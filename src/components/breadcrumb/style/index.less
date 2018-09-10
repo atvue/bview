@@ -1,0 +1,39 @@
+@import '../../../styles/themes/default';
+@import '../../../styles/mixins/index';
+
+@breadcrumb-prefix-cls: ~'@{nop-prefix}-breadcrumb';
+
+@normal-color : #666666;
+@hover-color: #999999;
+@current-color: #333333;
+
+.@{breadcrumb-prefix-cls} {
+    display: inline-block;
+}
+
+.@{breadcrumb-prefix-cls}-item {
+    font-size: 14px;
+    font-weight: bold;
+    color: @normal-color;
+
+    &_link,
+    &_label a {
+        &:hover {
+            color: @hover-color;
+        }
+    }
+    a {
+        color: inherit;
+        transition: color ease 0.3s;
+    }
+    &:last-child {
+        color: @current-color;
+        .@{breadcrumb-prefix-cls}-item_separator {
+            display: none;
+        }
+    }
+    &_separator {
+        margin: 0 8px;
+        color: @normal-color;
+    }
+}

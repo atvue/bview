@@ -1,0 +1,111 @@
+@import '../../../styles/themes/default';
+@import '../../../styles/mixins/index';
+
+@btn_hover: #3cd4ba;
+@btn_disabled: #bbc1d0;
+@btn_normal: #0bc9a9;
+@btn_press: #10bfa2;
+
+.nop-button {
+    display: inline-block;
+    vertical-align: middle;
+    width: auto;
+    padding: 0 26px;
+    height: 30px;
+    box-sizing: border-box;
+    line-height: 30px;
+    color: #ffffff;
+    background-color: @btn_normal;
+    font-size: 12px;
+    cursor: pointer;
+    &:hover {
+        background-color: @btn_hover;
+    }
+    &[disabled] {
+        background-color: @btn_disabled;
+        cursor: not-allowed;
+    }
+    &:focus {
+        background-color: @btn_press;
+    }
+    &.nop-button-sizebig {
+        padding: 0 41px;
+        margin-right: 40px;
+        font-size: 14px;
+        height: 38px;
+        line-height: 38px;
+    }
+}
+
+.nop-button-default {
+    color: #666;
+    border: 1px solid #aaa;
+    background-color: #fff;
+    &:hover {
+        background-color: #fff;
+    }
+    &[disabled] {
+        background-color: @btn_disabled;
+        cursor: not-allowed;
+    }
+    &:focus {
+        background-color: #fff;
+    }
+}
+
+.nop-button-black {
+    color: #fff;
+    border: 1px solid #666;
+    background-color: #666;
+    &:hover {
+        background-color: #777;
+    }
+    &[disabled] {
+        background-color: @btn_disabled;
+        cursor: not-allowed;
+    }
+    &:focus {
+        background-color: #555;
+    }
+}
+
+.nop-link-btn {
+    display: inline-block;
+    height: 26px;
+    line-height: 26px;
+    padding: 0 5px;
+    color: #03b294;
+    &:hover {
+        color: #0c967e;
+    }
+    &:visited,
+    &:active {
+        color: #03b294;
+    }
+    &.disabled {
+        color: #999999;
+        &:hover,
+        &:visited,
+        &:active {
+            color: #999999;
+        }
+    }
+    &.link-btn_default {
+        color: #666666;
+        &:hover {
+            color: #333333;
+        }
+        &:visited,
+        &:active {
+            color: #666666;
+        }
+        &.disabled {
+            color: #999999;
+            &:hover,
+            &:visited,
+            &:active {
+                color: #999999;
+            }
+        }
+    }
+}
