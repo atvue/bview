@@ -47,11 +47,9 @@ module.exports = {
                     },
                     {
                         loader: 'postcss-loader',
-                        options: {
-                            options: Object.assign({}, postcssConfig, {
-                                sourceMap: true
-                            })
-                        }
+                        options: Object.assign({}, postcssConfig, {
+                            sourceMap: true
+                        })
                     },
                     {
                         loader: 'less-loader',
