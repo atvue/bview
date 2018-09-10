@@ -3,7 +3,7 @@ import nopvue from 'nopvue';
 import Vue from 'vue';
 import App from './app';
 
-import '../dist/styles/nopvue.css';
+import '@/style.less';
 
 Vue.use(nopvue);
 

@@ -1,6 +1,6 @@
 {
     "name": "nopvue-ui",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "vue ui components",
     "main": "dist/nopvue.js",
     "scripts": {
@@ -12,7 +12,7 @@
     "author": "icy",
     "repository": {
         "type": "git",
-        "url": "https://github.com/iview/iview"
+        "url": "https://github.com/atvue/atvue-demo"
     },
     "license": "ISC",
     "dependencies": {
