@@ -117,10 +117,12 @@ module.exports = {
                     }
                 ]
             },
-            // 静态html模板
             {
-                test: /\.html$/,
-                loader: 'html-loader'
+                test: /\.md$/,
+                loader: 'vue-markdown-loader',
+                options: {
+                    preventExtract: true
+                }
             },
             // 图片&字体资源
             {

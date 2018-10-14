@@ -13,12 +13,13 @@ module.exports = merge(webpackBaseConfig, {
     mode: 'development',
     // 入口
     entry: {
-        main: './demos/main',
+        main: './demo/main',
+        doc: './doc/index',
         vendors: ['vue', 'vue-router']
     },
     // 输出
     output: {
-        path: path.join(__dirname, '../demos/dist'),
+        path: path.join(__dirname, '../dev/dist'),
         publicPath: '',
         filename: '[name].js',
         chunkFilename: '[name].chunk.js'
@@ -32,8 +33,13 @@ module.exports = merge(webpackBaseConfig, {
     plugins: [
         new HtmlWebpackPlugin({
             inject: true,
-            filename: path.join(__dirname, '../demos/dist/index.html'),
-            template: path.join(__dirname, '../demos/index.html')
+            filename: path.join(__dirname, '../dev/dist/index.html'),
+            template: path.join(__dirname, '../demo/index.html')
+        }),
+        new HtmlWebpackPlugin({
+            inject: true,
+            filename: path.join(__dirname, '../dev/dist/doc.html'),
+            template: path.join(__dirname, '../demo/index.html')
         })
     ]
 });
