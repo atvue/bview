@@ -2738,7 +2738,6 @@ var SizeBig = 'big';
 var SizeSmall = 'small';
 var TypeBlack = 'black';
 /* harmony default export */ var buttonvue_type_script_lang_js_ = ({
-  name: 'nop-button',
   components: {
     Icon: components_icon
   },
@@ -2937,7 +2936,8 @@ var components = {
   Option: select_option,
   Pager: components_pager,
   Select: components_select
-};
+}; // @TODO 命名规范？
+// 统一默认前缀
 
 var src_install = function install(Vue) {
   var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};

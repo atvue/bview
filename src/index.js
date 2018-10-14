@@ -17,6 +17,8 @@ const components = {
     Select
 };
 
+// @TODO 命名规范？
+// 统一默认前缀
 const install = function(Vue, opts = {}) {
     Object.keys(components).forEach(key => {
         // debugger;

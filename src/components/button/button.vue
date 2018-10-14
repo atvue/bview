@@ -20,7 +20,6 @@ const SizeSmall = 'small';
 const TypeBlack = 'black';
 
 export default {
-    name: 'nop-button',
     components: {
         Icon
     },
