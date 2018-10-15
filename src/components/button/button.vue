@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import Icon from '@/components/icon';
+import Icon from '../icon';
 const TypePrimary = 'primary';
 const TypeDefault = 'default';
 const SizeNormal = '';
