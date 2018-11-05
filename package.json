@@ -2,7 +2,7 @@
     "name": "nopvue-ui",
     "version": "1.0.3",
     "description": "vue ui components",
-    "main": "dist/nopvue.js",
+    "main": "lib/index.js",
     "scripts": {
         "dev": "webpack-dev-server --open --inline --hot --port 8022 --config scripts/webpack.dev.config.js",
         "dist": "npm run dist:style && npm run dist:prod-commonjs && npm run dist:prod-umd-dev && npm run dist:prod-umd",
