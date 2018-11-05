@@ -1,51 +1,54 @@
-const config = require('./config'),
-    { srcDir, toLibPath, toShortPath } = config,
-    { readFile, writeFile } = require('./util'),
-    parseVueFile = require('./parseVueFile');
+const config = require( './config' ) ,
+    path = require( 'path' ) ,
+    { srcDir , toLibPath , toShortPath } = config ,
+    { readFile , writeFile } = require( './util' ) ,
+    parseVueFile = require( './parseVueFile' ) ,
+    chalk = require( 'chalk' )
 
-const glob = require('glob');
+const glob = require("glob")
 
 // 查找所有vue文件
-async function findVueFiles() {
-    let files = await new Promise((r, j) => {
-        glob(`${srcDir}/**/*.vue`, function(er, files) {
-            if (er) {
-                return j(er);
+async function findVueFiles(){
+    let files = await new Promise( (r,j) => {
+        glob( `${srcDir}/**/*.vue` , function ( er , files ) {
+            if ( er ) {
+                return j( er )
             }
-            return r(files);
-        });
-    });
-    return files;
+            return r( files )
+        } )
+    } )
+    return files
 }
 
-async function init() {
-    let files;
-    try {
-        files = await findVueFiles();
-    } catch (e) {
-        throw e;
+async function init(){
+    let files
+    try{
+        files = await findVueFiles()
+    }catch( e ) {
+        throw e
     }
-    files.forEach(filePath => {
-        let mirrorLibPath = toLibPath(filePath);
-        readFile(filePath, async content => {
-            let code;
-            try {
-                code = await parseVueFile(content);
-            } catch (e) {
-                let short = toShortPath(filePath);
-                error = `文件：${short}，消息：${e}，(此文件的转译lib文件将会被跳过)`;
-                console.warn(error);
+    files.forEach( filePath => {
+        let mirrorLibPath = toLibPath( filePath )
+        readFile( filePath , async content => {
+            let code
+            try{
+                code = await parseVueFile( content )
+            }catch( e ){
+                let short = toShortPath( filePath ) ,
+                    { base } = path.parse( filePath )
+                    error = `错误❌:文件：${short}，消息：${e}(转译lib目录中，将不会生成${base})`
+                console.log(
+                    chalk.red( error )
+                )
                 // 有错误,返回
-                return;
+                return
             }
-            if (code !== undefined) {
-                // mirrorLibPath = mirrorLibPath.replace(/.vue/, '.js');
-                let fixPath = mirrorLibPath.replace(/\.vue/, '.js');
-                // console.log(fixPath);
-                writeFile(fixPath, code);
+            if ( code !== undefined ) {
+                writeFile( mirrorLibPath , code )
             }
-        });
-    });
+        } )
+    } )
 }
 
-exports.compileVue = init;
+
+exports.compileVue = init

@@ -18,7 +18,8 @@
     },
     "license": "ISC",
     "dependencies": {
-        "@babel/runtime": "^7.0.0"
+        "@babel/runtime": "^7.0.0",
+        "chalk": "^2.4.1"
     },
     "peerDependencies": {
         "vue": ">=2.5.2",
