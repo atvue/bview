@@ -46,13 +46,15 @@
 </template>
 
 <script>
-import { Button } from '../lib/components/button';
+import { Button } from '../src/components/button'
 
 // var Button = require('../lib/components/button/button.js').default;
 // debugger;
 
 export default {
-    components: { Button },
+    components: { 
+        Button 
+    } ,
     data() {
         return {
             modal: false,
