@@ -4,12 +4,12 @@
     "description": "vue ui components",
     "main": "dist/nopvue.js",
     "scripts": {
-        "dev": "webpack-dev-server --open --inline --hot --port 8022 --config build/webpack.dev.config.js",
+        "dev": "webpack-dev-server --open --inline --hot --port 8022 --config scripts/webpack.dev.config.js",
         "dist": "npm run dist:style && npm run dist:prod-commonjs && npm run dist:prod-umd-dev && npm run dist:prod-umd",
-        "dist:prod-umd": "webpack --config build/webpack.prod.config.js",
-        "dist:prod-umd-dev": "webpack --config build/webpack.prod.dev.config.js",
-        "dist:prod-commonjs": "node build/scripts/build-lib",
-        "dist:style": "gulp --gulpfile build/buildStyle.js"
+        "dist:prod-umd": "webpack --config scripts/webpack.prod.config.js",
+        "dist:prod-umd-dev": "webpack --config scripts/webpack.prod.dev.config.js",
+        "dist:prod-commonjs": "node scripts/scripts/build-lib",
+        "dist:style": "gulp --gulpfile scripts/buildStyle.js"
     },
     "author": "icy",
     "repository": {
