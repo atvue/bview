@@ -15,7 +15,7 @@ const config = merge( webpackBaseConfig , {
     devtool: 'eval-source-map',
     mode: 'development',
     entry: {
-        main: siteResolve( 'index.js' ) ,
+        index: siteResolve( 'index.js' ) ,
         vendors: [ 'vue', 'vue-router' ]
     },
     output: {
@@ -30,7 +30,7 @@ const config = merge( webpackBaseConfig , {
             filename: siteResolve( '../dist' , 'index.html' ) ,
             template: siteResolve( 'index.html' ) ,
         } ) ,
-
+        new webpack.HotModuleReplacementPlugin() ,
     ]
 } )
 
@@ -46,6 +46,8 @@ const devOptions = {
     stats: {
         colors: true ,
     } ,
+    port ,
+    host ,
 }
 webpackDevServer.addDevServerEntrypoints( config , devOptions )
 
