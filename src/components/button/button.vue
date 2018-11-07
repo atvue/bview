@@ -3,7 +3,7 @@
 <template>
     <button :disabled="disabled" @click.prevent="onClick" :class="boxlassName">
         <i v-if="loading"></i>
-        <Icon v-if="icon&&!loading" :type="icon" :size="iconsize" :color="iconcolor"></Icon>
+        <!-- <Icon v-if="icon&&!loading" :type="icon" :size="iconsize" :color="iconcolor"></Icon> -->
         <span v-if="showSlot">
             <slot></slot>
         </span>
@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import Icon from '../icon';
 const TypePrimary = 'primary';
 const TypeDefault = 'default';
 const SizeNormal = '';
@@ -21,7 +20,7 @@ const TypeBlack = 'black';
 
 export default {
     components: {
-        Icon
+        // Icon
     },
     props: {
         disabled: {
