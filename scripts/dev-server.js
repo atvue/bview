@@ -11,13 +11,13 @@ const { site } = require( './project-path' )
 const siteResolve = ( ...args ) => path.resolve( site , ...args )
 const port = 8022 ,
     host = 'localhost'
+    
 const config = merge( webpackBaseConfig , {
     devtool: 'eval-source-map',
     mode: 'development',
     entry: {
         index: siteResolve( 'index.js' ) ,
-        vendors: [ 'vue', 'vue-router' ]
-    },
+    } ,
     output: {
         path: siteResolve( '../dist' ) ,
         publicPath: '' ,

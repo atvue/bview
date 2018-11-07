@@ -9,5 +9,5 @@ function resolvePath( dir ) {
 
 module.exports = {
     site: resolvePath( './site' ) ,
-    
+    src: resolvePath( './src' )
 }

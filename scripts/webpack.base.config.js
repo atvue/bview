@@ -2,14 +2,10 @@
  * 通用webpack配置
  */
 
-const path = require('path');
-const webpack = require('webpack');
-const pkg = require('../package.json');
-// @UPDATED vue-loader更新至v15+版本后的 BREAKING CHANGE
-// 需要引入插件 注意require括号内写法
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const { src } = require( './project-path' )
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
-const isProd = process.env.NODE_ENV;
+const isProd = process.env.NODE_ENV === 'production'
 
 module.exports = {
     // 加载器
@@ -58,36 +54,6 @@ module.exports = {
                     }
                 ]
             },
-            // style : scss
-            {
-                test: /\.scss$/,
-                use: [
-                    {
-                        loader: 'style-loader',
-                        options: {
-                            sourceMap: true
-                        }
-                    },
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            sourceMap: true
-                        }
-                    },
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            sourceMap: true
-                        }
-                    },
-                    {
-                        loader: 'scss-loader',
-                        options: {
-                            sourceMap: true
-                        }
-                    }
-                ]
-            },
             // style: css
             {
                 test: /\.css$/,
@@ -111,7 +77,7 @@ module.exports = {
                         }
                     }
                 ]
-            },
+            } ,
             {
                 test: /\.md$/,
                 loader: 'vue-markdown-loader',
@@ -134,9 +100,11 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.vue'],
         alias: {
-            vue: 'vue/dist/vue.esm.js',
-            '@': path.resolve(__dirname, '../src')
+            vue: 'vue/dist/vue.esm.js' ,
+            '@': src ,
         }
     },
-    plugins: [new VueLoaderPlugin()]
-};
+    plugins: [
+        new VueLoaderPlugin() ,
+    ]
+}
