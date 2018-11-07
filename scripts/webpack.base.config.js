@@ -83,9 +83,9 @@ module.exports = {
                 use: [
                     {
                         loader: 'vue-loader'
-                    },
+                    } ,
                     {
-                        loader: 'vue-markdown-loader/lib/markdown-compiler',
+                        loader: require.resolve( './loaders/md-loader.js' ) ,
                         options: {
                             raw: true
                         }

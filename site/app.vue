@@ -9,18 +9,21 @@
             </div>
             <div>
                 <basic />
+                <bbbb />
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import basic from '@/components/button/demo/basic.md'
-
+import basic , { a as bbbb } from '@/components/button/demo/basic.md'
+import Button from '@/components/button/button.vue'
 
 export default {
     components: { 
         basic ,
+        Button ,
+        bbbb
     } ,
     data() {
         return {
@@ -38,6 +41,8 @@ export default {
 <style type="less">
 .box {
     display: flex ;
-
+}
+.box > div {
+    margin-right: 10px ;
 }
 </style>
