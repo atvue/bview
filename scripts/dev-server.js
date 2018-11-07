@@ -29,7 +29,8 @@ const config = merge( webpackBaseConfig , {
             inject: true,
             filename: siteResolve( '../dist' , 'index.html' ) ,
             template: siteResolve( 'index.html' ) ,
-        } )
+        } ) ,
+
     ]
 } )
 
@@ -40,13 +41,18 @@ const devOptions = {
     } ,
     hot: true ,
     compress: true ,
+    inline: true ,
+    disableHostCheck: true ,
+    stats: {
+        colors: true ,
+    } ,
 }
+webpackDevServer.addDevServerEntrypoints( config , devOptions )
 
 const webpackCompiler = webpack( config )
-
 const server = new webpackDevServer( webpackCompiler , devOptions )
 
 server.listen( port , host , function() {
-    console.log( 'done' )
+    console.log( `bview is running at http://${host}:${port}` )
 } )
 
