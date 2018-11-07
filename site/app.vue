@@ -1,21 +1,26 @@
 <template>
     <div style="padding: 40px;">
-        <h1>组件示例demo</h1>
-        普通按钮：
-        <section class="demo-button">
-            <Button @click="modal=true">点击出弹框</Button>
-            <Button type="default">default样式</Button>
-            <Button type="black">black样式</Button>
-        </section>
+        <h1>组件示例</h1>
+        <div class="box">
+            <div>
+                <ul>
+                    Button
+                </ul>
+            </div>
+            <div>
+                <basic />
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-import Button from '../src/components/button'
+import basic from '@/components/button/demo/basic.md'
+
 
 export default {
     components: { 
-        Button 
+        basic ,
     } ,
     data() {
         return {
@@ -30,13 +35,9 @@ export default {
 };
 </script>
 
-<style scoped>
-h1 {
-    font-size: 20px;
-    margin-bottom: 20px;
-    font-weight: bold;
-}
-section {
-    padding: 20px 10px;
+<style type="less">
+.box {
+    display: flex ;
+
 }
 </style>

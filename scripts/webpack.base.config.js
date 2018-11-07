@@ -80,11 +80,18 @@ module.exports = {
             } ,
             {
                 test: /\.md$/,
-                loader: 'vue-markdown-loader',
-                options: {
-                    preventExtract: true
-                }
-            },
+                use: [
+                    {
+                        loader: 'vue-loader'
+                    },
+                    {
+                        loader: 'vue-markdown-loader/lib/markdown-compiler',
+                        options: {
+                            raw: true
+                        }
+                    }
+                ]
+            } ,
             // 图片&字体资源
             {
                 test: /\.(gif|jpg|png|woff|svg|eot|ttf)$/,
