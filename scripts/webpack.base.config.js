@@ -5,7 +5,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const pkg = require('../package.json');
-const postcssConfig = require('./postcssConfig');
 // @UPDATED vue-loader更新至v15+版本后的 BREAKING CHANGE
 // 需要引入插件 注意require括号内写法
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
@@ -47,9 +46,9 @@ module.exports = {
                     },
                     {
                         loader: 'postcss-loader',
-                        options: Object.assign({}, postcssConfig, {
+                        options: {
                             sourceMap: true
-                        })
+                        }
                     },
                     {
                         loader: 'less-loader',
@@ -78,9 +77,7 @@ module.exports = {
                     {
                         loader: 'postcss-loader',
                         options: {
-                            options: Object.assign({}, postcssConfig, {
-                                sourceMap: true
-                            })
+                            sourceMap: true
                         }
                     },
                     {
@@ -110,9 +107,7 @@ module.exports = {
                     {
                         loader: 'postcss-loader',
                         options: {
-                            options: Object.assign({}, postcssConfig, {
-                                sourceMap: true
-                            })
+                            sourceMap: true
                         }
                     }
                 ]
