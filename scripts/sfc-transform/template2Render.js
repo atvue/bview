@@ -65,7 +65,7 @@ const tmp = `<template>
 </template>
 
 <script>
-import { Button , Modal } from 'bview'
+import bview , { Select } from 'bview'
 export default {
     components: { Button } ,
 }
