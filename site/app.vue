@@ -4,6 +4,16 @@
         <div class="box">
             <div>
                 <ul>
+                    select
+                </ul>
+            </div>
+            <div>
+                <selectBasicMd />
+            </div>
+        </div>
+        <div class="box">
+            <div>
+                <ul>
                     Button
                 </ul>
             </div>
@@ -16,10 +26,12 @@
 
 <script>
 import buttonBasicMd from '@/components/button/demo/basic.md'
+import selectBasicMd from '@/components/select/demo/basic.md'
 
 export default {
     components: {
         buttonBasicMd ,
+        selectBasicMd ,
     }
 }
 </script>
