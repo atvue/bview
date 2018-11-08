@@ -2,7 +2,7 @@ const compiler = require('vue-template-compiler');
 var transpile = require('vue-template-es2015-compiler');
 
 const babel = require('@babel/core');
-const babelPluginInsertVueTemplate = require('./babel-plugin-insert-vue-template');
+const babelPluginInsertVueTemplate = require('../babel-helper/babel-plugin-insert-vue-template');
 const NullSFCScriptExport = 'export default {}'
 function toFunction(code) {
     return transpile('function render () {' + code + '}');

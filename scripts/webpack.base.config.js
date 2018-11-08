@@ -86,9 +86,6 @@ module.exports = {
                     } ,
                     {
                         loader: require.resolve( './loaders/md-loader.js' ) ,
-                        options: {
-                            raw: true
-                        }
                     }
                 ]
             } ,

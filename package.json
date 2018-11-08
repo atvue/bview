@@ -5,11 +5,11 @@
     "main": "lib/index.js",
     "scripts": {
         "start": "npm run dev",
-        "dev": "node ./scripts/dev-server.js",
+        "dev": "node scripts/dev-server.js",
+        "dist:common": "node scripts/sfc-transform/build-lib",
         "dist": "npm run dist:style && npm run dist:prod-commonjs && npm run dist:prod-umd-dev && npm run dist:prod-umd",
         "dist:prod-umd": "webpack --config scripts/webpack.prod.config.js",
         "dist:prod-umd-dev": "webpack --config scripts/webpack.prod.dev.config.js",
-        "dist:prod-commonjs": "node scripts/sfc-transform/build-lib",
         "dist:style": "gulp --gulpfile scripts/buildStyle.js"
     },
     "author": "icy",
