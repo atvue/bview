@@ -11,7 +11,7 @@ title: 按钮类型
 <template>
     <div>
         <Button type="primary">主要按钮</Button>
-        <Button>次要按钮`</Button>
+        <Button>次要按钮</Button>
         <Button type="dashed">Dashed</Button>
         <Button type="danger">Danger</Button>
     </div>
