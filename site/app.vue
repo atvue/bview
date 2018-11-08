@@ -8,18 +8,18 @@
                 </ul>
             </div>
             <div>
-                <basicMd />
+                <buttonBasicMd />
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import basicMd from '@/components/button/demo/basic.md'
+import buttonBasicMd from '@/components/button/demo/basic.md'
 
 export default {
     components: {
-        basicMd ,
+        buttonBasicMd ,
     }
 }
 </script>
