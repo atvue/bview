@@ -30,14 +30,23 @@ module.exports = function( source ) {
         parse( content ).then( vueDemoModule => {
             let vueModuleStr = `
                     <template>
-                        <div class="markdown">${ html }</div>
+                        <div>
+                            <div>
+                                <demo />
+                            </div>
+                            <div>
+                                <div class="markdown">${ html }</div>
+                            </div>
+                        </div>
                     </template>
                     <script>
                         import 'highlight.js/styles/default.css' //样式文件
                         // demo 组件
                         ${ vueDemoModule }
                         // markdown 组件
-                        export default {}
+                        export default {
+                            components: { demo }
+                        }
                     </script>
                 `
             callback( null , vueModuleStr )

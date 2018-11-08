@@ -8,9 +8,6 @@
                 </ul>
             </div>
             <div>
-                <basicDemo />
-            </div>
-            <div>
                 <basicMd />
             </div>
         </div>
@@ -18,12 +15,11 @@
 </template>
 
 <script>
-import basicMd , { demo as basicDemo } from '@/components/button/demo/basic.md'
+import basicMd from '@/components/button/demo/basic.md'
 
 export default {
     components: {
         basicMd ,
-        basicDemo ,
     }
 }
 </script>
