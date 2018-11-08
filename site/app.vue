@@ -19,25 +19,13 @@
 
 <script>
 import basicMd , { demo as basicDemo } from '@/components/button/demo/basic.md'
-import Button from '@/components/button/button.vue'
 
 export default {
     components: {
         basicMd ,
-        Button ,
         basicDemo ,
-    } ,
-    data() {
-        return {
-            modal: false ,
-            toast: false ,
-            selected: undefined
-        }
-    } ,
-    mounted() {
-        // debugger;
     }
-};
+}
 </script>
 
 <style type="less">

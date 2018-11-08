@@ -10,8 +10,8 @@ title: 按钮类型
 ```vue
 <template>
     <div>
-        <Button type="primary">Primary</Button>
-        <Button>Default</Button>
+        <Button type="primary">主要按钮</Button>
+        <Button>次要按钮</Button>
         <Button type="dashed">Dashed</Button>
         <Button type="danger">Danger</Button>
     </div>
@@ -19,6 +19,7 @@ title: 按钮类型
 
 <script>
 import { Button } from 'bview'
+
 export default {
     components: { Button } ,
 }
