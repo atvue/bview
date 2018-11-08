@@ -10,8 +10,8 @@ title: 按钮类型
 ```vue
 <template>
     <div>
-        <Button type="primary">主要按钮12</Button>
-        <Button>次要按钮`121221</Button>
+        <Button type="primary">主要按钮</Button>
+        <Button>次要按钮`</Button>
         <Button type="dashed">Dashed</Button>
         <Button type="danger">Danger</Button>
     </div>
