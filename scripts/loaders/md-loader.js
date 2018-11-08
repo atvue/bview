@@ -1,5 +1,7 @@
 const markdown = require( 'markdown-it' )
 const hljs = require( 'highlight.js' )
+const fse = require( 'fs-extra' )
+const path = require( 'path' )
 const { parse } = require( '../sfc-transform/template2Render' )
 
 
@@ -21,24 +23,25 @@ module.exports = function( source ) {
         } )
     const html = md.render( source ) ,
         tokens = md.parse( source ) ,
-        vueModule = tokens.find( ( { type , tag } ) => type === 'fence' && tag === 'code' ) ,
+        vueModule = tokens.find( ( { type , tag , info } ) => type === 'fence' && tag === 'code' && info === 'vue' ) ,
         hasVueModule = vueModule !== undefined
     if ( hasVueModule ) {
         let { content } = vueModule
-        parse( content ).then( data => {
-            console.log( data )
-        } )
+        parse( content ).then( vueDemoModule => {
+            let vueModuleStr = `
+                    <template>
+                        <div class="markdown">${ html }</div>
+                    </template>
+                    <script>
+                        import 'highlight.js/styles/default.css' //样式文件
+                        // demo 组件
+                        ${ vueDemoModule }
+                        // markdown 组件
+                        export default {}
+                    </script>
+                `
+            callback( null , vueModuleStr )
+        } ).catch( callback )
     }
-    let vueModuleStr = `
-        <template>
-            <div class="markdown">${ html }</div>
-        </template>
-        <script>
-            import 'highlight.js/styles/default.css' //样式文件
-            const a = { template: '<div>123</div>' }
-            export { a }
-            export default {}
-        </script>
-    `
-    callback( null , vueModuleStr )
+    
 }
