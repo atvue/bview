@@ -8,27 +8,29 @@
                 </ul>
             </div>
             <div>
-                <basic />
-                <demo />
+                <basicDemo />
+            </div>
+            <div>
+                <basicMd />
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import basic , { demo } from '@/components/button/demo/basic.md'
+import basicMd , { demo as basicDemo } from '@/components/button/demo/basic.md'
 import Button from '@/components/button/button.vue'
 
 export default {
-    components: { 
-        basic ,
+    components: {
+        basicMd ,
         Button ,
-        demo ,
+        basicDemo ,
     } ,
     data() {
         return {
-            modal: false,
-            toast: false,
+            modal: false ,
+            toast: false ,
             selected: undefined
         }
     } ,
@@ -43,6 +45,6 @@ export default {
     display: flex ;
 }
 .box > div {
-    margin-right: 10px ;
+    margin-right: 30px ;
 }
 </style>

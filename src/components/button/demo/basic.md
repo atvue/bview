@@ -8,7 +8,7 @@ title: 按钮类型
 按钮有四种类型：主按钮、次按钮。主按钮在同一个操作区域最多出现一次。
 
 ```vue
-<tempalte>
+<template>
     <div>
         <Button type="primary">Primary</Button>
         <Button>Default</Button>
