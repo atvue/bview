@@ -15,14 +15,20 @@ module.exports = function( babel ) {
                     specifiers.forEach( spec => {
                         if ( types.isImportSpecifier( spec ) ) {
                             let lowerCaseComponentName = spec.local.name.toLowerCase() ,
-                                sourceStr = `@/components/${ lowerCaseComponentName }`
-                            let dec = types.ImportDeclaration(
-                                [
-                                    types.importDefaultSpecifier( spec.local ) ,
-                                ] ,
-                                types.StringLiteral( sourceStr )
-                            )
-                            declarations.push( dec )
+                                sourceStr = `@/components/${ lowerCaseComponentName }` ,
+                                styleSourceStr = `@/components/${ lowerCaseComponentName }/style/index.less`
+                            let decModule = types.ImportDeclaration(
+                                    [
+                                        types.importDefaultSpecifier( spec.local ) ,
+                                    ] ,
+                                    types.StringLiteral( sourceStr )
+                                ) ,
+                                decStyle = types.ImportDeclaration(
+                                    [] ,
+                                    types.StringLiteral( styleSourceStr )
+                                )
+                            declarations.push( decModule )
+                            declarations.push( decStyle )
                         }
                     } )
                     if ( declarations.length > 0 ) {
