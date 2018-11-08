@@ -1,11 +1,10 @@
 const markdown = require( 'markdown-it' )
 const hljs = require( 'highlight.js' )
-const fse = require( 'fs-extra' )
-const path = require( 'path' )
+const { transform2RelativePath } = require( '../project-path' )
 const { parse } = require( '../sfc-transform/template2Render' )
 
 
-module.exports = function( source ) {
+module.exports = function( source , map , meta ) {
     const callback = this.async()
     const md = markdown( {
             html: true ,
@@ -49,8 +48,22 @@ module.exports = function( source ) {
                         }
                     </script>
                 `
-            callback( null , vueModuleStr )
+            callback( null , vueModuleStr , map , meta )
         } ).catch( callback )
+    } else {
+        let { resourcePath } = this
+            relativePath = transform2RelativePath( resourcePath )
+        let mdHasNoVueCodeWarning = `<template>
+                <div>
+                    <code>${ relativePath }</code><br/>
+                    未定义：<br/>
+                    <code>
+                        \`\`\`vue<br/>
+                        // ...vue code<br/>
+                        \`\`\`<br/>
+                    </code>
+                </div>
+            </template>`
+        callback( null , mdHasNoVueCodeWarning , map , meta )
     }
-    
 }

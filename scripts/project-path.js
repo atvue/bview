@@ -6,8 +6,15 @@ function resolvePath( dir ) {
     return path.resolve( root , dir )
 }
 
+const src = resolvePath( './src' )
+
+function transform2RelativePath( path ) {
+    let remainPath = path.replace( `${root}/` , ''  )
+    return remainPath
+}
 
 module.exports = {
     site: resolvePath( './site' ) ,
-    src: resolvePath( './src' )
+    src ,
+    transform2RelativePath ,
 }
