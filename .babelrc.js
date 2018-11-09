@@ -12,5 +12,12 @@ module.exports = {
         ],
         'babel-plugin-transform-object-rest-spread',
         '@babel/syntax-dynamic-import'
-    ]
+    ] ,
+    "env": {
+        "test": {
+          "presets": [
+            ["@babel/env", { "targets": { "node": "current" }}]
+          ]
+        }
+      }
 };
