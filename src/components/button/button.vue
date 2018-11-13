@@ -69,6 +69,9 @@ export default {
                 `nop-button-size${size}`,
                 {
                     'nop-button-black': type === TypeBlack
+                } ,
+                {
+                    'nop-button-danger': type === 'danger'
                 }
             ];
         }
