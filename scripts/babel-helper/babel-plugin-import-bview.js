@@ -17,7 +17,7 @@ module.exports = function( babel ) {
                         if ( types.isImportSpecifier( spec ) ) {
                             let lowerCaseComponentName = spec.local.name.toLowerCase() ,
                                 sourceStr = `@/components/${ lowerCaseComponentName }` ,
-                                styleSourceStr = `@/components/${ lowerCaseComponentName }/style/index.less`
+                                styleSourceStr = `@/components/${ lowerCaseComponentName }/style/index.js`
                             let decModule = types.ImportDeclaration(
                                     [
                                         types.importDefaultSpecifier( spec.local ) ,

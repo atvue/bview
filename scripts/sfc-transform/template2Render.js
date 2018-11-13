@@ -11,11 +11,14 @@ const babelPluginDefault2Export = require( '../babel-helper/babel-plugin-default
     * do two things
 
     * 2.1、import { Button } from 'bview';   ->   import Buttom from '@/components/button'
-    
+                                                  import "@/components/button/style/index.js";
     * 2.2、export default {                       export const demo = {
             components: {                               components: {
                 Button ,                     ->              Button ,
-            }                                           }
+            }                                           } ,
+                                                        render: function render(){
+                                                            // ....
+                                                        }
         }                                         }
  * 
  */
@@ -54,18 +57,19 @@ const parse = content => {
         .catch( j )
     } )
 }
-/* 
-const tmp = `<template>
+
+/* const tmp = `<template>
     <div>
-        <Button type="primary">Primary</Button>
-        <Button>Default</Button>
+        <Button type="primary">主要按钮</Button>
+        <Button>次要按钮</Button>
         <Button type="dashed">Dashed</Button>
         <Button type="danger">Danger</Button>
     </div>
 </template>
 
 <script>
-import bview , { Select } from 'bview'
+import { Button } from 'bview'
+
 export default {
     components: { Button } ,
 }
