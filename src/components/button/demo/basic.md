@@ -10,6 +10,7 @@
         <Button>次要按钮</Button>
         <Button type="dashed">Dashed</Button>
         <Button type="danger">Danger</Button>
+        <Button type="danger">asfhjaksf</Button>
     </div>
 </template>
 
@@ -18,6 +19,9 @@ import { Button } from 'bview'
 
 export default {
     components: { Button } ,
+    data () {
+    	return {}
+    }
 }
 </script>
 ```
