@@ -1,0 +1,21 @@
+{
+  "name": "marksfc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "icyfanfan",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/generator": "^7.1.5",
+    "@babel/parser": "^7.1.5",
+    "@babel/traverse": "^7.1.5",
+    "@vue/component-compiler-utils": "^2.3.0",
+    "babel-types": "^6.26.0",
+    "fs-extra": "^7.0.1",
+    "markdown-table": "^1.1.2",
+    "vue-template-compiler": "^2.5.17"
+  }
+}

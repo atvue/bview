@@ -1,46 +1,35 @@
 <template>
-    <div style="padding: 40px;">
-        <h1>组件示例</h1>
-        <div class="box">
-            <div>
-                <ul>
-                    select
-                </ul>
+    <div style="padding: 10px;">
+        <h1>组件库</h1>
+        <div style="display:flex">
+            <!-- 随便生成的菜单 待替换 -->
+            <div style="width: 160px;margin-top:20px;">
+                <div v-for="r in routerData" :key="r.meta.name">
+                    <router-link :to="r.path" :key="r.meta.name">{{r.meta.name}}</router-link>
+                    <div v-show="r.children&&r.children.length>0">
+                        <div v-for="c in r.children" :key="c.meta.name" style="padding-left:10px;">
+                            <router-link :to="r.path+'/'+c.path">{{c.meta.name}}</router-link>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div>
-                <selectBasicMd />
-            </div>
-        </div>
-        <div class="box">
-            <div>
-                <ul>
-                    Button
-                </ul>
-            </div>
-            <div>
-                <buttonBasicMd />
-            </div>
+            <!-- END 随便生成的菜单 待替换 -->
+            <!-- 文档内容 -->
+            <router-view></router-view>
+            <!-- END 文档内容 -->
         </div>
     </div>
 </template>
 
 <script>
-import buttonBasicMd from '@/components/button/demo/basic.md'
-import selectBasicMd from '@/components/select/demo/basic.md'
+import './common.css';
 
 export default {
-    components: {
-        buttonBasicMd ,
-        selectBasicMd ,
+    computed: {
+        routerData() {
+            return this.$router.options.routes;
+        }
     }
-}
+};
 </script>
 
-<style type="less">
-.box {
-    display: flex ;
-}
-.box > div {
-    margin-right: 30px ;
-}
-</style>
