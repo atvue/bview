@@ -2,10 +2,10 @@
  * 通用webpack配置
  */
 
-const { src } = require( './project-path' )
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const { src } = require('./project-path');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
-const isProd = process.env.NODE_ENV === 'production'
+const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
     // 加载器
@@ -15,7 +15,11 @@ module.exports = {
             // @TODO iview中向vue-loader传入了postLoader参数，了解一下什么用
             {
                 test: /\.vue$/,
-                loader: 'vue-loader'
+                use: [
+                    {
+                        loader: 'vue-loader'
+                    }
+                ]
             },
             // .js文件
             {
@@ -77,18 +81,29 @@ module.exports = {
                         }
                     }
                 ]
-            } ,
+            },
             {
                 test: /\.md$/,
                 use: [
                     {
                         loader: 'vue-loader'
-                    } ,
+                    },
                     {
-                        loader: require.resolve( './loaders/md-loader.js' ) ,
+                        loader: require.resolve('./loaders/md-loader.js')
                     }
                 ]
-            } ,
+            },
+            {
+                test: /\.st$/,
+                use: [
+                    {
+                        loader: 'vue-loader'
+                    },
+                    {
+                        loader: require.resolve('./loaders/st-loader.js')
+                    }
+                ]
+            },
             // 图片&字体资源
             {
                 test: /\.(gif|jpg|png|woff|svg|eot|ttf)$/,
@@ -104,11 +119,9 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.vue'],
         alias: {
-            vue: 'vue/dist/vue.esm.js' ,
-            '@': src ,
+            vue: 'vue/dist/vue.esm.js',
+            '@': src
         }
     },
-    plugins: [
-        new VueLoaderPlugin() ,
-    ]
-}
+    plugins: [new VueLoaderPlugin()]
+};
