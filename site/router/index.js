@@ -83,6 +83,8 @@ let routes = [
     }
 ];
 
+console.log(routes);
+
 const router = new Router({
     routes
 });

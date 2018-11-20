@@ -5,10 +5,10 @@
             <!-- 随便生成的菜单 待替换 -->
             <div style="width: 160px;margin-top:20px;">
                 <div v-for="r in routerData" :key="r.meta.name">
-                    <router-link :to="{path:r.path}" :key="r.meta.name">{{r.meta.name}}</router-link>
+                    <router-link :to="r.path" :key="r.meta.name">{{r.meta.name}}</router-link>
                     <div v-show="r.children&&r.children.length>0">
                         <div v-for="c in r.children" :key="c.meta.name" style="padding-left:10px;">
-                            <router-link :to="{path:c.path}" :key="c.meta.name">{{c.meta.name}}</router-link>
+                            <router-link :to="r.path+'/'+c.path">{{c.meta.name}}</router-link>
                         </div>
                     </div>
                 </div>
