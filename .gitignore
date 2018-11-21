@@ -18,4 +18,5 @@ yarn-error.log*
 # local configs
 lauch.json
 .vscode
+.history
 
