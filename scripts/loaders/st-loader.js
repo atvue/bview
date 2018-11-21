@@ -1,7 +1,4 @@
-// const path
-
 const sfcDoc = require('../sfc-doc');
-// console.log(sfcDoc);
 const markdown = require('markdown-it');
 const path = require('path');
 const fse = require('fs-extra');
@@ -20,7 +17,6 @@ module.exports = function(source, map, meta) {
         { dir } = path.parse(resourcePath),
         sepDir = dir.split(path.sep),
         component = sepDir[sepDir.length - 1],
-        // @TODO P0 获取当前组件目录下所有.vue文件生成api文档
         // @TODO P1 sfc文件中注释添加ignore标记 不对外暴露api
         files = fse.readdirSync(dir),
         vueSfcs = files
@@ -28,15 +24,15 @@ module.exports = function(source, map, meta) {
             .map(f => path.join(dir, f)),
         vueSfcPath = path.join(dir, `${component}.vue`),
         apiTpl = `\n\n### API说明`;
-    console.log(resourcePath, vueSfcs);
+
+    // 添加当前目录为依赖，变化时重新获取结果
+    this.addContextDependency(dir);
     Promise.all(
         vueSfcs.map(sfc => {
             return sfcDoc(sfc);
         })
     )
-        // sfcDoc(vueSfcPath)
         .then(result => {
-            // .then(( {name, render: {propsRes, apiMethods, emitEvents, slotsRes}}) => {
             result.forEach(res => {
                 let {
                     name,
@@ -47,9 +43,7 @@ module.exports = function(source, map, meta) {
                     '无'}\n\n##### slots\n\n${slotsRes || '无'}\n
             `;
             });
-            // apiTpl  = `\n\n### API说明\n\n##### props\n\n${propsRes ||
-            //     '无'}\n\n##### methods\n\n${apiMethods}\n\n##### emits\n\n${emitEvents ||
-            //     '无'}\n\n##### slots\n\n${slotsRes || '无'}\n`
+
             const apiHtml = md.render(apiTpl);
             let vueSfcTpl = `<template>
                     <div>
@@ -57,7 +51,8 @@ module.exports = function(source, map, meta) {
                         <slot></slot>
                         ${apiHtml}
                     </div>
-                </template>`;
+                </template>
+            `;
 
             callback(null, vueSfcTpl, map, meta);
         })
