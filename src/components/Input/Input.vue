@@ -4,9 +4,9 @@
             <slot name="prepend"></slot>
             <i :class="['iconfont',prependIcon]" v-if="prependIcon"></i>
         </span>
-        <i v-if="clearable&&currentValue&&!disabled" :class="['iconfont icon-shibai',prefixCls+'-icon',prefixCls+'-icon-clear']" style="font-size:12px;" @click="handleClear"></i>
-        <i v-else-if="search" :class="['iconfont icon-sousuokuang-sousuo',prefixCls+'-icon',prefixCls+'-icon-search']" @click="handleSearch"></i>
-        <input ref="input" :placeholder="placeholder" :class="inputClasses" :name="name" :autocomplete="autocomplete" :maxlength="maxlength" :value="currentValue" @input="handleInput" :autofocus="autofocus" @focus="handleFocus" @blur="handleBlur" :readonly="readonly" :disabled="disabled" :type="type" @keyup.enter="handleEnter">
+        <i v-if="clearable&&currentValue&&!disabled" :class="['iconfont icon-shibai',prefixCls+'-icon',prefixCls+'-icon-clear']" style="font-size:12px;" @click="_handleClear"></i>
+        <i v-else-if="search" :class="['iconfont icon-sousuokuang-sousuo',prefixCls+'-icon',prefixCls+'-icon-search']" @click="_handleSearch"></i>
+        <input ref="input" :placeholder="placeholder" :class="inputClasses" :autocomplete="autocomplete" :maxlength="maxlength" :value="currentValue" @input="_handleInput" :autofocus="autofocus" @focus="_handleFocus" @blur="_handleBlur" :readonly="readonly" :disabled="disabled" :type="type" @keyup.enter="_handleEnter">
         <span :class="[prefixCls + '-icon-append']" v-if="$slots.append||appendIcon">
             <slot name="append"></slot>
             <i :class="['iconfont',appendIcon]" v-if="appendIcon"></i>
@@ -20,50 +20,60 @@ const prefixCls = 'bui-input';
 export default {
     name: 'Input',
     props: {
+        //@doc输入框类型
         type: {
             type: String,
             default: 'text'
         },
+        //@doc输入框的值
         value: {
             type: [String, Number],
             default: ''
         },
-        name: {
-            type: String
-        },
+        //@doc输入框占位文本
         placeholder: {
             type: String,
             default: '提示性文案'
         },
+        //@doc是否启用自动完成功能，为on或者off
         autocomplete: {
             type: String,
             default: 'off'
         },
+        //@doc是否自动聚焦
         autofocus: {
             type: Boolean,
             default: false
         },
+        //@doc最大输入长度
         maxlength: {
             type: Number
         },
+        //@doc是否禁用按钮
         disabled: {
             type: Boolean,
             default: false
         },
+        //@doc是否显示清空按钮
         clearable: {
             type: Boolean,
             default: false
         },
+        //@doc输入框是否只读
         readonly: {
             type: Boolean,
             default: false
         },
+        //@doc是否显示搜索按钮
         search: {
             type: Boolean,
             default: false
         },
+        //@doc输入框头部icon
         prependIcon: String,
+        //@doc输入框尾部icon
         appendIcon: String,
+        //@doc输入框长度
         width: {
             type: String,
             default: '200px'
@@ -90,38 +100,45 @@ export default {
         }
     },
     methods: {
-        setCurrentValue(val) {
+        _setCurrentValue(val) {
             this.currentValue = val;
         },
-        handleEnter(event) {
+        _handleEnter(event) {
             if (this.search && !this.disabled) {
+                //@doc开启 search 时可用，点击搜索或按下回车键时触发
                 this.$emit('search', event, this.currentValue);
             }
+            //@doc enter键时触发
             this.$emit('enter', event);
         },
-        handleInput(event) {
+        _handleInput(event) {
             let value = event.target.value;
+            //@doc 输入框改变时触发
             this.$emit('input', value);
             this.setCurrentValue(value);
         },
+        //@doc手动聚焦
         focus() {
             this.$refs.input.focus();
         },
+        //@doc手动失焦
         blur() {
             this.$refs.input.blur();
         },
-        handleFocus(event) {
+        _handleFocus(event) {
+            //@doc聚焦时触发
             this.$emit('focus', event);
         },
-        handleBlur(event) {
+        _handleBlur(event) {
+            //@doc失焦时触发
             this.$emit('blur', event);
         },
-        handleClear() {
+        _handleClear() {
             const e = { target: { value: '' } };
             this.$emit('input', '');
             this.setCurrentValue('');
         },
-        handleSearch(event) {
+        _handleSearch(event) {
             this.$emit('search', event, this.currentValue);
         }
     },
