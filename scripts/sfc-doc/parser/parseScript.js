@@ -77,6 +77,9 @@ let emitEvents = [],
     apiMethods = [];
 
 module.exports = astJs => {
+    emitEvents = [];
+    propsRes = [];
+    apiMethods = [];
     traverse(astJs, {
         Property(path) {
             // props

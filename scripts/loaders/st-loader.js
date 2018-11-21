@@ -28,13 +28,15 @@ module.exports = function(source, map, meta) {
             .map(f => path.join(dir, f)),
         vueSfcPath = path.join(dir, `${component}.vue`),
         apiTpl = `\n\n### API说明`;
-    // console.log (vueSfcs)
+    console.log(resourcePath, vueSfcs);
     Promise.all(
         vueSfcs.map(sfc => {
             return sfcDoc(sfc);
         })
     )
+        // sfcDoc(vueSfcPath)
         .then(result => {
+            // .then(( {name, render: {propsRes, apiMethods, emitEvents, slotsRes}}) => {
             result.forEach(res => {
                 let {
                     name,
@@ -45,6 +47,9 @@ module.exports = function(source, map, meta) {
                     '无'}\n\n##### slots\n\n${slotsRes || '无'}\n
             `;
             });
+            // apiTpl  = `\n\n### API说明\n\n##### props\n\n${propsRes ||
+            //     '无'}\n\n##### methods\n\n${apiMethods}\n\n##### emits\n\n${emitEvents ||
+            //     '无'}\n\n##### slots\n\n${slotsRes || '无'}\n`
             const apiHtml = md.render(apiTpl);
             let vueSfcTpl = `<template>
                     <div>
