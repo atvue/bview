@@ -21,6 +21,7 @@ export default {
             type: String,
             default: '提示性文案'
         },
+        //@doc自带属性
         autocomplete: {
             type: String,
             default: 'off'

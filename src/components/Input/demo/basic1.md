@@ -13,16 +13,6 @@
       <span>test3:</span>
       <Input placeholder="请输入" v-model="value3" @blur="blur" @change="change" search @search="search" />
     </div>
-    <div class="example">
-      <span>test4:</span>
-      <Input placeholder="请输入" v-model="value4" @focus="focus" prependIcon="icon-riqi" />
-    </div>
-    <div class="example">
-      <span>test5:</span>
-      <Input placeholder="请输入" v-model="value5" @focus="focus">
-             <i slot="append" class="iconfont icon-riqi"></i>
-      </Input>
-    </div>
   </section>
 
 </template>
@@ -37,8 +27,6 @@ export default {
             value1: '',
             value2: '',
             value3: '',
-            value4: '',
-            value5: '',
             maxlength: 20
         };
     },
