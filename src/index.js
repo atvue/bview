@@ -1,20 +1,29 @@
 import Button from './components/button'
 import Select from './components/select'
+import Input from './components/Input'
+import Switch from './components/Switches'
+import Textarea from './components/Textarea'
 
 const components = {
-    Button ,
-    Select ,
+    Button,
+    Select,
+    Input,
+    Switch,
+    Textarea
 }
 
-const install = function( Vue , opts = {} ) {
-    Object.keys( components ).forEach( key => {
-        Vue.component( key , components[ key ] )
-    } )
+const install = function(Vue, opts = {}) {
+    Object.keys(components).forEach(key => {
+        Vue.component(key, components[key])
+    })
 }
 
 export {
-    Button ,
-    Select ,
+    Button,
+    Select,
+    Input,
+    Switch,
+    Textarea
 }
 
 export default {

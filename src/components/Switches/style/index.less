@@ -1,0 +1,114 @@
+@css-prefix: ~'bui-switches';
+@primary-color : #2d8cf0;
+.@{css-prefix} {
+  display: inline-block;
+  width: 44px;
+  height: 22px;
+  line-height: 20px;
+  border-radius: 22px;
+  vertical-align: middle;
+  border: 1px solid #ccc;
+  background-color: #ccc;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease-in-out;
+  &-inner {
+    color: #fff;
+    font-size: 12px;
+    position: absolute;
+    left: 23px;
+    i {
+      width: 12px;
+      height: 12px;
+      text-align: center;
+      position: relative;
+    }
+  }
+  &-loading {
+    opacity: 0.4;
+  }
+
+  &:after {
+    content: '';
+    width: 18px;
+    height: 18px;
+    border-radius: 18px;
+    background-color: #fff;
+    position: absolute;
+    left: 1px;
+    top: 1px;
+    cursor: pointer;
+    transition: left 0.2s ease-in-out, width 0.2s ease-in-out;
+  }
+  &:active:after {
+    width: 26px;
+  }
+  .@{css-prefix}-loading {
+    position: absolute;
+    left: 3px;
+    z-index: 4;
+    animation: switch-loading 1s linear;
+    animation-iteration-count: infinite;
+  }
+
+  &:before {
+    content: '';
+    display: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: transparent;
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    z-index: 1;
+    border: 1px solid #2d8cf0;
+    border-color: transparent transparent transparent #2d8cf0;
+  }
+  &-checked {
+    border-color: @primary-color;
+    background-color: @primary-color;
+
+    .@{css-prefix}-inner {
+      left: 7px;
+    }
+    .@{css-prefix}-loading {
+      right: 3px;
+      left: 23px;
+    }
+    &:after {
+      left: 23px;
+    }
+    &:before {
+      left: 25px;
+    }
+
+    &:active:after {
+      left: 15px;
+    }
+  }
+
+  &-disabled {
+    cursor: not-allowed;
+    //background: #f3f3f3;
+    //border-color: #f3f3f3;
+    opacity: 0.4;
+    &:after {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    .@{css-prefix}-inner {
+      color: #ccc;
+    }
+  }
+}
+@keyframes switch-loading {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
