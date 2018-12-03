@@ -85,7 +85,7 @@ let testJs = name => {
 
 	return `import ${up} from '../index.js'
 
-describe('${name}'组件测试, () => {
+describe('${name}', () => {
 
 })`
 }
