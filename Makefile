@@ -7,11 +7,11 @@ folder:
 file:
 	@touch $(filter-out $@,$(MAKECMDGOALS))
 
-temp:
+component:
 	@node ./scripts/make/index.js $(filter-out $@,$(MAKECMDGOALS))
 
 help:
 	@echo 'make 命令使用说明'
-	@echo 'make temp <name> <path>  --- name 文件模型的名称，不能忽略'
+	@echo 'make component <name> <path>  --- name 文件模型的名称，不能忽略'
 	@echo '                         --- path 文件模型路径，忽略则认为是/src/components/'	
 
