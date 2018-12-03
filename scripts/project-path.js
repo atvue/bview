@@ -2,8 +2,8 @@ const path = require( 'path' )
 
 const root = process.cwd()
 
-function resolvePath( dir ) {
-    return path.resolve( root , dir )
+function resolvePath( ...args ) {
+    return path.resolve( root , ...args )
 }
 
 const src = resolvePath( './src' )
@@ -14,7 +14,8 @@ function transform2RelativePath( path ) {
 }
 
 module.exports = {
-    site: resolvePath( './site' ) ,
     src ,
+    site: resolvePath( 'site' ) ,
+    components: resolvePath( 'src' , 'components' ) ,
     transform2RelativePath ,
 }

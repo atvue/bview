@@ -5,6 +5,7 @@ const webpackBaseConfig = require( './webpack.base.config.js' )
 const merge = require('webpack-merge')
 const webpackDevServer = require( 'webpack-dev-server' )
 const { site } = require( './project-path' )
+const { generateComponentRoute } = require( './site-helper/index' )
 
 const siteResolve = ( ...args ) => path.resolve( site , ...args )
 const port = 8022 ,
@@ -34,9 +35,6 @@ const config = merge( webpackBaseConfig , {
 
 const devOptions = {
     contentBase: [ site ] ,
-    proxy: {
-
-    } ,
     hot: true ,
     compress: true ,
     inline: true ,
@@ -48,6 +46,8 @@ const devOptions = {
     host ,
 }
 webpackDevServer.addDevServerEntrypoints( config , devOptions )
+
+generateComponentRoute()
 
 const webpackCompiler = webpack( config )
 const server = new webpackDevServer( webpackCompiler , devOptions )
