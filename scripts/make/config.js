@@ -56,7 +56,7 @@ function createConfig (name) {
 }
 
 let vueTemp = name => `<template>
-
+	<div></div>
 </template>
 
 <script>
