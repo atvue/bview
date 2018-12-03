@@ -1,3 +1,4 @@
+// 自动生成组件路由 [ { path: '...' , mata: { name: '...' } } ]
 const { siteComponentsReadMeSortedConfig } = require( './componentsReadme' )
 const { writeRouteConfig } = require( './writeRouteConfig' )
 
