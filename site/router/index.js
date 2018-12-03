@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import { componentRoutes } from './componentRoutes'
+import { componentRoutes } from './cptRoutes'
 Vue.use(Router);
 
 import Introduce from '../modules/introduce';
