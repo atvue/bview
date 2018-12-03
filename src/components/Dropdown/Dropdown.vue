@@ -1,16 +1,22 @@
 <template>
-	<div>
-		123
-	</div>
+    <div class="bview-dropdown">
+        <slot />
+        <div class="bview-dropdown-overlay">
+            <slot name="overlay" />
+        </div>
+    </div>
 </template>
 
+
 <script>
-	export default {
-		name: 'Dropdown',
-		prop: {},
-		data () {
-			return {}
-		},
-		methods: {},
-	}
+export default {
+	name: 'dropdown' ,
+    data(){
+        return {
+
+        }
+    } ,
+    created(){
+    }
+}
 </script>

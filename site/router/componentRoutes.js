@@ -8,12 +8,6 @@ export const componentRoutes = [
         }
     },
     {
-        "path": "Dropdown",
-        "meta": {
-            "name": "下拉框"
-        }
-    },
-    {
         "path": "Switches",
         "meta": {
             "name": "开关"
@@ -23,6 +17,12 @@ export const componentRoutes = [
         "path": "Textarea",
         "meta": {
             "name": "多行输入框"
+        }
+    },
+    {
+        "path": "dropdown",
+        "meta": {
+            "name": "Dropdown下拉菜单"
         }
     },
     {
