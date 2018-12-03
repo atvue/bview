@@ -75,7 +75,7 @@ let styleIndex = name => `import './index.less'`
 let indexJs = name => {
 	let up = firstUpperCase(name)
 
-	return `import ${up} from './name'
+	return `import ${up} from './${name}'
 
 export default ${up}`
 }
