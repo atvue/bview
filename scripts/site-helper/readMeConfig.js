@@ -1,7 +1,7 @@
 const existsFile = require( '../fs-helper/existsFile' )
 const readFile = require( '../fs-helper/readFile' )
 const yaml = require('js-yaml')
-const yamlReg = /---([\s\S]*)---/
+const yamlReg = /---([\s\S]*?)---/
 
 // 提取yaml字符内容
 function getYamlContent( str ){
