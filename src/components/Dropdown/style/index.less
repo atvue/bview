@@ -2,7 +2,18 @@
 
 
 @dropdown-prefix-cls: ~"@{bview-prefix}-dropdown" ;
+@overlay-prefix-cls: ~"@{bview-prefix}-dropdown-overlay" ;
+@bg: #fff ;
 
 .@{dropdown-prefix-cls} {
     display: inline-block ;
+}
+
+
+.@{overlay-prefix-cls} {
+    position: fixed ;
+    top: 0 ;
+    left: 0 ;
+    z-index: @global-z-index ;
+    background: @bg ;
 }
