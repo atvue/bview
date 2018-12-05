@@ -1,5 +1,6 @@
 <template>
     <span 
+        ref="trigger"
         :class="prefixCls"
         @mouseenter="_mouseEnter"
         @mouseleave="_mouseLeave"
@@ -10,6 +11,8 @@
             v-if="visible"
             v-dom-portal
             :class="clsOverlay"
+            @mouseenter="_mouseEnter"
+            @mouseleave="_mouseLeave"
         >
             <slot name="overlay" />
         </div>
@@ -23,12 +26,11 @@ import warnInit from '../../utils/warn'
 import makeCancelable from '../../utils/makeCancelable'
 import { timeout } from '../../utils/timer'
 import noop from '../../utils/noop'
+import { calcPlacement } from './helper'
+import placement from './placement'
 const name = 'dropdown'
 const warn = warnInit( name )
 const lazy = 200
-const placement = {
-    bottomLeft: 'bottomLeft'
-}
 
 export default {
     name ,
@@ -36,7 +38,7 @@ export default {
     props: {
         placement: {
             type: String ,
-            default: placement.bottomLeft ,
+            default: undefined ,
         }
     } ,
     data(){
@@ -66,7 +68,7 @@ export default {
                 this.visible = true
                 // 计算位置
                 await this.$nextTick()
-                let { $refs: { overlay } } = this
+                this._calcPopPosition()
             } catch( e ) {
                 if ( !e.isCanceled ) {
                     console.warn( e ) 
@@ -87,7 +89,14 @@ export default {
                 }
             }
         } ,
-
+        _calcPopPosition(){
+            let { $refs: { overlay , trigger } , placement } = this ,
+                result = calcPlacement( trigger , overlay , placement ) ,
+                { left , top } = result
+            // console.log( result )
+            overlay.style.top = `${top}px`
+            overlay.style.left = `${left}px`
+        }
     }
 }
 </script>
