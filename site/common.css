@@ -97,7 +97,6 @@ h6{ font-size:0.9em; }
 
 /* Elements */
 p{
-  margin:1em 0em;
   text-align: justify;
 }
 
@@ -120,7 +119,6 @@ hr {
   height: 2px; 
   border: 0; 
   border-bottom: 1px solid #CCC; 
-  margin: 1em 0; 
   padding: 0; 
 }
 
@@ -160,22 +158,6 @@ sub, sup {
 sup { top: -0.5em; }
 sub { bottom: -0.25em; }
 
-
-/* Lists */
-ul, ol { 
-  margin: 1em 0; 
-  padding: 0 0 0 2em; 
-}
-
-ol li {
-  list-style-type: decimal; 
-  padding-bottom: 0.50em;
-}
-
-ul li {
-  list-style-type: disc; 
-  padding-bottom: 0.50em;
-}
 
 li p:last-child { 
   margin:0 
