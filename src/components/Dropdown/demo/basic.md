@@ -4,25 +4,32 @@
 
 ```vue
 <template>
-    <div>
+    <div class="demo-dropdown">
         <Dropdown>
             <span>Hover Me</span>
             <div slot="overlay">
-                <ul>
-                    <li>菜单</li>
-                    <li>菜单</li>
-                    <li>菜单</li>
-                </ul>
+                <Menu>
+                    <MenuItem>链接1</MenuItem>
+                    <MenuItem>链接2</MenuItem>
+                    <MenuItem>链接3</MenuItem>
+                </Menu>
             </div>
         </Dropdown>
     </div>
 </template>
 
 <script>
-import { Dropdown } from 'bview'
+import { Dropdown , Menu } from 'bview'
+const { MenuItem } = Menu
 
 export default {
-    components: { Dropdown } ,
+    components: { Dropdown , Menu , MenuItem } ,
 }
 </script>
+
+<style type="less">
+.demo-dropdown {
+    background: #f00 ;
+}
+</style>
 ```
