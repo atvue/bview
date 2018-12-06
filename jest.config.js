@@ -12,4 +12,10 @@ module.exports = {
         "^@/(.*)$": "<rootDir>/src/$1" ,
     } ,
     transformIgnorePatterns: [ '<rootDir>/node_modules/' ] ,
+    collectCoverage: true ,
+    collectCoverageFrom: [
+        "src/**/*.{js,vue}",
+        "!**/node_modules/**",
+        "!**/vendor/**"
+    ]
 }
