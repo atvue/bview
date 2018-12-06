@@ -4,6 +4,7 @@
 @dropdown-prefix-cls: ~"@{bview-prefix}-dropdown" ;
 @overlay-prefix-cls: ~"@{bview-prefix}-dropdown-overlay" ;
 @portal-cls: ~"bview-portal" ;
+@dropdown-poartal-cls: ~"bview-dropdown-poartal" ;
 @bg: #fff ;
 
 .@{dropdown-prefix-cls} {
@@ -24,4 +25,15 @@
     left: 0 ;
     width: 100% ;
     z-index: @global-z-index ;
+}
+
+.@{dropdown-poartal-cls} {
+    .fade-enter-active, .fade-leave-active {
+        transform: translateY( 0 ) ;
+        transition: transform 0.3s ;
+    }
+    .fade-enter, .fade-leave-to {
+        transform: translateY( -8px ) ;
+        opacity: 0 ;
+    }
 }

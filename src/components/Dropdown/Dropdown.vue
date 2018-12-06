@@ -6,16 +6,23 @@
         @mouseleave="_mouseLeave"
     >
         <slot></slot>
-        <portal>
-            <div 
-                ref="overlay"
-                v-if="visible"
-                :class="clsOverlay"
-                @mouseenter="_mouseEnter"
-                @mouseleave="_mouseLeave"
+        <portal
+            :class="clsDropPortal"
+        >
+            <transition
+                name="fade"
             >
-                <slot name="overlay" />
-            </div>
+                <div 
+                    ref="overlay"
+                    v-if="visible"
+                    :class="clsOverlay"
+                    @mouseenter="_mouseEnter"
+                    @mouseleave="_mouseLeave"
+                    @click="_mouseLeave"
+                >
+                    <slot name="overlay" />
+                </div>
+            </transition>
         </portal>
     </span>
 </template>
@@ -55,6 +62,9 @@ export default {
         } ,
         clsOverlay(){
             return `bview-${name}-overlay`
+        } ,
+        clsDropPortal(){
+            return `bview-${name}-poartal`
         }
     } ,
     methods: {
@@ -83,7 +93,7 @@ export default {
             this.cancelLeave = cancelLeave
             try {
                 await promise
-                // this.visible = false
+                this.visible = false
             } catch( e ) {
                 if ( !e.isCanceled ) {
                     warn( e ) 
