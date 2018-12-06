@@ -1,6 +1,6 @@
 <template>
 	<div class="bview-menu">
-		123
+		<slot />
 	</div>
 </template>
 
