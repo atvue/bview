@@ -3,6 +3,7 @@
 
 @dropdown-prefix-cls: ~"@{bview-prefix}-dropdown" ;
 @overlay-prefix-cls: ~"@{bview-prefix}-dropdown-overlay" ;
+@portal-cls: ~"bview-portal" ;
 @bg: #fff ;
 
 .@{dropdown-prefix-cls} {
@@ -11,10 +12,16 @@
 
 
 .@{overlay-prefix-cls} {
-    position: fixed ;
+    position: absolute ;
     top: 0 ;
     left: 0 ;
+    z-index: 1 ;
+}
+
+.@{portal-cls} {
+    position: absolute ;
+    top: 0 ;
+    left: 0 ;
+    width: 100% ;
     z-index: @global-z-index ;
-    background: @bg ;
-    border: 1px solid #ccc ;
 }

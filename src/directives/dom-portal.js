@@ -13,7 +13,6 @@ const domPortal = {
     inserted( el , { value } , vnode) {
         const inited = homes.has( el )
         let hasMovedOut = false
-
         if ( value !== false ) {
             getTarget( value ).appendChild( el ) // moving into new place
             hasMovedOut = true
@@ -26,19 +25,20 @@ const domPortal = {
     } ,
     componentUpdated( el , { value } ) {  // need to make sure children are done updating (vs. `update`)
         const { hasMovedOut } = homes.get( el )
-
         if ( !hasMovedOut && value ) {
             getTarget(value).appendChild(el)
             homes.set( el , Object.assign({}, homes.get(el), { hasMovedOut: true }))
         } else if ( hasMovedOut && value === false ) {
-            homes.set(el, Object.assign({}, homes.get(el), { hasMovedOut: false }))
-        } else if (value) {
-            // already moved, going somewhere else
-            getTarget(value).appendChild(el)
+            homes.set( el , Object.assign( {} , homes.get(el), { hasMovedOut: false }))
+        } else if ( value ) {
+            getTarget( value ).appendChild( el )
         }
     } ,
     unbind( el ) {
         homes.delete( el )
+        if ( el.parentNode ) {
+            el.parentNode.removeChild( el )
+        }
     }
 }
   

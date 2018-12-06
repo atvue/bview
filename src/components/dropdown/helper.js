@@ -6,10 +6,12 @@ const win = window ,
 
 function windowSize(){
     let width = Math.max( doc.documentElement.clientWidth , win.innerWidth ) ,
-        height = Math.max( document.documentElement.clientHeight , window.innerHeight )
+        height = Math.max( document.documentElement.clientHeight , window.innerHeight ) ,
+        { scrollTop , scrollLeft } = doc.documentElement
     return {
         width ,
         height ,
+        scrollTop ,
     }
 }
 
@@ -20,7 +22,7 @@ const calcPlacement = ( trigger , overlay , type ) => {
             width: triWidth , height: triHeight } = rectTrigger ,
         { left: layLeft , top: layTop ,
             width: layWidth , height: layHeight } = rectOverlay ,
-        { width: winWidth , height: winHeight } = windowSize() ,
+        { width: winWidth , height: winHeight , scrollTop } = windowSize() ,
         top ,
         left ,
         { top: offsetTop , left: offsetLeft } = offsetLay
@@ -42,6 +44,7 @@ const calcPlacement = ( trigger , overlay , type ) => {
             break
         }
     }
+    top += scrollTop
     return { top , left }
 }
 
