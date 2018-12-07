@@ -29,7 +29,7 @@ module.exports = function( source , map , meta ) {
         parse( content ).then( vueDemoModule => {
             let vueModuleStr = `
                     <template>
-                        <div>
+                        <div class="md-example-block">
                             <div>
                                 <demo />
                             </div>
@@ -47,6 +47,11 @@ module.exports = function( source , map , meta ) {
                             components: { demo }
                         }
                     </script>
+                    <style type="less">
+                    .md-example-block {
+                        marigin-top: 20px ;
+                    }
+                    </style>
                 `
             callback( null , vueModuleStr , map , meta )
         } ).catch( callback )

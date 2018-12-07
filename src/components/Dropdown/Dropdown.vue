@@ -5,7 +5,7 @@
         @mouseenter="_mouseEnter"
         @mouseleave="_mouseLeave"
     >
-        <slot></slot>
+        <slot />
         <portal
             :class="clsDropPortal"
         >
@@ -104,7 +104,6 @@ export default {
             let { $refs: { overlay , trigger } , placement } = this ,
                 result = calcPlacement( trigger , overlay , placement ) ,
                 { left , top } = result
-            // console.log( result )
             overlay.style.top = `${top}px`
             overlay.style.left = `${left}px`
         }
