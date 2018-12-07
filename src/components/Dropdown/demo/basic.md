@@ -38,7 +38,7 @@ export default {
 ```vue
 <template>
     <div class="demo-dropdown">
-        vue2
+        md中的第二个vue demo
     </div>
 </template>
 

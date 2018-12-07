@@ -2,7 +2,7 @@ import placement from './placement'
 
 const win = window ,
     doc = document ,
-    offsetLay = { top: 10 , left: 0 }
+    offsetLay = { top: 0 , left: 0 }
 
 function windowSize(){
     let width = Math.max( doc.documentElement.clientWidth , win.innerWidth ) ,
