@@ -57,48 +57,51 @@ module.exports = function( source , map , meta ) {
                     }
                 vueComponents.push( vueComponent )
                 return [
-                    `<${name} />` ,
+                    `<div class="markdown-live-vue">
+                        <${name} />
+                    </div>` ,
                     mdHtml ,
                 ]
             }
             return [ mdHtml ]
         } ) ,
         html2 = [].concat( ...dealFragments ).join('')
-    
-    const html = md.render( source ) ,
-        tokens = md.parse( source ) ,
+    const tokens = md.parse( source ) ,
         vueModule = tokens.find( ( { type , tag , info } ) => type === 'fence' && tag === 'code' && info === 'vue' ) ,
         hasVueModule = vueModule !== undefined
-    callback( null , mdHasNoVueCodeWarning( relativePath ) , map , meta )
-    vueComponents.map( async ( { name , content } ) => {
-        let vueDemoModule = await parse( content , name )
-        console.log( 123 , vueDemoModule , 'abc' )
-    } )
-    return
     if ( hasVueModule ) {
-        let { content } = vueModule
-        parse( content ).then( vueDemoModule => {
+        let componentToPromise = vueComponents.map( async ( { name , content } ) => {
+            let vueDemoModule = await parse( content , name )
+            return vueDemoModule
+        } )
+        Promise.all( componentToPromise ).then( es6Modules => {
+            let jsStr = es6Modules.join(';\n') ,
+                components = vueComponents.map( ( { name } ) => name ).join( ',' )
             let vueModuleStr = `
-                    <template>
-                        <div class="md-example-block">
-                            <div class="markdown">${ html2 }</div>
-                        </div>
-                    </template>
-                    <script>
-                        import 'highlight.js/styles/default.css' //样式文件
-                        // demo 组件
-                        ${ vueDemoModule }
-                        // markdown 组件
-                        export default {
-                            components: { demo }
+                        <template>
+                            <div class="md-example-block">
+                                <div class="markdown">${ html2 }</div>
+                            </div>
+                        </template>
+                        <script>
+                            import 'highlight.js/styles/default.css' //样式文件
+                            // demo 组件
+                            ${ jsStr }
+                            // markdown 组件
+                            export default {
+                                components: { ${ components } }
+                            }
+                        </script>
+                        <style type="less">
+                        .markdown-live-vue {
+                            margin-top: 20px ;
+                            margin-bottom: 20px ;
                         }
-                    </script>
-                    <style type="less">
-                    .md-example-block {
-                        marigin-top: 20px ;
-                    }
-                    </style>
-                `
+                        .md-example-block {
+                            margin-top: 20px ;
+                        }
+                        </style>
+                    `
             callback( null , vueModuleStr , map , meta )
         } ).catch( callback )
     } else {

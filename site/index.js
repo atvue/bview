@@ -1,7 +1,5 @@
 
-import md from '@/components/dropdown/demo/basic.md'
-console.log( md )
-/* import Vue from 'vue';
+import Vue from 'vue';
 import App from './app';
 import router from './router';
 
@@ -11,4 +9,3 @@ new Vue({
     render: h => h(App),
     router
 }).$mount('#app');
- */

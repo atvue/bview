@@ -22,7 +22,7 @@ const babelPluginDefault2Export = require( '../babel-helper/babel-plugin-default
         }                                         }
  * 
  */
-const parse = content => {
+const parse = ( content , name ) => {
     return new Promise( ( r , j ) => {
         if ( content === undefined || content === null || content.trim() === '' ) {
             return j( new Error( '解析的vue文件内容不能为空' ) )
@@ -44,7 +44,10 @@ const parse = content => {
             sourceType: 'module' ,
             plugins:[
                 [ babelPluginImportBview , { libraryName: 'bview' } ] ,
-                [ babelPluginDefault2Export , { render: toFuncRender } ] ,
+                [ babelPluginDefault2Export , { 
+                    render: toFuncRender ,
+                    exportName: name 
+                } ] ,
             ]
         } ).then( ( { ast } ) => {
             babel
