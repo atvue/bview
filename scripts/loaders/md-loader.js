@@ -6,15 +6,13 @@ const mdHasNoVueCodeWarning = filePath => `<template>
                 <div>
                     <code>${ filePath }</code><br/>
                     未定义：<br/>
-                    <code>
-                        \`\`\`vue<br/>
-                        // ...vue code<br/>
-                        \`\`\`<br/>
-                    </code>
+                    \`\`\`vue<br/>
+                    // ...SFC code<br/>
+                    \`\`\`<br/>
                 </div>
             </template>`,
-        vueCodeReg = /(```vue[\s\S]*?```)/ ,
-        extractVueReg = /```vue([\s\S]*)```/ ,
+        vueCodeReg = /(```\s*vue\s[\s\S]*?```)/ ,
+        extractVueReg = /```\s*vue\s([\s\S]*)```/ ,
         extractVue = str => {
             let result = str.match( extractVueReg )
             if ( result ) {
@@ -34,14 +32,17 @@ module.exports = function( source , map , meta ) {
             html: true ,
             typographer: true ,
             highlight: function ( str, lang ) {
+                let className = `md-code-${ lang }`
                 if ( lang && hljs.getLanguage( lang ) ) {
                     try {
-                        return `<pre class="hljs"><code>${ hljs.highlight( lang , str , true ).value }</code></pre>`
+                        let html = hljs.highlight( lang , str , true ).value
+                        return `<pre class="hljs ${ className }"><code>${ html }</code></pre>`
                     } catch ( e ) {
-                        throw e
+                        callback( e )
                     }
                 }
-                return `<pre class="hljs"><code>${  md.utils.escapeHtml( str ) }</code></pre>`
+                let html = md.utils.escapeHtml( str )
+                return `<pre class="hljs ${ className }"><code>${ html }</code></pre>`
             } ,
         } )
     let vueComponents = [] ,
@@ -57,7 +58,7 @@ module.exports = function( source , map , meta ) {
                     }
                 vueComponents.push( vueComponent )
                 return [
-                    `<div class="markdown-live-vue">
+                    `<div class="md-live-vue">
                         <${name} />
                     </div>` ,
                     mdHtml ,
@@ -79,7 +80,7 @@ module.exports = function( source , map , meta ) {
                 components = vueComponents.map( ( { name } ) => name ).join( ',' )
             let vueModuleStr = `
                         <template>
-                            <div class="md-example-block">
+                            <div class="md-live-vue-with-md">
                                 <div class="markdown">${ html2 }</div>
                             </div>
                         </template>
@@ -93,12 +94,12 @@ module.exports = function( source , map , meta ) {
                             }
                         </script>
                         <style type="less">
-                        .markdown-live-vue {
+                        .md-live-vue-with-md {
+                            margin-top: 20px ;
+                        }
+                        .md-live-vue {
                             margin-top: 20px ;
                             margin-bottom: 20px ;
-                        }
-                        .md-example-block {
-                            margin-top: 20px ;
                         }
                         </style>
                     `
