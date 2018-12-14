@@ -21,6 +21,8 @@ const mdHasNoVueCodeWarning = filePath => `<template>
                 return undefined
             }
         }
+// 用xml的解析规则高亮
+hljs.registerLanguage( 'vue' , require('highlight.js/lib/languages/xml') )
 
 module.exports = function( source , map , meta ) {
     const callback = this.async() ,
@@ -85,10 +87,9 @@ module.exports = function( source , map , meta ) {
                             </div>
                         </template>
                         <script>
-                            import 'highlight.js/styles/default.css' //样式文件
-                            // demo 组件
+                            // md中vue组件 source code
                             ${ jsStr }
-                            // markdown 组件
+                            // 注册md中的vue组件
                             export default {
                                 components: { ${ components } }
                             }

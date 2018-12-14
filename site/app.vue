@@ -22,8 +22,7 @@
 </template>
 
 <script>
-import './common.css';
-import '../src/style.less';
+import './style/app.less'
 
 export default {
     computed: {
