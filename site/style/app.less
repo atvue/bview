@@ -1,5 +1,19 @@
+// reset
+@import './common.css' ;
 // md文件样式
 @import './md-theme.less' ;
 
-// @import './common.css' ;
+.water-fall {
+    display: flex ;
+    justify-content: space-around ;
+    .water-fall-column {
+        &.col-2 {
+            width: 50% ;
+        }
+    }
+}
 
+.main-wrapper {
+    flex: 1 ;
+    width: calc( 100% - 160px ) ;
+}

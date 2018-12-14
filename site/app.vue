@@ -15,7 +15,9 @@
             </div>
             <!-- END 随便生成的菜单 待替换 -->
             <!-- 文档内容 -->
-            <router-view></router-view>
+            <div class="main-wrapper">
+                <router-view></router-view>
+            </div>
             <!-- END 文档内容 -->
         </div>
     </div>
