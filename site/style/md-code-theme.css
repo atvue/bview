@@ -1,7 +1,6 @@
 /* 
 md代码高亮 主题色改造
 参考：source code: https://github.com/highlightjs/highlight.js/blob/master/src/styles/a11y-light.css
-
 */
 
 /* Comment */
@@ -19,7 +18,7 @@ md代码高亮 主题色改造
 .hljs-selector-class,
 .hljs-regexp,
 .hljs-deletion {
-  color: #d91e18;
+  color: #f81d22 ;
 }
 
 /* Orange */
@@ -44,7 +43,7 @@ md代码高亮 主题色改造
 .hljs-symbol,
 .hljs-bullet,
 .hljs-addition {
-  color: #008000;
+  color: #0b8235 ;
 }
 
 /* Blue */
@@ -53,10 +52,9 @@ md代码高亮 主题色改造
   color: #007faa;
 }
 
-/* Purple */
 .hljs-keyword,
 .hljs-selector-tag {
-  color: #7928a1;
+  color: #008dff ;
 }
 
 .hljs {
