@@ -52,7 +52,11 @@ let slotsRes = [];
 
 module.exports = astTpl => {
     slotsRes = [];
-    walk(astTpl);
+    if ( astTpl ) {
+        walk(astTpl);
+    } else {
+        console.warn( `sfc-doc/parse/parseTemplate.js astTpl = ` , astTpl )
+    }
     // debugger;
     return slotsRes;
 };

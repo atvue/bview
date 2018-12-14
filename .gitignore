@@ -19,4 +19,5 @@ yarn-error.log*
 lauch.json
 .vscode
 .history
-
+# 测试覆盖率
+/coverage

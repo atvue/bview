@@ -56,7 +56,7 @@ function createConfig (name) {
 }
 
 let vueTemp = name => `<template>
-
+	<div></div>
 </template>
 
 <script>
@@ -75,7 +75,7 @@ let styleIndex = name => `import './index.less'`
 let indexJs = name => {
 	let up = firstUpperCase(name)
 
-	return `import ${up} from './name'
+	return `import ${up} from './${name}'
 
 export default ${up}`
 }
@@ -85,7 +85,7 @@ let testJs = name => {
 
 	return `import ${up} from '../index.js'
 
-describe('${name}'组件测试, () => {
+describe('${name}', () => {
 
 })`
 }

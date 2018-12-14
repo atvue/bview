@@ -10,8 +10,9 @@ module.exports = function( babel ) {
     return {
         visitor: {
             ExportDefaultDeclaration( path , state ) {
-                const { node } = path ,
-                    { opts: { render } } = state
+                let { node } = path ,
+                    { opts: { render , exportName } } = state
+                exportName = exportName ? exportName : 'demo'
                 if ( !node ) return
                 let { declaration } = node
                 if ( declaration.type !== 'ObjectExpression' ) {
@@ -25,7 +26,7 @@ module.exports = function( babel ) {
                 declaration.properties.push( objectPropertyId )
                 // export default -> export const demo = ...
                 let exportDemoDec = template( `
-                        export const demo = EXPORTDEFAULT
+                        export const ${ exportName } = EXPORTDEFAULT
                     ` ) ,
                     ast = exportDemoDec( { EXPORTDEFAULT: declaration } )
                 // replace export default

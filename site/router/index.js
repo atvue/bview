@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-
+import { componentRoutes } from './cptRoutes'
 Vue.use(Router);
 
 import Introduce from '../modules/introduce';
@@ -37,33 +37,7 @@ requireDemos.keys().forEach(fileName => {
 
 // 路由配置
 // 规定组件说明展示顺序
-let RouteConfig = [{
-            path: 'button',
-            component: undefined,
-            meta: { name: '按钮' }
-        },
-        {
-            path: 'select',
-            component: undefined,
-            meta: { name: '下拉选框' }
-        },
-        {
-            path: 'Input',
-            component: undefined,
-            meta: { name: '单行输入框' }
-        },
-        {
-            path: 'Switches',
-            component: undefined,
-            meta: { name: '开关' }
-        },
-        {
-            path: 'Textarea',
-            component: undefined,
-            meta: { name: '多行输入框' }
-        }
-    ],
-    componentsRouteConfig = RouteConfig.map(ele => {
+let componentsRouteConfig = componentRoutes.map(ele => {
         let { path } = ele,
         docComp = components[path],
             demoComps = demos[path];
@@ -95,8 +69,6 @@ let routes = [{
         children: componentsRouteConfig
     }
 ];
-
-console.log(routes);
 
 const router = new Router({
     routes
