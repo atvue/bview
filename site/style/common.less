@@ -40,11 +40,13 @@ a:active{ color:#faa700; }
 a:focus{ outline: thin dotted; }
 a:hover, a:active{ outline: 0; }
 
-::-moz-selection{background:rgba(255,255,0,0.3);color:#000}
-::selection{background:rgba(255,255,0,0.3);color:#000}
+@selectionColor: #b3d4fc ;
 
-a::-moz-selection{background:rgba(255,255,0,0.3);color:#0645ad}
-a::selection{background:rgba(255,255,0,0.3);color:#0645ad}
+::-moz-selection{background: @selectionColor; color:#fff}
+::selection{background: @selectionColor; color:#fff}
+
+a::-moz-selection{background: @selectionColor; color:#fff}
+a::selection{background: @selectionColor; color:#fff}
 
 /* Headings */
 h1,h2,h3,h4,h5,h6{
