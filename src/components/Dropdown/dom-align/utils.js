@@ -270,11 +270,18 @@ function setLeftTop(elem, offset, option) {
   if ('left' in offset || 'top' in offset) {
     setTransitionProperty(elem, originalTransition);
   }
-  const ret = {};
+  const ret = {} ,
+    { x: transformX , y: transformY } = getTransformXY( elem )
   for (const key in offset) {
     if (offset.hasOwnProperty(key)) {
-      const dir = getOffsetDirection(key, option);
-      const off = offset[key] - originalOffset[key];
+      let dir = getOffsetDirection(key, option)
+      let off = offset[key] - originalOffset[key]
+      if ( key === 'top' ) {
+        off += transformY
+      }
+      if ( key === 'left' ) {
+        off += transformX
+      }
       if (key === dir) {
         ret[dir] = originalStyle[dir] + off;
       } else {
