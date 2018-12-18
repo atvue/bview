@@ -1,6 +1,6 @@
 <template>
     <span 
-        ref="trigger"
+        ref="target"
         :class="prefixCls"
         @mouseenter="_mouseEnter"
         @mouseleave="_mouseLeave"
@@ -13,7 +13,7 @@
                 name="dropdown-transition"
             >
                 <div 
-                    ref="overlay"
+                    ref="source"
                     v-if="visible"
                     :class="clsOverlay"
                     @mouseenter="_mouseEnter"
@@ -35,6 +35,8 @@ import { timeout } from '../../utils/timer'
 import noop from '../../utils/noop'
 import portal from './portal.vue'
 import alignElement from './dom-align/index'
+import { bottomLeft } from './placement'
+import { placementToPoints } from './helper'
 const name = 'dropdown'
 const warn = warnInit( name )
 const lazy = 200
@@ -45,7 +47,7 @@ export default {
     props: {
         placement: {
             type: String ,
-            default: undefined ,
+            default: bottomLeft ,
         }
     } ,
     data(){
@@ -100,10 +102,11 @@ export default {
             }
         } ,
         _calcPopPosition(){
-            let { $refs: { overlay , trigger } , placement } = this
-
-            alignElement( overlay , trigger , {
-                points: [ 'tc', 'bc'] ,
+            let { $refs: { source , target } , placement } = this ,
+                points = placementToPoints( placement )
+            
+            alignElement( source , target , {
+                points ,
                 offset: [ 0 , 6 ] ,
                 overflow: { adjustX: true, adjustY: true } ,
             } )
