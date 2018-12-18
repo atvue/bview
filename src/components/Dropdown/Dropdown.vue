@@ -10,7 +10,7 @@
             :class="clsDropPortal"
         >
             <transition
-                name="fade"
+                name="dropdown-transition"
             >
                 <div 
                     ref="overlay"
@@ -104,7 +104,7 @@ export default {
 
             alignElement( overlay , trigger , {
                 points: [ 'tc', 'bc'] ,
-                offset: [ 0 , 0 ] ,
+                offset: [ 0 , 6 ] ,
                 overflow: { adjustX: true, adjustY: true } ,
             } )
         }

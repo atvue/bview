@@ -28,12 +28,14 @@
 }
 
 .@{dropdown-poartal-cls} {
-    .fade-enter-active, .fade-leave-active {
+    .dropdown-transition-enter-active , .dropdown-transition-leave-active {
+        opacity: 1 ;
         transform: translateY( 0 ) ;
-        transition: transform 0.3s ;
+        transition: transform 0.3s , opacity 0.3s ;
     }
-    .fade-enter, .fade-leave-to {
-        transform: translateY( -8px ) ;
+    .dropdown-transition-enter , .dropdown-transition-leave-to {
         opacity: 0 ;
+        transform: translateY( -8px ) ;
+        transition: transform 0.3s , opacity 0.3s ;
     }
 }
