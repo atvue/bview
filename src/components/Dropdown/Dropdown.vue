@@ -33,9 +33,8 @@ import warnInit from '../../utils/warn'
 import makeCancelable from '../../utils/makeCancelable'
 import { timeout } from '../../utils/timer'
 import noop from '../../utils/noop'
-import { calcPlacement } from './helper'
-import placement from './placement'
 import portal from './portal.vue'
+import alignElement from './dom-align/index'
 const name = 'dropdown'
 const warn = warnInit( name )
 const lazy = 200
@@ -101,11 +100,13 @@ export default {
             }
         } ,
         _calcPopPosition(){
-            let { $refs: { overlay , trigger } , placement } = this ,
-                result = calcPlacement( trigger , overlay , placement ) ,
-                { left , top } = result
-            overlay.style.top = `${top}px`
-            overlay.style.left = `${left}px`
+            let { $refs: { overlay , trigger } , placement } = this
+
+            alignElement( overlay , trigger , {
+                points: [ 'tc', 'bc'] ,
+                offset: [ 0 , 0 ] ,
+                overflow: { adjustX: true, adjustY: true } ,
+            } )
         }
     }
 }
