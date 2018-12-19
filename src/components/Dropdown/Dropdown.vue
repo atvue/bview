@@ -119,7 +119,10 @@ export default {
             }
         } ,
         _afterAnimLeave(){
-            this.visiblePortal = false
+            // important 异步触发，先确认是否主菜单是否已关闭
+            if ( this.visible === false ) {
+                this.visiblePortal = false
+            }
         } ,
         _calcPopPosition(){
             let { $refs: { source , target } , placement } = this ,
@@ -127,7 +130,9 @@ export default {
                 [ , targetPoint ] = points ,
                 isTargetTop = targetPoint.indexOf( 't' ) >= 0 ,
                 offsetY = isTargetTop ? -defaultOffsetY : defaultOffsetY
-            
+            if ( source === undefined || target === undefined ) {
+                return warn( `one of source、target get be undefined,should nerver be happened` )
+            }
             alignElement( source , target , {
                 points ,
                 offset: [ 0 , offsetY ] ,
