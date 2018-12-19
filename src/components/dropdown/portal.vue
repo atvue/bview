@@ -1,6 +1,6 @@
 <template>
     <div
-        class="bview-portal"
+        id="bview-portal"
         v-dom-portal
     >
         <div>
@@ -13,6 +13,8 @@
 <script>
 import domPortal from '../../directives/dom-portal'
 export default {
-    directives: { domPortal } ,
+    directives: { 
+        domPortal
+    } ,
 }
 </script>
