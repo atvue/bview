@@ -6,7 +6,7 @@
         <Dropdown
             placement="bottomLeft"
         >
-            <span>bottomLeft</span>
+            <Button>bottomLeft</Button>
             <div slot="overlay">
                 <Menu>
                     <MenuItem>
@@ -20,7 +20,7 @@
         <Dropdown
             placement="bottomCenter"
         >
-            <span>bottomCenter</span>
+            <Button>bottomCenter</Button>
             <div slot="overlay">
                 <Menu>
                     <MenuItem>
@@ -34,7 +34,7 @@
         <Dropdown
             placement="bottomRight"
         >
-            <span>bottomRight</span>
+            <Button>bottomRight</Button>
             <div slot="overlay">
                 <Menu>
                     <MenuItem>
@@ -48,7 +48,7 @@
         <Dropdown
             placement="topLeft"
         >
-            <span>topLeft</span>
+            <Button>topLeft</Button>
             <div slot="overlay">
                 <Menu>
                     <MenuItem>
@@ -62,7 +62,7 @@
         <Dropdown
             placement="topCenter"
         >
-            <span>topCenter</span>
+            <Button>topCenter</Button>
             <div slot="overlay">
                 <Menu>
                     <MenuItem>
@@ -76,7 +76,7 @@
         <Dropdown
             placement="topRight"
         >
-            <span>topRight</span>
+            <Button>topRight</Button>
             <div slot="overlay">
                 <Menu>
                     <MenuItem>
@@ -91,11 +91,11 @@
 </template>
 
 <script>
-import { Dropdown , Menu } from 'bview'
+import { Dropdown , Menu , Button } from 'bview'
 const { MenuItem } = Menu
 
 export default {
-    components: { Dropdown , Menu , MenuItem } ,
+    components: { Dropdown , Menu , MenuItem , Button } ,
 }
 </script>
 
