@@ -7,11 +7,13 @@
     >
         <slot />
         <portal
+            v-if="visiblePortal"
             :class="clsDropPortal"
             :symbol="symbolPortal"
         >
             <transition
                 :name="transitionName"
+                @after-leave="_afterAnimLeave"
             >
                 <div 
                     ref="source"
@@ -55,6 +57,7 @@ export default {
     data(){
         return {
             visible: false ,
+            visiblePortal: false ,
             cancelEnter: noop ,
             cancelLeave: noop ,
         }
@@ -88,6 +91,9 @@ export default {
             try {
                 let { target } = event
                 await promise
+                this.visiblePortal = true
+                // 先dom protal生成
+                await this.$nextTick()
                 this.visible = true
                 // 计算位置
                 await this.$nextTick()
@@ -112,6 +118,9 @@ export default {
                 }
             }
         } ,
+        _afterAnimLeave(){
+            this.visiblePortal = false
+        } ,
         _calcPopPosition(){
             let { $refs: { source , target } , placement } = this ,
                 points = placementToPoints( placement ) ,
@@ -124,7 +133,7 @@ export default {
                 offset: [ 0 , offsetY ] ,
                 overflow: { adjustX: true, adjustY: true } ,
             } )
-        }
+        } ,
     }
 }
 </script>
