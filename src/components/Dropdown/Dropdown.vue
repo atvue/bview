@@ -39,6 +39,7 @@ import { bottomLeft } from './placement'
 import { placementToPoints } from './helper'
 const name = 'dropdown'
 const warn = warnInit( name )
+const defaultOffsetY = 4
 const lazy = 200
 
 export default {
@@ -106,7 +107,7 @@ export default {
                 points = placementToPoints( placement ) ,
                 [ , targetPoint ] = points ,
                 isTargetTop = targetPoint.indexOf( 't' ) >= 0 ,
-                offsetY = isTargetTop ? -4 : 4
+                offsetY = isTargetTop ? -defaultOffsetY : defaultOffsetY
             
             alignElement( source , target , {
                 points ,
