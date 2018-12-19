@@ -6,107 +6,62 @@ function getTarget (node = document.body) {
     return node instanceof window.Node ? node : document.querySelector(node)
 }
   
-const homes = new Map()
+const homes = new Map() ,
+    defaultConfig = { target: document.body }
   
 const domPortal = {
     name: 'dom-portal' ,
-    inserted( el , { value } , vnode) {
-        let { id } = el ,
-            parentWrapper = getTarget( value ) ,
-            canInsert = value !== false ,
-            hasId = id !== '' && id !== undefined && id !== null ,
-            inited = homes.has( id ) ,
-            childNodes = el.hasChildNodes() ? [ ...el.childNodes ] : []
-
-        if ( inited ) {
-            let oneInstance = homes.get( id ) ,
-                { el: existedEl , count } = oneInstance
-            
-            for( let i = 0 ; i < childNodes.length ; i++ ) {
-                let child = childNodes[ i ]
-                existedEl.appendChild( child )
-            }
-            // fix id conflict
-            el.removeAttribute( 'id' )
-            el.setAttribute( "data-id" , id )
-            // store
-            homes.set( id , 
-                Object.assign( 
-                    oneInstance , 
-                    { 
-                        count: count + 1 
-                    }
-                )
-            )
-            homes.set( el , {
-                childNodes ,
-            } )
-        } else {
-            if ( canInsert ) {
-                parentWrapper.appendChild( el )
-                if ( hasId === false ) {
-                    id = el
-                }
-                homes.set( id , {
-                    el ,
+    inserted( el , { value } ) {
+        let config = Object.assign( {} , value , defaultConfig ) ,
+            { target , symbol } = config ,
+            parentWrapper = getTarget( target ) ,
+            only1Instance = symbol !== undefined && symbol !== null
+        if ( only1Instance ) {
+            let hasInited = homes.has( symbol )
+            if ( hasInited ) {
+                let obj = homes.get( symbol ) ,
+                    { div , count } = obj
+                div.appendChild( el )
+                homes.set( symbol , Object.assign( obj , { count: count + 1 } ) )
+            } else {
+                let div = document.createElement( 'div' )
+                div.appendChild( el )
+                parentWrapper.appendChild( div )
+                homes.set( symbol , {
+                    div ,
                     count: 1 ,
-                    childNodes ,
                 } )
             }
+        } else {
+            parentWrapper.appendChild( el )
         }
     } ,
-    unbind( el ) {
-        let { id } = el ,
-            hasId = id !== '' && id !== undefined && id !== null
-        if ( hasId === false ) {
-            id = el.getAttribute( 'data-id' )
-        }
-        let inited = homes.has( id ) ,
-            hasChildNodes = homes.has( el )
-        if ( inited ) {
-            let oneInstance = homes.get( id ) ,
-                { el , count , childNodes } = oneInstance ,
+    unbind( el , { value } ) {
+        let config = Object.assign( {} , value , defaultConfig ) ,
+            { symbol } = config ,
+            only1Instance = symbol !== undefined && symbol !== null
+        if ( only1Instance ) {
+            let obj = homes.get( symbol ) ,
+                { div , count } = obj ,
                 lastOne = count === 1
             if ( lastOne ) {
                 if ( el.parentNode ) {
                     el.parentNode.removeChild( el )
                 }
-                homes.delete( id )
-            } else {
-                homes.set( id ,
-                    Object.assign( 
-                        oneInstance , 
-                        { 
-                            count: count - 1 
-                        }
-                    )
-                )
-                if ( childNodes ) {
-                    childNodes.forEach( el => {
-                        if ( el.parentNode ) {
-                            el.parentNode.removeChild( el )
-                        }
-                    } )
+                if ( div.parentNode ) {
+                    div.parentNode.removeChild( div )
                 }
+                homes.delete( symbol )
+            } else {
+                if ( el.parentNode ) {
+                    el.parentNode.removeChild( el )
+                }
+                homes.set( symbol , Object.assign( obj , { count: count - 1 } ) )
             }
         } else {
             if ( el.parentNode ) {
                 el.parentNode.removeChild( el )
             }
-        }
-        if ( hasChildNodes ) {
-            let { childNodes } = homes.get( el )
-            if ( childNodes ) {
-                childNodes.forEach( el => {
-                    if ( el.parentNode ) {
-                        el.parentNode.removeChild( el )
-                    }
-                } )
-            }
-            if ( el.parentNode ) {
-                el.parentNode.removeChild( el )
-            }
-            homes.delete( el )
         }
     }
 }

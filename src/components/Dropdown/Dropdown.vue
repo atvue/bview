@@ -8,6 +8,7 @@
         <slot />
         <portal
             :class="clsDropPortal"
+            :symbol="symbolPortal"
         >
             <transition
                 :name="transitionName"
@@ -73,6 +74,9 @@ export default {
                 isTop = placement.indexOf( 'top' ) >= 0 ,
                 dir = isTop ? 'top' : 'bottom'
             return `dropdown-transition-${ dir }`
+        } ,
+        symbolPortal(){
+            return Symbol.for( 'dropdown-protal' )
         }
     } ,
     methods: {
