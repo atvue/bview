@@ -89,7 +89,6 @@ export default {
             cancelLeave()
             this.cancelEnter = cancelEnter
             try {
-                let { target } = event
                 await promise
                 this.visiblePortal = true
                 // 先dom protal生成
