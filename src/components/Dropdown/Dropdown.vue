@@ -10,7 +10,7 @@
             :class="clsDropPortal"
         >
             <transition
-                name="dropdown-transition"
+                :name="transitionName"
             >
                 <div 
                     ref="source"
@@ -67,6 +67,12 @@ export default {
         } ,
         clsDropPortal(){
             return `bview-${name}-poartal`
+        } ,
+        transitionName(){
+            let { placement } = this ,
+                isTop = placement.indexOf( 'top' ) >= 0 ,
+                dir = isTop ? 'top' : 'bottom'
+            return `dropdown-transition-${ dir }`
         }
     } ,
     methods: {

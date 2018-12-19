@@ -28,12 +28,23 @@
 }
 
 .@{dropdown-poartal-cls} {
-    .dropdown-transition-enter-active , .dropdown-transition-leave-active {
+    // top 动画
+    .dropdown-transition-top-enter-active , .dropdown-transition-top-leave-active {
         opacity: 1 ;
         transform: translateY( 0 ) ;
         transition: transform 0.3s , opacity 0.3s ;
     }
-    .dropdown-transition-enter , .dropdown-transition-leave-to {
+    .dropdown-transition-top-enter , .dropdown-transition-top-leave-to {
+        opacity: 0 ;
+        transform: translateY( 8px ) ;
+    }
+    // down 动画
+    .dropdown-transition-bottom-enter-active , .dropdown-transition-bottom-leave-active {
+        opacity: 1 ;
+        transform: translateY( 0 ) ;
+        transition: transform 0.3s , opacity 0.3s ;
+    }
+    .dropdown-transition-bottom-enter , .dropdown-transition-bottom-leave-to {
         opacity: 0 ;
         transform: translateY( -8px ) ;
     }
