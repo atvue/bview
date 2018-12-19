@@ -103,11 +103,14 @@ export default {
         } ,
         _calcPopPosition(){
             let { $refs: { source , target } , placement } = this ,
-                points = placementToPoints( placement )
+                points = placementToPoints( placement ) ,
+                [ , targetPoint ] = points ,
+                isTargetTop = targetPoint.indexOf( 't' ) >= 0 ,
+                offsetY = isTargetTop ? -4 : 4
             
             alignElement( source , target , {
                 points ,
-                offset: [ 0 , 6 ] ,
+                offset: [ 0 , offsetY ] ,
                 overflow: { adjustX: true, adjustY: true } ,
             } )
         }
