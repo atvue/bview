@@ -87,7 +87,7 @@ export default {
         }
     },
     mounted() {
-        this.resizeTextarea();
+        this._resizeTextarea();
     },
     methods: {
         _setCurrentValue(val) {
