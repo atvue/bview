@@ -80,12 +80,20 @@ export default {
         // @doc 下拉根元素的类名称
         overlayClass: {
             type: String ,
+        } ,
+        // @doc v-model 下拉框受控展示
+        value: {
+            type: Boolean ,
+            default: undefined ,
         }
     } ,
     data(){
+        let { value } = this ,
+            isControlled = value !== undefined ,
+            visible = isControlled ? value : false
         return {
-            visible: false ,
-            visiblePortal: false ,
+            visible ,
+            visiblePortal: visible ,
             cancelEnter: noop ,
             cancelLeave: noop ,
         }
@@ -115,6 +123,21 @@ export default {
             let { trigger } = this
             return trigger !== triggerHover
         } ,
+        isControlled(){
+            let { value } = this
+            return value !== undefined
+        }
+    } ,
+    watch: {
+        value( visible , oldVisible ) {
+            if ( visible !== oldVisible ) {
+                if ( visible ) {
+                    this._showOverlay()
+                } else {
+                    this._hiddenOverlay()
+                }
+            }
+        }
     } ,
     methods: {
         async _showOverlay( event ){
@@ -158,7 +181,10 @@ export default {
             }
         } ,
         _clickOutEl( { target } ){
-            let { isTriggerClick } = this
+            let { isTriggerClick , isControlled } = this
+            if ( isControlled ) {
+                return
+            }
             if ( isTriggerClick ) {
                 let { $refs: { source } } = this ,
                     contains = source && source.contains( target ) ,
@@ -171,7 +197,10 @@ export default {
             }
         } ,
         _clickTrigger(){
-            let { isTriggerClick , visible } = this
+            let { isTriggerClick , visible , isControlled } = this
+            if ( isControlled ) {
+                return
+            }
             if ( isTriggerClick ) {
                 if ( visible ) {
                     this._hiddenOverlay()
@@ -181,13 +210,19 @@ export default {
             }
         } ,
         _mouseEnter(){
-            let { isTriggerClick } = this
+            let { isTriggerClick , isControlled } = this
+            if ( isControlled ) {
+                return
+            }
             if ( !isTriggerClick ) {
                 this._showOverlay()
             }
         } ,
         _mouseLeave(){
-            let { isTriggerClick } = this
+            let { isTriggerClick , isControlled } = this
+            if ( isControlled ) {
+                return
+            }
             if ( !isTriggerClick ) {
                 this._hiddenOverlay()
             }
