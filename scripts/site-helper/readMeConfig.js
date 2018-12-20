@@ -1,4 +1,4 @@
-const existsFile = require( '../fs-helper/existsFile' )
+const { existsFile } = require( '../fs-helper/existsFile' )
 const readFile = require( '../fs-helper/readFile' )
 const yaml = require('js-yaml')
 const yamlReg = /---([\s\S]*?)---/

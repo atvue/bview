@@ -1,12 +1,14 @@
-#### 基本用法
+#### 触发方式
 
-Dropdown组件放入一个触发器(必传)，之后添加overlay的slot下拉框即可
+默认是移入触发菜单，可以点击触发。
 
 ```vue
 <template>
     <div class="demo-dropdown">
-        <Dropdown>
-            <span>Hover Me</span>
+        <Dropdown
+            trigger="click"
+        >
+            <Button>bottomLeft</Button>
             <div slot="overlay">
                 <Menu>
                     <MenuItem>
@@ -21,11 +23,11 @@ Dropdown组件放入一个触发器(必传)，之后添加overlay的slot下拉�
 </template>
 
 <script>
-import { Dropdown , Menu } from 'bview'
+import { Dropdown , Menu , Button } from 'bview'
 const { MenuItem } = Menu
 
 export default {
-    components: { Dropdown , Menu , MenuItem } ,
+    components: { Dropdown , Menu , MenuItem , Button } ,
 }
 </script>
 

@@ -2,9 +2,12 @@
     <span 
         ref="target"
         :class="prefixCls"
+        @click="_clickTrigger"
         @mouseenter="_mouseEnter"
         @mouseleave="_mouseLeave"
+        v-click-out-el="_clickOutEl"
     >
+        <!-- 触发器 -->
         <slot />
         <portal
             v-if="visiblePortal"
@@ -23,6 +26,7 @@
                     @mouseleave="_mouseLeave"
                     @click="_mouseLeave"
                 >
+                    <!-- 下拉组件 -->
                     <slot name="overlay" />
                 </div>
             </transition>
@@ -34,11 +38,12 @@
 <script>
 import warnInit from '../../utils/warn'
 import makeCancelable from '../../utils/makeCancelable'
+import clickOutEl from '../../directives/click-out-el'
 import { timeout } from '../../utils/timer'
 import noop from '../../utils/noop'
 import portal from './portal.vue'
 import alignElement from './dom-align/index'
-import { bottomLeft } from './placement'
+import { placements , bottomLeft , triggers , triggerHover } from './placement'
 import { placementToPoints } from './helper'
 const name = 'dropdown'
 const warn = warnInit( name )
@@ -48,11 +53,30 @@ const lazy = 200
 export default {
     name ,
     components: { portal } ,
+    directives: { clickOutEl } ,
     props: {
+        /* @docbegin 菜单弹出位置：bottomLeft bottomCenter bottomRight topLeft topCenter topRight
+            @docend */
         placement: {
             type: String ,
             default: bottomLeft ,
-        }
+            validator( value ) {
+                return placements.indexOf( value ) !== -1
+            } ,
+        } ,
+        // @doc 是否禁用
+        disabled: {
+            type: Boolean ,
+            default: false ,
+        } ,
+        // @doc 触发方式
+        trigger: {
+            type: String ,
+            default: triggerHover ,
+            validator( value ) {
+                return triggers.indexOf( value ) !== -1
+            } ,
+        } ,
     } ,
     data(){
         return {
@@ -80,12 +104,19 @@ export default {
         } ,
         symbolPortal(){
             return Symbol.for( 'dropdown-protal' )
-        }
+        } ,
+        isTriggerClick(){
+            let { trigger } = this
+            return trigger !== triggerHover
+        } ,
     } ,
     methods: {
-        async _mouseEnter( event ){
-            let { cancelLeave } = this ,
-                { promise , cancel: cancelEnter } = makeCancelable( timeout( lazy ) )
+        async _showOverlay( event ){
+            let { cancelLeave , disabled } = this
+            if ( disabled ) {
+                return
+            }
+            let { promise , cancel: cancelEnter } = makeCancelable( timeout( lazy ) )
             cancelLeave()
             this.cancelEnter = cancelEnter
             try {
@@ -103,8 +134,11 @@ export default {
                 }
             }
         } ,
-        async _mouseLeave(){
-            let { cancelEnter } = this
+        async _hiddenOverlay(){
+            let { cancelEnter , disabled } = this
+            if ( disabled ) {
+                return
+            }
             cancelEnter()
             let { promise , cancel: cancelLeave } = makeCancelable( timeout( lazy ) )
             this.cancelLeave = cancelLeave
@@ -117,9 +151,45 @@ export default {
                 }
             }
         } ,
+        _clickOutEl( { target } ){
+            let { isTriggerClick } = this
+            if ( isTriggerClick ) {
+                let { $refs: { source } } = this ,
+                    contains = source && source.contains( target ) ,
+                    preventClose = source && contains
+                // click belongs to innter
+                if ( preventClose ) {
+                    // return
+                }
+                this._hiddenOverlay()   
+            }
+        } ,
+        _clickTrigger(){
+            let { isTriggerClick , visible } = this
+            if ( isTriggerClick ) {
+                if ( visible ) {
+                    this._hiddenOverlay()
+                } else {
+                    this._showOverlay()
+                }
+            }
+        } ,
+        _mouseEnter(){
+            let { isTriggerClick } = this
+            if ( !isTriggerClick ) {
+                this._showOverlay()
+            }
+        } ,
+        _mouseLeave(){
+            let { isTriggerClick } = this
+            if ( !isTriggerClick ) {
+                this._hiddenOverlay()
+            }
+        } ,
         _afterAnimLeave(){
-            // important 异步触发，先确认是否主菜单是否已关闭
-            if ( this.visible === false ) {
+            // important 异步触发，先确认主菜单是否已关闭
+            let { visible } = this
+            if ( visible === false ) {
                 this.visiblePortal = false
             }
         } ,

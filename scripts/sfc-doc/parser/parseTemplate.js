@@ -1,4 +1,6 @@
-function walk(node) {
+const slotDefaultName = 'default'
+
+function walk( node , slotsRes ) {
     // debugger;
     let { children } = node;
     if (children !== undefined && children.length > 0) {
@@ -23,7 +25,7 @@ function walk(node) {
                     attrsMap,
                     describe: undefined,
                     isAnonymous: attrsMap.name !== undefined ? false : true,
-                    name: attrsMap.name !== undefined ? attrsMap.name : '无'
+                    name: attrsMap.name !== undefined ? attrsMap.name : slotDefaultName
                 };
                 // slot说明查找上一个comment节点
                 try {
@@ -42,18 +44,17 @@ function walk(node) {
                 slotsRes.push(slot);
                 // slot不再继续遍历子元素
             } else {
-                walk(ele);
+                walk( ele , slotsRes );
             }
         });
     }
 }
 
-let slotsRes = [];
 
 module.exports = astTpl => {
-    slotsRes = [];
+    let slotsRes = [];
     if ( astTpl ) {
-        walk(astTpl);
+        walk( astTpl , slotsRes ) ;
     } else {
         console.warn( `sfc-doc/parse/parseTemplate.js astTpl = ` , astTpl )
     }
