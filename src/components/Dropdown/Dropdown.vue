@@ -6,7 +6,7 @@
         @mouseleave="_mouseLeave"
     >
         <!-- 触发器 -->
-        <slot name="default" />
+        <slot />
         <portal
             v-if="visiblePortal"
             :class="clsDropPortal"
