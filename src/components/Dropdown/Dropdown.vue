@@ -155,10 +155,11 @@ export default {
             let { isTriggerClick } = this
             if ( isTriggerClick ) {
                 let { $refs: { source } } = this ,
-                    contains = source && source.contains( target )
+                    contains = source && source.contains( target ) ,
+                    preventClose = source && contains
                 // click belongs to innter
-                if ( source && contains ) {
-                    return
+                if ( preventClose ) {
+                    // return
                 }
                 this._hiddenOverlay()   
             }
