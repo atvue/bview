@@ -53,7 +53,7 @@ module.exports = function( source , map , meta ) {
                 mdHtml = md.render( mdStr )
             if ( isVueCode ) {
                 let content = extractVue( mdStr ) ,
-                    name = `demo${index}` ,
+                    name = `Demo${index}Component` ,
                     vueComponent = {
                         name ,
                         content ,
