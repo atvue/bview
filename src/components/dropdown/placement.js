@@ -10,5 +10,13 @@ export const bottomLeft = "bottomLeft" ,
     bottomRight = "bottomRight" ,
     topLeft = "topLeft" ,
     topCenter = "topCenter" ,
-    topRight = "topRight"
+    topRight = "topRight" ,
+    placements = [
+        bottomLeft ,
+        bottomCenter ,
+        bottomRight ,
+        topLeft ,
+        topCenter ,
+        topRight ,
+    ]
 

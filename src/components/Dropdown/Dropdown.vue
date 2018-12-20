@@ -43,7 +43,7 @@ import { timeout } from '../../utils/timer'
 import noop from '../../utils/noop'
 import portal from './portal.vue'
 import alignElement from './dom-align/index'
-import { bottomLeft , triggers , triggerHover } from './placement'
+import { placements , bottomLeft , triggers , triggerHover } from './placement'
 import { placementToPoints } from './helper'
 const name = 'dropdown'
 const warn = warnInit( name )
@@ -60,6 +60,9 @@ export default {
         placement: {
             type: String ,
             default: bottomLeft ,
+            validator( value ) {
+                return placements.indexOf( value ) !== -1
+            } ,
         } ,
         // @doc 是否禁用
         disabled: {
@@ -69,10 +72,10 @@ export default {
         // @doc 触发方式
         trigger: {
             type: String ,
+            default: triggerHover ,
             validator( value ) {
                 return triggers.indexOf( value ) !== -1
             } ,
-            default: triggerHover ,
         } ,
     } ,
     data(){
