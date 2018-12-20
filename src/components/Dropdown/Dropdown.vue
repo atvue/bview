@@ -5,7 +5,8 @@
         @mouseenter="_mouseEnter"
         @mouseleave="_mouseLeave"
     >
-        <slot />
+        <!-- 触发器 -->
+        <slot name="default" />
         <portal
             v-if="visiblePortal"
             :class="clsDropPortal"
@@ -23,6 +24,7 @@
                     @mouseleave="_mouseLeave"
                     @click="_mouseLeave"
                 >
+                    <!-- 下拉组件 -->
                     <slot name="overlay" />
                 </div>
             </transition>
