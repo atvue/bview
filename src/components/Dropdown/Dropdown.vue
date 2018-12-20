@@ -105,9 +105,10 @@ export default {
             return `bview-${name}`
         } ,
         clsOverlay(){
-            let { overlayClass } = this ,
-                clsStr = overlayClass ? overlayClass : ''
-            return `bview-${name}-overlay ${clsStr}`
+            let { overlayClass , trigger } = this ,
+                clsStr = overlayClass ? ` ${overlayClass}` : '' ,
+                clsTriggerContextMenu = trigger === triggerRightClick ? ` ctx-menu-type` : ''
+            return `bview-${name}-overlay` + clsStr + clsTriggerContextMenu
         } ,
         clsDropPortal(){
             return `bview-${name}-poartal`
