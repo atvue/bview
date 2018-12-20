@@ -51,6 +51,11 @@ module.exports = function( source , map , meta ) {
         dealFragments = mdFragments.map( ( mdStr , index ) => {
             let isVueCode = vueCodeReg.test( mdStr ) ,
                 mdHtml = md.render( mdStr )
+            // 解决md中的`{{`,`}}`符号被sfc当做template插值语法来解析
+            mdHtml = mdHtml
+                .replace( '{{' , '<span>{{</span>' )
+                .replace( '}}' , '<span>}}</span>' )
+            
             if ( isVueCode ) {
                 let content = extractVue( mdStr ) ,
                     name = `Demo${index}Component` ,
