@@ -1,6 +1,6 @@
 #### 触发方式
 
-默认是移入触发菜单，可以点击触发。
+默认是移入触发菜单，可以点击或者右键触发。
 
 ```vue
 <template>
@@ -8,7 +8,21 @@
         <Dropdown
             trigger="click"
         >
-            <Button>bottomLeft</Button>
+            <Button>点我触发</Button>
+            <div slot="overlay">
+                <Menu>
+                    <MenuItem>
+                        <a target="_blank" href="http://www.163.com">网易邮箱</a>
+                    </MenuItem>
+                    <MenuItem>链接2...</MenuItem>
+                    <MenuItem>链接3...</MenuItem>
+                </Menu>
+            </div>
+        </Dropdown>
+        <Dropdown
+            trigger="contextmenu"
+        >
+            <Button>右键触发</Button>
             <div slot="overlay">
                 <Menu>
                     <MenuItem>

@@ -43,7 +43,7 @@ import { timeout } from '../../utils/timer'
 import noop from '../../utils/noop'
 import portal from './portal.vue'
 import alignElement from './dom-align/index'
-import { placements , bottomLeft , triggers , triggerHover } from './placement'
+import { placements , bottomLeft , triggers , triggerHover , triggerClick , triggerRightClick } from './placement'
 import { placementToPoints } from './helper'
 const name = 'dropdown'
 const warn = warnInit( name )
@@ -121,7 +121,14 @@ export default {
         } ,
         isTriggerClick(){
             let { trigger } = this
-            return trigger !== triggerHover
+            return trigger === triggerClick
+        } ,
+        isTriggerHover(){
+            let { trigger } = this
+            return trigger === triggerHover
+        } ,
+        isTriggerRightClick(){
+            return this.trigger === triggerRightClick
         } ,
         isControlled(){
             let { value } = this
@@ -210,20 +217,20 @@ export default {
             }
         } ,
         _mouseEnter(){
-            let { isTriggerClick , isControlled } = this
+            let { isTriggerHover , isControlled } = this
             if ( isControlled ) {
                 return
             }
-            if ( !isTriggerClick ) {
+            if ( isTriggerHover ) {
                 this._showOverlay()
             }
         } ,
         _mouseLeave(){
-            let { isTriggerClick , isControlled } = this
+            let { isTriggerHover , isControlled } = this
             if ( isControlled ) {
                 return
             }
-            if ( !isTriggerClick ) {
+            if ( isTriggerHover ) {
                 this._hiddenOverlay()
             }
         } ,
