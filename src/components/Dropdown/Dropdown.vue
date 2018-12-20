@@ -49,9 +49,16 @@ export default {
     name ,
     components: { portal } ,
     props: {
+        /* @docbegin 菜单弹出位置：bottomLeft bottomCenter bottomRight topLeft topCenter topRight
+            @docend */
         placement: {
             type: String ,
             default: bottomLeft ,
+        } ,
+        // @doc 是否禁用
+        disabled: {
+            type: Boolean ,
+            default: false ,
         }
     } ,
     data(){
@@ -84,8 +91,11 @@ export default {
     } ,
     methods: {
         async _mouseEnter( event ){
-            let { cancelLeave } = this ,
-                { promise , cancel: cancelEnter } = makeCancelable( timeout( lazy ) )
+            let { cancelLeave , disabled } = this
+            if ( disabled ) {
+                return
+            }
+            let { promise , cancel: cancelEnter } = makeCancelable( timeout( lazy ) )
             cancelLeave()
             this.cancelEnter = cancelEnter
             try {
@@ -104,7 +114,10 @@ export default {
             }
         } ,
         async _mouseLeave(){
-            let { cancelEnter } = this
+            let { cancelEnter , disabled } = this
+            if ( disabled ) {
+                return
+            }
             cancelEnter()
             let { promise , cancel: cancelLeave } = makeCancelable( timeout( lazy ) )
             this.cancelLeave = cancelLeave
@@ -118,7 +131,7 @@ export default {
             }
         } ,
         _afterAnimLeave(){
-            // important 异步触发，先确认是否主菜单是否已关闭
+            // important 异步触发，先确认主菜单是否已关闭
             if ( this.visible === false ) {
                 this.visiblePortal = false
             }
