@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import { componentRoutes } from './cptRoutes'
+import { waterfall } from './waterfall'
 Vue.use(Router);
 
 import Introduce from '../modules/introduce';
@@ -44,13 +45,11 @@ let componentsRouteConfig = componentRoutes.map(ele => {
         // 插入demo
         let wrapperComp = Vue.extend({
             render: h => {
-                let demosRender = demoComps.map(ele => {
-                    return h(ele);
-                });
-                return h(docComp, [...demosRender]);
+                let waterFallVNode = waterfall( demoComps , h )
+                return h( docComp , [ waterFallVNode ] )
             }
         });
-        ele.component = wrapperComp;
+        ele.component = wrapperComp ;
         return ele;
     });
 

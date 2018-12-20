@@ -1,52 +1,32 @@
-import placement from './placement'
+let regHump = /([a-z])[a-z]*([A-Z])[a-zA-Z]*/
 
-const win = window ,
-    doc = document ,
-    offsetLay = { top: 0 , left: 0 }
-
-function windowSize(){
-    let width = Math.max( doc.documentElement.clientWidth , win.innerWidth ) ,
-        height = Math.max( document.documentElement.clientHeight , window.innerHeight ) ,
-        { scrollTop , scrollLeft } = doc.documentElement
-    return {
-        width ,
-        height ,
-        scrollTop ,
+// 'bottomLeft' => 'bl'
+function simplifier( placement ) {
+    let result = placement.match( regHump ) ,
+        hasResult = result !== null
+    if ( hasResult ) {
+        return [
+            result[ 1 ] ,
+            result[ 2 ].toLowerCase() ,
+        ]
+    } else {
+        return undefined
     }
 }
 
-const calcPlacement = ( trigger , overlay , type ) => {
-    let rectTrigger = trigger.getBoundingClientRect() ,
-        rectOverlay = overlay.getBoundingClientRect() ,
-        { left: triLeft , top: triTop , bottom: triBottom ,
-            width: triWidth , height: triHeight } = rectTrigger ,
-        { left: layLeft , top: layTop ,
-            width: layWidth , height: layHeight } = rectOverlay ,
-        { width: winWidth , height: winHeight , scrollTop } = windowSize() ,
-        top ,
-        left ,
-        { top: offsetTop , left: offsetLeft } = offsetLay
-    switch( type ) {
-        
-        default: {
-            let isBottomCovered = triBottom + layHeight > winHeight ,
-                isLayRightCovered = triLeft + layWidth > winWidth
-            if ( isBottomCovered ) {
-                top = triTop - offsetTop - layHeight
-            } else {
-                top = triBottom + offsetTop
-            }
-            if ( isLayRightCovered ) {
-                left = winWidth - layWidth + offsetLeft
-            } else {
-                left = triLeft + offsetLeft
-            }
-            break
-        }
-    }
-    top += scrollTop
-    return { top , left }
+// 'bottomLeft' => [ 'tl' , 'bl' ]
+export function placementToPoints( placement ){
+    let sourcePoints = [ 't' , 'c' ] ,
+        targetPoints = [ 'b' , 'c' ] ,
+        [ upDown , leftCenterRight ] = simplifier( placement )
+    // source
+    sourcePoints[ 0 ] = upDown === 'b' ? 't' : 'b'
+    sourcePoints[ 1 ] = leftCenterRight
+    // target
+    targetPoints[ 0 ] = upDown
+    targetPoints[ 1 ] = leftCenterRight
+    return [ 
+        sourcePoints.join('') ,
+        targetPoints.join('')
+    ] 
 }
-
-
-export { calcPlacement }

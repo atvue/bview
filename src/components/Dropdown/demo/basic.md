@@ -33,23 +33,3 @@ export default {
 }
 </style>
 ```
-
-
-```vue
-<template>
-    <div class="demo-dropdown">
-        md中的第二个vue demo
-    </div>
-</template>
-
-<script>
-export default {
-    name: 'vue2'
-}
-</script>
-<style type="less">
-.body {
-    background: #f00 ;
-}
-</style>
-```

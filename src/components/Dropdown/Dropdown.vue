@@ -1,19 +1,22 @@
 <template>
     <span 
-        ref="trigger"
+        ref="target"
         :class="prefixCls"
         @mouseenter="_mouseEnter"
         @mouseleave="_mouseLeave"
     >
         <slot />
         <portal
+            v-if="visiblePortal"
             :class="clsDropPortal"
+            :symbol="symbolPortal"
         >
             <transition
-                name="fade"
+                :name="transitionName"
+                @after-leave="_afterAnimLeave"
             >
                 <div 
-                    ref="overlay"
+                    ref="source"
                     v-if="visible"
                     :class="clsOverlay"
                     @mouseenter="_mouseEnter"
@@ -33,11 +36,13 @@ import warnInit from '../../utils/warn'
 import makeCancelable from '../../utils/makeCancelable'
 import { timeout } from '../../utils/timer'
 import noop from '../../utils/noop'
-import { calcPlacement } from './helper'
-import placement from './placement'
 import portal from './portal.vue'
+import alignElement from './dom-align/index'
+import { bottomLeft } from './placement'
+import { placementToPoints } from './helper'
 const name = 'dropdown'
 const warn = warnInit( name )
+const defaultOffsetY = 4
 const lazy = 200
 
 export default {
@@ -46,12 +51,13 @@ export default {
     props: {
         placement: {
             type: String ,
-            default: undefined ,
+            default: bottomLeft ,
         }
     } ,
     data(){
         return {
             visible: false ,
+            visiblePortal: false ,
             cancelEnter: noop ,
             cancelLeave: noop ,
         }
@@ -65,6 +71,15 @@ export default {
         } ,
         clsDropPortal(){
             return `bview-${name}-poartal`
+        } ,
+        transitionName(){
+            let { placement } = this ,
+                isTop = placement.indexOf( 'top' ) >= 0 ,
+                dir = isTop ? 'top' : 'bottom'
+            return `dropdown-transition-${ dir }`
+        } ,
+        symbolPortal(){
+            return Symbol.for( 'dropdown-protal' )
         }
     } ,
     methods: {
@@ -74,8 +89,10 @@ export default {
             cancelLeave()
             this.cancelEnter = cancelEnter
             try {
-                let { target } = event
                 await promise
+                this.visiblePortal = true
+                // 先dom protal生成
+                await this.$nextTick()
                 this.visible = true
                 // 计算位置
                 await this.$nextTick()
@@ -100,13 +117,27 @@ export default {
                 }
             }
         } ,
+        _afterAnimLeave(){
+            // important 异步触发，先确认是否主菜单是否已关闭
+            if ( this.visible === false ) {
+                this.visiblePortal = false
+            }
+        } ,
         _calcPopPosition(){
-            let { $refs: { overlay , trigger } , placement } = this ,
-                result = calcPlacement( trigger , overlay , placement ) ,
-                { left , top } = result
-            overlay.style.top = `${top}px`
-            overlay.style.left = `${left}px`
-        }
+            let { $refs: { source , target } , placement } = this ,
+                points = placementToPoints( placement ) ,
+                [ , targetPoint ] = points ,
+                isTargetTop = targetPoint.indexOf( 't' ) >= 0 ,
+                offsetY = isTargetTop ? -defaultOffsetY : defaultOffsetY
+            if ( source === undefined || target === undefined ) {
+                return warn( `one of source、target get be undefined,should nerver be happened` )
+            }
+            alignElement( source , target , {
+                points ,
+                offset: [ 0 , offsetY ] ,
+                overflow: { adjustX: true, adjustY: true } ,
+            } )
+        } ,
     }
 }
 </script>

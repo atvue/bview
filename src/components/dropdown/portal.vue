@@ -1,7 +1,6 @@
 <template>
     <div
-        class="bview-portal"
-        v-dom-portal
+        v-dom-portal="config"
     >
         <div>
             <slot />
@@ -13,6 +12,20 @@
 <script>
 import domPortal from '../../directives/dom-portal'
 export default {
-    directives: { domPortal } ,
+    props: {
+        symbol: {
+            type: [ Symbol , String ] ,
+        }
+    } ,
+    directives: { 
+        domPortal
+    } ,
+    computed: {
+        config(){
+            return {
+                symbol: this.symbol
+            }
+        }
+    }
 }
 </script>
