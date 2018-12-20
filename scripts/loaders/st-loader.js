@@ -1,4 +1,5 @@
 const sfcDoc = require('../sfc-doc');
+const { checkFileIsNeedIgnore } = require( '../sfc-doc/ignore' )
 const markdown = require('markdown-it');
 const path = require('path');
 const fse = require('fs-extra');
@@ -21,7 +22,12 @@ module.exports = function(source, map, meta) {
         files = fse.readdirSync(dir),
         vueSfcs = files
             .filter(f => /\.vue$/.test(f))
-            .map(f => path.join(dir, f)),
+            .map(f => path.join(dir, f))
+            .map( f => {
+                let ingore = checkFileIsNeedIgnore( f )
+                return ingore ? undefined : f
+            } )
+            .filter( f => f !== undefined ) ,
         vueSfcPath = path.join(dir, `${component}.vue`),
         apiTpl = `\n\n### API说明`;
 
