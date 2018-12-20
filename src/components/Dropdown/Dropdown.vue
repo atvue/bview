@@ -5,6 +5,7 @@
         @click="_clickTrigger"
         @mouseenter="_mouseEnter"
         @mouseleave="_mouseLeave"
+        @contextmenu.prevent="_contextMenu"
         v-click-out-el="_clickOutEl"
     >
         <!-- 触发器 -->
@@ -42,11 +43,12 @@ import clickOutEl from '../../directives/click-out-el'
 import { timeout } from '../../utils/timer'
 import noop from '../../utils/noop'
 import portal from './portal.vue'
-import alignElement from './dom-align/index'
+import alignElement , { alignPoint } from './dom-align/index'
 import { placements , bottomLeft , triggers , triggerHover , triggerClick , triggerRightClick } from './placement'
 import { placementToPoints } from './helper'
 const name = 'dropdown'
 const warn = warnInit( name )
+const contextMenuOffset = { x: 10 , y: 16 }
 const defaultOffsetY = 4
 const lazy = 200
 
@@ -147,13 +149,14 @@ export default {
         }
     } ,
     methods: {
-        async _showOverlay( event ){
-            let { cancelLeave , disabled } = this
+        async _showOverlay( point ){
+            let { cancelLeave , cancelEnter: prevCancelEnter , disabled } = this
             if ( disabled ) {
                 return
             }
-            let { promise , cancel: cancelEnter } = makeCancelable( timeout( lazy ) )
+            prevCancelEnter()
             cancelLeave()
+            let { promise , cancel: cancelEnter } = makeCancelable( timeout( lazy ) )
             this.cancelEnter = cancelEnter
             try {
                 await promise
@@ -163,7 +166,7 @@ export default {
                 this.visible = true
                 // 计算位置
                 await this.$nextTick()
-                this._calcPopPosition()
+                this._calcPopPosition( point )
             } catch( e ) {
                 if ( !e.isCanceled ) {
                     warn( e ) 
@@ -171,10 +174,11 @@ export default {
             }
         } ,
         async _hiddenOverlay(){
-            let { cancelEnter , disabled } = this
+            let { cancelEnter , cancelLeave: prevCancelLeave , disabled } = this
             if ( disabled ) {
                 return
             }
+            prevCancelLeave()
             cancelEnter()
             let { promise , cancel: cancelLeave } = makeCancelable( timeout( lazy ) )
             this.cancelLeave = cancelLeave
@@ -188,11 +192,12 @@ export default {
             }
         } ,
         _clickOutEl( { target } ){
-            let { isTriggerClick , isControlled } = this
+            let { isTriggerClick , isTriggerRightClick , isControlled } = this
             if ( isControlled ) {
                 return
             }
-            if ( isTriggerClick ) {
+            let canHandle = isTriggerClick || isTriggerRightClick
+            if ( canHandle ) {
                 let { $refs: { source } } = this ,
                     contains = source && source.contains( target ) ,
                     preventClose = source && contains
@@ -204,8 +209,12 @@ export default {
             }
         } ,
         _clickTrigger(){
-            let { isTriggerClick , visible , isControlled } = this
+            let { isTriggerClick , isTriggerRightClick , visible , isControlled } = this
             if ( isControlled ) {
+                return
+            }
+            if ( isTriggerRightClick ) {
+                this._hiddenOverlay()
                 return
             }
             if ( isTriggerClick ) {
@@ -234,6 +243,13 @@ export default {
                 this._hiddenOverlay()
             }
         } ,
+        _contextMenu( event ){
+            let { isTriggerRightClick } = this
+            if ( isTriggerRightClick ) {
+                let { pageX , pageY } = event
+                this._showOverlay( { pageX , pageY } )
+            }
+        } ,
         _afterAnimLeave(){
             // important 异步触发，先确认主菜单是否已关闭
             let { visible } = this
@@ -241,20 +257,30 @@ export default {
                 this.visiblePortal = false
             }
         } ,
-        _calcPopPosition(){
+        _calcPopPosition( mousePoint ){
             let { $refs: { source , target } , placement } = this ,
-                points = placementToPoints( placement ) ,
-                [ , targetPoint ] = points ,
-                isTargetTop = targetPoint.indexOf( 't' ) >= 0 ,
-                offsetY = isTargetTop ? -defaultOffsetY : defaultOffsetY
-            if ( source === undefined || target === undefined ) {
-                return warn( `one of source、target get be undefined,should nerver be happened` )
+                isContextMenuMode = mousePoint !== undefined
+            if ( isContextMenuMode ) {
+                let { x , y } = contextMenuOffset
+                alignPoint( source , mousePoint , {
+                    points: [ 'tl' , 'br' ] ,
+                    offset: [ x , y ] ,
+                    overflow: { adjustX: true, adjustY: true } ,
+                } )
+            } else {
+                let points = placementToPoints( placement ) ,
+                    [ , targetPoint ] = points ,
+                    isTargetTop = targetPoint.indexOf( 't' ) >= 0 ,
+                    offsetY = isTargetTop ? -defaultOffsetY : defaultOffsetY
+                if ( source === undefined || target === undefined ) {
+                    return warn( `one of source、target get be undefined,should nerver be happened` )
+                }
+                alignElement( source , target , {
+                    points ,
+                    offset: [ 0 , offsetY ] ,
+                    overflow: { adjustX: true, adjustY: true } ,
+                } )
             }
-            alignElement( source , target , {
-                points ,
-                offset: [ 0 , offsetY ] ,
-                overflow: { adjustX: true, adjustY: true } ,
-            } )
         } ,
     }
 }
