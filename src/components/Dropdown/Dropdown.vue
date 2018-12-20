@@ -77,6 +77,10 @@ export default {
                 return triggers.indexOf( value ) !== -1
             } ,
         } ,
+        // @doc 下拉根元素的类名称
+        overlayClass: {
+            type: String ,
+        }
     } ,
     data(){
         return {
@@ -91,7 +95,9 @@ export default {
             return `bview-${name}`
         } ,
         clsOverlay(){
-            return `bview-${name}-overlay`
+            let { overlayClass } = this ,
+                clsStr = overlayClass ? overlayClass : ''
+            return `bview-${name}-overlay ${clsStr}`
         } ,
         clsDropPortal(){
             return `bview-${name}-poartal`
