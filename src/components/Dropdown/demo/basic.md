@@ -6,15 +6,13 @@ Dropdown组件放入一个触发器(必传)，之后添加overlay的slot下拉�
 <template>
     <Dropdown>
         <span>Hover Me</span>
-        <div slot="overlay">
-            <Menu>
-                <MenuItem>
-                    <a target="_blank" href="http://www.163.com">网易邮箱</a>
-                </MenuItem>
-                <MenuItem>链接2...</MenuItem>
-                <MenuItem>链接3...</MenuItem>
-            </Menu>
-        </div>
+        <Menu slot="overlay">
+            <MenuItem>
+                <a target="_blank" href="http://www.163.com">网易邮箱</a>
+            </MenuItem>
+            <MenuItem>链接2...</MenuItem>
+            <MenuItem>链接3...</MenuItem>
+        </Menu>
     </Dropdown>
 </template>
 

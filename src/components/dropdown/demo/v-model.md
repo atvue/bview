@@ -9,15 +9,13 @@
             v-model="visible"
         >
             Hover Me
-            <div slot="overlay">
-                <Menu>
-                    <MenuItem>
-                        <a target="_blank" href="http://www.163.com">网易邮箱</a>
-                    </MenuItem>
-                    <MenuItem>链接2...</MenuItem>
-                    <MenuItem>链接3...</MenuItem>
-                </Menu>
-            </div>
+            <Menu slot="overlay">
+                <MenuItem>
+                    <a target="_blank" href="http://www.163.com">网易邮箱</a>
+                </MenuItem>
+                <MenuItem>链接2...</MenuItem>
+                <MenuItem>链接3...</MenuItem>
+            </Menu>
         </Dropdown>
         <Button
                 @click="visible = !visible"

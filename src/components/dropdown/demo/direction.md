@@ -9,85 +9,73 @@
             placement="bottomLeft"
         >
             <Button>bottomLeft</Button>
-            <div slot="overlay">
-                <Menu>
-                    <MenuItem>
-                        <a target="_blank" href="http://www.163.com">网易邮箱</a>
-                    </MenuItem>
-                    <MenuItem>链接2...</MenuItem>
-                    <MenuItem>链接3...</MenuItem>
-                </Menu>
-            </div>
+            <Menu slot="overlay">
+                <MenuItem>
+                    <a target="_blank" href="http://www.163.com">网易邮箱</a>
+                </MenuItem>
+                <MenuItem>链接2...</MenuItem>
+                <MenuItem>链接3...</MenuItem>
+            </Menu>
         </Dropdown>
         <Dropdown
             placement="bottomCenter"
         >
             <Button>bottomCenter</Button>
-            <div slot="overlay">
-                <Menu>
-                    <MenuItem>
-                        <a target="_blank" href="http://www.163.com">网易邮箱</a>
-                    </MenuItem>
-                    <MenuItem>链接2...</MenuItem>
-                    <MenuItem>链接3...</MenuItem>
-                </Menu>
-            </div>
+            <Menu slot="overlay">
+                <MenuItem>
+                    <a target="_blank" href="http://www.163.com">网易邮箱</a>
+                </MenuItem>
+                <MenuItem>链接2...</MenuItem>
+                <MenuItem>链接3...</MenuItem>
+            </Menu>
         </Dropdown>
         <Dropdown
             placement="bottomRight"
         >
             <Button>bottomRight</Button>
-            <div slot="overlay">
-                <Menu>
-                    <MenuItem>
-                        <a target="_blank" href="http://www.163.com">网易邮箱</a>
-                    </MenuItem>
-                    <MenuItem>链接2...</MenuItem>
-                    <MenuItem>链接3...</MenuItem>
-                </Menu>
-            </div>
+            <Menu slot="overlay">
+                <MenuItem>
+                    <a target="_blank" href="http://www.163.com">网易邮箱</a>
+                </MenuItem>
+                <MenuItem>链接2...</MenuItem>
+                <MenuItem>链接3...</MenuItem>
+            </Menu>
         </Dropdown>
         <Dropdown
             placement="topLeft"
         >
             <Button>topLeft</Button>
-            <div slot="overlay">
-                <Menu>
-                    <MenuItem>
-                        <a target="_blank" href="http://www.163.com">网易邮箱</a>
-                    </MenuItem>
-                    <MenuItem>链接2...</MenuItem>
-                    <MenuItem>链接3...</MenuItem>
-                </Menu>
-            </div>
+            <Menu slot="overlay">
+                <MenuItem>
+                    <a target="_blank" href="http://www.163.com">网易邮箱</a>
+                </MenuItem>
+                <MenuItem>链接2...</MenuItem>
+                <MenuItem>链接3...</MenuItem>
+            </Menu>
         </Dropdown>
         <Dropdown
             placement="topCenter"
         >
             <Button>topCenter</Button>
-            <div slot="overlay">
-                <Menu>
-                    <MenuItem>
-                        <a target="_blank" href="http://www.163.com">网易邮箱</a>
-                    </MenuItem>
-                    <MenuItem>链接2...</MenuItem>
-                    <MenuItem>链接3...</MenuItem>
-                </Menu>
-            </div>
+            <Menu slot="overlay">
+                <MenuItem>
+                    <a target="_blank" href="http://www.163.com">网易邮箱</a>
+                </MenuItem>
+                <MenuItem>链接2...</MenuItem>
+                <MenuItem>链接3...</MenuItem>
+            </Menu>
         </Dropdown>
         <Dropdown
             placement="topRight"
         >
             <Button>topRight</Button>
-            <div slot="overlay">
-                <Menu>
-                    <MenuItem>
-                        <a target="_blank" href="http://www.163.com">网易邮箱</a>
-                    </MenuItem>
-                    <MenuItem>链接2...</MenuItem>
-                    <MenuItem>链接3...</MenuItem>
-                </Menu>
-            </div>
+            <Menu slot="overlay">
+                <MenuItem>
+                    <a target="_blank" href="http://www.163.com">网易邮箱</a>
+                </MenuItem>
+                <MenuItem>链接2...</MenuItem>
+                <MenuItem>链接3...</MenuItem>
+            </Menu>
         </Dropdown>
     </div>
 </template>
