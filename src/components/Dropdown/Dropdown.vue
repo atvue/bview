@@ -194,19 +194,25 @@ export default {
         } ,
         _clickOutEl( { target } ){
             let { isTriggerClick , isTriggerRightClick , isControlled } = this
-            if ( isControlled ) {
-                return
-            }
-            let canHandle = isTriggerClick || isTriggerRightClick
+            let canHandle = isTriggerClick || isTriggerRightClick || isControlled
             if ( canHandle ) {
                 let { $refs: { source } } = this ,
-                    contains = source && source.contains( target ) ,
-                    preventClose = source && contains
-                // click belongs to innter
-                if ( preventClose ) {
-                    // return
+                    contains = source !== undefined && source.contains( target ) ,
+                    preventClose = contains
+                if ( isControlled ) {
+                    if ( preventClose ) {
+                        // click dropdown menu do nothing
+                        return
+                    } else {
+                        return this.$emit( 'input' , false )
+                    }
+                } else {
+                    // click belongs to inner
+                    if ( preventClose ) {
+                        // return
+                    }
+                    this._hiddenOverlay()   
                 }
-                this._hiddenOverlay()   
             }
         } ,
         _clickTrigger(){

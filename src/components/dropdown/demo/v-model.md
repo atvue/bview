@@ -1,6 +1,6 @@
-#### 受控v-model
+#### 菜单隐藏方式
 
-下拉框的展示与不展示受控
+默认点击菜单关闭菜单，可以关闭此功能
 
 ```vue
 <template>
@@ -8,18 +8,19 @@
         <Dropdown
             v-model="visible"
         >
-            Hover Me
+            <span
+                @click="visible=!visible"
+            >Hover Me</span>
             <Menu slot="overlay">
                 <MenuItem>
                     <a target="_blank" href="http://www.163.com">网易邮箱</a>
                 </MenuItem>
                 <MenuItem>链接2...</MenuItem>
-                <MenuItem>链接3...</MenuItem>
+                <MenuItem>
+                    <span @click="visible=false">链接3...</span>
+                </MenuItem>
             </Menu>
         </Dropdown>
-        <Button
-                @click="visible = !visible"
-            >点我展示toggle</Button>
     </div>
 </template>
 
