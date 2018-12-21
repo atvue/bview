@@ -11,10 +11,10 @@
             <Button>bottomLeft</Button>
             <Menu slot="overlay">
                 <MenuItem>
-                    <a target="_blank" href="http://www.163.com">网易邮箱</a>
+                    <a target="_blank" href="http://www.163.com">网易首页</a>
                 </MenuItem>
-                <MenuItem>链接2...</MenuItem>
-                <MenuItem>链接3...</MenuItem>
+                <MenuItem>菜单二</MenuItem>
+                <MenuItem>菜单三</MenuItem>
             </Menu>
         </Dropdown>
         <Dropdown
@@ -23,10 +23,10 @@
             <Button>bottomCenter</Button>
             <Menu slot="overlay">
                 <MenuItem>
-                    <a target="_blank" href="http://www.163.com">网易邮箱</a>
+                    <a target="_blank" href="http://www.163.com">网易首页</a>
                 </MenuItem>
-                <MenuItem>链接2...</MenuItem>
-                <MenuItem>链接3...</MenuItem>
+                <MenuItem>菜单二</MenuItem>
+                <MenuItem>菜单三</MenuItem>
             </Menu>
         </Dropdown>
         <Dropdown
@@ -35,10 +35,10 @@
             <Button>bottomRight</Button>
             <Menu slot="overlay">
                 <MenuItem>
-                    <a target="_blank" href="http://www.163.com">网易邮箱</a>
+                    <a target="_blank" href="http://www.163.com">网易首页</a>
                 </MenuItem>
-                <MenuItem>链接2...</MenuItem>
-                <MenuItem>链接3...</MenuItem>
+                <MenuItem>菜单二</MenuItem>
+                <MenuItem>菜单三</MenuItem>
             </Menu>
         </Dropdown>
         <Dropdown
@@ -47,10 +47,10 @@
             <Button>topLeft</Button>
             <Menu slot="overlay">
                 <MenuItem>
-                    <a target="_blank" href="http://www.163.com">网易邮箱</a>
+                    <a target="_blank" href="http://www.163.com">网易首页</a>
                 </MenuItem>
-                <MenuItem>链接2...</MenuItem>
-                <MenuItem>链接3...</MenuItem>
+                <MenuItem>菜单二</MenuItem>
+                <MenuItem>菜单三</MenuItem>
             </Menu>
         </Dropdown>
         <Dropdown
@@ -59,10 +59,10 @@
             <Button>topCenter</Button>
             <Menu slot="overlay">
                 <MenuItem>
-                    <a target="_blank" href="http://www.163.com">网易邮箱</a>
+                    <a target="_blank" href="http://www.163.com">网易首页</a>
                 </MenuItem>
-                <MenuItem>链接2...</MenuItem>
-                <MenuItem>链接3...</MenuItem>
+                <MenuItem>菜单二</MenuItem>
+                <MenuItem>菜单三</MenuItem>
             </Menu>
         </Dropdown>
         <Dropdown
@@ -71,10 +71,10 @@
             <Button>topRight</Button>
             <Menu slot="overlay">
                 <MenuItem>
-                    <a target="_blank" href="http://www.163.com">网易邮箱</a>
+                    <a target="_blank" href="http://www.163.com">网易首页</a>
                 </MenuItem>
-                <MenuItem>链接2...</MenuItem>
-                <MenuItem>链接3...</MenuItem>
+                <MenuItem>菜单二</MenuItem>
+                <MenuItem>菜单三</MenuItem>
             </Menu>
         </Dropdown>
     </div>

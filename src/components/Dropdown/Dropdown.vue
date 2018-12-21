@@ -204,6 +204,7 @@ export default {
                         // click dropdown menu do nothing
                         return
                     } else {
+                        // @doc 点击'触发器'和'下拉框'外，触发visible = false
                         return this.$emit( 'input' , false )
                     }
                 } else {

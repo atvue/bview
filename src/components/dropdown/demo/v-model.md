@@ -13,11 +13,11 @@
             >Hover Me</span>
             <Menu slot="overlay">
                 <MenuItem>
-                    <a target="_blank" href="http://www.163.com">网易邮箱</a>
+                    <a target="_blank" href="http://www.163.com">网易首页</a>
                 </MenuItem>
-                <MenuItem>链接2...</MenuItem>
+                <MenuItem>菜单二</MenuItem>
                 <MenuItem>
-                    <span @click="visible=false">链接3...</span>
+                    <span @click="visible=false">菜单三</span>
                 </MenuItem>
             </Menu>
         </Dropdown>
