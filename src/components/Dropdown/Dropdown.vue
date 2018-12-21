@@ -5,6 +5,7 @@
         @click="_clickTrigger"
         @mouseenter="_mouseEnter"
         @mouseleave="_mouseLeave"
+        @contextmenu.prevent="_contextMenu"
         v-click-out-el="_clickOutEl"
     >
         <!-- 触发器 -->
@@ -42,11 +43,12 @@ import clickOutEl from '../../directives/click-out-el'
 import { timeout } from '../../utils/timer'
 import noop from '../../utils/noop'
 import portal from './portal.vue'
-import alignElement from './dom-align/index'
-import { placements , bottomLeft , triggers , triggerHover } from './placement'
+import alignElement , { alignPoint } from './dom-align/index'
+import { placements , bottomLeft , triggers , triggerHover , triggerClick , triggerRightClick } from './placement'
 import { placementToPoints } from './helper'
 const name = 'dropdown'
 const warn = warnInit( name )
+const contextMenuOffset = { x: 10 , y: 16 }
 const defaultOffsetY = 4
 const lazy = 200
 
@@ -77,11 +79,23 @@ export default {
                 return triggers.indexOf( value ) !== -1
             } ,
         } ,
+        // @doc 下拉根元素的类名称
+        overlayClass: {
+            type: String ,
+        } ,
+        // @doc v-model 下拉框受控展示
+        value: {
+            type: Boolean ,
+            default: undefined ,
+        }
     } ,
     data(){
+        let { value } = this ,
+            isControlled = value !== undefined ,
+            visible = isControlled ? value : false
         return {
-            visible: false ,
-            visiblePortal: false ,
+            visible ,
+            visiblePortal: visible ,
             cancelEnter: noop ,
             cancelLeave: noop ,
         }
@@ -91,7 +105,10 @@ export default {
             return `bview-${name}`
         } ,
         clsOverlay(){
-            return `bview-${name}-overlay`
+            let { overlayClass , trigger } = this ,
+                clsStr = overlayClass ? ` ${overlayClass}` : '' ,
+                clsTriggerContextMenu = trigger === triggerRightClick ? ` ctx-menu-type` : ''
+            return `bview-${name}-overlay` + clsStr + clsTriggerContextMenu
         } ,
         clsDropPortal(){
             return `bview-${name}-poartal`
@@ -107,17 +124,40 @@ export default {
         } ,
         isTriggerClick(){
             let { trigger } = this
-            return trigger !== triggerHover
+            return trigger === triggerClick
         } ,
+        isTriggerHover(){
+            let { trigger } = this
+            return trigger === triggerHover
+        } ,
+        isTriggerRightClick(){
+            return this.trigger === triggerRightClick
+        } ,
+        isControlled(){
+            let { value } = this
+            return value !== undefined
+        }
+    } ,
+    watch: {
+        value( visible , oldVisible ) {
+            if ( visible !== oldVisible ) {
+                if ( visible ) {
+                    this._showOverlay()
+                } else {
+                    this._hiddenOverlay()
+                }
+            }
+        }
     } ,
     methods: {
-        async _showOverlay( event ){
-            let { cancelLeave , disabled } = this
+        async _showOverlay( point ){
+            let { cancelLeave , cancelEnter: prevCancelEnter , disabled } = this
             if ( disabled ) {
                 return
             }
-            let { promise , cancel: cancelEnter } = makeCancelable( timeout( lazy ) )
+            prevCancelEnter()
             cancelLeave()
+            let { promise , cancel: cancelEnter } = makeCancelable( timeout( lazy ) )
             this.cancelEnter = cancelEnter
             try {
                 await promise
@@ -127,7 +167,7 @@ export default {
                 this.visible = true
                 // 计算位置
                 await this.$nextTick()
-                this._calcPopPosition()
+                this._calcPopPosition( point )
             } catch( e ) {
                 if ( !e.isCanceled ) {
                     warn( e ) 
@@ -135,10 +175,11 @@ export default {
             }
         } ,
         async _hiddenOverlay(){
-            let { cancelEnter , disabled } = this
+            let { cancelEnter , cancelLeave: prevCancelLeave , disabled } = this
             if ( disabled ) {
                 return
             }
+            prevCancelLeave()
             cancelEnter()
             let { promise , cancel: cancelLeave } = makeCancelable( timeout( lazy ) )
             this.cancelLeave = cancelLeave
@@ -152,20 +193,38 @@ export default {
             }
         } ,
         _clickOutEl( { target } ){
-            let { isTriggerClick } = this
-            if ( isTriggerClick ) {
+            let { isTriggerClick , isTriggerRightClick , isControlled } = this
+            let canHandle = isTriggerClick || isTriggerRightClick || isControlled
+            if ( canHandle ) {
                 let { $refs: { source } } = this ,
-                    contains = source && source.contains( target ) ,
-                    preventClose = source && contains
-                // click belongs to innter
-                if ( preventClose ) {
-                    // return
+                    contains = source !== undefined && source.contains( target ) ,
+                    preventClose = contains
+                if ( isControlled ) {
+                    if ( preventClose ) {
+                        // click dropdown menu do nothing
+                        return
+                    } else {
+                        // @doc 点击'触发器'和'下拉框'外，触发visible = false
+                        return this.$emit( 'input' , false )
+                    }
+                } else {
+                    // click belongs to inner
+                    if ( preventClose ) {
+                        // return
+                    }
+                    this._hiddenOverlay()   
                 }
-                this._hiddenOverlay()   
             }
         } ,
         _clickTrigger(){
-            let { isTriggerClick , visible } = this
+            let { isTriggerClick , isTriggerRightClick , visible , isControlled } = this
+            if ( isControlled ) {
+                return
+            }
+            if ( isTriggerRightClick ) {
+                this._hiddenOverlay()
+                return
+            }
             if ( isTriggerClick ) {
                 if ( visible ) {
                     this._hiddenOverlay()
@@ -175,15 +234,28 @@ export default {
             }
         } ,
         _mouseEnter(){
-            let { isTriggerClick } = this
-            if ( !isTriggerClick ) {
+            let { isTriggerHover , isControlled } = this
+            if ( isControlled ) {
+                return
+            }
+            if ( isTriggerHover ) {
                 this._showOverlay()
             }
         } ,
         _mouseLeave(){
-            let { isTriggerClick } = this
-            if ( !isTriggerClick ) {
+            let { isTriggerHover , isControlled } = this
+            if ( isControlled ) {
+                return
+            }
+            if ( isTriggerHover ) {
                 this._hiddenOverlay()
+            }
+        } ,
+        _contextMenu( event ){
+            let { isTriggerRightClick } = this
+            if ( isTriggerRightClick ) {
+                let { pageX , pageY } = event
+                this._showOverlay( { pageX , pageY } )
             }
         } ,
         _afterAnimLeave(){
@@ -193,20 +265,30 @@ export default {
                 this.visiblePortal = false
             }
         } ,
-        _calcPopPosition(){
+        _calcPopPosition( mousePoint ){
             let { $refs: { source , target } , placement } = this ,
-                points = placementToPoints( placement ) ,
-                [ , targetPoint ] = points ,
-                isTargetTop = targetPoint.indexOf( 't' ) >= 0 ,
-                offsetY = isTargetTop ? -defaultOffsetY : defaultOffsetY
-            if ( source === undefined || target === undefined ) {
-                return warn( `one of source、target get be undefined,should nerver be happened` )
+                isContextMenuMode = mousePoint !== undefined
+            if ( isContextMenuMode ) {
+                let { x , y } = contextMenuOffset
+                alignPoint( source , mousePoint , {
+                    points: [ 'tl' , 'br' ] ,
+                    offset: [ x , y ] ,
+                    overflow: { adjustX: true, adjustY: true } ,
+                } )
+            } else {
+                let points = placementToPoints( placement ) ,
+                    [ , targetPoint ] = points ,
+                    isTargetTop = targetPoint.indexOf( 't' ) >= 0 ,
+                    offsetY = isTargetTop ? -defaultOffsetY : defaultOffsetY
+                if ( source === undefined || target === undefined ) {
+                    return warn( `one of source、target get be undefined,should nerver be happened` )
+                }
+                alignElement( source , target , {
+                    points ,
+                    offset: [ 0 , offsetY ] ,
+                    overflow: { adjustX: true, adjustY: true } ,
+                } )
             }
-            alignElement( source , target , {
-                points ,
-                offset: [ 0 , offsetY ] ,
-                overflow: { adjustX: true, adjustY: true } ,
-            } )
         } ,
     }
 }

@@ -1,32 +1,24 @@
-#### 触发方式
+#### 菜单隐藏方式
 
-默认是移入触发菜单，可以点击或者右键触发。
+默认点击菜单关闭菜单，可以关闭此功能
 
 ```vue
 <template>
     <div class="demo-dropdown">
         <Dropdown
-            trigger="click"
+            v-model="visible"
         >
-            <Button>点我触发</Button>
+            <span
+                @click="visible=!visible"
+            >Hover Me</span>
             <Menu slot="overlay">
                 <MenuItem>
                     <a target="_blank" href="http://www.163.com">网易首页</a>
                 </MenuItem>
                 <MenuItem>菜单二</MenuItem>
-                <MenuItem>菜单三</MenuItem>
-            </Menu>
-        </Dropdown>
-        <Dropdown
-            trigger="contextmenu"
-        >
-            <Button>右键触发</Button>
-            <Menu slot="overlay">
                 <MenuItem>
-                    <a target="_blank" href="http://www.163.com">网易首页</a>
+                    <span @click="visible=false">菜单三</span>
                 </MenuItem>
-                <MenuItem>菜单二</MenuItem>
-                <MenuItem>菜单三</MenuItem>
             </Menu>
         </Dropdown>
     </div>
@@ -38,6 +30,11 @@ const { MenuItem } = Menu
 
 export default {
     components: { Dropdown , Menu , MenuItem , Button } ,
+    data(){
+        return {
+            visible: false ,
+        }
+    }
 }
 </script>
 
