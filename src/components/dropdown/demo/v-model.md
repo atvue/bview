@@ -10,14 +10,14 @@
         >
             <span
                 @click="visible=!visible"
-            >Hover Me</span>
+            >Click Me</span>
             <Menu slot="overlay">
                 <MenuItem>
                     <a target="_blank" href="http://www.163.com">网易首页</a>
                 </MenuItem>
-                <MenuItem>菜单二</MenuItem>
+                <MenuItem>点击会关闭失败</MenuItem>
                 <MenuItem>
-                    <span @click="visible=false">菜单三</span>
+                    <span @click="visible=false">点我才关闭</span>
                 </MenuItem>
             </Menu>
         </Dropdown>
