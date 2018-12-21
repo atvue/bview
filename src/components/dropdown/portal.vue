@@ -15,16 +15,25 @@ export default {
     props: {
         symbol: {
             type: [ Symbol , String ] ,
+        } ,
+        getPopupContainer: {
+            type: Function
         }
     } ,
     directives: { 
-        domPortal
+        domPortal ,
     } ,
     computed: {
         config(){
-            return {
-                symbol: this.symbol
+            let { getPopupContainer , symbol } = this ,
+                target = getPopupContainer() ,
+                config = {
+                    symbol ,
+                }
+            if ( target !== undefined && target !== null ) {
+                Object.assign( config , { target } )
             }
+            return config
         }
     }
 }

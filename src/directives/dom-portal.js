@@ -12,7 +12,7 @@ const homes = new Map() ,
 const domPortal = {
     name: 'dom-portal' ,
     inserted( el , { value } ) {
-        let config = Object.assign( {} , value , defaultConfig ) ,
+        let config = Object.assign( {} , defaultConfig , value ) ,
             { target , symbol } = config ,
             parentWrapper = getTarget( target ) ,
             only1Instance = symbol !== undefined && symbol !== null

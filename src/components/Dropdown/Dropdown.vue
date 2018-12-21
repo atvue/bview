@@ -14,6 +14,7 @@
             v-if="visiblePortal"
             :class="clsDropPortal"
             :symbol="symbolPortal"
+            :getPopupContainer="getPopupContainer"
         >
             <transition
                 :name="transitionName"
@@ -51,6 +52,7 @@ const warn = warnInit( name )
 const contextMenuOffset = { x: 10 , y: 16 }
 const defaultOffsetY = 4
 const lazy = 200
+const defaultContainer = () => document.body
 
 export default {
     name ,
@@ -87,6 +89,11 @@ export default {
         value: {
             type: Boolean ,
             default: undefined ,
+        } ,
+        // @doc 菜单渲染父节点，默认渲染到 body 上，如果你遇到菜单滚动定位问题，试试修改为滚动的区域，并相对其定位。
+        getPopupContainer: {
+            type: Function ,
+            default: defaultContainer ,
         }
     } ,
     data(){
