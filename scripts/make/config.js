@@ -62,7 +62,7 @@ let vueTemp = name => `<template>
 <script>
 	export default {
 		name: '${name}',
-		prop: {},
+		props: {},
 		data () {
 			return {}
 		},
