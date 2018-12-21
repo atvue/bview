@@ -5,7 +5,7 @@
         @click="_clickTrigger"
         @mouseenter="_mouseEnter"
         @mouseleave="_mouseLeave"
-        @contextmenu.prevent="_contextMenu"
+        @contextmenu="_contextMenu"
         v-click-out-el="_clickOutEl"
     >
         <!-- 触发器 -->
@@ -261,6 +261,7 @@ export default {
         _contextMenu( event ){
             let { isTriggerRightClick } = this
             if ( isTriggerRightClick ) {
+                event.preventDefault()
                 let { pageX , pageY } = event
                 this._showOverlay( { pageX , pageY } )
             }
