@@ -1,5 +1,5 @@
 <template>
-    <span 
+    <div 
         ref="target"
         :class="prefixCls"
         @click="_clickTrigger"
@@ -33,7 +33,7 @@
                 </div>
             </transition>
         </portal>
-    </span>
+    </div>
 </template>
 
 
