@@ -4,6 +4,7 @@
     border: 1px solid #d9d9d9 ;
     background-color: #fff;
     font-size: 14px ;
+    cursor: pointer ;
     .bview-select-inner {
         display: flex ;
         margin: 0 11px ;
@@ -21,6 +22,36 @@
         }
         .bview-select-icon {
             width: 20px ;
+        }
+    }
+}
+
+.bview-options-wrapper {
+    line-height: 1.5;
+    color: rgba(0,0,0,0.65);
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    border-radius: 4px;
+    font-size: 14px;
+    .bview-select-dropdown-menu-item {
+        position: relative;
+        display: block ;
+        padding: 5px 12px;
+        line-height: 22px;
+        font-weight: normal;
+        color: rgba(0,0,0,0.65);
+        white-space: nowrap;
+        cursor: pointer;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        transition: background .3s ease;
+        &:hover {
+            background-color: #e6f7ff;
+        }
+        &.selected {
+            background-color: #fafafa;
+            font-weight: 600;
+            color: rgba(0,0,0,0.65);
         }
     }
 }
