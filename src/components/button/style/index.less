@@ -1,10 +1,47 @@
-
 @btn_hover: #3cd4ba;
 @btn_disabled: #bbc1d0;
 @btn_normal: #0bc9a9;
 @btn_press: #10bfa2;
 
-.nop-button {
+.bview-button-group-vertical{
+    .bview-button{
+        display: block;
+    }
+}
+
+.bview-button-group-vertical-space-middle{
+    .bview-button{
+        &:not(:first-child){
+            margin-top: 20px;
+        }
+    }
+}
+
+.bview-button-group-vertical-space-default{
+    .bview-button{
+        &:not(:first-child){
+            margin-top: 10px;
+        }
+    }
+}
+
+.bview-button-group-vertical-space-small{
+    .bview-button{
+        &:not(:first-child){
+            margin-top: 5px;
+        }
+    }
+}
+
+.bview-button-group-vertical-space-big{
+    .bview-button{
+        &:not(:first-child){
+            margin-top: 30px;
+        }
+    }
+}
+
+.bview-button {
     display: inline-block;
     vertical-align: middle;
     width: auto;
@@ -26,19 +63,16 @@
     &:focus {
         background-color: @btn_press;
     }
-    &.nop-button-sizebig {
+    &.bview-button-sizebig {
         padding: 0 41px;
         margin-right: 40px;
         font-size: 14px;
         height: 38px;
         line-height: 38px;
     }
-    &.nop-button-danger {
-        background: #f00 ;
-    }
 }
 
-.nop-button-default {
+.bview-button-primary {
     color: #666;
     border: 1px solid #aaa;
     background-color: #fff;
@@ -54,7 +88,23 @@
     }
 }
 
-.nop-button-black {
+.bview-button-text {
+    color: #666;
+    border: none;
+    background-color: #fff;
+    &:hover {
+        background-color: #fff;
+    }
+    &[disabled] {
+        background-color: @btn_disabled;
+        cursor: not-allowed;
+    }
+    &:focus {
+        background-color: #fff;
+    }
+}
+
+.bview-button-main {
     color: #fff;
     border: 1px solid #666;
     background-color: #666;
@@ -70,7 +120,7 @@
     }
 }
 
-.nop-link-btn {
+.bview-link-btn {
     display: inline-block;
     height: 26px;
     line-height: 26px;

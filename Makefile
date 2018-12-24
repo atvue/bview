@@ -1,4 +1,4 @@
-.PHONY: template
+.PHONY: component
 default: help
 
 folder:

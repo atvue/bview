@@ -1,0 +1,153 @@
+.bview-checkbox-group-vertical{
+    .bview-checkbox-wrap{
+        display: block;
+        height: 30px;
+        line-height: 30px;
+    }
+}
+
+.bview-checkbox-wrap{
+	font-size: 12px;
+    vertical-align: middle;
+    display: inline-block;
+    position: relative;
+    white-space: nowrap;
+    margin-right: 8px;
+    cursor: pointer;
+
+    .bview-checkbox-default{
+    	display: inline-block;
+        margin-right: 4px;
+        white-space: nowrap;
+        position: relative;
+        line-height: 1;
+        vertical-align: middle;
+        cursor: pointer;
+
+        .bview-checkbox-inner{
+        	display: inline-block;
+            width: 14px;
+            height: 14px;
+            position: relative;
+            top: 0;
+            left: 0;
+            border: 1px solid #dcdee2;
+            border-radius: 2px;
+            background-color: #fff;
+            transition: border-color .2s ease-in-out,background-color .2s ease-in-out,box-shadow .2s ease-in-out;
+        }
+
+        .bview-checkbox-inner-checked{
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            position: relative;
+            top: 0;
+            left: 0;
+            border: 1px solid rgb(45, 140, 240);
+            border-radius: 2px;
+            background-color: #2d8cf0;
+            transition: border-color .2s ease-in-out, background-color .2s ease-in-out, box-shadow .2s ease-in-out;
+            &:after {
+                content: "";
+                display: table;
+                width: 4px;
+                height: 8px;
+                position: absolute;
+                top: 1px;
+                left: 4px;
+                transform: rotate(45deg) scale(1);
+                border-width: 0px 2px 2px 0px;
+                border-style: solid solid;
+                border-color: rgb(255, 255, 255) rgb(255, 255, 255);
+                border-image: initial;
+                border-top: 0px;
+                border-left: 0px;
+                transition: all 0.2s ease-in-out 0s;
+            }
+        }
+
+        .bview-checkbox-inner-disabled{
+        	background-color: #eee;
+            cursor: not-allowed;
+            z-index: 2;
+        }
+
+        .bview-checkbox-inner-checked-disabled{
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            position: relative;
+            top: 0;
+            left: 0;
+            border: 1px solid #dcdee2;
+            border-radius: 2px;
+            background-color: #eee;
+            // transition: border-color .2s ease-in-out, background-color .2s ease-in-out, box-shadow .2s ease-in-out;
+            &:after {
+                content: "";
+                display: table;
+                width: 4px;
+                height: 8px;
+                position: absolute;
+                top: 1px;
+                left: 4px;
+                transform: rotate(45deg) scale(1);
+                border-width: 0px 2px 2px 0px;
+                border-style: solid solid;
+                border-color: #bbb #bbb;
+                border-image: initial;
+                border-top: 0px;
+                border-left: 0px;
+                // transition: all 0.2s ease-in-out 0s;
+            }
+        }
+
+        .bview-checkbox-inner-half-checked{
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            position: relative;
+            top: 0;
+            left: 0;
+            border: 1px solid rgb(45, 140, 240);
+            border-radius: 2px;
+            background-color: #2d8cf0;
+            transition: border-color .2s ease-in-out, background-color .2s ease-in-out, box-shadow .2s ease-in-out;
+            &:after {
+                content: '';
+                width: 10px;
+                height: 3px;
+                border-radius: 20%;
+                -webkit-transform: scale(1);
+                -ms-transform: scale(1);
+                transform: scale(1);
+                position: absolute;
+                left: 2px;
+                top: 5px;
+                background: #fff;
+            }
+        }
+
+        .bview-checkbox-input{
+        	position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1;
+            opacity: 0;
+            height: 18px;
+            width: 18px;
+            cursor: pointer;
+        }
+    }
+
+    .bview-checkbox-label{
+    	&:hover{
+    		cursor: pointer;
+    	}
+    }
+}
+
+

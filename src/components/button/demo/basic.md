@@ -1,16 +1,12 @@
-
-#### 描述
-
-按钮有四种类型：主按钮、次按钮。主按钮在同一个操作区域最多出现一次。
+#### 基本用法
 
 ```vue
 <template>
-    <div>
-        <Button type="primary">主要按钮</Button>
-        <Button>次要按钮</Button>
-        <Button type="dashed">Dashed</Button>
-        <Button type="danger">Danger</Button>
-        <Button type="danger">asfhjaksf</Button>
+    <div class="demo-button">
+        <Button type="primary">primary样式</Button>
+        <Button type="main">main样式</Button>
+        <Button type="text">text样式</Button>
+        <Button :showSlot="showSlot">noslot</Button>
     </div>
 </template>
 
@@ -20,8 +16,16 @@ import { Button } from 'bview'
 export default {
     components: { Button } ,
     data () {
-    	return {}
+        return {
+            showSlot: true
+        }
     }
 }
 </script>
+
+<style type="less">
+.demo-button {
+    background: #f00 ;
+}
+</style>
 ```

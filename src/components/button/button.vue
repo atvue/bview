@@ -1,87 +1,75 @@
-// 通用按钮组件
-// 可用 禁用 hover状态
 <template>
-    <button :disabled="disabled" @click.prevent="onClick" :class="boxlassName">
-        <i v-if="loading"></i>
-        <!-- <Icon v-if="icon&&!loading" :type="icon" :size="iconsize" :color="iconcolor"></Icon> -->
+	<button :disabled="disabled" @click.prevent="_onClick" :class="boxlassName">
         <span v-if="showSlot">
             <slot></slot>
         </span>
+        <i v-if="loading"></i>
     </button>
 </template>
 
 <script>
-const TypePrimary = 'primary';
-const TypeDefault = 'default';
-const SizeNormal = '';
-const SizeBig = 'big';
-const SizeSmall = 'small';
-const TypeBlack = 'black';
+    const prefixCls = "bview";
+    const typeDefault = 'primary';
+    const SizeDefault = '';
+    const types = ['main', 'primary', 'dashed', 'text', 'danger', 'ghost', 'dropbox'];
+    const sizes = ['', 'big','small'];
 
-export default {
-    components: {
-        // Icon
-    },
-    props: {
-        disabled: {
-            type: Boolean,
-            default: false
-        },
-        loading: {
-            type: Boolean,
-            default: false
-        },
-        icon: {
-            type: String
-        },
-        iconsize: {
-            type: Number,
-            default: 12
-        },
-        iconcolor: {
-            type: String,
-            default: '#ffffff'
-        },
-        showSlot: {
-            type: Boolean,
-            default: true
-        },
-        size: {
-            type: String,
-            default: SizeNormal
-        },
-        type: {
-            type: String,
-            default: TypePrimary
-        }
-    },
-    data() {
-        return {};
-    },
-    computed: {
-        boxlassName() {
-            let { type, size } = this;
-            return [
-                'nop-button',
-                {
-                    'nop-button-default': type === TypeDefault
+	export default {
+		name: 'bview-button',
+		props: {
+            //@doc是否禁用按钮
+            disabled: {
+                type: Boolean,
+                default: false
+            },
+            //@doc是否需要loading
+            loading: {
+                type: Boolean,
+                default: false
+            },
+            //@doc是否显示slot
+            showSlot: {
+                type: Boolean,
+                default: true
+            },
+            //@doc按钮的大小
+            size: {
+                validator (value) {
+                    return sizes.indexOf(value) >= 0
                 },
-                `nop-button-size${size}`,
-                {
-                    'nop-button-black': type === TypeBlack
-                } ,
-                {
-                    'nop-button-danger': type === 'danger'
+                default: SizeDefault
+            },
+            //@doc按钮的类型
+            type: {
+                validator (value) {
+                    return value ? true : types.indexOf(value) >= 0
+                },
+                default: typeDefault               
+            }
+        },
+		data () {
+			return {}
+		},
+		computed: {
+            boxlassName() {
+                let { type, size } = this;
+
+                return [
+                    `${prefixCls}-button`,
+                    `${prefixCls}-button-size${size}`,
+                    `${prefixCls}-button-${type}`
+                ];
+            }
+        },
+        methods: {
+            _onClick(event) {
+                let { loading } = this;
+
+                if (!loading) {
+                    //@doc 点击事件，参数event
+                    this.$emit('click', event);
                 }
-            ];
+            }
         }
-    },
-    methods: {
-        onClick(event) {
-            this.$emit('click');
-        }
-    }
-};
+	}
 </script>
-
-

@@ -3,8 +3,7 @@
 
 @dropdown-prefix-cls: ~"@{bview-prefix}-dropdown" ;
 @overlay-prefix-cls: ~"@{bview-prefix}-dropdown-overlay" ;
-@portal-cls: ~"bview-portal" ;
-@dropdown-poartal-cls: ~"bview-dropdown-poartal" ;
+@dropdown-poartal-cls: ~"@{bview-prefix}-dropdown-poartal" ;
 @bg: #fff ;
 
 .@{dropdown-prefix-cls} {
@@ -19,15 +18,16 @@
     z-index: 1 ;
 }
 
-.@{portal-cls} {
+.@{dropdown-poartal-cls} {
     position: absolute ;
     top: 0 ;
     left: 0 ;
     width: 100% ;
     z-index: @global-z-index ;
-}
-
-.@{dropdown-poartal-cls} {
+    // 菜单位置移动动画
+    .ctx-menu-type {
+        transition: top 0.25s , left 0.25s ;
+    }
     // top 动画
     .dropdown-transition-top-enter-active , .dropdown-transition-top-leave-active {
         opacity: 1 ;
