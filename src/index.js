@@ -1,8 +1,8 @@
 import Button from './components/button'
 import Select from './components/select'
-import Input from './components/Input'
-import Switch from './components/Switches'
-import Textarea from './components/Textarea'
+import Input from './components/input'
+import Switch from './components/switches'
+import Textarea from './components/textarea'
 
 const components = {
     Button,
