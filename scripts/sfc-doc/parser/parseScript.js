@@ -9,6 +9,10 @@ const COMMENTTAG = '@doc';
 function getType(node) {
     let type = '';
     // xxx: String 形式
+    if (bt.isNullLiteral(node)) {
+        // `null` 匹配任何类型 https://vuejs.org/v2/guide/components-props.html#Prop-Validation
+        type = 'any 任何类型';
+    }
     if (bt.isIdentifier(node)) {
         // debugger;
         type = node.name;
