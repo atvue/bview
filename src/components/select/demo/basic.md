@@ -27,6 +27,14 @@ export default {
         return {
             value: undefined ,
         }
+    } ,
+    watch: {
+        value( val , oldValue ) {
+            console.log( val )
+        }
+    } ,
+    mounted(){
+        console.log( this.$options )
     }
 }
 </script>
