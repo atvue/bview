@@ -8,10 +8,20 @@
                     v-for="(r,i) in routerData" 
                     :key="getMetaName(r,i)"
                 >
-                    <RouterLink :to="r.path">{{getMetaName(r,i)}}</RouterLink>
+                    <RouterLink :to="r.path">
+                        {{ getMetaName(r,i) }}
+                    </RouterLink>
                     <div v-show="r.children&&r.children.length>0">
-                        <div v-for="(c,j) in r.children" :key="getMetaName(c,j)" style="padding-left:10px;">
-                            <RouterLink :to="r.path+'/'+c.path">{{getMetaName(c,j)}}</RouterLink>
+                        <div 
+                            v-for="(c,j) in r.children"
+                            :key="getMetaName(c,j)"
+                            style="padding-left:10px;"
+                        >
+                            <RouterLink
+                                :to="r.path+'/'+c.path"
+                            >
+                                {{ getMetaName(c,j) }}
+                            </RouterLink>
                         </div>
                     </div>
                 </div>
@@ -19,7 +29,7 @@
             <!-- END 随便生成的菜单 待替换 -->
             <!-- 文档内容 -->
             <div class="main-wrapper">
-                <router-view></router-view>
+                <RouterView />
             </div>
             <!-- END 文档内容 -->
         </div>

@@ -4,7 +4,7 @@
         class="bview-select-dropdown-menu-item"
         @click="clickOption"
     >
-        <slot/>
+        <slot />
     </li>
 </template>
 

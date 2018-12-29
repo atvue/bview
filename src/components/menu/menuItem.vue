@@ -7,6 +7,6 @@
 
 <script>
 export default {
-    name: 'menu-item'
+    name: 'MenuItem'
 }
 </script>

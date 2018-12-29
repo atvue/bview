@@ -1,11 +1,11 @@
 
 <template>
-    <router-view></router-view>
+    <RouterView />
 </template>
 
 <script>
 export default {
-    name: 'route-root'
+    name: 'RouteRoot'
 };
 </script>
 <style lang="scss">
