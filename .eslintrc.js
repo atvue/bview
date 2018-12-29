@@ -7,7 +7,8 @@ module.exports = {
         'plugin:vue/recommended'
     ],
     rules: {
-        // override/add rules settings here, such as:
-        // 'vue/no-unused-vars': 'error'
+        "indent": [ "warn" , 4 ] ,
+        "vue/html-indent": [ "warn" , 4 ] ,
+        // 'vue/no-unused-vars': 'warn' ,
     }
 }
