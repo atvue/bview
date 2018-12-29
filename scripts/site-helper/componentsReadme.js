@@ -1,5 +1,6 @@
 const fs = require( 'fs' )
 const path = require( 'path' )
+const junk = require( '../fs-helper/junk' )
 const { components: pathComponents } = require( '../project-path' )
 const getReadMeConfig = require( './readMeConfig' )
 const suffix = '.st' ,
@@ -30,7 +31,7 @@ async function mapFileToConfig( fileName ) {
 
 async function readComponentsReadme(){
     try {
-        let dirs = await readDir() ,
+        let dirs = await readDir().then( files => files.filter( junk.not )  ) ,
             componentsConfig = await Promise.all( dirs.map( mapFileToConfig ) )
         return componentsConfig
     }catch( e ) {
