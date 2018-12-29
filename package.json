@@ -11,7 +11,8 @@
         "dist": "npm run dist:style && npm run dist:prod-commonjs && npm run dist:prod-umd-dev && npm run dist:prod-umd",
         "dist:prod-umd": "webpack --config scripts/webpack.prod.config.js",
         "dist:prod-umd-dev": "webpack --config scripts/webpack.prod.dev.config.js",
-        "dist:style": "gulp --gulpfile scripts/buildStyle.js"
+        "dist:style": "gulp --gulpfile scripts/buildStyle.js",
+        "lint": "eslint --ext .js,.vue src"
     },
     "author": "icy",
     "repository": {
@@ -58,6 +59,9 @@
         "babel-plugin-transform-vue-jsx": "^3.7.0",
         "babel-types": "^6.26.0",
         "css-loader": "^1.0.0",
+        "eslint": "^5.11.1",
+        "eslint-loader": "^2.1.1",
+        "eslint-plugin-vue": "^5.0.0",
         "file-loader": "^2.0.0",
         "fs-extra": "^7.0.0",
         "glob": "^7.1.3",
