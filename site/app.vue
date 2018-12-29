@@ -4,11 +4,14 @@
         <div style="display:flex">
             <!-- 随便生成的菜单 待替换 -->
             <div style="width: 160px;margin-top:20px;flex:0 0 160px;">
-                <div v-for="(r,i) in routerData" :key="getMetaName(r,i)">
-                    <router-link :to="r.path">{{getMetaName(r,i)}}</router-link>
+                <div 
+                    v-for="(r,i) in routerData" 
+                    :key="getMetaName(r,i)"
+                >
+                    <RouterLink :to="r.path">{{getMetaName(r,i)}}</RouterLink>
                     <div v-show="r.children&&r.children.length>0">
                         <div v-for="(c,j) in r.children" :key="getMetaName(c,j)" style="padding-left:10px;">
-                            <router-link :to="r.path+'/'+c.path">{{getMetaName(c,j)}}</router-link>
+                            <RouterLink :to="r.path+'/'+c.path">{{getMetaName(c,j)}}</RouterLink>
                         </div>
                     </div>
                 </div>
