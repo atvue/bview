@@ -7,6 +7,7 @@
             v-if="$slots.prepend||prependIcon"
             :class="[prefixCls + '-icon-prepend']"
         >
+            <!-- 输入框前预留位 -->
             <slot name="prepend" />
             <i
                 v-if="prependIcon"
@@ -44,17 +45,19 @@
             v-if="$slots.append||appendIcon"
             :class="[prefixCls + '-icon-append']"
         >
+            <!-- 输入框后预留位 -->
             <slot name="append" />
             <i
                 v-if="appendIcon"
                 :class="['iconfont',appendIcon]"
             />
         </span>
+        <!-- 输入框默认预留位 -->
         <slot />
     </div>
 </template>
 <script>
-const prefixCls = 'bui-input';
+const prefixCls = 'bview-input';
 export default {
     name: 'Input',
     props: {
@@ -165,15 +168,7 @@ export default {
             let value = event.target.value;
             //@doc 输入框改变时触发
             this.$emit('input', value);
-            this.setCurrentValue(value);
-        },
-        //@doc手动聚焦
-        focus() {
-            this.$refs.input.focus();
-        },
-        //@doc手动失焦
-        blur() {
-            this.$refs.input.blur();
+            this._setCurrentValue(value);
         },
         _handleFocus(event) {
             //@doc聚焦时触发
@@ -185,10 +180,18 @@ export default {
         },
         _handleClear() {
             this.$emit('input', '');
-            this.setCurrentValue('');
+            this._setCurrentValue('');
         },
         _handleSearch(event) {
             this.$emit('search', event, this.currentValue);
+        },
+        //@doc手动聚焦
+        focus() {
+            this.$refs.input.focus();
+        },
+        //@doc手动失焦
+        blur() {
+            this.$refs.input.blur();
         }
     }
 };
