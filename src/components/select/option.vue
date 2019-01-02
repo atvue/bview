@@ -20,8 +20,8 @@ export default {
     } ,
     methods: {
         clickOption(){
-            let { value , $refs: { el } } = this
-            console.log( el )
+            // let { value , $refs: { el } } = this
+            // console.log( value , el )
         }
     }
 }

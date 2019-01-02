@@ -1,16 +1,16 @@
 <template>
-	<div class="bview-menu">
-		<slot />
-	</div>
+    <div class="bview-menu">
+        <slot />
+    </div>
 </template>
 
 <script>
-	export default {
-		name: 'bview-menu',
-		prop: {},
-		data () {
-			return {}
-		},
-		methods: {},
-	}
+export default {
+    name: 'BviewMenu',
+    prop: {},
+    data () {
+        return {}
+    },
+    methods: {},
+}
 </script>

@@ -91,7 +91,7 @@ export function throttle( delay, noTrailing, callback, debounceMode ) {
     // Return the wrapper function.
     return wrapper;
 
-};
+}
 
 
 /* eslint-disable no-undefined */
@@ -112,4 +112,4 @@ export function throttle( delay, noTrailing, callback, debounceMode ) {
  */
 export function debounce( delay, atBegin, callback ) {
     return callback === undefined ? throttle(delay, atBegin, false) : throttle(delay, callback, atBegin !== false);
-};
+}

@@ -1,22 +1,57 @@
-<template >
-    <div :class="prefixCls+'-wrapper'" :style="{'width':width}">
-        <span :class="[prefixCls + '-icon-prepend']" v-if="$slots.prepend||prependIcon">
-            <!-- 输入框内部：左侧（前）预留位 -->
-            <slot name="prepend"></slot>
-            <i :class="['iconfont',prependIcon]" v-if="prependIcon"></i>
+<template>
+    <div
+        :class="prefixCls+'-wrapper'"
+        :style="{'width':width}"
+    >
+        <span
+            v-if="$slots.prepend||prependIcon"
+            :class="[prefixCls + '-icon-prepend']"
+        >
+            <slot name="prepend" />
+            <i
+                v-if="prependIcon"
+                :class="['iconfont',prependIcon]"
+            />
         </span>
-        <i v-if="clearable&&currentValue&&!disabled" :class="['iconfont icon-shibai',prefixCls+'-icon',prefixCls+'-icon-clear']" style="font-size:12px;" @click="_handleClear"></i>
-        <i v-else-if="search" :class="['iconfont icon-sousuokuang-sousuo',prefixCls+'-icon',prefixCls+'-icon-search']" @click="_handleSearch"></i>
-        <input ref="input" :placeholder="placeholder" :class="inputClasses" :autocomplete="autocomplete" :maxlength="maxlength" :value="currentValue" @input="_handleInput" :autofocus="autofocus" @focus="_handleFocus" @blur="_handleBlur" :readonly="readonly" :disabled="disabled" :type="type" @keyup.enter="_handleEnter">
-        <span :class="[prefixCls + '-icon-append']" v-if="$slots.append||appendIcon">
-            <!-- 输入框：右侧（后）预留位 -->
-            <slot name="append"></slot>
-            <i :class="['iconfont',appendIcon]" v-if="appendIcon"></i>
+        <i
+            v-if="clearable&&currentValue&&!disabled"
+            :class="['iconfont icon-shibai',prefixCls+'-icon',prefixCls+'-icon-clear']"
+            style="font-size:12px;"
+            @click="_handleClear"
+        />
+        <i
+            v-else-if="search"
+            :class="['iconfont icon-sousuokuang-sousuo',prefixCls+'-icon',prefixCls+'-icon-search']"
+            @click="_handleSearch"
+        />
+        <input
+            ref="input"
+            :placeholder="placeholder"
+            :class="inputClasses"
+            :autocomplete="autocomplete"
+            :maxlength="maxlength"
+            :value="currentValue"
+            :autofocus="autofocus"
+            :readonly="readonly"
+            :disabled="disabled"
+            :type="type"
+            @input="_handleInput"
+            @focus="_handleFocus"
+            @blur="_handleBlur"
+            @keyup.enter="_handleEnter"
+        >
+        <span
+            v-if="$slots.append||appendIcon"
+            :class="[prefixCls + '-icon-append']"
+        >
+            <slot name="append" />
+            <i
+                v-if="appendIcon"
+                :class="['iconfont',appendIcon]"
+            />
         </span>
-        <!-- 默认插槽，输入框外部后方 -->
-        <slot></slot>
+        <slot />
     </div>
-
 </template>
 <script>
 const prefixCls = 'bview-input';
@@ -50,7 +85,8 @@ export default {
         },
         //@doc最大输入长度
         maxlength: {
-            type: Number
+            type: Number ,
+            default: undefined ,
         },
         //@doc是否禁用按钮
         disabled: {
@@ -73,9 +109,15 @@ export default {
             default: false
         },
         //@doc输入框头部icon
-        prependIcon: String,
+        prependIcon: {
+            type: String ,
+            default: undefined
+        } ,
         //@doc输入框尾部icon
-        appendIcon: String,
+        appendIcon: {
+            type: String ,
+            default: undefined
+        } ,
         //@doc输入框长度
         width: {
             type: String,
@@ -100,6 +142,11 @@ export default {
                         this.appendIcon || this.search || this.$slots.append
                 }
             ];
+        }
+    },
+    watch: {
+        value(val) {
+            this.setCurrentValue(val);
         }
     },
     methods: {
@@ -129,7 +176,6 @@ export default {
             this.$emit('blur', event);
         },
         _handleClear() {
-            const e = { target: { value: '' } };
             this.$emit('input', '');
             this._setCurrentValue('');
         },
@@ -143,7 +189,7 @@ export default {
         //@doc手动失焦
         blur() {
             this.$refs.input.blur();
-        },
+        }
     },
     watch: {
         value(val) {
