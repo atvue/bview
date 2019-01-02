@@ -15,9 +15,22 @@
 export default {
     name: 'Casitem',
     props: {
-        data: Object,
-        prefixCls: String,
-        tmpItem: Object
+        data: {
+            type:Object,
+            default:()=>{
+                return {}
+            }
+        },
+        prefixCls: {
+            type:String,
+            default:'',
+        },
+        tmpItem: {
+            type:Object,
+            default:()=>{
+                return {}
+            }
+        },
     },
     computed: {
         classes () {

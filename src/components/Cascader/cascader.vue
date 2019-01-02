@@ -9,9 +9,9 @@
             {{ displayRender }}
         </span>
         <input
-            v-click-out-el="handleClickOutSide" 
             id="input" 
             v-model="query" 
+            v-click-out-el="handleClickOutSide" 
             type="text"
             class="u-ipt"
             :placeholder="displayRender==='' ? placeholder : ''" 
@@ -51,6 +51,7 @@
                     :class="[prefixCls + '-search-dropdown']"
                 >
                     <ul :class="[selectPrefixCls + '-dropdown-list']">
+                        <!-- eslint-disable -->
                         <li
                             v-for="(item, index) in querySelections"
                             :key="index"
@@ -60,6 +61,7 @@
                             @click="handleSelectItem(index)" 
                             v-html="item.display"
                         />
+                        <!-- eslint-enable -->
                     </ul>
                 </div>
                 <div
@@ -148,7 +150,8 @@ export default {
         },
         // 异步数据
         loadData: {
-            type: Function
+            type: Function,
+            default:()=>{},
         },
     },
     data () {
