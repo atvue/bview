@@ -19,7 +19,8 @@ export default {
         },
 
         name: {
-            type: String
+            type: String ,
+            default: undefined ,
         },
         //@doc是否垂直显示radioGroup
         vertical: {
@@ -33,14 +34,6 @@ export default {
             childrens: [],
         }
     },
-    watch: {
-        value (val) {
-            if(this.curValue !== val){
-                this.curValue = val
-                this._updateValue()
-            }
-        }
-    },
     computed: {
         groupClass: function () {
             return [
@@ -50,6 +43,17 @@ export default {
                 }
             ]
         }
+    },
+    watch: {
+        value (val) {
+            if(this.curValue !== val){
+                this.curValue = val
+                this._updateValue()
+            }
+        }
+    },
+    mounted () {
+        this._updateValue(true);
     },
     methods: {
         _updateValue (flag) {
@@ -73,9 +77,6 @@ export default {
             //@doc 值改变时触发事件，参数当前的value
             this.$emit('change', value)
         }
-    },
-    mounted () {
-        this._updateValue(true);
     }
 }
 </script>

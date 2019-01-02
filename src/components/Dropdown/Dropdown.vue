@@ -1,28 +1,28 @@
 <template>
     <div 
         ref="target"
+        v-click-out-el="_clickOutEl"
         :class="prefixCls"
         @click="_clickTrigger"
         @mouseenter="_mouseEnter"
         @mouseleave="_mouseLeave"
         @contextmenu="_contextMenu"
-        v-click-out-el="_clickOutEl"
     >
         <!-- 触发器 -->
         <slot />
-        <portal
+        <Portal
             v-if="visiblePortal"
             :class="clsDropPortal"
             :symbol="symbolPortal"
-            :getPopupContainer="getPopupContainer"
+            :get-popup-container="getPopupContainer"
         >
-            <transition
+            <Transition
                 :name="transitionName"
                 @after-leave="_afterAnimLeave"
             >
                 <div 
-                    ref="source"
                     v-if="visible"
+                    ref="source"
                     :class="clsOverlay"
                     @mouseenter="_mouseEnter"
                     @mouseleave="_mouseLeave"
@@ -31,8 +31,8 @@
                     <!-- 下拉组件 -->
                     <slot name="overlay" />
                 </div>
-            </transition>
-        </portal>
+            </Transition>
+        </Portal>
     </div>
 </template>
 
@@ -43,7 +43,7 @@ import makeCancelable from '../../utils/makeCancelable'
 import clickOutEl from '../../directives/click-out-el'
 import { timeout } from '../../utils/timer'
 import noop from '../../utils/noop'
-import portal from './portal.vue'
+import Portal from './portal.vue'
 import alignElement , { alignPoint } from './dom-align/index'
 import { placements , bottomLeft , triggers , triggerHover , triggerClick , triggerRightClick } from './placement'
 import { placementToPoints } from './helper'
@@ -56,7 +56,7 @@ const defaultContainer = () => document.body
 
 export default {
     name ,
-    components: { portal } ,
+    components: { Portal } ,
     directives: { clickOutEl } ,
     props: {
         /* @docbegin 菜单弹出位置：bottomLeft bottomCenter bottomRight topLeft topCenter topRight
@@ -84,6 +84,7 @@ export default {
         // @doc 下拉根元素的类名称
         overlayClass: {
             type: String ,
+            default: undefined ,
         } ,
         // @doc v-model 下拉框受控展示
         value: {

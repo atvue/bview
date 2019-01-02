@@ -1,8 +1,27 @@
 <template>
-  <div :class="prefixCls+'-wrapper'">
-    <textarea ref="textarea" :class="textareaClasses" :style="[{'resize':resize,'width':width,'height':height},textareaStyles]" :placeholder="placeholder" :disabled="disabled" :maxlength="maxlength" :readonly="readonly" :value="currentValue" :autofocus="autofocus" @keyup.enter="_handleEnter" @focus="_handleFocus" @blur="_handleBlur" @input="_handleInput"></textarea>
-    <span :class="prefixCls+'-count'" v-if="maxlength">{{current + '/' + maxlength}}</span>
-  </div>
+    <div :class="prefixCls+'-wrapper'">
+        <textarea
+            ref="textarea"
+            :class="textareaClasses"
+            :style="[{'resize':resize,'width':width,'height':height},textareaStyles]"
+            :placeholder="placeholder"
+            :disabled="disabled"
+            :maxlength="maxlength"
+            :readonly="readonly"
+            :value="currentValue"
+            :autofocus="autofocus"
+            @keyup.enter="_handleEnter"
+            @focus="_handleFocus"
+            @blur="_handleBlur"
+            @input="_handleInput"
+        />
+        <span
+            v-if="maxlength"
+            :class="prefixCls+'-count'"
+        >
+            {{ current + '/' + maxlength }}
+        </span>
+    </div>
 </template>
 
 <script>
@@ -33,7 +52,8 @@ export default {
         },
         //@doc最大输入长度
         maxlength: {
-            type: Number
+            type: Number ,
+            default: undefined ,
         },
         //@doc是否禁用状态
         disabled: {

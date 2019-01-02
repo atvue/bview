@@ -12,16 +12,18 @@
 <script>
 import domPortal from '../../directives/dom-portal'
 export default {
+    directives: { 
+        domPortal ,
+    } ,
     props: {
         symbol: {
             type: [ Symbol , String ] ,
+            default: undefined ,
         } ,
         getPopupContainer: {
-            type: Function
+            type: Function ,
+            default: undefined ,
         }
-    } ,
-    directives: { 
-        domPortal ,
     } ,
     computed: {
         config(){

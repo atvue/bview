@@ -5,10 +5,10 @@ import getRegion from '../getRegion';
 
 
 function isOutOfVisibleRect(target) {
-  const visibleRect = getVisibleRectForElement(target);
-  const targetRegion = getRegion(target);
+    const visibleRect = getVisibleRectForElement(target);
+    const targetRegion = getRegion(target);
 
-  return !visibleRect ||
+    return !visibleRect ||
     (targetRegion.left + targetRegion.width) <= visibleRect.left ||
     (targetRegion.top + targetRegion.height) <= visibleRect.top ||
     targetRegion.left >= visibleRect.right ||
@@ -16,12 +16,12 @@ function isOutOfVisibleRect(target) {
 }
 
 function alignElement(el, refNode, align) {
-  const target = align.target || refNode;
-  const refNodeRegion = getRegion(target);
+    const target = align.target || refNode;
+    const refNodeRegion = getRegion(target);
 
-  const isTargetNotOutOfVisible = !isOutOfVisibleRect(target);
+    const isTargetNotOutOfVisible = !isOutOfVisibleRect(target);
 
-  return doAlign(el, refNodeRegion, align, isTargetNotOutOfVisible);
+    return doAlign(el, refNodeRegion, align, isTargetNotOutOfVisible);
 }
 
 alignElement.__getOffsetParent = getOffsetParent;
