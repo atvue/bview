@@ -27,7 +27,7 @@
 <script>
 import Casitem from './casitem.vue';
 import Emitter from '../../utils/emitter';
-import { findComponentUpward, findComponentDownward } from '../../utils/assist';
+import { findComponentUpward, findComponentsDownward } from '../../utils/assist';
 let key = 1;
 export default {
     name: 'Caspanel',
@@ -86,7 +86,7 @@ export default {
             this.sublist = [];
             this.tmpItem = {};
             if (deep) {
-                const Caspanel = findComponentDownward(this, 'Caspanel');
+                const Caspanel = findComponentsDownward(this, 'Caspanel');
                 if (Caspanel) {
                     Caspanel.$emit('on-clear', true);
                 }
@@ -149,7 +149,7 @@ export default {
                     fromInit: fromInit
                 });
                 if (this.changeOnSelect) {
-                    const Caspanel = findComponentDownward(this, 'Caspanel');
+                    const Caspanel = findComponentsDownward(this, 'Caspanel');
                     if (Caspanel) {
                         Caspanel.$emit('on-clear', true);
                     }
