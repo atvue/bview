@@ -6,4 +6,4 @@
 
 [组件开发规范](./docs/specification.md)
 
-[组件基础说明文档](./doc/component.md)
+[组件基础说明文档](./docs/component.md)
