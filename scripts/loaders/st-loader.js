@@ -45,7 +45,7 @@ module.exports = function(source, map, meta) {
                     render: { propsRes, apiMethods, emitEvents, slotsRes }
                 } = res;
                 apiTpl += `\n\n#### ${name}.vue\n\n##### props\n\n${propsRes ||
-                    '无'}\n\n##### methods\n\n${apiMethods}\n\n##### emits\n\n${emitEvents ||
+                    '无'}\n\n##### methods\n\n${apiMethods || '无'}\n\n##### emits\n\n${emitEvents ||
                     '无'}\n\n##### slots\n\n${slotsRes || '无'}\n
             `;
             });

@@ -7,6 +7,7 @@
             v-if="$slots.prepend||prependIcon"
             :class="[prefixCls + '-icon-prepend']"
         >
+            <!-- 输入框前预留位 -->
             <slot name="prepend" />
             <i
                 v-if="prependIcon"
@@ -44,12 +45,14 @@
             v-if="$slots.append||appendIcon"
             :class="[prefixCls + '-icon-append']"
         >
+            <!-- 输入框后预留位 -->
             <slot name="append" />
             <i
                 v-if="appendIcon"
                 :class="['iconfont',appendIcon]"
             />
         </span>
+        <!-- 输入框默认预留位 -->
         <slot />
     </div>
 </template>
@@ -76,7 +79,7 @@ export default {
         //@doc是否启用自动完成功能，为on或者off
         autocomplete: {
             type: String,
-            default: 'on'
+            default: 'off'
         },
         //@doc是否自动聚焦
         autofocus: {
@@ -189,11 +192,6 @@ export default {
         //@doc手动失焦
         blur() {
             this.$refs.input.blur();
-        }
-    },
-    watch: {
-        value(val) {
-            this._setCurrentValue(val);
         }
     }
 };
