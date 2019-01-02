@@ -45,3 +45,8 @@ components 目录下每个组件目录会生成一份文档说明，文档内容
 文档资源在`site`目录下，基于单页应用，主要分为两个部分：
 
 -   组件库的说明文档，统一放在 `site/modules` 目录下，之后会改成.md 格式文件，每个 md 文件生成一个单独路由和左侧一级根目录
+
+
+### 编码规范
+
+推荐使用[Vue 风格指南](https://cn.vuejs.org/v2/style-guide/index.html)

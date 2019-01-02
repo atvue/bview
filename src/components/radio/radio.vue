@@ -1,22 +1,22 @@
 <template>
-	<span :class="[prefix + '-radio-wrap']" @click="_onChange">
-		<span :class="radioClass">
-			<span :class="innerClass"></span>
-			<input 
-				type="radio" 
+    <span :class="[prefix + '-radio-wrap']" @click="_onChange">
+        <span :class="radioClass">
+            <span :class="innerClass" />
+            <input 
+                type="radio" 
                 :class="[prefix + '-radio-input']"
                 :disabled="disabled"
                 :checked="checked"
                 :name="groupName"
                 :value="value"
-			>
-		</span>
-		<label :class="[prefix + '-radio-label']">
-			<slot>
-				{{ value }}
-			</slot>
-		</label>
-	</span>
+            >
+        </span>
+        <label :class="[prefix + '-radio-label']">
+            <slot>
+                {{ value }}
+            </slot>
+        </label>
+    </span>
 </template>
 
 <script>

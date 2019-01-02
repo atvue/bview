@@ -2,12 +2,16 @@
 
 module.exports = {
     extends: [
-        // 'eslint:recommended' ,
+        'eslint:recommended' ,
         'plugin:vue/recommended' ,
     ] ,
     rules: {
         "indent": [ "warn" , 4 ] ,
         "vue/html-indent": [ "warn" , 4 ] ,
         "vue/no-unused-vars": 'warn' ,
+    } ,
+    env: {
+        "browser": true ,
+        "commonjs": true ,
     }
 }
