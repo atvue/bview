@@ -35,6 +35,14 @@ module.exports = {
                 // .md => bview/src/components/button/demo/basic.md.js
                 exclude: [ /node_modules/ , /\.md\.js$/ ] ,     // 排除解析md文件
                 loader: "eslint-loader" ,
+                options: {
+                    emitWarning: true ,
+                } ,
+                /**
+                 * eslint-vue-plugin 注释语法
+                 * https://github.com/vuejs/eslint-plugin-vue/issues/260
+                 * https://github.com/vuejs/eslint-plugin-vue/pull/320
+                 */
             } ,
             // style: less
             {
