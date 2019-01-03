@@ -10,13 +10,12 @@
 
 
 <script>
-import { findComponentUpward , camlizeName } from '../../utils/assist'
+import { findComponentUpward } from '../../utils/assist'
+import { optionName , selectName } from './helper/name'
 import { bviewPrefix as b } from '../../utils/macro'
-const name = camlizeName( `${b}-option` ) ,
-    parentName = camlizeName( `${b}-select` )
 
 export default {
-    name ,
+    name: optionName ,
     props: {
         // @doc 值
         value: {
@@ -26,7 +25,7 @@ export default {
     } ,
     computed: {
         selectVm(){
-            let parent = findComponentUpward( this , parentName )
+            let parent = findComponentUpward( this , selectName )
             return parent
         } ,
         bClsOption(){

@@ -10,7 +10,7 @@
             placeholder="请选择..."
             v-model="value"
         >
-            <Option :value="undefined">请选择..</Option>
+            <Option :value="undefined">空</Option>
             <Option value="value1">选项一</Option>
         </Select>
     </div>

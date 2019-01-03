@@ -52,19 +52,27 @@
 import Dropdown from '../dropdown'
 import Icon from '../icon'
 import { bviewPrefix as b } from '../../utils/macro'
-import { camlizeName } from '../../utils/assist'
-const nameKebab = `${b}-select` ,
-    name = camlizeName( nameKebab )
+import options from './helper/options'
+import { selectName } from './helper/name'
 
 export default {
-    name ,
+    name: selectName ,
     components: { Dropdown , Icon } ,
+    mixins: [ options ] ,
     props: {
         // @doc 占位提示符
         placeholder: {
             type: String ,
             default: undefined ,
-        }
+        } ,
+        value: {
+            type: null ,
+            default: undefined ,
+        } ,
+        labelInValue: {
+            type: Boolean ,
+            default: false ,
+        } ,
     } ,
     data(){
         return {
@@ -118,11 +126,12 @@ export default {
     } ,
     created(){
         this.$on( 'click-option' , this._clickOption )
+        // 初次加载 填充legend
+        this._setValue()
     } ,
     methods: {
         _toggleOptions(){
             let { visibleOptions } = this
-
             this.visibleOptions = !visibleOptions
         } ,
         _clacOptionWrapperWidth(){
@@ -138,6 +147,17 @@ export default {
             this.selected = { value , label }
             this.$emit( 'input' , inputVal )
             this.visibleOptions = false
+        } ,
+        _setValue(){
+            let { options , value , labelInValue } = this ,
+                target = options.find( ( { value: val } ) => {
+                    return labelInValue ? ( value.value === val ) : 
+                        ( val === value )
+                } ) ,
+                hasValue = target !== undefined
+            if ( hasValue ) {
+                this.selected = { ...target }
+            }
         }
     } ,
 }
