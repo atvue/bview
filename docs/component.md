@@ -25,6 +25,8 @@ API 文档会读取组件目录下所有.vue 文件内容，静态解析获得�
  */
 ```
 
+name：统一使用`PascalCase`命名方式，[组件名为多个单词](https://vuejs.org/v2/style-guide/index.html#Multi-word-component-names-essential)
+
 props：
 
 -   不能使用 `props:[xxx, xxx, xxx]` 简写形式，必须至少指定每个`prop`的类型
@@ -42,6 +44,8 @@ methods:
 emits:
 
 -   所有 emits 需要写在`<script></script>`标签中，暂不支持`<template></template>`中 emit 的事件
+
+-   统一使用`kebab-case`的事件名，[always use kebab-case for event names](https://vuejs.org/v2/guide/components-custom-events.html#Event-Names)
 
 slots:
 
