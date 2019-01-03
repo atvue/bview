@@ -13,7 +13,9 @@
                 <div 
                     class="bview-select-value"
                 >
-                    这是值的占位符
+                    <span v-if="hasSelected">
+                        {{ selected.label }}
+                    </span>
                 </div>
                 <div 
                     class="bview-select-icon"
@@ -40,8 +42,12 @@
 <script>
 import Dropdown from '../dropdown'
 import Icon from '../icon'
+import { bviewPrefix as b } from '../../utils/macro'
+import { camlizeName } from '../../utils/assist'
+const name = camlizeName( `${b}-select` )
 
 export default {
+    name ,
     components: { Dropdown , Icon } ,
     props: {
         placeholder: {
@@ -51,6 +57,7 @@ export default {
     } ,
     data(){
         return {
+            selected: undefined ,
             visibleOptions: false ,
             styleOptionWrapper: '' ,
         }
@@ -61,6 +68,11 @@ export default {
             if ( calc ) {
                 this._clacOptionWrapperWidth()
             }
+        }
+    } ,
+    computed: {
+        hasSelected(){
+            return this.selected !== undefined
         }
     } ,
     methods: {
@@ -74,7 +86,14 @@ export default {
                 rect = select.getBoundingClientRect() ,
                 { width } = rect
             this.styleOptionWrapper = `width: ${width}px`
+        } ,
+        _clickOption( { vm , payload } ){
+            let { value , label } = payload
+            this.selected = { value , label }
         }
+    } ,
+    created(){
+        this.$on( 'clickOption' , this._clickOption )
     }
 }
 </script>

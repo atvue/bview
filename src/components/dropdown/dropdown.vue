@@ -40,6 +40,7 @@
 <script>
 import warnInit from '../../utils/warn'
 import makeCancelable from '../../utils/makeCancelable'
+import { bviewPrefix as b } from '../../utils/macro.js'
 import clickOutEl from '../../directives/click-out-el'
 import { timeout } from '../../utils/timer'
 import noop from '../../utils/noop'
@@ -110,16 +111,16 @@ export default {
     } ,
     computed: {
         prefixCls(){
-            return `bview-${name}`
+            return `${b}-${name}`
         } ,
         clsOverlay(){
             let { overlayClass , trigger } = this ,
                 clsStr = overlayClass ? ` ${overlayClass}` : '' ,
                 clsTriggerContextMenu = trigger === triggerRightClick ? ` ctx-menu-type` : ''
-            return `bview-${name}-overlay` + clsStr + clsTriggerContextMenu
+            return `${b}-${name}-overlay` + clsStr + clsTriggerContextMenu
         } ,
         clsDropPortal(){
-            return `bview-${name}-poartal`
+            return `${b}-${name}-poartal`
         } ,
         transitionName(){
             let { placement } = this ,

@@ -10,7 +10,13 @@
 
 
 <script>
+import { findComponentUpward , camlizeName } from '../../utils/assist'
+import { bviewPrefix as b } from '../../utils/macro'
+const name = camlizeName( `${b}-option` ) ,
+    parentName = camlizeName( `${b}-select` )
+
 export default {
+    name ,
     props: {
         // @doc 值
         value: {
@@ -18,10 +24,21 @@ export default {
             required: true ,
         }
     } ,
+    computed: {
+        selectVm(){
+            let parent = findComponentUpward( this , parentName )
+            return parent
+        } ,
+    } ,
     methods: {
         clickOption(){
-            // let { value , $refs: { el } } = this
-            // console.log( value , el )
+            let { value , $refs: { el } , selectVm } = this ,
+                noSelect = selectVm === undefined ,
+                noEl = el === undefined ,
+                skip = noSelect || noEl ,
+                { textContent } = noEl ? {} : el ,
+                payload = { value , label: textContent }
+            selectVm.$emit( 'clickOption' , { vm: this , payload } )
         }
     }
 }

@@ -23,6 +23,7 @@ export function findComponentUpward (context, componentName, componentNames) {
     }
     return parent;
 }
+
 // 判断参数是否是其中之一
 export function oneOf (value, validList) {
     for (let i = 0; i < validList.length; i++) {
@@ -32,3 +33,23 @@ export function oneOf (value, validList) {
     }
     return false;
 }
+
+// 驼峰转连字符
+const hyphenateRE = /\B([A-Z])/g;
+export const hyphenate = function (str) {
+    return str.replace(hyphenateRE, '-$1').toLowerCase()
+}
+
+// 连字符转驼峰
+const camelizeRE = /-(\w)/g;
+export const camelize = function (str) {
+    return str.replace(camelizeRE, function (_, c) { return c ? c.toUpperCase() : ''; })
+}
+
+// 首字母大写
+var capitalize = function ( str ) {
+    return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
+// 组件名称规范 https://vuejs.org/v2/style-guide/index.html#Multi-word-component-names-essential
+export const camlizeName = str => capitalize( camelize( str ) )
