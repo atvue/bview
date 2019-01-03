@@ -16,8 +16,8 @@
             class="u-ipt"
             :placeholder="displayRender==='' ? placeholder : ''" 
             :readonly="!filterable" 
-            @click="toggleOpen"
-            @input="handleInput"
+            @click="_toggleOpen"
+            @input="_handleInput"
         >
         <span
             v-show="displayRender!== '' && (filterable || clearable)" 
@@ -28,7 +28,7 @@
         </span>
         <div
             v-show="showDropDown"
-            @click.stop="doShowValue"
+            @click.stop="_doShowValue"
         >
             <div :class="prefixCls + '-dropdown-contain'">
                 <Caspanel
@@ -58,7 +58,7 @@
                             :class="[selectPrefixCls + '-item' ,{
                                 [selectPrefixCls + '-item-disabled']: item.disabled
                             }]"
-                            @click="handleSelectItem(index)" 
+                            @click="_handleSelectItem(index)" 
                             v-html="item.display"
                         />
                         <!-- eslint-enable -->
@@ -215,7 +215,7 @@ export default {
         showDropDown (val) {
             if (val) {
                 if (this.currentValue.length) {
-                    this.updateSelected();
+                    this._updateSelected();
                 }
             }
             this.$emit('on-visible-change', val);
@@ -230,16 +230,16 @@ export default {
                 this.updatingValue = false;
                 return;
             }
-            this.updateSelected(true);
+            this._updateSelected(true);
         },
         data: {
             deep: true,
             handler () {
-                const validDataStr = JSON.stringify(this.getValidData(this.data));
+                const validDataStr = JSON.stringify(this._getValidData(this.data));
                 if (validDataStr !== this.validDataStr) {
                     this.validDataStr = validDataStr;
                     if (!this.isLoadedChildren) {
-                        this.$nextTick(() => this.updateSelected(false));
+                        this.$nextTick(() => this._updateSelected(false));
                     }
                     this.isLoadedChildren = false;
                 }
@@ -247,7 +247,7 @@ export default {
         },
     },
     created () {
-        this.validDataStr = JSON.stringify(this.getValidData(this.data));
+        this.validDataStr = JSON.stringify(this._getValidData(this.data));
         this.$on('on-result-change', (params) => {
             // lastValue 点击最后一级
             // fromInit 初始化时更新
@@ -264,53 +264,55 @@ export default {
                 if (!fromInit) {
                     this.updatingValue = true;
                     this.currentValue = newVal;
-                    this.emitValue(this.currentValue, oldVal);
+                    this._emitValue(this.currentValue, oldVal);
                 }
             }
             if (lastValue && !fromInit) {
-                this.handleClose();
+                this.onClose();
             }
         });
     },
     mounted () {
-        this.updateSelected(true);
+        this._updateSelected(true);
     },
     methods: {
-        toggleOpen () {
+        _toggleOpen () {
             if (this.disabled) return false;
             if (this.showDropDown) {
                 if (!this.filterable) {
-                    this.handleClose();
+                    this.onClose();
                 }
             } else {
                 this.onFocus();
             }
         },
-        handleClose () {
+        //@doc手动关闭级联选择器
+        onClose () {
             this.showDropDown = false;
         },
+        //@doc手动选中级联选择器
         onFocus () {
             this.showDropDown = true;
             if (!this.currentValue.length) {
                 this.broadcast('Caspanel', 'on-clear');
             }
         },
-        // 当外部被点击时调用
+        //@doc当外部被点击时调用
         handleClickOutSide() {
             if (this.showDropDown && !this.filterable) {
-                this.handleClose();
+                this.onClose();
             }
         } ,
-        handleSelectItem (index) {
+        _handleSelectItem (index) {
             let item = this.querySelections[index];
             if (item.item.disabled) return false;
             this.query = '';
             let oldVal = JSON.stringify(this.currentValue);
             this.currentValue = item.value.split(',');
-            this.emitValue(this.currentValue, oldVal);
-            this.handleClose();
+            this._emitValue(this.currentValue, oldVal);
+            this.onClose();
         },
-        emitValue (val, oldVal) {
+        _emitValue (val, oldVal) {
             if (JSON.stringify(val) !== oldVal) {
                 this.$emit('on-change', this.currentValue, JSON.parse(JSON.stringify(this.selected)));
                 // 对于表单中使用级联选择器，触发表单变更事件
@@ -323,21 +325,21 @@ export default {
             }
         },
         // 更新选中
-        updateSelected (init = false) {
+        _updateSelected (init = false) {
             if (this.changeOnSelect || init) {
                 this.broadcast('Caspanel', 'on-find-selected', {
                     value: this.currentValue
                 });
             }
         },
-        updateResult (result) {
+        _updateResult (result) {
             this.tmpSelected = result;
         },
         // 排除 loading 后的 data，避免重复触发 updateSelect
-        getValidData (data) {
-            return data.map(item => this.deleteData(item));
+        _getValidData (data) {
+            return data.map(item => this._deleteData(item));
         } ,
-        deleteData(item){
+        _deleteData(item){
             const new_item = Object.assign({}, item);
             if ('loading' in new_item) {
                 delete new_item.loading;
@@ -349,27 +351,27 @@ export default {
                 delete new_item.__label;
             }
             if ('children' in new_item && new_item.children.length) {
-                new_item.children = new_item.children.map(i => this.deleteData(i));
+                new_item.children = new_item.children.map(i => this._deleteData(i));
             }
             return new_item;
         } ,
-        handleInput (event) {
+        _handleInput (event) {
             this.noChild = false ;
             this.showValue = false ;
             this.query = event.target.value;
         },
-        doShowValue(){
+        _doShowValue(){
             this.query = '';
             this.showValue = true ;
         } ,
-        // 清空值
+        //@doc手动清空值
         clearValue(){
             if (this.disabled) { return }
             this.selected = [];
             const oldVal = JSON.stringify(this.currentValue);
             this.currentValue = [] ;
-            this.emitValue(this.currentValue, oldVal);
-            this.handleClose();
+            this._emitValue(this.currentValue, oldVal);
+            this.onClose();
         } ,
     }
 };

@@ -3,11 +3,11 @@
         {{ data.label }}
         <i
             v-if="showArrow"
-            class="ivu-icon ivu-icon-ios-arrow-forward"
+            class="at-icon at-icon-ios-arrow-forward"
         />
         <i
             v-if="showLoading"
-            class="ivu-icon ivu-icon-ios-loading ivu-load-loop"
+            class="at-icon at-icon-ios-loading at-load-loop"
         />
     </li>
 </template>
