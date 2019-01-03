@@ -38,6 +38,9 @@ export default {
                 skip = noSelect || noEl ,
                 { textContent } = noEl ? {} : el ,
                 payload = { value , label: textContent }
+            if ( skip ) {
+                return
+            }
             selectVm.$emit( 'clickOption' , { vm: this , payload } )
         }
     }

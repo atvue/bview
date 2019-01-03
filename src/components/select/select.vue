@@ -62,6 +62,11 @@ export default {
             styleOptionWrapper: '' ,
         }
     } ,
+    computed: {
+        hasSelected(){
+            return this.selected !== undefined
+        }
+    } ,
     watch: {
         visibleOptions( val , newVal ) {
             let calc = val !== newVal && val
@@ -70,10 +75,8 @@ export default {
             }
         }
     } ,
-    computed: {
-        hasSelected(){
-            return this.selected !== undefined
-        }
+    created(){
+        this.$on( 'clickOption' , this._clickOption )
     } ,
     methods: {
         _toggleOptions(){
@@ -87,13 +90,11 @@ export default {
                 { width } = rect
             this.styleOptionWrapper = `width: ${width}px`
         } ,
+        // eslint-disable-next-line
         _clickOption( { vm , payload } ){
             let { value , label } = payload
             this.selected = { value , label }
         }
     } ,
-    created(){
-        this.$on( 'clickOption' , this._clickOption )
-    }
 }
 </script>
