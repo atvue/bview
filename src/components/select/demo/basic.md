@@ -10,7 +10,7 @@
         v-model="value"
     >
         <Option value="primary">小学</Option>
-        <Option value="junior">初中</Option>
+        <Option value="junior" disabled>初中</Option>
         <Option value="senior">高中</Option>
         <Option value="university">大学</Option>
     </Select>
@@ -24,7 +24,7 @@ export default {
     components: { Select , Option } ,
     data(){
         return {
-            value: undefined ,
+            value: 'university' ,
         }
     } ,
     watch: {

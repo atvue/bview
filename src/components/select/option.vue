@@ -21,6 +21,11 @@ export default {
         value: {
             type: null ,
             required: true ,
+        } ,
+        // @doc 禁用
+        disabled: {
+            type: Boolean ,
+            default: false ,
         }
     } ,
     computed: {
@@ -29,11 +34,14 @@ export default {
             return parent
         } ,
         bClsOption(){
-            let { selected } = this ,
+            let { selected , disabled } = this ,
                 cls = `${b}-option`
-            if ( selected ) {
+            if ( disabled ) {
+                cls += ` ${b}-option-disabled`
+            } else if ( selected ) {
                 cls += ` ${b}-option-selected`
             }
+            
             return cls
         } ,
         selected(){
@@ -45,10 +53,10 @@ export default {
     } ,
     methods: {
         clickOption(){
-            let { value , $refs: { el } , selectVm } = this ,
+            let { value , $refs: { el } , selectVm , disabled } = this ,
                 noSelect = selectVm === undefined ,
                 noEl = el === undefined ,
-                skip = noSelect || noEl ,
+                skip = noSelect || noEl || disabled ,
                 { textContent } = noEl ? {} : el ,
                 payload = { value , label: textContent }
             if ( skip ) {

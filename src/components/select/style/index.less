@@ -9,6 +9,7 @@
 @options-wrapper: ~"@{bview-prefix}-options-wrapper" ;
 @option: ~"@{bview-prefix}-option" ;
 @option-selected: ~"@{bview-prefix}-option-selected" ;
+@option-disabled: ~"@{bview-prefix}-option-disabled" ;
 // num
 @height: 32px ;
 
@@ -78,5 +79,14 @@
         background-color: #fafafa;
         font-weight: 600;
         color: rgba(0,0,0,0.65);
+    }
+    .@{option-disabled} {
+        color: rgba(0,0,0,0.25);
+        cursor: not-allowed;
+        &:hover {
+            color: rgba(0,0,0,0.25);
+            background-color: #fff;
+            cursor: not-allowed;
+        }
     }
 }
