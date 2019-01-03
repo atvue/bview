@@ -1,7 +1,7 @@
 <template>
     <li
         ref="el"
-        class="bview-select-dropdown-menu-item"
+        :class="bClsOption"
         @click="clickOption"
     >
         <slot />
@@ -29,6 +29,9 @@ export default {
             let parent = findComponentUpward( this , parentName )
             return parent
         } ,
+        bClsOption(){
+            return `${b}-option`
+        }
     } ,
     methods: {
         clickOption(){

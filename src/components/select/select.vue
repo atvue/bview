@@ -4,21 +4,21 @@
     >
         <div 
             ref="select"
-            class="bview-select-wrapper"
+            :class="bClsSelectWrapper"
             @click="_toggleOptions"
         >
             <div 
-                class="bview-select-inner"
+                :class="bClsSelectInner"
             >
                 <div 
-                    class="bview-select-value"
+                    :class="bClsSelectValue"
                 >
                     <span v-if="hasSelected">
                         {{ selected.label }}
                     </span>
                 </div>
                 <div 
-                    class="bview-select-icon"
+                    :class="bClsSelectIcon"
                 >
                     <Icon type="down" />
                 </div>
@@ -26,11 +26,11 @@
         </div>
         <div 
             slot="overlay"
-            class="bview-options-wrapper"
+            :class="bClsOptionsWrapper"
             :style="styleOptionWrapper"
         >
             <ul
-                class="options-inner"
+                :class="bClsOptionsInner"
             >
                 <slot />
             </ul>
@@ -44,7 +44,8 @@ import Dropdown from '../dropdown'
 import Icon from '../icon'
 import { bviewPrefix as b } from '../../utils/macro'
 import { camlizeName } from '../../utils/assist'
-const name = camlizeName( `${b}-select` )
+const nameKebab = `${b}-select` ,
+    name = camlizeName( nameKebab )
 
 export default {
     name ,
@@ -58,13 +59,32 @@ export default {
     data(){
         return {
             selected: undefined ,
+
             visibleOptions: false ,
-            styleOptionWrapper: '' ,
+            styleOptionWrapper: undefined ,
         }
     } ,
     computed: {
         hasSelected(){
             return this.selected !== undefined
+        } ,
+        bClsSelectWrapper(){
+            return `${b}-select-wrapper`
+        } ,
+        bClsSelectInner(){
+            return `${b}-select-inner`
+        } ,
+        bClsSelectValue(){
+            return `${b}-select-value`
+        } ,
+        bClsSelectIcon(){
+            return `${b}-select-icon`
+        } ,
+        bClsOptionsWrapper(){
+            return `${b}-options-wrapper`
+        } ,
+        bClsOptionsInner(){
+            return `${b}-options-inner`
         }
     } ,
     watch: {
@@ -76,7 +96,10 @@ export default {
         }
     } ,
     created(){
-        this.$on( 'clickOption' , this._clickOption )
+        this.$on( 'clickOption' , data => {
+            this._clickOption( data )
+            return true ;
+        } )
     } ,
     methods: {
         _toggleOptions(){
