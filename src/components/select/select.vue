@@ -11,10 +11,19 @@
                 :class="bClsSelectInner"
             >
                 <div 
-                    :class="bClsSelectValue"
+                    :class="bClsSelectLegend"
                 >
-                    <span v-if="hasSelected">
+                    <span 
+                        v-if="hasSelected"
+                        :class="bClsSelectValue"
+                    >
                         {{ selected.label }}
+                    </span>
+                    <span 
+                        v-else
+                        :class="bClsPlaceholder"
+                    >
+                        {{ placeholderLabel }}
                     </span>
                 </div>
                 <div 
@@ -74,6 +83,9 @@ export default {
         bClsSelectInner(){
             return `${b}-select-inner`
         } ,
+        bClsSelectLegend(){
+            return `${b}-select-legend`
+        } ,
         bClsSelectValue(){
             return `${b}-select-value`
         } ,
@@ -85,6 +97,14 @@ export default {
         } ,
         bClsOptionsInner(){
             return `${b}-options-inner`
+        } ,
+        bClsPlaceholder(){
+            return `${b}-select-placeholder`
+        } ,
+        placeholderLabel(){
+            let { placeholder } = this ,
+                hasPlaceholder = placeholder !== undefined
+            return hasPlaceholder ? placeholder : '\u2003'
         }
     } ,
     watch: {
@@ -96,10 +116,7 @@ export default {
         }
     } ,
     created(){
-        this.$on( 'clickOption' , data => {
-            this._clickOption( data )
-            return true ;
-        } )
+        this.$on( 'click-option' , this._clickOption )
     } ,
     methods: {
         _toggleOptions(){
@@ -115,8 +132,11 @@ export default {
         } ,
         // eslint-disable-next-line
         _clickOption( { vm , payload } ){
-            let { value , label } = payload
+            let { value , label } = payload ,
+                inputVal = value
             this.selected = { value , label }
+            this.$emit( 'input' , inputVal )
+            this.visibleOptions = false
         }
     } ,
 }

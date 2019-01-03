@@ -7,6 +7,7 @@
     <div>
         <Select 
             style="width: 120px;"
+            placeholder="请选择..."
             v-model="value"
         >
             <Option :value="undefined">请选择..</Option>
@@ -32,9 +33,6 @@ export default {
         value( val , oldValue ) {
             console.log( val )
         }
-    } ,
-    mounted(){
-        console.log( this.$options )
     }
 }
 </script>

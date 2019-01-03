@@ -44,7 +44,7 @@ export default {
             if ( skip ) {
                 return
             }
-            selectVm.$emit( 'clickOption' , { vm: this , payload } )
+            selectVm.$emit( 'click-option' , { vm: this , payload } )
         }
     }
 }
