@@ -60,6 +60,7 @@ export default {
     name ,
     components: { Dropdown , Icon } ,
     props: {
+        // @doc 占位提示符
         placeholder: {
             type: String ,
             default: undefined ,
