@@ -29,8 +29,19 @@ export default {
             return parent
         } ,
         bClsOption(){
-            return `${b}-option`
-        }
+            let { selected } = this ,
+                cls = `${b}-option`
+            if ( selected ) {
+                cls += ` ${b}-option-selected`
+            }
+            return cls
+        } ,
+        selected(){
+            let { selectVm } = this ,
+                { selected } = selectVm ,
+                selted = selected.value === this.value
+            return selted
+        } ,
     } ,
     methods: {
         clickOption(){
