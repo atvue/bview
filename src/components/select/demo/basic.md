@@ -4,22 +4,20 @@
 
 ```vue
 <template>
-    <div>
-        <Select 
-            style="width: 120px;"
-            placeholder="请选择..."
-            v-model="value"
-        >
-            <Option :value="undefined">空</Option>
-            <Option value="value1">选项一</Option>
-        </Select>
-    </div>
+    <Select 
+        style="width: 140px;"
+        placeholder="请选择学历"
+        v-model="value"
+    >
+        <Option value="primary">小学</Option>
+        <Option value="junior">初中</Option>
+        <Option value="senior">高中</Option>
+        <Option value="university">大学</Option>
+    </Select>
 </template>
 
 <script>
 import { Select } from 'bview'
-
-
 const { Option } = Select
 
 export default {

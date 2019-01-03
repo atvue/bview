@@ -140,8 +140,7 @@ export default {
                 { width } = rect
             this.styleOptionWrapper = `width: ${width}px`
         } ,
-        // eslint-disable-next-line
-        _clickOption( { vm , payload } ){
+        _clickOption( { payload } ){
             let { value , label } = payload ,
                 inputVal = value
             this.selected = { value , label }
