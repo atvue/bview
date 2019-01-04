@@ -2,7 +2,7 @@
     <li
         ref="el"
         :class="bClsOption"
-        @click="clickOption"
+        @click="_clickOption"
     >
         <Icon 
             v-if="selected"
@@ -63,7 +63,7 @@ export default {
         } ,
     } ,
     methods: {
-        clickOption(){
+        _clickOption(){
             let { value , $refs: { el } , selectVm , disabled } = this ,
                 noSelect = selectVm === undefined ,
                 noEl = el === undefined ,
@@ -73,6 +73,7 @@ export default {
             if ( skip ) {
                 return
             }
+            // -@doc
             selectVm.$emit( 'click-option' , { vm: this , payload } )
         }
     }

@@ -4,7 +4,13 @@ const traverse = require('@babel/traverse').default;
 const bt = require('babel-types');
 const generate = require('@babel/generator').default;
 
-const COMMENTTAG = '@doc';
+const COMMENTTAG = '@doc' ,
+    ignoreCommentReg = new RegExp( `^\\s*-${COMMENTTAG}` ) ,    // -@doc 忽略输出当前的API
+    tagbeginReg = new RegExp(`^${COMMENTTAG}`),
+    tagblock = new RegExp(`@docbegin[\\s\\S]*?@docend`),
+    tagReg = new RegExp(`(${COMMENTTAG}(begin|end|)|\\*)`, 'g') ,
+    newLineReg = /\n/g
+    
 // 获取prop 的 type
 function getType(node) {
     let type = '';
@@ -45,11 +51,7 @@ function getComment(node) {
     let { leadingComments } = node;
 
     if (leadingComments !== undefined && leadingComments.length > 0) {
-        let tagbeginReg = new RegExp(`^${COMMENTTAG}`),
-            tagblock = new RegExp(`@docbegin[\\s\\S]*?@docend`),
-            tagReg = new RegExp(`(${COMMENTTAG}(begin|end|)|\\*)`, 'g'),
-            newLineReg = /\n/g,
-            tarComments = leadingComments
+        let tarComments = leadingComments
                 .filter(({ value, type }) => {
                     let trimVal = value.trim();
                     if (type === 'CommentBlock') {
@@ -197,6 +199,15 @@ module.exports = astJs => {
 
                 // if (!exist) {
                 // 参数说明和事件说明都解析注释
+                let { leadingComments: comments } = path.parent ,
+                    hasComments = comments && comments.length > 0 ,
+                    ignoreEmit = false
+                if ( hasComments ) {
+                    ignoreEmit = comments.some( ( { value } ) => ignoreCommentReg.test( value ) )
+                }
+                if ( ignoreEmit ) {
+                    return
+                }
                 let emit = {
                     name: emitName.value,
                     args: generate(emitArg).code, // args暂时没有用
