@@ -53,22 +53,25 @@ import Dropdown from '../dropdown'
 import Icon from '../icon'
 import { bviewPrefix as b } from '../../utils/macro'
 import options from './helper/options'
+import keyboard from './helper/keyboard'
 import { selectName } from './helper/name'
 
 export default {
     name: selectName ,
     components: { Dropdown , Icon } ,
-    mixins: [ options ] ,
+    mixins: [ options , keyboard ] ,
     props: {
         // @doc 占位提示符
         placeholder: {
             type: String ,
             default: undefined ,
         } ,
+        // @doc v-model
         value: {
             type: null ,
             default: undefined ,
         } ,
+        // @doc 默认false，则value值只是option代表的值，设置成true，则value是对象形式，参数中有label：{ value , label }
         labelInValue: {
             type: Boolean ,
             default: false ,

@@ -9,6 +9,7 @@
 @options-wrapper: ~"@{bview-prefix}-options-wrapper" ;
 @option: ~"@{bview-prefix}-option" ;
 @option-selected: ~"@{bview-prefix}-option-selected" ;
+@option-selected-icon: ~"@{bview-prefix}-option-selected-icon" ;
 @option-disabled: ~"@{bview-prefix}-option-disabled" ;
 // num
 @height: 32px ;
@@ -64,7 +65,7 @@
     .@{option} {
         position: relative;
         display: block ;
-        padding: 5px 12px;
+        padding: 5px 12px 5px 16px;
         line-height: 22px;
         font-weight: normal;
         color: rgba(0,0,0,0.65);
@@ -81,6 +82,12 @@
         background-color: #fafafa;
         font-weight: 600;
         color: rgba(0,0,0,0.65);
+        .@{option-selected-icon} {
+            position: absolute ;
+            left: 4px ;
+            z-index: 1 ;
+            font-size: 12px ;
+        }
     }
     .@{option-disabled} {
         color: rgba(0,0,0,0.25);

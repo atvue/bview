@@ -4,6 +4,11 @@
         :class="bClsOption"
         @click="clickOption"
     >
+        <Icon 
+            v-if="selected"
+            type="check"
+            :class="bClsOptionSelectedIcon"
+        />
         <slot />
     </li>
 </template>
@@ -11,11 +16,15 @@
 
 <script>
 import { findComponentUpward } from '../../utils/assist'
+import Icon from '../icon'
 import { optionName , selectName } from './helper/name'
 import { bviewPrefix as b } from '../../utils/macro'
 
 export default {
     name: optionName ,
+    components: {
+        Icon ,
+    } ,
     props: {
         // @doc 值
         value: {
@@ -41,8 +50,10 @@ export default {
             } else if ( selected ) {
                 cls += ` ${b}-option-selected`
             }
-            
             return cls
+        } ,
+        bClsOptionSelectedIcon(){
+            return `${b}-option-selected-icon`
         } ,
         selected(){
             let { selectVm } = this ,
