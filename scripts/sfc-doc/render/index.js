@@ -4,7 +4,13 @@ function renderTable(heads, keys, data) {
     let res = data.map(d => {
         let row = [];
         keys.forEach(key => {
-            let v = d[key] === undefined ? '/' : d[key];
+            let value = d[key] ,
+                noValue = value === undefined || value === 'undefined'
+                v = noValue ? '/' : value;
+            if ( key === 'required' ) {
+                let required = value === 'true'
+                v = required ? '必填' : '不必填'
+            }
             row.push(v);
         });
         return row;

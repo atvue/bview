@@ -9,15 +9,28 @@ demo 文件夹下可包括多个 md 文件，最终每个 md 文件会生成一�
 
 #### API 文档
 
-API 文档会读取组件目录下所有.vue 文件内容，静态解析获得文档内容，如果某个.vue 文件不需要对外暴露 api，文件内使用特殊 ignore 标记（暂未实现，实现后再补充）
+API 文档会读取组件目录下所有.vue 文件内容，静态解析获得文档内容
 
 每个.vue 文件的 API 文档包括四个部分（章节命名待定）：props, methods, emits, slots。
 
 通用注释规范，请按以下示例编写需要被解析展示的注释内容
 
+如果当前API不想对外暴露，可以使用`-@doc`标记
+
 `// @doc xxxxxxxxx`
 
 `// @docbegin xxxxxxxx @docend`
+
+```javascript
+export default {
+    methods: {
+        click(){
+            // -@doc 下面的$emit API不会在文档中体现
+            this.$emit( 'click' )
+        }
+    }
+}
+```
 
 ```js
 /**

@@ -1,6 +1,6 @@
 {
-    "name": "nopvue-ui",
-    "version": "1.0.3",
+    "name": "bview",
+    "version": "0.0.1-alpha",
     "description": "vue ui components",
     "main": "lib/index.js",
     "scripts": {

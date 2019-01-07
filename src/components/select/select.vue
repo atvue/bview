@@ -11,10 +11,19 @@
                 :class="bClsSelectInner"
             >
                 <div 
-                    :class="bClsSelectValue"
+                    :class="bClsSelectLegend"
                 >
-                    <span v-if="hasSelected">
+                    <span 
+                        v-if="hasSelected"
+                        :class="bClsSelectValue"
+                    >
                         {{ selected.label }}
+                    </span>
+                    <span 
+                        v-else
+                        :class="bClsPlaceholder"
+                    >
+                        {{ placeholderLabel }}
                     </span>
                 </div>
                 <div 
@@ -43,18 +52,30 @@
 import Dropdown from '../dropdown'
 import Icon from '../icon'
 import { bviewPrefix as b } from '../../utils/macro'
-import { camlizeName } from '../../utils/assist'
-const nameKebab = `${b}-select` ,
-    name = camlizeName( nameKebab )
+import options from './helper/options'
+import keyboard from './helper/keyboard'
+import { selectName } from './helper/name'
 
 export default {
-    name ,
+    name: selectName ,
     components: { Dropdown , Icon } ,
+    mixins: [ options , keyboard ] ,
     props: {
+        // @doc 占位提示符
         placeholder: {
             type: String ,
             default: undefined ,
-        }
+        } ,
+        // @doc v-model
+        value: {
+            type: null ,
+            default: undefined ,
+        } ,
+        // @doc 默认false，则value值只是option代表的值，设置成true，则value是对象形式，参数中有label：{ value , label }
+        labelInValue: {
+            type: Boolean ,
+            default: false ,
+        } ,
     } ,
     data(){
         return {
@@ -74,6 +95,9 @@ export default {
         bClsSelectInner(){
             return `${b}-select-inner`
         } ,
+        bClsSelectLegend(){
+            return `${b}-select-legend`
+        } ,
         bClsSelectValue(){
             return `${b}-select-value`
         } ,
@@ -85,6 +109,14 @@ export default {
         } ,
         bClsOptionsInner(){
             return `${b}-options-inner`
+        } ,
+        bClsPlaceholder(){
+            return `${b}-select-placeholder`
+        } ,
+        placeholderLabel(){
+            let { placeholder } = this ,
+                hasPlaceholder = placeholder !== undefined
+            return hasPlaceholder ? placeholder : '\u2003'
         }
     } ,
     watch: {
@@ -96,15 +128,13 @@ export default {
         }
     } ,
     created(){
-        this.$on( 'clickOption' , data => {
-            this._clickOption( data )
-            return true ;
-        } )
+        this.$on( 'click-option' , this._clickOption )
+        // 初次加载 填充legend
+        this._setValue()
     } ,
     methods: {
         _toggleOptions(){
             let { visibleOptions } = this
-
             this.visibleOptions = !visibleOptions
         } ,
         _clacOptionWrapperWidth(){
@@ -113,10 +143,23 @@ export default {
                 { width } = rect
             this.styleOptionWrapper = `width: ${width}px`
         } ,
-        // eslint-disable-next-line
-        _clickOption( { vm , payload } ){
-            let { value , label } = payload
+        _clickOption( { payload } ){
+            let { value , label } = payload ,
+                inputVal = value
             this.selected = { value , label }
+            this.$emit( 'input' , inputVal )
+            this.visibleOptions = false
+        } ,
+        _setValue(){
+            let { options , value , labelInValue } = this ,
+                target = options.find( ( { value: val } ) => {
+                    return labelInValue ? ( value.value === val ) : 
+                        ( val === value )
+                } ) ,
+                hasValue = target !== undefined
+            if ( hasValue ) {
+                this.selected = { ...target }
+            }
         }
     } ,
 }

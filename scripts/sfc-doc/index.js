@@ -82,6 +82,24 @@ module.exports = async file => {
     };
 };
 
+/* 
+async function test(){
+    let ast = await babelParse( `
+    let a = 1 ;
+    // -@doc 不触发
+    a.$emit( 'click' , 123 )
+    ` , {
+        sourceType: 'module'
+    } )
+    let { propsRes, emitEvents, apiMethods } = await parseJs(ast)
+    console.log( emitEvents )
+}
+
+test() */
+
+
+
+
 // parseEntry({ file: testfile, output: testoutput })
 //     .then(render)
 //     .then(result => {

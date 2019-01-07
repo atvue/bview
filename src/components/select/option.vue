@@ -2,49 +2,79 @@
     <li
         ref="el"
         :class="bClsOption"
-        @click="clickOption"
+        @click="_clickOption"
     >
+        <Icon 
+            v-if="selected"
+            type="check"
+            :class="bClsOptionSelectedIcon"
+        />
         <slot />
     </li>
 </template>
 
 
 <script>
-import { findComponentUpward , camlizeName } from '../../utils/assist'
+import { findComponentUpward } from '../../utils/assist'
+import Icon from '../icon'
+import { optionName , selectName } from './helper/name'
 import { bviewPrefix as b } from '../../utils/macro'
-const name = camlizeName( `${b}-option` ) ,
-    parentName = camlizeName( `${b}-select` )
 
 export default {
-    name ,
+    name: optionName ,
+    components: {
+        Icon ,
+    } ,
     props: {
         // @doc 值
         value: {
             type: null ,
             required: true ,
+        } ,
+        // @doc 禁用
+        disabled: {
+            type: Boolean ,
+            default: false ,
         }
     } ,
     computed: {
         selectVm(){
-            let parent = findComponentUpward( this , parentName )
+            let parent = findComponentUpward( this , selectName )
             return parent
         } ,
         bClsOption(){
-            return `${b}-option`
-        }
+            let { selected , disabled } = this ,
+                cls = `${b}-option`
+            if ( disabled ) {
+                cls += ` ${b}-option-disabled`
+            } else if ( selected ) {
+                cls += ` ${b}-option-selected`
+            }
+            return cls
+        } ,
+        bClsOptionSelectedIcon(){
+            return `${b}-option-selected-icon`
+        } ,
+        selected(){
+            let { selectVm } = this ,
+                { selected } = selectVm ,
+                selted = selected.value === this.value
+            return selted
+        } ,
     } ,
     methods: {
-        clickOption(){
-            let { value , $refs: { el } , selectVm } = this ,
+        _clickOption(){
+            let { value , $refs: { el } , selectVm , disabled } = this ,
                 noSelect = selectVm === undefined ,
                 noEl = el === undefined ,
-                skip = noSelect || noEl ,
+                skip = noSelect || noEl || disabled ,
                 { textContent } = noEl ? {} : el ,
                 payload = { value , label: textContent }
             if ( skip ) {
                 return
             }
-            selectVm.$emit( 'clickOption' , { vm: this , payload } )
+            // -@doc
+            selectVm.$emit( 'click-option' , { vm: this , payload } )
         }
     }
 }

@@ -2,36 +2,52 @@
 // select
 @select-wrapper: ~"@{bview-prefix}-select-wrapper" ;
 @select-inner: ~"@{bview-prefix}-select-inner" ;
-@select-value: ~"@{bview-prefix}-select-value" ;
+@select-legend: ~"@{bview-prefix}-select-legend" ;
 @select-icon: ~"@{bview-prefix}-select-icon" ;
+@select-placeholder: ~"@{bview-prefix}-select-placeholder" ;
 // option
 @options-wrapper: ~"@{bview-prefix}-options-wrapper" ;
 @option: ~"@{bview-prefix}-option" ;
-
+@option-selected: ~"@{bview-prefix}-option-selected" ;
+@option-selected-icon: ~"@{bview-prefix}-option-selected-icon" ;
+@option-disabled: ~"@{bview-prefix}-option-disabled" ;
+// num
+@height: 32px ;
 
 .@{select-wrapper} {
     border-radius: 4px;
+    height: @height ;
+    line-height: calc( @height - 2px ) ;
     border: 1px solid #d9d9d9 ;
     background-color: #fff;
     font-size: 14px ;
     cursor: pointer ;
+    box-sizing: border-box ;
+    &:hover {
+        border-color: #40a9ff;
+    }
     .@{select-inner} {
         display: flex ;
-        margin: 0 11px ;
+        margin: 0 10px ;
         outline: none;
         user-select: none;
         box-sizing: border-box ;
         // transition: all .3s cubic-bezier(.645, .045, .355, 1);
-        line-height: 30px ;
-        .@{select-value} {
+        .@{select-legend} {
+            flex: 1 ;
             padding-right: 20px ;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            max-width: 100%;
+        }
+        .@{select-placeholder}{
+            color: #bfbfbf ;
         }
         .@{select-icon} {
             width: 20px ;
+            .bicon-down {
+                line-height: 1 ;
+            }
         }
     }
 }
@@ -44,10 +60,12 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     border-radius: 4px;
     font-size: 14px;
+    max-height: 160px ;
+    overflow: auto ;
     .@{option} {
         position: relative;
         display: block ;
-        padding: 5px 12px;
+        padding: 5px 12px 5px 16px;
         line-height: 22px;
         font-weight: normal;
         color: rgba(0,0,0,0.65);
@@ -59,10 +77,25 @@
         &:hover {
             background-color: #e6f7ff;
         }
-        &.selected {
-            background-color: #fafafa;
-            font-weight: 600;
-            color: rgba(0,0,0,0.65);
+    }
+    .@{option-selected} {
+        background-color: #fafafa;
+        font-weight: 600;
+        color: rgba(0,0,0,0.65);
+        .@{option-selected-icon} {
+            position: absolute ;
+            left: 4px ;
+            z-index: 1 ;
+            font-size: 12px ;
+        }
+    }
+    .@{option-disabled} {
+        color: rgba(0,0,0,0.25);
+        cursor: not-allowed;
+        &:hover {
+            color: rgba(0,0,0,0.25);
+            background-color: #fff;
+            cursor: not-allowed;
         }
     }
 }
