@@ -36,7 +36,7 @@ module.exports = {
                 enforce: "pre" ,
                 test: /\.(js|vue)$/ ,
                 // .md => bview/src/components/button/demo/basic.md.js
-                exclude: [ /node_modules/ , /\.md\.js$/ ] ,     // 排除解析md文件
+                exclude: [ /node_modules/ , /\.md\.js$/, /src\/icons/ ] ,     // 排除解析md文件
                 loader: "eslint-loader" ,
                 options: {
                     emitWarning: true ,
