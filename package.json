@@ -8,7 +8,7 @@
         "dev": "node scripts/dev-server.js",
         "test": "jest",
         "dist:common": "node scripts/sfc-transform/build-lib",
-        "dist": "npm run dist:style && npm run dist:prod-commonjs && npm run dist:prod-umd-dev && npm run dist:prod-umd",
+        "dist": "npm run dist:style && npm run dist:icon && npm run dist:common && npm run dist:prod-umd-dev && npm run dist:prod-umd",
         "dist:prod-umd": "webpack --config scripts/webpack.prod.config.js",
         "dist:prod-umd-dev": "webpack --config scripts/webpack.prod.dev.config.js",
         "dist:style": "gulp --gulpfile scripts/buildStyle.js",

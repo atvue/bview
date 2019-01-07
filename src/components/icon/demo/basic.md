@@ -1,5 +1,4 @@
-#### 基本用法
-
+#### 字体图标
 
 ```vue
 <template>
@@ -10,7 +9,7 @@
 import { Icon } from 'bview'
 
 export default {
-    components: { Icon } ,
+    components: { Icon }
 }
 </script>
 ```

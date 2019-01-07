@@ -13,16 +13,8 @@ gulp.task('css', function() {
         .pipe(less())
         .pipe(postcss(processors))
         .pipe(cleanCSS())
-        .pipe(rename('nopvue.css'))
+        .pipe(rename('bview.css'))
         .pipe(gulp.dest('../dist/styles'));
 });
 
-// 拷贝字体文件
-gulp.task('fonts', function() {
-    gulp.src('../src/styles/iconfont/fonts/*.*').pipe(
-        gulp.dest('../dist/styles/fonts')
-    );
-});
-
-// gulp.task('default', ['css']);
-gulp.task('default', ['css', 'fonts']);
+gulp.task('default', ['css']);

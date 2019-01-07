@@ -16,10 +16,10 @@
         </span>
         <i
             v-if="clearable&&currentValue&&!disabled"
-            :class="['iconfont icon-shibai',prefixCls+'-icon',prefixCls+'-icon-clear']"
-            style="font-size:12px;"
-            @click="_handleClear"
-        />
+            :class="prefixCls+'-icon'"
+            @click="_handleClear">
+            <Icon :svg="closeIcon"/>
+        </i>
         <i
             v-else-if="search"
             :class="['iconfont icon-sousuokuang-sousuo',prefixCls+'-icon',prefixCls+'-icon-search']"
@@ -58,8 +58,14 @@
 </template>
 <script>
 const prefixCls = 'bview-input';
+import CloseIcon from '../../icons/close';
+import Icon from '../icon';
+// debugger;
 export default {
     name: 'Input',
+    components: {
+        Icon
+    },
     props: {
         //@doc输入框类型
         type: {
@@ -130,7 +136,8 @@ export default {
     data() {
         return {
             currentValue: this.value,
-            prefixCls: prefixCls
+            prefixCls: prefixCls,
+            closeIcon: CloseIcon
         };
     },
     computed: {
@@ -149,7 +156,7 @@ export default {
     },
     watch: {
         value(val) {
-            this.setCurrentValue(val);
+            this._setCurrentValue(val);
         }
     },
     methods: {
