@@ -60,7 +60,6 @@
 const prefixCls = 'bview-input';
 import CloseIcon from '../../icons/close';
 import Icon from '../icon';
-// debugger;
 export default {
     name: 'Input',
     components: {
