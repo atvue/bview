@@ -17,8 +17,9 @@
         <i
             v-if="clearable&&currentValue&&!disabled"
             :class="prefixCls+'-icon'"
-            @click="_handleClear">
-            <Icon :svg="closeIcon"/>
+            @click="_handleClear"
+        >
+            <Icon :svg="closeIcon" />
         </i>
         <i
             v-else-if="search"
