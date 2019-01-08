@@ -14,6 +14,7 @@ const keyMap = {
     up: 38 ,
     right: 39 ,
     down: 40 ,
+    enter: 13 ,
 }
 
 export const loopFindEnable = ( list , index , up = false ) => {
@@ -61,10 +62,14 @@ export default {
                 isUp = which === keyMap.up ,
                 isRight = which === keyMap.right ,
                 isDown = which === keyMap.down ,
+                isEnter = which === keyMap.enter ,
                 upward = isLeft || isUp ,
                 downward = isRight || isDown
             if ( upward || downward ) {
                 this._scrollDropdownDir( event , upward )
+            }
+            if ( isEnter ) {
+                this._keyEnter()
             }
         } ,
         _scrollDropdownDir( event , up ){

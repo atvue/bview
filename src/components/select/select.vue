@@ -36,10 +36,12 @@
         </div>
         <div 
             slot="overlay"
+            ref="selectDropdown"
             :class="bClsOptionsWrapper"
             :style="styleOptionWrapper"
         >
             <ul
+                ref="optionBox"
                 :class="bClsOptionsInner"
             >
                 <slot />
@@ -55,12 +57,13 @@ import Icon from '../icon'
 import { bviewPrefix as b } from '../../utils/macro'
 import options from './helper/options'
 import keyboard from './helper/keyboard'
+import scrollActiveIndex from './helper/scrollActiveIndex'
 import { selectName } from './helper/name'
 
 export default {
     name: selectName ,
     components: { Dropdown , Icon } ,
-    mixins: [ options , keyboard ] ,
+    mixins: [ options , keyboard , scrollActiveIndex ] ,
     props: {
         // @doc 占位提示符
         placeholder: {
@@ -210,6 +213,18 @@ export default {
             } else {
                 this.activeIndex = undefined
             }
+        } ,
+        _keyEnter(){
+            let { activeIndex , visibleOptions , options } = this ,
+                noCalc = visibleOptions === false || 
+                    activeIndex === undefined
+            if ( noCalc ) {
+                return
+            }
+            let targetOption = options[ activeIndex ] ,
+                { value , label } = targetOption
+            this.selected = { value , label }
+            this._toggleOptions()
         }
     } ,
 }
