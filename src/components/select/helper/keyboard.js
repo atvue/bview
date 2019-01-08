@@ -10,42 +10,41 @@ export const fixOverflow = ( total , now ) => {
 }
 
 const keyMap = {
-        left: 37 ,
-        up: 38 ,
-        right: 39 ,
-        down: 40 ,
-    }
-export const loopFindEnable = ( list , index , up ) => {
+    left: 37 ,
+    up: 38 ,
+    right: 39 ,
+    down: 40 ,
+}
+
+export const loopFindEnable = ( list , index , up = false ) => {
     let r ,
         size = list.length
-    if ( list[ index ].disabled !== true ) {
-        return index
-    }
-    if ( up ) {
-        for( let i = index , loop = 0 ; i >= 0 ; i-- ) {
-            let target = list[ i ] ,
-                { disabled } = target
-            if ( i === index ) {
-                loop++
-            }
-            if ( loop === 2 ) {
-                break
-            }
-            if ( disabled ) {
-                if ( i === 0 ) {
-                    i = size
-                }
-                continue
-            } else {
-                r = i
-                break
-            }
+    for( let i = index , loop = 0 ; up ? i >= 0 : i < size ; up ? i-- : i++ ) {
+        let target = list[ i ] ,
+            { disabled } = target
+        if ( i === index ) {
+            loop++
         }
-        return r
-    } else {
-
+        // 经历了一次闭环，跳出
+        if ( loop === 2 ) {
+            break
+        }
+        if ( disabled ) {
+            // 到头，继续从size-1向上找
+            if ( up && i === 0 ) {
+                i = size
+            }
+            // 到尾，继续从0向下找
+            if ( !up && i === ( size - 1 ) ) {
+                i = -1
+            }
+            continue
+        } else {
+            r = i
+            break
+        }
     }
-    return index
+    return r
 }
 
 export default {
