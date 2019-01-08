@@ -86,6 +86,7 @@ export default {
             }
             nextIndex = fixOverflow( total , nextIndex )
             nextIndex = loopFindEnable( options , nextIndex , up )
+            this.activeIndex = nextIndex
         }
     }
 }

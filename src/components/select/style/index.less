@@ -11,6 +11,7 @@
 @option-selected: ~"@{bview-prefix}-option-selected" ;
 @option-selected-icon: ~"@{bview-prefix}-option-selected-icon" ;
 @option-disabled: ~"@{bview-prefix}-option-disabled" ;
+@option-active: ~"@{bview-prefix}-option-active" ;
 // num
 @height: 32px ;
 
@@ -77,6 +78,9 @@
         &:hover {
             background-color: #e6f7ff;
         }
+    }
+    .@{option-active} , .@{option-active}.@{option-selected} {
+        background-color: #e6f7ff;
     }
     .@{option-selected} {
         background-color: #fafafa;

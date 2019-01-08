@@ -17,8 +17,9 @@ export default {
                     return isOptionNode
                 } ).map( vNode => {
                     let { componentOptions: op } = vNode ,
-                        { propsData: { value } , children } = op ,
+                        { propsData: { value , disabled } , children } = op ,
                         hasTextNode = children[ 0 ] && children[ 0 ] ,
+                        enabled = disabled === undefined || disabled ===false ,
                         label = undefined
                     if ( hasTextNode ) {
                         label = children[ 0 ].text
@@ -26,6 +27,7 @@ export default {
                     return { 
                         value ,
                         label ,
+                        disabled: !enabled ,
                     }
                 } )
                 return ops
