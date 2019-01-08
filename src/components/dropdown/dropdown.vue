@@ -273,6 +273,8 @@ export default {
             let { visible } = this
             if ( visible === false ) {
                 this.visiblePortal = false
+                // -@doc 不暴露，动画结束，通知外部下拉框关闭
+                this.$emit( 'dropdown-closed' )
             }
         } ,
         _calcPopPosition( mousePoint ){
