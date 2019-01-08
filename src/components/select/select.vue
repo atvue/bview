@@ -136,6 +136,7 @@ export default {
                 calc = changed && val
             if ( calc ) {
                 this._clacOptionWrapperWidth()
+                this._checkIfScrollOption()
             }
         }
     } ,
@@ -170,6 +171,16 @@ export default {
                 rect = select.getBoundingClientRect() ,
                 { width } = rect
             this.styleOptionWrapper = `width: ${width}px`
+        } ,
+        async _checkIfScrollOption(){
+            await this.$nextTick()
+            let { activeIndex } = this ,
+                hasActive = activeIndex !== undefined
+            if ( hasActive ) {
+                setTimeout( () => {
+                    this._scrollOptions( activeIndex )
+                } , 300 )
+            }
         } ,
         _clickOption( { payload } ){
             let { value , label } = payload ,

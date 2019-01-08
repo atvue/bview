@@ -5,12 +5,12 @@ export default {
         activeIndex( val , oldVal ) {
             let changed = val !== oldVal
             if ( changed ) {
-                this.scrollOptions( val ) ;
+                this._scrollOptions( val ) ;
             }
         }
     } ,
     methods: {
-        scrollOptions( index ){
+        _scrollOptions( index ){
             let { visibleOptions , __options , $refs } = this ,
                 noCalc = visibleOptions === false
             if ( noCalc ) {
