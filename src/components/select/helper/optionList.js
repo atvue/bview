@@ -15,7 +15,7 @@ export default {
         optionList(){
             let { hasOptions } = this
             if ( hasOptions ) {
-                return this.options
+                return this.filterAttrBindOptions
             } else {
                 let { filterSlotOptions: options } = this ,
                     ops = options

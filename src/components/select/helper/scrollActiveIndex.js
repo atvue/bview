@@ -10,7 +10,8 @@ export default {
         }
     } ,
     methods: {
-        _scrollOptions( index ){
+        async _scrollOptions( index ){
+            await this.$nextTick()
             let { visibleOptions , __options , $refs } = this ,
                 noCalc = visibleOptions === false || 
                     __options.length === 0 ||
@@ -20,7 +21,7 @@ export default {
             }
             let activeVm = __options[ index ]
             if ( activeVm == undefined ) {
-                // 后续排查此问题
+                // nextTick之后，等待__options更新，理论上不会报错了
                 if ( activeVm == undefined ) {
                     let txt = __options.map( ( { value } )=> value ).join(',')
                     // eslint-disable-next-line
