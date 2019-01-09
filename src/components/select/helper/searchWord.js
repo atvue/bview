@@ -10,13 +10,11 @@ export default {
                 filter = showSearch && 
                     hasOptions &&
                     hasSearchWord
-            // console.log(showSearch,hasOptions,hasSearchWord)
             if ( filter ) {
                 let result = options.filter( ( { label } ) => {
                     let hasLable = label !== undefined && label !== null
                     if ( hasLable ) {
                         let has = label.includes( searchWord )
-                        console.log( label , searchWord , has )
                         return has
                     }
                     return true

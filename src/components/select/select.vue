@@ -212,17 +212,19 @@ export default {
             }
         } ,
         searchResultNoList(){
-            let { searchWord , filterSlotOptions } = this ,
+            let { hasOptions , searchWord , filterSlotOptions , filterAttrBindOptions } = this ,
                 hasSearchWord = searchWord !== undefined && 
                     searchWord !== null && 
                     searchWord.trim() !== '' ,
-                noList = filterSlotOptions.length === 0
+                slotOpsNone = filterSlotOptions.length === 0 ,
+                attrOpsNone = filterAttrBindOptions.length === 0 ,
+                noList = hasOptions ? attrOpsNone : slotOpsNone
             if ( hasSearchWord && noList ) {
                 return true
             } else {
                 return false
             }
-        } ,
+        }
     } ,
     watch: {
         visibleOptions( val , oldVal ) {
