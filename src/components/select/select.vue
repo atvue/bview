@@ -65,8 +65,8 @@
                 :class="`${b}-options-inner`"
             >   
                 <template v-if="hasOptions">
-                    <Option 
-                        v-for="item in options"
+                    <Option
+                        v-for="item in filterAttrBindOptions"
                         :key="item.value"
                         :value="item.value"
                         :disabled="item.disabled===true"
@@ -183,6 +183,11 @@ export default {
             return cls
         } ,
         filterSlotOptions(){
+            let { hasOptions } = this
+            // :options方式绑定的，通过另外一种方式过滤
+            if ( hasOptions ) {
+                return []
+            }
             let { slotOptions , searchWord , showSearch } = this
             if ( showSearch ) {
                 let hasSearchWord = searchWord !== undefined && 
