@@ -7,6 +7,7 @@
         <div 
             ref="select"
             :class="`${b}-select-wrapper`"
+            :tabindex="tabIndex"
             @click="_toggleOptions"
         >
             <div 
@@ -96,6 +97,11 @@ export default {
         options: {
             type: Array ,
             default: undefined ,
+        } ,
+        // @doc tabindex顺序，取值需要在0到32767之间，默认字符流中的次序来
+        tabIndex: {
+            type: Number ,
+            default: 0 ,
         }
     } ,
     data(){
@@ -244,16 +250,34 @@ export default {
         } ,
         _keyEnter(){
             let { activeIndex , visibleOptions , optionList } = this ,
-                noCalc = visibleOptions === false || 
-                    activeIndex === undefined
-            if ( noCalc ) {
-                return
+                hiddenDropdown = visibleOptions === false ,
+                noneSelected = activeIndex === undefined
+            if ( noneSelected || hiddenDropdown ) {
+                let isFocusNeedOpen = this._checkIsTabActive()
+                if ( isFocusNeedOpen ) {
+                    this._toggleOptions()
+                }
+            } else {
+                // activeIndex tre , visible true
+                let targetOption = optionList[ activeIndex ] ,
+                    { value , label } = targetOption
+                this.selected = { value , label }
+                this._emitInput()
+                this._toggleOptions()
             }
-            let targetOption = optionList[ activeIndex ] ,
-                { value , label } = targetOption
-            this.selected = { value , label }
-            this._emitInput()
-            this._toggleOptions()
+        } ,
+        _keyTab( event ){
+            let { $refs: { select } , visibleOptions } = this ,
+                visible = visibleOptions === true ,
+                currentEl = event.target === select
+            if ( visible && currentEl ) {
+                this._toggleOptions()
+            }
+        } ,
+        _checkIsTabActive(){
+            let { $refs: { select } } = this ,
+                flag = document.activeElement === select
+            return flag
         } ,
         _emitInput(){
             let { selected , labelInValue } = this ,

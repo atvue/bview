@@ -6,6 +6,7 @@
         style="width: 140px;"
         placeholder="请选择学历"
         v-model="value"
+        labelInValue
     >
         <Option value="primary">小学</Option>
         <Option value="junior" disabled>初中</Option>
