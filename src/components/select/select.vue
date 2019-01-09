@@ -44,8 +44,18 @@
             <ul
                 ref="optionBox"
                 :class="`${b}-options-inner`"
-            >
-                <slot />
+            >   
+                <template v-if="hasOptions">
+                    <Option 
+                        v-for="item in options"
+                        :key="item.value"
+                        :value="item.value"
+                        :disabled="item.disabled===true"
+                    >
+                        {{ item.label }}
+                    </Option>
+                </template>
+                <slot v-else />
             </ul>
         </div>
     </Dropdown>
@@ -55,6 +65,7 @@
 <script>
 import Dropdown from '../dropdown'
 import Icon from '../icon'
+import Option from './option'
 import { bviewPrefix as b } from '../../utils/macro'
 import optionList from './helper/optionList'
 import keyboard from './helper/keyboard'
@@ -63,7 +74,7 @@ import { selectName } from './helper/name'
 
 export default {
     name: selectName ,
-    components: { Dropdown , Icon } ,
+    components: { Dropdown , Icon , Option } ,
     mixins: [ optionList , keyboard , scrollActiveIndex ] ,
     props: {
         // @doc 占位提示符
@@ -81,6 +92,11 @@ export default {
             type: Boolean ,
             default: false ,
         } ,
+        // @doc 如果不引入Option组件，可使用options参数直接生成option列表，参数应该符合{ value , label }的形式，支持disabled属性。注意：options和default slot配置方式只能二选一
+        options: {
+            type: Array ,
+            default: undefined ,
+        }
     } ,
     data(){
         return {
@@ -106,6 +122,10 @@ export default {
                 return undefined
             }
             return optionList[ activeIndex ]
+        } ,
+        hasOptions(){
+            let { options } = this
+            return options !== undefined && options !== null
         }
     } ,
     watch: {
