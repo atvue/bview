@@ -1,7 +1,10 @@
 @import '../../../style/default.less' ;
+@import '../../input/style/index.less' ;
+
 // select
 @select-wrapper: ~"@{bview-prefix}-select-wrapper" ;
 @select-inner: ~"@{bview-prefix}-select-inner" ;
+@select-search-inner: ~"@{bview-prefix}-select-search-inner" ;
 @select-legend: ~"@{bview-prefix}-select-legend" ;
 @select-icon: ~"@{bview-prefix}-select-icon" ;
 @select-placeholder: ~"@{bview-prefix}-select-placeholder" ;
@@ -17,8 +20,6 @@
 
 .@{select-wrapper} {
     border-radius: 4px;
-    height: @height ;
-    line-height: calc( @height - 2px ) ;
     border: 1px solid #d9d9d9 ;
     background-color: #fff;
     font-size: 14px ;
@@ -30,10 +31,12 @@
     }
     .@{select-inner} {
         display: flex ;
+        align-items: center ;
         margin: 0 10px ;
         outline: none;
         user-select: none;
         box-sizing: border-box ;
+        height: @height ;
         // transition: all .3s cubic-bezier(.645, .045, .355, 1);
         .@{select-legend} {
             flex: 1 ;
@@ -51,12 +54,23 @@
                 line-height: 1 ;
             }
         }
+        .@{css-prefix} {
+            border: none ;
+            &-wrapper {
+                
+            }
+        }
+    }
+    .@{select-search-inner}{
+        margin-left: 0 ;  
+        .@{select-legend} {
+            padding-right: 0 ;
+        }
     }
 }
 
 
 .@{options-wrapper} {
-    line-height: 1.5;
     color: rgba(0,0,0,0.65);
     background-color: #fff;
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);

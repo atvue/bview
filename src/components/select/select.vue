@@ -8,26 +8,37 @@
             ref="select"
             :class="`${b}-select-wrapper`"
             :tabindex="tabIndex"
-            @click="_toggleOptions"
+            @click="_clickTrigger"
         >
             <div 
-                :class="`${b}-select-inner`"
+                :class="clsSelectInner"
             >
                 <div 
                     :class="`${b}-select-legend`"
                 >
-                    <span 
-                        v-if="hasSelected"
-                        :class="`${b}-select-value`"
-                    >
-                        {{ selectedLabel }}
-                    </span>
-                    <span 
-                        v-else
-                        :class="`${b}-select-placeholder`"
-                    >
-                        {{ placeholderLabel }}
-                    </span>
+                    <div v-if="showSearch">
+                        <Input
+                            v-model="searchWord"
+                            style="width:100%"
+                            :placeholder="placeholder"
+                            @focus="_focusSearchInput"
+                            @blur="_blurSearchInput"
+                        />
+                    </div>
+                    <div v-else>
+                        <span 
+                            v-if="hasSelected"
+                            :class="`${b}-select-value`"
+                        >
+                            {{ selectedLabel }}
+                        </span>
+                        <span 
+                            v-else
+                            :class="`${b}-select-placeholder`"
+                        >
+                            {{ placeholderLabel }}
+                        </span>
+                    </div>
                 </div>
                 <div 
                     :class="`${b}-select-icon`"
@@ -56,7 +67,10 @@
                         {{ item.label }}
                     </Option>
                 </template>
-                <slot v-else />
+                <SlotRender
+                    v-else
+                    :list="filterSlotOptions"
+                />
             </ul>
         </div>
     </Dropdown>
@@ -65,18 +79,21 @@
 
 <script>
 import Dropdown from '../dropdown'
+import Input from '../input'
 import Icon from '../icon'
 import Option from './option'
 import { bviewPrefix as b } from '../../utils/macro'
-import optionList from './helper/optionList'
+import optionList , { filterOption } from './helper/optionList'
 import keyboard from './helper/keyboard'
 import scrollActiveIndex from './helper/scrollActiveIndex'
+import searchWord from './helper/searchWord'
+import SlotRender from './helper/slotRender'
 import { selectName } from './helper/name'
 
 export default {
     name: selectName ,
-    components: { Dropdown , Icon , Option } ,
-    mixins: [ optionList , keyboard , scrollActiveIndex ] ,
+    components: { Dropdown , Icon , Option , Input , SlotRender } ,
+    mixins: [ optionList , keyboard , scrollActiveIndex , searchWord ] ,
     props: {
         // @doc 占位提示符
         placeholder: {
@@ -102,6 +119,11 @@ export default {
         tabIndex: {
             type: Number ,
             default: 0 ,
+        } ,
+        // @doc 支持搜索
+        showSearch: {
+            type: Boolean ,
+            default: false ,
         }
     } ,
     data(){
@@ -111,6 +133,8 @@ export default {
             visibleOptions: false ,
             styleOptionWrapper: undefined ,
             b ,
+            searchWord: '' ,
+            slotOptions: this.$slots.default ,
         }
     } ,
     computed: {
@@ -141,6 +165,36 @@ export default {
             } else {
                 return undefined
             }
+        } ,
+        clsSelectInner(){
+            let { showSearch } = this ,
+                cls = `${b}-select-inner`
+            if ( showSearch ) {
+                cls += ` ${b}-select-search-inner`
+            }
+            return cls
+        } ,
+        filterSlotOptions(){
+            let { slotOptions , searchWord , showSearch } = this
+            if ( showSearch ) {
+                let hasSearchWord = searchWord !== undefined && searchWord !== null && searchWord.trim() !== '' ,
+                    validOptions = slotOptions
+                        .filter( filterOption )
+                        .filter( vNode => {
+                            let { componentOptions: op } = vNode ,
+                                { propsData: { value , disabled } , children } = op ,
+                                text = children[ 0 ] && children[ 0 ] && children[ 0 ].text ,
+                                needFilter = hasSearchWord && text 
+                            if ( needFilter ) {
+                                let has = text.includes( searchWord )
+                                return has
+                            }
+                            return true
+                        } )
+                return validOptions
+            } else {
+                return slotOptions
+            }
         }
     } ,
     watch: {
@@ -169,6 +223,9 @@ export default {
     destroyed(){
         this.__options = undefined
     } ,
+    updated(){
+        this._syncSlotOptions()
+    } ,
     methods: {
         _getSelectedOptionIndex(){
             let { selected , optionList , hasSelected } = this
@@ -180,9 +237,20 @@ export default {
                 return undefined
             }
         } ,
-        _toggleOptions(){
-            let { visibleOptions } = this
-            this.visibleOptions = !visibleOptions
+        _clickTrigger(){
+            let { showSearch } = this
+            if ( showSearch === false ) {
+                this._toggleOptions()
+            }
+        } ,
+        _toggleOptions( flag ){
+            let { visibleOptions } = this ,
+                bool = flag === true || flag === false
+            if ( bool) {
+                this.visibleOptions = bool
+            } else {
+                this.visibleOptions = !visibleOptions
+            }
         } ,
         _clacOptionWrapperWidth(){
             let { $refs: { select } } = this ,
@@ -307,6 +375,12 @@ export default {
             this.selected = newSelected
             let index = this._getSelectedOptionIndex()
             this.activeIndex = index
+        } ,
+        _syncSlotOptions(){
+            let changed = this.slotOptions !== this.$slots.default
+            if ( changed ) {
+                this.slotOptions = this.$slots.default
+            }
         }
     } ,
 }
