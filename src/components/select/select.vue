@@ -18,6 +18,7 @@
                 >
                     <div v-if="showSearch">
                         <Input
+                            ref="vmSearch"
                             v-model="searchWord"
                             style="width:100%"
                             :placeholder="placeholder"
@@ -190,6 +191,7 @@ export default {
             }
             let { slotOptions , searchWord , showSearch } = this
             if ( showSearch ) {
+                searchWord = searchWord.trim()
                 let hasSearchWord = searchWord !== undefined && 
                         searchWord !== null && 
                         searchWord.trim() !== '' ,
@@ -298,6 +300,7 @@ export default {
             let { value , label } = payload
             this.selected = { value , label }
             this._emitInput()
+            this._syncSearchInputValue()
             this._toggleOptions( false )
         } ,
         _setValue(){
@@ -360,6 +363,7 @@ export default {
                     { value , label } = targetOption
                 this.selected = { value , label }
                 this._emitInput()
+                this._syncSearchInputValue()
                 this._toggleOptions()
             }
         } ,
@@ -409,6 +413,16 @@ export default {
             let changed = this.slotOptions !== this.$slots.default
             if ( changed ) {
                 this.slotOptions = this.$slots.default ? this.$slots.default : []
+            }
+        } ,
+        async _syncSearchInputValue(){
+            let { showSearch , selected , hasSelected , $refs: { vmSearch } } = this
+            if ( showSearch && hasSelected ) {
+                let { label } = selected
+                this.searchWord = label
+                // 等待 watch searchWord 触发 _toggleOptions( true ) 执行完毕后,触发失焦
+                await this.$nextTick()
+                vmSearch.blur()
             }
         }
     } ,

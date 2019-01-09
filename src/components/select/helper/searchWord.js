@@ -3,8 +3,9 @@
 export default {
     computed: {
         filterAttrBindOptions(){
-            let { hasOptions , options , searchWord , showSearch } = this ,
-                hasSearchWord = searchWord !== undefined && 
+            let { hasOptions , options , searchWord , showSearch } = this
+            searchWord = searchWord.trim()
+            let hasSearchWord = searchWord !== undefined && 
                     searchWord !== null && 
                     searchWord.trim() !== '' ,
                 filter = showSearch && 
