@@ -176,6 +176,8 @@ export default {
                 this.visible = true
                 // 计算位置
                 await this.$nextTick()
+                // -@doc 通知下拉框打开，dom已生成
+                this.$emit( 'dropdown-open' )
                 this._calcPopPosition( point )
             } catch( e ) {
                 if ( !e.isCanceled ) {
