@@ -1,6 +1,7 @@
 <template>
     <Dropdown
         v-model="visibleOptions"
+        @dropdown-open="_dropdownOpen"
         @dropdown-closed="_dropdownClosed"
     >
         <div 
@@ -136,7 +137,6 @@ export default {
                 calc = changed && val
             if ( calc ) {
                 this._clacOptionWrapperWidth()
-                this._checkIfScrollOption()
             }
         }
     } ,
@@ -172,14 +172,11 @@ export default {
                 { width } = rect
             this.styleOptionWrapper = `width: ${width}px`
         } ,
-        async _checkIfScrollOption(){
-            await this.$nextTick()
+        _checkIfScrollOption(){
             let { activeIndex } = this ,
                 hasActive = activeIndex !== undefined
             if ( hasActive ) {
-                setTimeout( () => {
-                    this._scrollOptions( activeIndex )
-                } , 300 )
+                this._scrollOptions( activeIndex )
             }
         } ,
         _clickOption( { payload } ){
@@ -213,6 +210,9 @@ export default {
             if( hasIndex ) {
                 __options.splice( index , 1 )
             }
+        } ,
+        _dropdownOpen(){
+            this._checkIfScrollOption()
         } ,
         _dropdownClosed(){
             this._resetActiveIndex()
