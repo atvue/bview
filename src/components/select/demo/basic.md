@@ -1,6 +1,6 @@
-#### 描述
+#### 使用说明
 
-下拉框组件
+基本用法
 
 ```vue
 <template>
@@ -24,7 +24,7 @@ export default {
     components: { Select , Option } ,
     data(){
         return {
-            value: 'university' ,
+            value: undefined ,
         }
     } ,
     watch: {
