@@ -6,30 +6,30 @@
     >
         <div 
             ref="select"
-            :class="bClsSelectWrapper"
+            :class="`${b}-select-wrapper`"
             @click="_toggleOptions"
         >
             <div 
-                :class="bClsSelectInner"
+                :class="`${b}-select-inner`"
             >
                 <div 
-                    :class="bClsSelectLegend"
+                    :class="`${b}-select-legend`"
                 >
                     <span 
                         v-if="hasSelected"
-                        :class="bClsSelectValue"
+                        :class="`${b}-select-value`"
                     >
                         {{ selected.label }}
                     </span>
                     <span 
                         v-else
-                        :class="bClsPlaceholder"
+                        :class="`${b}-select-placeholder`"
                     >
                         {{ placeholderLabel }}
                     </span>
                 </div>
                 <div 
-                    :class="bClsSelectIcon"
+                    :class="`${b}-select-icon`"
                 >
                     <Icon type="down" />
                 </div>
@@ -38,12 +38,12 @@
         <div 
             slot="overlay"
             ref="selectDropdown"
-            :class="bClsOptionsWrapper"
+            :class="`${b}-options-wrapper`"
             :style="styleOptionWrapper"
         >
             <ul
                 ref="optionBox"
-                :class="bClsOptionsInner"
+                :class="`${b}-options-inner`"
             >
                 <slot />
             </ul>
@@ -88,35 +88,12 @@ export default {
             activeIndex: undefined ,
             visibleOptions: false ,
             styleOptionWrapper: undefined ,
+            b ,
         }
     } ,
     computed: {
         hasSelected(){
             return this.selected !== undefined
-        } ,
-        bClsSelectWrapper(){
-            return `${b}-select-wrapper`
-        } ,
-        bClsSelectInner(){
-            return `${b}-select-inner`
-        } ,
-        bClsSelectLegend(){
-            return `${b}-select-legend`
-        } ,
-        bClsSelectValue(){
-            return `${b}-select-value`
-        } ,
-        bClsSelectIcon(){
-            return `${b}-select-icon`
-        } ,
-        bClsOptionsWrapper(){
-            return `${b}-options-wrapper`
-        } ,
-        bClsOptionsInner(){
-            return `${b}-options-inner`
-        } ,
-        bClsPlaceholder(){
-            return `${b}-select-placeholder`
         } ,
         placeholderLabel(){
             let { placeholder } = this ,
