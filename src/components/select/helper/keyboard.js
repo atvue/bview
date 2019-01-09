@@ -58,10 +58,11 @@ export default {
     } ,
     methods: {
         _keydown( event ){
-            let { which } = event ,
-                isLeft = which === keyMap.left ,
+            let { showSearch } = this ,
+                { which } = event ,
+                isLeft = showSearch ? false : which === keyMap.left ,
                 isUp = which === keyMap.up ,
-                isRight = which === keyMap.right ,
+                isRight = showSearch ? false : which === keyMap.right ,
                 isDown = which === keyMap.down ,
                 isEnter = which === keyMap.enter ,
                 isTab = which === keyMap.tab ,

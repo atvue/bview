@@ -134,6 +134,7 @@ export default {
         }
     } ,
     data(){
+        let slotOptions = this.$slots.default
         return {
             selected: undefined ,
             activeIndex: undefined ,
@@ -141,7 +142,7 @@ export default {
             styleOptionWrapper: undefined ,
             b ,
             searchWord: '' ,
-            slotOptions: this.$slots.default ,
+            slotOptions: slotOptions ? slotOptions : [] ,
         }
     } ,
     computed: {
@@ -191,7 +192,7 @@ export default {
                         .filter( filterOption )
                         .filter( vNode => {
                             let { componentOptions: op } = vNode ,
-                                { propsData: { value , disabled } , children } = op ,
+                                { children } = op ,
                                 text = children[ 0 ] && children[ 0 ] && children[ 0 ].text ,
                                 needFilter = hasSearchWord && text 
                             if ( needFilter ) {
@@ -266,9 +267,9 @@ export default {
         } ,
         _toggleOptions( flag ){
             let { visibleOptions } = this ,
-                bool = flag === true || flag === false
-            if ( bool) {
-                this.visibleOptions = bool
+                confrimedVisible = flag !== undefined
+            if ( confrimedVisible ) {
+                this.visibleOptions = flag
             } else {
                 this.visibleOptions = !visibleOptions
             }
@@ -290,7 +291,7 @@ export default {
             let { value , label } = payload
             this.selected = { value , label }
             this._emitInput()
-            this.visibleOptions = false
+            this._toggleOptions( false )
         } ,
         _setValue(){
             let { optionList , value , labelInValue } = this ,
@@ -400,7 +401,7 @@ export default {
         _syncSlotOptions(){
             let changed = this.slotOptions !== this.$slots.default
             if ( changed ) {
-                this.slotOptions = this.$slots.default
+                this.slotOptions = this.$slots.default ? this.$slots.default : []
             }
         }
     } ,

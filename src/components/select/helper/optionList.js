@@ -17,10 +17,7 @@ export default {
             if ( hasOptions ) {
                 return this.options
             } else {
-                let { slotOptions: options } = this ,
-                    hasDefault = options !== undefined ,
-                    ops = []
-                if ( hasDefault ) {
+                let { filterSlotOptions: options } = this ,
                     ops = options
                         .filter( filterOption )
                         .map( vNode => {
@@ -38,10 +35,7 @@ export default {
                                 disabled: !enabled ,
                             }
                         } )
-                    return ops
-                } else {
-                    return ops
-                }
+                return ops
             }
         }
     }

@@ -10,8 +10,9 @@ export default {
         }
     } ,
     methods: {
-        _searchWordChanged( txt ){
-            
+        _searchWordChanged(){
+            this._resetActiveIndex()
+            this._toggleOptions( true )
         } ,
         _focusSearchInput(){
             this._toggleOptions( true )
