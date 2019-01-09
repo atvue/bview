@@ -68,7 +68,7 @@ export default {
         selected(){
             let { selectVm } = this ,
                 { selected } = selectVm ,
-                selted = selected.value === this.value
+                selted = selected ? selected.value === this.value : false
             return selted
         } ,
     } ,
