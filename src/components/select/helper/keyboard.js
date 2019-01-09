@@ -87,7 +87,7 @@ export default {
             if ( hasActiveIndex ) {
                 nextIndex = up ? activeIndex - 1 : activeIndex + 1
             } else {
-                nextIndex = up ? total - 1 : 1
+                nextIndex = up ? total - 1 : 0
             }
             nextIndex = fixOverflow( total , nextIndex )
             nextIndex = loopFindEnable( options , nextIndex , up )

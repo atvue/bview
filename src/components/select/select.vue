@@ -138,6 +138,12 @@ export default {
             if ( calc ) {
                 this._clacOptionWrapperWidth()
             }
+        } ,
+        value( val , oldVal ) {
+            let changed = val !== oldVal
+            if ( changed ) {
+                this._syncValueWithSelected()
+            }
         }
     } ,
     created(){
@@ -180,10 +186,9 @@ export default {
             }
         } ,
         _clickOption( { payload } ){
-            let { value , label } = payload ,
-                inputVal = value
+            let { value , label } = payload
             this.selected = { value , label }
-            this.$emit( 'input' , inputVal )
+            this._emitInput()
             this.visibleOptions = false
         } ,
         _setValue(){
@@ -235,7 +240,41 @@ export default {
             let targetOption = options[ activeIndex ] ,
                 { value , label } = targetOption
             this.selected = { value , label }
+            this._emitInput()
             this._toggleOptions()
+        } ,
+        _emitInput(){
+            let { selected , labelInValue } = this ,
+                { value , label } = selected
+            // @doc 选中值变化触发input事件
+            this.$emit( 'input' , labelInValue ? { value , label } : value )
+        } ,
+        _syncValueWithSelected(){
+            let { value: outData , selected , hasSelected , labelInValue , options } = this ,
+                selectdValue = hasSelected ? selected.value : undefined ,
+                hasOutValue = outData !== undefined ,
+                outDataValue = hasOutValue ? ( labelInValue ? outData.value : outData ) : 
+                    undefined ,
+                sameValue = outDataValue === selectdValue
+            if ( sameValue ) {
+                return
+            }
+            let clonedValue = hasOutValue ? ( labelInValue ? { ...outData } : outData ) : undefined ,
+                newSelected = labelInValue ? clonedValue : { value: outData }
+            // 追加label属性
+            if ( labelInValue === false ) {
+                let target = options.find( ( { value } ) => value === outData ) ,
+                    hasTarget = target !== undefined ,
+                    label = hasTarget ? target.label: undefined
+                // 未找到label，设置展示值为value
+                if ( label === undefined ) {
+                    label = outData
+                }
+                Object.assign( newSelected , { label } )
+            }
+            this.selected = newSelected
+            let index = this._getSelectedOptionIndex()
+            this.activeIndex = index
         }
     } ,
 }
