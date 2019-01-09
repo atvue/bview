@@ -91,5 +91,6 @@
         "webpack-cli": "^3.1.0",
         "webpack-dev-server": "^3.1.7",
         "webpack-merge": "^4.1.4"
-    }
+    } ,
+    "node": "^8.10.0 || >=9.10.0"
 }
