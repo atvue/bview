@@ -80,8 +80,8 @@ export default {
             }
         } ,
         _scrollOptionWrapper( up ){
-            let { activeIndex , options } = this ,
-                total = options.length ,
+            let { activeIndex , optionList } = this ,
+                total = optionList.length ,
                 hasActiveIndex = activeIndex !== undefined ,
                 nextIndex = undefined
             if ( hasActiveIndex ) {
@@ -90,7 +90,7 @@ export default {
                 nextIndex = up ? total - 1 : 0
             }
             nextIndex = fixOverflow( total , nextIndex )
-            nextIndex = loopFindEnable( options , nextIndex , up )
+            nextIndex = loopFindEnable( optionList , nextIndex , up )
             this.activeIndex = nextIndex
         }
     }

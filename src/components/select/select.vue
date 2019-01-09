@@ -56,7 +56,7 @@
 import Dropdown from '../dropdown'
 import Icon from '../icon'
 import { bviewPrefix as b } from '../../utils/macro'
-import options from './helper/options'
+import optionList from './helper/optionList'
 import keyboard from './helper/keyboard'
 import scrollActiveIndex from './helper/scrollActiveIndex'
 import { selectName } from './helper/name'
@@ -64,7 +64,7 @@ import { selectName } from './helper/name'
 export default {
     name: selectName ,
     components: { Dropdown , Icon } ,
-    mixins: [ options , keyboard , scrollActiveIndex ] ,
+    mixins: [ optionList , keyboard , scrollActiveIndex ] ,
     props: {
         // @doc 占位提示符
         placeholder: {
@@ -101,11 +101,11 @@ export default {
             return hasPlaceholder ? placeholder : '\u2003'
         } ,
         activeOption(){
-            let { activeIndex , options } = this
+            let { activeIndex , optionList } = this
             if ( activeIndex === undefined ) {
                 return undefined
             }
-            return options[ activeIndex ]
+            return optionList[ activeIndex ]
         }
     } ,
     watch: {
@@ -136,9 +136,9 @@ export default {
     } ,
     methods: {
         _getSelectedOptionIndex(){
-            let { selected , options , hasSelected } = this
+            let { selected , optionList , hasSelected } = this
             if ( hasSelected ) {
-                let index = options.findIndex( item => item.value === selected.value ) ,
+                let index = optionList.findIndex( item => item.value === selected.value ) ,
                     hasIndex = index > -1
                 return hasIndex ? index : undefined
             } else {
@@ -169,14 +169,14 @@ export default {
             this.visibleOptions = false
         } ,
         _setValue(){
-            let { options , value , labelInValue } = this ,
-                target = options.find( ( { value: val } ) => {
+            let { optionList , value , labelInValue } = this ,
+                target = optionList.find( ( { value: val } ) => {
                     return labelInValue ? ( value.value === val ) : 
                         ( val === value )
                 } ) ,
                 hasValue = target !== undefined
             if ( hasValue ) {
-                let index = options.findIndex( item => item === target )
+                let index = optionList.findIndex( item => item === target )
                 this.selected = { ...target }
                 this.activeIndex = index
             }
@@ -208,13 +208,13 @@ export default {
             }
         } ,
         _keyEnter(){
-            let { activeIndex , visibleOptions , options } = this ,
+            let { activeIndex , visibleOptions , optionList } = this ,
                 noCalc = visibleOptions === false || 
                     activeIndex === undefined
             if ( noCalc ) {
                 return
             }
-            let targetOption = options[ activeIndex ] ,
+            let targetOption = optionList[ activeIndex ] ,
                 { value , label } = targetOption
             this.selected = { value , label }
             this._emitInput()
@@ -227,7 +227,7 @@ export default {
             this.$emit( 'input' , labelInValue ? { value , label } : value )
         } ,
         _syncValueWithSelected(){
-            let { value: outData , selected , hasSelected , labelInValue , options } = this ,
+            let { value: outData , selected , hasSelected , labelInValue , optionList } = this ,
                 selectdValue = hasSelected ? selected.value : undefined ,
                 hasOutValue = outData !== undefined ,
                 outDataValue = hasOutValue ? ( labelInValue ? outData.value : outData ) : 
@@ -240,7 +240,7 @@ export default {
                 newSelected = labelInValue ? clonedValue : { value: outData }
             // 追加label属性
             if ( labelInValue === false ) {
-                let target = options.find( ( { value } ) => value === outData ) ,
+                let target = optionList.find( ( { value } ) => value === outData ) ,
                     hasTarget = target !== undefined ,
                     label = hasTarget ? target.label: undefined
                 // 未找到label，设置展示值为value

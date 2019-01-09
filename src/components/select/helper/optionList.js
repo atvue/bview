@@ -4,7 +4,7 @@ import { optionName } from './name'
 
 export default {
     computed: {
-        options(){
+        optionList(){
             let { default: options } = this.$slots ,
                 hasDefault = options !== undefined ,
                 ops = []
