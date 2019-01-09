@@ -10,6 +10,7 @@
 @select-placeholder: ~"@{bview-prefix}-select-placeholder" ;
 // option
 @options-wrapper: ~"@{bview-prefix}-options-wrapper" ;
+@option-empty: ~"@{bview-prefix}-options-search-empty" ;
 @option: ~"@{bview-prefix}-option" ;
 @option-selected: ~"@{bview-prefix}-option-selected" ;
 @option-selected-icon: ~"@{bview-prefix}-option-selected-icon" ;
@@ -78,6 +79,10 @@
     font-size: 14px;
     max-height: 160px ;
     overflow: auto ;
+    .@{option-empty} {
+        padding: 10px ;
+        text-align: center ;
+    }
     .@{option} {
         position: relative;
         display: block ;

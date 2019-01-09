@@ -53,7 +53,14 @@
             :class="`${b}-options-wrapper`"
             :style="styleOptionWrapper"
         >
+            <div 
+                v-if="showSearch && searchResultNoList"
+                :class="`${b}-options-search-empty`"
+            >
+                暂无数据
+            </div>
             <ul
+                v-else
                 ref="optionBox"
                 :class="`${b}-options-inner`"
             >   
@@ -177,7 +184,9 @@ export default {
         filterSlotOptions(){
             let { slotOptions , searchWord , showSearch } = this
             if ( showSearch ) {
-                let hasSearchWord = searchWord !== undefined && searchWord !== null && searchWord.trim() !== '' ,
+                let hasSearchWord = searchWord !== undefined && 
+                        searchWord !== null && 
+                        searchWord.trim() !== '' ,
                     validOptions = slotOptions
                         .filter( filterOption )
                         .filter( vNode => {
@@ -195,7 +204,19 @@ export default {
             } else {
                 return slotOptions
             }
-        }
+        } ,
+        searchResultNoList(){
+            let { searchWord , filterSlotOptions } = this ,
+                hasSearchWord = searchWord !== undefined && 
+                    searchWord !== null && 
+                    searchWord.trim() !== '' ,
+                noList = filterSlotOptions.length === 0
+            if ( hasSearchWord && noList ) {
+                return true
+            } else {
+                return false
+            }
+        } ,
     } ,
     watch: {
         visibleOptions( val , oldVal ) {
