@@ -19,7 +19,7 @@
                         v-if="hasSelected"
                         :class="`${b}-select-value`"
                     >
-                        {{ selected.label }}
+                        {{ selectedLabel }}
                     </span>
                     <span 
                         v-else
@@ -126,6 +126,15 @@ export default {
         hasOptions(){
             let { options } = this
             return options !== undefined && options !== null
+        } ,
+        selectedLabel(){
+            let { selected , hasSelected } = this
+            if ( hasSelected ) {
+                let hasLabel = selected.label !== undefined
+                return hasLabel ? selected.label : selected.value
+            } else {
+                return undefined
+            }
         }
     } ,
     watch: {
@@ -190,15 +199,21 @@ export default {
         } ,
         _setValue(){
             let { optionList , value , labelInValue } = this ,
-                target = optionList.find( ( { value: val } ) => {
-                    return labelInValue ? ( value.value === val ) : 
-                        ( val === value )
-                } ) ,
-                hasValue = target !== undefined
-            if ( hasValue ) {
-                let index = optionList.findIndex( item => item === target )
-                this.selected = { ...target }
-                this.activeIndex = index
+                valueDefined = value !== undefined
+            if ( valueDefined ) {
+                let target = optionList.find( ( { value: val } ) => {
+                        return labelInValue ? value.value === val : 
+                            ( val === value )
+                    } ) ,
+                    hasValue = target !== undefined
+                if ( hasValue ) {
+                    let index = optionList.findIndex( item => item === target )
+                    this.selected = { ...target }
+                    this.activeIndex = index
+                } else {
+                    let newSelected = labelInValue ? { ...value } : { value }
+                    this.selected = newSelected
+                }
             }
         } ,
         _regsiterOption( vm ) {
@@ -263,10 +278,6 @@ export default {
                 let target = optionList.find( ( { value } ) => value === outData ) ,
                     hasTarget = target !== undefined ,
                     label = hasTarget ? target.label: undefined
-                // 未找到label，设置展示值为value
-                if ( label === undefined ) {
-                    label = outData
-                }
                 Object.assign( newSelected , { label } )
             }
             this.selected = newSelected

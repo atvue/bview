@@ -54,7 +54,8 @@ export default {
                 currentActive = hasActiveOption && activeOption.value === value
             if ( disabled ) {
                 cls = joinClassnames( cls , `${b}-option-disabled` )
-            } else if ( selected ) {
+            }
+            if ( selected ) {
                 cls = joinClassnames( cls , `${b}-option-selected` )
             }
             if ( currentActive ) {
