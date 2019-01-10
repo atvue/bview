@@ -29,14 +29,8 @@ export default {
     } ,
     watch: {
         value( val , oldValue ) {
-            console.log( val )
+            // console.log( val )
         }
-    } ,
-    mounted(){
-        setTimeout( () => {
-            this.visibleSenior = false
-            console.log( 'remove' , '高中' )
-        } , 1000 )
     }
 }
 </script>

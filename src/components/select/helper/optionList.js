@@ -1,5 +1,6 @@
 
 import { optionName } from './name'
+import { getVnodesTxt } from './traverseVnode'
 
 export const filterOption = vNode => {
     let { componentOptions: op } = vNode ,
@@ -23,12 +24,9 @@ export default {
                         .map( vNode => {
                             let { componentOptions: op } = vNode ,
                                 { propsData: { value , disabled } , children } = op ,
-                                hasTextNode = children[ 0 ] && children[ 0 ] ,
-                                enabled = disabled === undefined || disabled === false ,
-                                label = undefined
-                            if ( hasTextNode ) {
-                                label = children[ 0 ].text
-                            }
+                                label = getVnodesTxt( children ) ,
+                                enabled = disabled === undefined || disabled === false
+                            
                             return {
                                 value ,
                                 label ,

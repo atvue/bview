@@ -71,9 +71,9 @@ export default {
         }
     },
     methods: {
-        _onClick() {
+        _onClick( event ) {
             // @doc 点击事件
-            this.$emit("click");
+            this.$emit( "click" , event ) ;
         }
     }
 };

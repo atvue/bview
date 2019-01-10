@@ -21,9 +21,10 @@
                             ref="vmSearch"
                             v-model="searchWord"
                             style="width:100%"
-                            :placeholder="placeholder"
+                            :placeholder="searchPlaceholder"
                             @focus="_focusSearchInput"
                             @blur="_blurSearchInput"
+                            @input="_searchWordChange"
                         />
                     </div>
                     <div v-else>
@@ -41,11 +42,11 @@
                         </span>
                     </div>
                 </div>
-                <div 
-                    :class="`${b}-select-icon`"
-                >
-                    <Icon type="down" />
-                </div>
+                <TriggerIcon
+                    :b="b"
+                    :visible="visibleOptions"
+                    @click="_clickIcon"
+                />
             </div>
         </div>
         <div 
@@ -88,7 +89,6 @@
 <script>
 import Dropdown from '../dropdown'
 import Input from '../input'
-import Icon from '../icon'
 import Option from './option'
 import { bviewPrefix as b } from '../../utils/macro'
 import optionList , { filterOption } from './helper/optionList'
@@ -96,11 +96,14 @@ import keyboard from './helper/keyboard'
 import scrollActiveIndex from './helper/scrollActiveIndex'
 import searchWord from './helper/searchWord'
 import SlotRender from './helper/slotRender'
+import { getVnodesTxt } from './helper/traverseVnode'
+import TriggerIcon from './component/triggerIcon'
 import { selectName } from './helper/name'
+
 
 export default {
     name: selectName ,
-    components: { Dropdown , Icon , Option , Input , SlotRender } ,
+    components: { Dropdown , Option , Input , SlotRender , TriggerIcon } ,
     mixins: [ optionList , keyboard , scrollActiveIndex , searchWord ] ,
     props: {
         // @doc 占位提示符
@@ -200,8 +203,8 @@ export default {
                         .filter( vNode => {
                             let { componentOptions: op } = vNode ,
                                 { children } = op ,
-                                text = children[ 0 ] && children[ 0 ] && children[ 0 ].text ,
-                                needFilter = hasSearchWord && text 
+                                text = getVnodesTxt( children ) ,
+                                needFilter = hasSearchWord && text !== undefined
                             if ( needFilter ) {
                                 let has = text.includes( searchWord )
                                 return has
@@ -245,6 +248,8 @@ export default {
     } ,
     created(){
         this.__options = []
+        this.__dropdownClosedCallBacks = []
+        this.__delayBlurCloseDropdownCancel = undefined
         this.$on( 'click-option' , this._clickOption )
         this.$on( 'register-option' , this._regsiterOption )
         this.$on( 'un-register-option' , this._unRegsiterOption )
@@ -253,6 +258,8 @@ export default {
     } ,
     destroyed(){
         this.__options = undefined
+        this.__dropdownClosedCallBacks = undefined
+        this.__delayBlurCloseDropdownCancel = undefined
     } ,
     updated(){
         this._syncSlotOptions()
@@ -296,11 +303,15 @@ export default {
                 this._scrollOptions( activeIndex )
             }
         } ,
-        _clickOption( { payload } ){
+        _clickOption( { payload , disabled } ){
+            let { __delayBlurCloseDropdownCancel: cancel } = this
+            cancel && cancel()
+            if ( disabled ) {
+                return
+            }
             let { value , label } = payload
             this.selected = { value , label }
             this._emitInput()
-            this._syncSearchInputValue()
             this._toggleOptions( false )
         } ,
         _setValue(){
@@ -339,6 +350,17 @@ export default {
         } ,
         _dropdownClosed(){
             this._resetActiveIndex()
+            this._doClosedCallbacks()
+        } ,
+        _doClosedCallbacks(){
+            let { __dropdownClosedCallBacks: callbacks } = this
+            if ( callbacks ) {
+                for( let cb of callbacks ) {
+                    cb()
+                }
+            }
+            // 执行完就清空
+            this.__dropdownClosedCallBacks = []
         } ,
         _resetActiveIndex(){
             let index = this._getSelectedOptionIndex()
@@ -363,7 +385,7 @@ export default {
                     { value , label } = targetOption
                 this.selected = { value , label }
                 this._emitInput()
-                this._syncSearchInputValue()
+                this._triggerSearchInputBlur()
                 this._toggleOptions()
             }
         } ,
@@ -415,15 +437,17 @@ export default {
                 this.slotOptions = this.$slots.default ? this.$slots.default : []
             }
         } ,
-        async _syncSearchInputValue(){
-            let { showSearch , selected , hasSelected , $refs: { vmSearch } } = this
-            if ( showSearch && hasSelected ) {
-                let { label } = selected
-                this.searchWord = label
-                // 等待 watch searchWord 触发 _toggleOptions( true ) 执行完毕后,触发失焦
-                await this.$nextTick()
+        _triggerSearchInputBlur(){
+            let { showSearch , $refs: { vmSearch } } = this
+            if ( showSearch ) {
                 vmSearch.blur()
             }
+        } ,
+        _clickIcon( event ){
+            event.stopPropagation()
+            let { __delayBlurCloseDropdownCancel: cancel } = this
+            cancel && cancel()
+            this._toggleOptions()
         }
     } ,
 }

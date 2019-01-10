@@ -1,0 +1,20 @@
+/**
+usage
+.placeholder({
+    color: #0000FF;
+});
+*/
+.placeholder( @rules ) {
+    &::-webkit-input-placeholder {
+        @rules();
+    }
+    &:-moz-placeholder {
+        @rules();
+    }
+    &::-moz-placeholder {
+        @rules();
+    }
+    &:-ms-input-placeholder {
+        @rules();
+    }
+}

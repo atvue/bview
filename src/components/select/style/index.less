@@ -1,4 +1,5 @@
 @import '../../../style/default.less' ;
+@import '../../../style/placeholder.less' ;
 @import '../../input/style/index.less' ;
 
 // select
@@ -52,20 +53,27 @@
         .@{select-icon} {
             width: 20px ;
             .bicon-down {
-                line-height: 1 ;
+                display: block ;
+                text-align: center ;
+                transition: transform ease-in-out 0.2s ;
+            }
+            .bview-down-turn-up {
+                transform: rotate( 180deg )
             }
         }
         .@{css-prefix} {
             border: none ;
-            &-wrapper {
-                
-            }
         }
     }
     .@{select-search-inner}{
         margin-left: 0 ;  
         .@{select-legend} {
             padding-right: 0 ;
+        }
+        .@{css-prefix} {
+            .placeholder({
+                color: #aaa ;
+            });
         }
     }
 }

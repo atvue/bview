@@ -19,6 +19,7 @@ import { findComponentUpward } from '../../utils/assist'
 import Icon from '../icon'
 import { optionName , selectName } from './helper/name'
 import { bviewPrefix as b } from '../../utils/macro'
+import { getVnodesTxt } from './helper/traverseVnode'
 
 function joinClassnames( ...classnames ) {
     return classnames.filter( i => i ).join( ' ' )
@@ -84,14 +85,14 @@ export default {
             let { value , $refs: { el } , selectVm , disabled } = this ,
                 noSelect = selectVm === undefined ,
                 noEl = el === undefined ,
-                skip = noSelect || noEl || disabled ,
-                { textContent } = noEl ? {} : el ,
-                payload = { value , label: textContent }
+                skip = noSelect || noEl ,
+                label = this._getSlotTextContent() ,
+                payload = { value , label }
             if ( skip ) {
                 return
             }
             // -@doc
-            selectVm.$emit( 'click-option' , { vm: this , payload } )
+            selectVm.$emit( 'click-option' , { vm: this , payload , disabled } )
         } ,
         _registerOption(){
             let { selectVm } = this ,
@@ -110,6 +111,11 @@ export default {
             }
             // -@doc
             selectVm.$emit( 'un-register-option' , this )   
+        } ,
+        _getSlotTextContent(){
+            let { $slots: { default: textVnodes } } = this ,
+                txt = getVnodesTxt( textVnodes )
+            return txt
         }
     }
 }
