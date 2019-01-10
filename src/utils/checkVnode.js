@@ -6,7 +6,7 @@ export function isTextVNode( vNode ){
         return false
     }
     if ( vNode.tag === undefined &&
-        vNode.data === undefined &&
+        ( vNode.data === undefined || vNode.data.slot ) &&  // vNode.data.slot 测试
         vNode.children === undefined &&
         'text' in vNode ) {
         return true
