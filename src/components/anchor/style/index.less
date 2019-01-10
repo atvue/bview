@@ -1,0 +1,58 @@
+@css-prefix :~'bui-anchor';
+.@{css-prefix} {
+  a {
+    color: #2d8cf0;
+    background: transparent;
+    text-decoration: none;
+    outline: none;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+  &-wrapper {
+    overflow: auto;
+    padding-left: 4px;
+    margin-left: -4px;
+  }
+  & {
+    position: relative;
+    padding-left: 2px;
+  }
+  &-link {
+    padding: 8px 0 8px 16px;
+    position: relative;
+    line-height: 1;
+    &:before{
+      position:absolute;
+      content:"";
+      width:8px;
+      height: 8px;
+      border-radius: 50%;
+     // border:1px solid #2d8cf0;
+      background: #ccc;
+      left:2px;
+      top:12px;
+      margin: auto 0;
+
+    }
+    &-title {
+      display: block;
+      position: relative;
+      transition: all 0.3s;
+      color: #515a6e !important;
+      white-space: nowrap;
+      overflow: hidden;
+      text-align: left;
+      text-overflow: ellipsis;
+      margin-bottom: 8px;
+      &:only-child {
+        margin-bottom: 0;
+      }
+      &:hover{
+        color: #2d8cf0;
+      }
+    }
+  }
+  &-link-active:before{
+    background: #2d8cf0;
+  }
+}

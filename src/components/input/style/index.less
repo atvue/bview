@@ -1,76 +1,76 @@
 @import '../../../style/default';
 
-@css-prefix: ~'bview-input';
+@css-prefix: ~'@{bview-prefix}-input';
 .@{css-prefix} {
-  &-wrapper {
-    position: relative;
-    display: inline-block;
-    height: 32px;
-    .@{css-prefix} {
-      width: 100%;
-      height: 100%;
-      padding: 0 16px 0 10px;
-      box-sizing: border-box;
-      border: 1px solid #e3e5e8;
-      border-radius: 4px;
-      font-size: 12px;
-      background: #fff;
-      line-height: 32px;
-      vertical-align: middle;
-      &[disabled] {
-        background-color: #f3f3f3;
-        opacity: 1;
-        cursor: not-allowed;
-        color: #ccc;
-        &:hover {
-          border-color: #e3e5e8;
+    &-wrapper {
+        position: relative;
+        display: inline-block;
+        height: 32px;
+        .@{css-prefix} {
+            width: 100%;
+            height: 100%;
+            padding: 0 16px 0 10px;
+            box-sizing: border-box;
+            border: 1px solid #e3e5e8;
+            border-radius: 4px;
+            font-size: 12px;
+            background: #fff;
+            line-height: 32px;
+            vertical-align: middle;
+            &[disabled] {
+                background-color: #f3f3f3;
+                opacity: 1;
+                cursor: not-allowed;
+                color: #ccc;
+                &:hover {
+                    border-color: #e3e5e8;
+                }
+            }
+            &:hover,
+            &:focus {
+                border-color: black;
+                outline: none;
+            }
         }
-      }
-      &:hover,
-      &:focus {
-        border-color: black;
-        outline: none;
-      }
     }
-  }
-  &-icon,
-  &-icon-append {
-    width: 32px;
-    height: 32px;
-    line-height: 32px;
-    font-size: 16px;
-    text-align: center;
-    color: #808695;
-    position: absolute;
-    right: 0;
-    top: 0;
-    z-index: 3;
-  }
-  &-with-prepend {
-    padding-left: 32px !important;
-  }
-  &-with-append {
-    padding-right: 32px !important;
-  }
-  &-icon-prepend {
-    width: 32px;
-    height: 100%;
-    line-height: 32px;
-    text-align: center;
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: 1;
-  }
-  &-icon-clear {
-    display: none;
-  }
-  &-icon-search {
-    cursor: pointer;
-  }
-  &-wrapper:hover {
-    .@{css-prefix}-icon-clear {
-      display: inline-block;
+    &-icon,
+    &-icon-append {
+        width: 32px;
+        height: 32px;
+        line-height: 32px;
+        font-size: 16px;
+        text-align: center;
+        color: #808695;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 3;
     }
-  }
+    &-with-prepend {
+        padding-left: 32px !important;
+    }
+    &-with-append {
+        padding-right: 32px !important;
+    }
+    &-icon-prepend {
+        width: 32px;
+        height: 100%;
+        line-height: 32px;
+        text-align: center;
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 1;
+    }
+    &-icon-clear {
+        display: none;
+    }
+    &-icon-search {
+        cursor: pointer;
+    }
+    &-wrapper:hover {
+        .@{css-prefix}-icon-clear {
+            display: inline-block;
+        }
+    }
 }

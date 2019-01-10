@@ -21,7 +21,9 @@
         "url": "https://github.com/atvue/atvue-demo"
     },
     "license": "ISC",
-    "dependencies": {},
+    "dependencies": {
+        "markdown-it-attrs": "^2.3.2"
+    },
     "peerDependencies": {
         "vue": ">=2.5.2"
     },

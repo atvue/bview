@@ -1,28 +1,32 @@
 <template>
-    <span 
+    <span
         ref="switch"
-        :class="wrapClasses" 
-        @click="_toggle" 
-        @keydown.space="_toggle" 
+        :class="wrapClasses"
+        @click="_toggle"
+        @keydown.space="_toggle"
     >
-        <i :class="[prefixCls+'-loading',{'iconfont icon-loading':loading}]" />
-        <input 
-            type="hidden" 
-            :name="name" 
+        <Icon
+            v-if="loading"
+      :svg="loadIcon"
+            :class="switchLoading"
+        />
+        <input
+            type="hidden"
+            :name="name"
             :value="currentValue"
         >
-        <span :class="prefixCls+'-inner'">
+        <span :class="switchInner">
             <span v-if="trueText&&currentValue">
                 {{ trueText }}
             </span>
-            <span v-if="falseText&&currentValue">
+            <span v-if="falseText&&!currentValue">
                 {{ falseText }}
             </span>
-            <slot 
+            <slot
                 v-if="currentValue"
-                name="open" 
+                name="open"
             />
-            <slot 
+            <slot
                 v-if="!currentValue"
                 name="close"
             />
@@ -30,11 +34,15 @@
     </span>
 </template>
 <script>
-const prefixCls = 'bui-switches';
+//const prefixCls = 'bui-switches';
+import Icon from "../icon";
+import { bviewPrefix as b } from "../../utils/macro";
+import loadIcon from "../../icons/loading";
 export default {
-    name: 'Switches',
+    name: "Switches",
+    components: { Icon },
     props: {
-        //@doc开关禁用
+    //@doc开关禁用
         disabled: {
             type: Boolean,
             default: false
@@ -51,36 +59,42 @@ export default {
         },
         //@doc value为true时显示的值
         trueText: {
-            type: String ,
-            default: undefined ,
+            type: String,
+            default: undefined
         },
         //@doc value为false时显示的值
         falseText: {
-            type: String ,
-            default: undefined ,
+            type: String,
+            default: undefined
         },
         //@doc开关的name属性
         name: {
-            type: String ,
-            default: undefined ,
+            type: String,
+            default: undefined
         }
     },
     data() {
         return {
-            prefixCls: prefixCls,
-            currentValue: this.value
+            currentValue: this.value,
+            loadIcon: loadIcon
         };
     },
     computed: {
         wrapClasses() {
             return [
-                `${prefixCls}`,
+                `${b}-switch`,
                 {
-                    [`${prefixCls}-checked`]: this.currentValue,
-                    [`${prefixCls}-disabled`]: this.disabled,
+                    [`${b}-switch-checked`]: this.currentValue,
+                    [`${b}-switch-disabled`]: this.disabled
                     // [`${prefixCls}-loading`]: this.loading
                 }
             ];
+        },
+        switchInner() {
+            return `${b}-switch-inner`;
+        },
+        switchLoading() {
+            return `${b}-switch-loading`;
         }
     },
     methods: {
@@ -92,7 +106,7 @@ export default {
             let checked = !this.currentValue;
             this.currentValue = checked;
             //@doc开关切换时触发
-            this.$emit('input', checked);
+            this.$emit("input", checked);
         }
     }
 };

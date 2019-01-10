@@ -1,6 +1,17 @@
 <template>
-    <div style="padding: 10px;">
-        <h1>组件库</h1>
+    <div class="wrapper">
+        <div class="home-header">
+            <div class="header-left">
+                <div class="header-logo"></div>
+                <div class="header-title">Bee Design</div>
+                <div class="header-search">
+                    <Input/>
+                </div>
+            </div> 
+            <div class="header-right">
+                
+            </div>
+        </div>
         <div style="display:flex">
             <!-- 随便生成的菜单 待替换 -->
             <div style="width: 160px;margin-top:20px;flex:0 0 160px;">
