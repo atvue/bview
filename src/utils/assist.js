@@ -16,7 +16,7 @@ export function findComponentUpward(context, componentName, componentNames) {
     }
 
     let parent = context.$parent;
-    let name = parent.$options.name;
+    let name = parent ? parent.$options.name : undefined ;
     while (parent && (!name || componentNames.indexOf(name) < 0)) {
         parent = parent.$parent;
         if (parent) name = parent.$options.name;
