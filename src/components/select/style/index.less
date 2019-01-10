@@ -1,37 +1,43 @@
 @import '../../../style/default.less' ;
+@import '../../input/style/index.less' ;
+
 // select
 @select-wrapper: ~"@{bview-prefix}-select-wrapper" ;
 @select-inner: ~"@{bview-prefix}-select-inner" ;
+@select-search-inner: ~"@{bview-prefix}-select-search-inner" ;
 @select-legend: ~"@{bview-prefix}-select-legend" ;
 @select-icon: ~"@{bview-prefix}-select-icon" ;
 @select-placeholder: ~"@{bview-prefix}-select-placeholder" ;
 // option
 @options-wrapper: ~"@{bview-prefix}-options-wrapper" ;
+@option-empty: ~"@{bview-prefix}-options-search-empty" ;
 @option: ~"@{bview-prefix}-option" ;
 @option-selected: ~"@{bview-prefix}-option-selected" ;
 @option-selected-icon: ~"@{bview-prefix}-option-selected-icon" ;
 @option-disabled: ~"@{bview-prefix}-option-disabled" ;
+@option-active: ~"@{bview-prefix}-option-active" ;
 // num
 @height: 32px ;
 
 .@{select-wrapper} {
     border-radius: 4px;
-    height: @height ;
-    line-height: calc( @height - 2px ) ;
     border: 1px solid #d9d9d9 ;
     background-color: #fff;
     font-size: 14px ;
     cursor: pointer ;
     box-sizing: border-box ;
-    &:hover {
+    &:hover , &:focus {
+        outline: none ;
         border-color: #40a9ff;
     }
     .@{select-inner} {
         display: flex ;
+        align-items: center ;
         margin: 0 10px ;
         outline: none;
         user-select: none;
         box-sizing: border-box ;
+        height: @height ;
         // transition: all .3s cubic-bezier(.645, .045, .355, 1);
         .@{select-legend} {
             flex: 1 ;
@@ -49,12 +55,23 @@
                 line-height: 1 ;
             }
         }
+        .@{css-prefix} {
+            border: none ;
+            &-wrapper {
+                
+            }
+        }
+    }
+    .@{select-search-inner}{
+        margin-left: 0 ;  
+        .@{select-legend} {
+            padding-right: 0 ;
+        }
     }
 }
 
 
 .@{options-wrapper} {
-    line-height: 1.5;
     color: rgba(0,0,0,0.65);
     background-color: #fff;
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
@@ -62,6 +79,10 @@
     font-size: 14px;
     max-height: 160px ;
     overflow: auto ;
+    .@{option-empty} {
+        padding: 10px ;
+        text-align: center ;
+    }
     .@{option} {
         position: relative;
         display: block ;
@@ -77,6 +98,9 @@
         &:hover {
             background-color: #e6f7ff;
         }
+    }
+    .@{option-active} , .@{option-active}.@{option-selected} {
+        background-color: #e6f7ff;
     }
     .@{option-selected} {
         background-color: #fafafa;

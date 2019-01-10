@@ -176,6 +176,8 @@ export default {
                 this.visible = true
                 // 计算位置
                 await this.$nextTick()
+                // -@doc 通知下拉框打开，dom已生成
+                this.$emit( 'dropdown-open' )
                 this._calcPopPosition( point )
             } catch( e ) {
                 if ( !e.isCanceled ) {
@@ -273,6 +275,8 @@ export default {
             let { visible } = this
             if ( visible === false ) {
                 this.visiblePortal = false
+                // -@doc 不暴露，动画结束，通知外部下拉框关闭
+                this.$emit( 'dropdown-closed' )
             }
         } ,
         _calcPopPosition( mousePoint ){

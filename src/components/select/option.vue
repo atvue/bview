@@ -20,6 +20,10 @@ import Icon from '../icon'
 import { optionName , selectName } from './helper/name'
 import { bviewPrefix as b } from '../../utils/macro'
 
+function joinClassnames( ...classnames ) {
+    return classnames.filter( i => i ).join( ' ' )
+}
+
 export default {
     name: optionName ,
     components: {
@@ -43,12 +47,19 @@ export default {
             return parent
         } ,
         bClsOption(){
-            let { selected , disabled } = this ,
-                cls = `${b}-option`
+            let { selected , disabled , selectVm , value } = this ,
+                cls = `${b}-option` ,
+                { activeOption } = selectVm ,
+                hasActiveOption = activeOption !== undefined ,
+                currentActive = hasActiveOption && activeOption.value === value
             if ( disabled ) {
-                cls += ` ${b}-option-disabled`
-            } else if ( selected ) {
-                cls += ` ${b}-option-selected`
+                cls = joinClassnames( cls , `${b}-option-disabled` )
+            }
+            if ( selected ) {
+                cls = joinClassnames( cls , `${b}-option-selected` )
+            }
+            if ( currentActive ) {
+                cls = joinClassnames( cls , `${b}-option-active` )
             }
             return cls
         } ,
@@ -58,9 +69,15 @@ export default {
         selected(){
             let { selectVm } = this ,
                 { selected } = selectVm ,
-                selted = selected.value === this.value
+                selted = selected ? selected.value === this.value : false
             return selted
         } ,
+    } ,
+    mounted(){
+        this._registerOption()
+    } ,
+    destroyed(){
+        this._unRegisterOption()
     } ,
     methods: {
         _clickOption(){
@@ -75,6 +92,24 @@ export default {
             }
             // -@doc
             selectVm.$emit( 'click-option' , { vm: this , payload } )
+        } ,
+        _registerOption(){
+            let { selectVm } = this ,
+                noSelect = selectVm === undefined
+            if ( noSelect ) {
+                return
+            }
+            // -@doc
+            selectVm.$emit( 'register-option' , this )   
+        } ,
+        _unRegisterOption(){
+            let { selectVm } = this ,
+                noSelect = selectVm === undefined
+            if ( noSelect ) {
+                return
+            }
+            // -@doc
+            selectVm.$emit( 'un-register-option' , this )   
         }
     }
 }

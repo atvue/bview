@@ -1,4 +1,5 @@
-基本用法
+
+使用options替代Option组件
 
 ```vue
 <template>
@@ -6,13 +7,8 @@
         style="width: 140px;"
         placeholder="请选择学历"
         v-model="value"
-        labelInValue
-    >
-        <Option value="primary">小学</Option>
-        <Option value="junior" disabled>初中</Option>
-        <Option value="senior">高中</Option>
-        <Option value="university">大学</Option>
-    </Select>
+        :options="options"
+    />
 </template>
 
 <script>
@@ -24,6 +20,12 @@ export default {
     data(){
         return {
             value: undefined ,
+            options: [
+                { value: 'primary' , label: '小学' } ,
+                { value: 'junior' , label: '初中' , disabled: true } ,
+                { value: 'senior' , label: '高中' } ,
+                { value: 'university' , label: '大学' } ,
+            ] ,
         }
     } ,
     watch: {
