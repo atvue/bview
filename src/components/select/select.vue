@@ -116,7 +116,7 @@ export default {
             type: null ,
             default: undefined ,
         } ,
-        // @doc 默认false，则value值只是option代表的值，设置成true，则value是对象形式，参数中有label：{ value , label }
+        // @doc 默认false，则value值只是option代表的值，设置成true，则value是对象形式，参数中有label：{ value , label }。
         labelInValue: {
             type: Boolean ,
             default: false ,
