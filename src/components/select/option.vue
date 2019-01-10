@@ -50,7 +50,7 @@ export default {
         bClsOption(){
             let { selected , disabled , selectVm , value } = this ,
                 cls = `${b}-option` ,
-                { activeOption } = selectVm ,
+                { activeOption } = selectVm ? selectVm : { activeOption: undefined } ,
                 hasActiveOption = activeOption !== undefined ,
                 currentActive = hasActiveOption && activeOption.value === value
             if ( disabled ) {
@@ -69,7 +69,7 @@ export default {
         } ,
         selected(){
             let { selectVm } = this ,
-                { selected } = selectVm ,
+                { selected } = selectVm ? selectVm : { selected: undefined } ,
                 selted = selected ? selected.value === this.value : false
             return selted
         } ,
