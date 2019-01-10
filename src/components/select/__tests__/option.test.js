@@ -3,7 +3,7 @@ import Select from '../index.js'
 import OptionVue from '../option.vue'
 const { Option } = Select
 
-describe( 'Option组件测试' , () => {
+describe( 'Option组件' , () => {
     let wrapper
     beforeEach( () => {
         wrapper = mount( Option , {
