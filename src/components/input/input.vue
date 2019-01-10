@@ -1,29 +1,27 @@
 <template>
     <div
-        :class="inputWrapper"
+        :class="`${b}-input-wrapper`"
         :style="{'width':width}"
     >
         <span
             v-if="$slots.prepend"
-            :class="inputIconPrepend"
+            :class="`${b}-input-icon-prepend`"
         >
             <!-- 输入框前预留位 -->
             <slot name="prepend" />
         </span>
-        <i
+        <Icon
             v-if="clearable&&currentValue&&!disabled"
-            :class="inputIcon"
-            @click="_handleClear"
-        >
-            <Icon :svg="closeIcon" />
-        </i>
-        <i
+            :svg="closeIcon"
+            :class="`${b}-input-icon`"
+            @click="_handleClear"  
+        />
+        <Icon 
             v-else-if="search"
-            :class="[inputIcon,inputIconSearch]"
+            :svg="searchIcon"   
+            :class="[`${b}-input-icon`,`${b}-input-search`]"
             @click="_handleSearch"
-        >
-            <Icon :svg="searchIcon" />
-        </i>
+        />
         <input
             ref="input"
             :placeholder="placeholder"
@@ -42,7 +40,7 @@
         >
         <span
             v-if="$slots.append"
-            :class="inputIconAppend"
+            :class="`${b}-input-icon-append`"
         >
             <!-- 输入框后预留位 -->
             <slot name="append" />
@@ -123,34 +121,20 @@ export default {
         return {
             currentValue: this.value,
             closeIcon: CloseIcon,
-            searchIcon: searchIcon
+            searchIcon: searchIcon,
+            b:b
         };
     },
     computed: {
         inputClasses() {
             return [
-                `${b}`,
+                `${b}-input`,
                 {
-                    [`${b}-disabled`]: this.disabled,
-                    [`${b}-with-prepend`]: this.$slots.prepend,
-                    [`${b}-with-append`]: this.search || this.$slots.append
+                    [`${b}-input-disabled`]: this.disabled,
+                    [`${b}-input-with-prepend`]: this.$slots.prepend,
+                    [`${b}-input-with-append`]: this.search || this.$slots.append
                 }
             ];
-        },
-        inputWrapper() {
-            return `${b}-input-wrapper`;
-        },
-        inputIconPrepend() {
-            return `${b}-input-icon-prepend`;
-        },
-        inputIconAppend() {
-            return `${b}-input-icon-append`;
-        },
-        inputIcon() {
-            return `${b}-input-icon`;
-        },
-        inputIconSearch() {
-            return `${b}-icon-search`;
         }
     },
     watch: {

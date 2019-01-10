@@ -1,5 +1,5 @@
 <template>
-    <div :class="textareaWrapper">
+    <div :class="`${b}-textarea-wrapper`">
         <textarea
             ref="textarea"
             :class="textareaClasses"
@@ -17,7 +17,7 @@
         />
         <span
             v-if="maxlength"
-            :class="textareaCount"
+            :class="`${b}-textarea-count`"
         >
             {{ current + '/' + maxlength }}
         </span>
@@ -89,7 +89,8 @@ export default {
     data() {
         return {
             currentValue: this.value,
-            textareaStyles: ""
+            textareaStyles: "",
+            b
         };
     },
     computed: {
@@ -100,12 +101,6 @@ export default {
                     [`${b}-textarea-disabled`]: this.disabled
                 }
             ];
-        },
-        textareaWrapper() {
-            return `${b}-textarea-wrapper`;
-        },
-        textareaCount() {
-            return `${b}-textarea-count`;
         },
         current() {
             return this.value.length;

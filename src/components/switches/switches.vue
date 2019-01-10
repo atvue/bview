@@ -7,15 +7,15 @@
     >
         <Icon
             v-if="loading"
-      :svg="loadIcon"
-            :class="switchLoading"
+            :svg="loadIcon"
+            :class="`${b}-switch-loading`"
         />
         <input
             type="hidden"
             :name="name"
             :value="currentValue"
         >
-        <span :class="switchInner">
+        <span :class="`${b}-switch-inner`">
             <span v-if="trueText&&currentValue">
                 {{ trueText }}
             </span>
@@ -76,7 +76,8 @@ export default {
     data() {
         return {
             currentValue: this.value,
-            loadIcon: loadIcon
+            loadIcon: loadIcon,
+            b
         };
     },
     computed: {
@@ -89,12 +90,6 @@ export default {
                     // [`${prefixCls}-loading`]: this.loading
                 }
             ];
-        },
-        switchInner() {
-            return `${b}-switch-inner`;
-        },
-        switchLoading() {
-            return `${b}-switch-loading`;
         }
     },
     methods: {
