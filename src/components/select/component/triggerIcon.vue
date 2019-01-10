@@ -5,8 +5,9 @@
         :class="`${b}-select-icon`"
     >
         <Icon 
-            type="down" 
+            :svg="down" 
             :class="clsIconDown"
+            :size="18"
             @click="_clickUpDown"
         />
     </div>
@@ -15,6 +16,8 @@
 
 <script>
 import Icon from '../../icon'
+import down from "../../../icons/left_arrow"
+
 export default {
     components: { Icon } ,
     props: {
@@ -27,11 +30,17 @@ export default {
             required: true ,
         }
     } ,
+    data(){
+        return {
+            down ,
+        }
+    } ,
     computed: {
         clsIconDown(){
-            let { visible , b } = this
+            let { visible , b } = this ,
+                cls = `${b}-down`
             // visible = true
-            return visible ? `${b}-down-turn-up` : undefined
+            return visible ? cls + ` ${b}-down-turn-up` : cls
         }
     } ,
     methods: {
