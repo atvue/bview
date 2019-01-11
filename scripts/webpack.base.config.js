@@ -151,6 +151,7 @@ module.exports = {
         new VueLoaderPlugin() ,
         new webpack.DefinePlugin( {
             'process.env.BVIEWPREFIX': JSON.stringify( namePrefixer ) ,
+            'PRODUCTIONBVIEWPREFIX': `process.env.BVIEWPREFIX ? process.env.BVIEWPREFIX : "${namePrefixer}"` ,
         } ) ,
     ]
 };

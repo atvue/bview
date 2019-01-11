@@ -1,7 +1,8 @@
+/* eslint-disable no-undef */
 
-
-
-// 前缀
-// eslint-disable-next-line no-undef
-export const bviewPrefix = process.env.BVIEWPREFIX  // webpack DefinePlugin 注入
+if ( process.env.NODE_ENV !== 'production' ) {
+    exports.bviewPrefix = process.env.BVIEWPREFIX 
+} else {
+    exports.bviewPrefix = PRODUCTIONBVIEWPREFIX
+}
 
