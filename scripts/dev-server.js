@@ -45,14 +45,23 @@ const devOptions = {
     port ,
     host ,
 }
-webpackDevServer.addDevServerEntrypoints( config , devOptions )
 
-generateComponentRoute()
+async function devServer(){
+    try {
+        await generateComponentRoute()
+        
+        webpackDevServer.addDevServerEntrypoints( config , devOptions )
 
-const webpackCompiler = webpack( config )
-const server = new webpackDevServer( webpackCompiler , devOptions )
+        const webpackCompiler = webpack( config )
+        const server = new webpackDevServer( webpackCompiler , devOptions )
 
-server.listen( port , host , function() {
-    console.log( `bview is running at http://${host}:${port}` )
-} )
+        server.listen( port , host , function() {
+            console.log( `bview is running at http://${host}:${port}` )
+        } )
+    } catch( e ) {
+        console.warn( e )
+    }
+}
 
+
+devServer()
