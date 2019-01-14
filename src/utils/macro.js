@@ -1,5 +1,8 @@
+/* eslint-disable no-undef */
 
-
-// 前缀
-export const bviewPrefix = 'bview'
+if ( process.env.NODE_ENV !== 'production' ) {
+    exports.bviewPrefix = process.env.BVIEWPREFIX 
+} else {
+    exports.bviewPrefix = PRODUCTIONBVIEWPREFIX
+}
 

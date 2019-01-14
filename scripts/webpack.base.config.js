@@ -1,11 +1,16 @@
 /**
  * 通用webpack配置
  */
-
+const chalk = require( 'chalk' )
+const webpack = require( 'webpack' )
 const { src } = require('./project-path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
-
-const isProd = process.env.NODE_ENV === 'production';
+const { getNamePrefix , rlaLessFile , lessPrefixKey } = require( './getLessVariables' ) ,
+    namePrefixer = getNamePrefix()
+if ( namePrefixer === '' ) {
+    let msg = chalk`{yellow ${'wraning'}}: {green ${rlaLessFile}}，不存在名为：{red ${lessPrefixKey}}的变量`
+    console.log( msg ) 
+}
 
 module.exports = {
     // 加载器
@@ -142,5 +147,11 @@ module.exports = {
             '@': src
         }
     },
-    plugins: [new VueLoaderPlugin()]
+    plugins: [
+        new VueLoaderPlugin() ,
+        new webpack.DefinePlugin( {
+            'process.env.BVIEWPREFIX': JSON.stringify( namePrefixer ) ,
+            'PRODUCTIONBVIEWPREFIX': `process.env.BVIEWPREFIX ? process.env.BVIEWPREFIX : "${namePrefixer}"` ,
+        } ) ,
+    ]
 };

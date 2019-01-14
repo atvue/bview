@@ -1,6 +1,6 @@
 const compiler = require('vue-template-compiler');
 var transpile = require('vue-template-es2015-compiler');
-
+const { babelParseOptions } = require( './babel-parse-options' )
 const babel = require('@babel/core');
 const babelPluginInsertVueTemplate = require('../babel-helper/babel-plugin-insert-vue-template');
 const NullSFCScriptExport = 'export default {}'
@@ -28,11 +28,8 @@ module.exports = function(content) {
             code: false,
             sourceType: 'module',
             plugins: [
-                [
-                    '@babel/plugin-transform-modules-commonjs',
-                    { strictMode: true }
-                ],
-                [babelPluginInsertVueTemplate, { renderBody: toFuncRender }]
+                ...babelParseOptions.plugins ,
+                [ babelPluginInsertVueTemplate , { renderBody: toFuncRender } ]
             ]
         };
         if (errors.length > 0) {

@@ -50,3 +50,8 @@ components 目录下每个组件目录会生成一份文档说明，文档内容
 ### 编码规范
 
 推荐使用[Vue 风格指南](https://cn.vuejs.org/v2/style-guide/index.html)
+
+
+### README.st
+
+顶部yml配置中，如果`ignoreMenu`为`true`，则不会出现在左侧菜单栏中，修改st的yml配置之后，需要重新启动`npm start`

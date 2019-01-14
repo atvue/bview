@@ -4,6 +4,7 @@
 const config = require( './config' ) ,
     { srcDir , toLibPath } = config ,
     { readFileSync , writeFile } = require( './util' ) ,
+    { babelParseOptions } = require( './babel-parse-options' ) ,
     babel = require("@babel/core")
 
 const glob = require("glob")
@@ -25,14 +26,6 @@ async function findJSFiles(){
     } )
 }
 
-const options = {
-    plugins: [
-        [ '@babel/plugin-transform-modules-commonjs' , {
-            strictMode: true ,
-        } ] ,
-    ]
-}
-
 async function init(){
     let files
     try{
@@ -42,7 +35,7 @@ async function init(){
     }
     files.forEach( file => {
         let code = readFileSync( file )
-        babel.transformAsync( code , options ).then( ( { code } ) => {
+        babel.transformAsync( code , babelParseOptions ).then( ( { code } ) => {
             let libFile = toLibPath( file )
             writeFile( libFile , code )
         } )
