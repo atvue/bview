@@ -1,14 +1,12 @@
 
 /* Reset */
 html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
+h1, h2, h3, h4, h5, h6, p, blockquote,
+abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
+b, u, i, center,ul,
+fieldset, form, label, legend,pre
 article, aside, canvas, details, embed, 
 figure, figcaption, footer, header, hgroup, 
 menu, nav, output, ruby, section, summary,
@@ -25,20 +23,18 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
   display: block;
 }
-ol, ul {
-  list-style: none;
-}
+// ol, ul {
+//   list-style: none;
+// }
 
 /* Links */
-a{ 
-  color: #0645ad; 
+a{  
   text-decoration:none;
 }
-a:visited{ color: #0b0080; }
-a:hover{ color: #06e; }
-a:active{ color:#faa700; }
-a:focus{ outline: thin dotted; }
-a:hover, a:active{ outline: 0; }
+a,a:visited,a:hover,a:active,a:focus{
+  outline: none;
+  color: #333;
+}
 
 @selectionColor: #b3d4fc ;
 
@@ -55,13 +51,13 @@ h1,h2,h3,h4,h5,h6{
   color:#111111;
   line-height:1em;
   -webkit-font-smoothing: antialiased;
-  margin: 30px 0px;
+  // margin: 30px 0px;
 }
 h1{ font-size:2.5em; }
 h2{ font-size:2em;  border-bottom: 1px solid #CCC; padding-bottom: 10px; }
 h3{ font-size:1.5em; }
-h4{ font-size:1.2em; }
-h5{ font-size:1em; }
+h4{ font-size:1.2em;margin:8px 0; }
+h5{ font-size:1em; margin:8px 0; }
 h6{ font-size:0.9em; }
 
 /* Elements */
@@ -78,10 +74,12 @@ img{
 
 /* Tables */
 table { 
-  border-collapse: collapse; 
+  // border-collapse: collapse; 
   border-spacing: 0; 
   width: 100%;
   font-size: 13px;
+  border:1px solid #f2f2f2;
+  border-bottom: none;
 }
 
 td { 
@@ -93,8 +91,9 @@ table th {
 }
 
 table th, table td {
-  border: 1px solid #ccc;
-  padding: 6px 13px;
+  // border: 1px solid #ccc;
+  padding: 8px 13px;
+  border-bottom:1px solid #f2f2f2;
 }
 
 table tr {
@@ -102,9 +101,9 @@ table tr {
   background-color: #fff;
 }
 
-table tr:nth-child(2n) {
-  background-color: #f8f8f8;
-}
+// table tr:nth-child(2n) {
+//   background-color: #f8f8f8;
+// }
 
 /* Code */
 pre, code, tt {

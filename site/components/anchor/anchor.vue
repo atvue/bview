@@ -1,5 +1,6 @@
 <template>
-    <div style="width: 200px;position:fixed">
+    <div style="width: 200px;position:fixed" 
+    >
         <div :class="prefix+'-wrapper'">
             <div :class="prefix">
                 <slot />
@@ -21,6 +22,10 @@ export default {
         isAffix: {
             type: Boolean,
             default: true
+        },
+        scrollOffset:{
+            type:Number,
+            default:0
         }
     },
     data() {
@@ -33,7 +38,7 @@ export default {
             animating: false, // if is scrolling now
             scrollElement: document.documentElement || document.body,
             wrapperTop: 20,
-            titleEle: []
+            // titleEle: []
         };
     },
     watch: {
@@ -42,7 +47,7 @@ export default {
             this.$nextTick(() => {
                 this._ScrollTo();
             });
-        }
+        },
     },
     mounted() {
         this._initMethod();
@@ -55,11 +60,6 @@ export default {
             this._handleHashChange();
             this.$nextTick(() => {
                 this._removeListener();
-                this.titleEle = this.$children.map(item => {
-                    let link = item.href.split("#")[1];
-                    let titleId = document.getElementById(link);
-                    return titleId;
-                });
                 this._addListener();
             });
         },
@@ -78,7 +78,11 @@ export default {
             this._updateTitleOffset(scrollTop);
         },
         _updateTitleOffset(scrollTop) {
-            let titleEle = this.titleEle;
+            let titleEle = this.$children.map(item => {
+                let link = item.href.split("#")[1];
+                let titleId = document.getElementById(link);
+                return titleId;
+            });
             if (this.animating) {
                 return;
             }
@@ -124,4 +128,8 @@ export default {
     }
 };
 </script>
+<style lang="less">
+@import './style/index';
+</style>
+
 

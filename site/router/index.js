@@ -40,27 +40,27 @@ requireDemos.keys().forEach(fileName => {
 // 规定组件说明展示顺序
 let componentsRouteConfig = componentRoutes.map(ele => {
     let { path } = ele,
-        docComp = components[path],
+    docComp = components[path],
         demoComps = demos[path];
     // 插入demo
     let wrapperComp = Vue.extend({
         render: h => {
-            let waterFallVNode = waterfall( demoComps , h )
-            return h( docComp , [ waterFallVNode ] )
+            let waterFallVNode = waterfall(demoComps, h)
+            return h(docComp, [waterFallVNode])
         }
     });
-    ele.component = wrapperComp ;
+    ele.component = wrapperComp;
     return ele;
 });
 
 // 添加组件说明路由结构
 let routes = [
-    {
-        path: '/introduce',
-        component: Introduce,
-        alias: '/',
-        meta: { name: '简介' }
-    } ,
+    // {
+    //     path: '/introduce',
+    //     component: Introduce,
+    //     alias: '/',
+    //     meta: { name: '简介' }
+    // } ,
     {
         path: '/components',
         redirect: '/components/button',

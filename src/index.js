@@ -1,19 +1,21 @@
 import Button from './components/button'
 import Select from './components/select'
 import Input from './components/input'
-import Switch from './components/switches'
+import Switches from './components/switches'
 import Textarea from './components/textarea'
 import Radio from './components/radio'
 import Checkbox from './components/checkbox'
+import Icon from './components/icon'
 
 const components = {
     Button,
     Select,
     Input,
-    Switch,
+    Switches,
     Textarea,
     Radio,
-    Checkbox
+    Checkbox,
+    Icon
 }
 
 const install = function(Vue, opts = {}) {
@@ -26,10 +28,11 @@ export {
     Button,
     Select,
     Input,
-    Switch,
+    Switches,
     Textarea,
     Radio,
-    Checkbox
+    Checkbox,
+    Icon
 }
 
 export default {
