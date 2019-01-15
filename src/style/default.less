@@ -1,29 +1,29 @@
-@import "color/colors";
+@import "colors";
 
 // Prefix
 @bview-prefix                   : bview-;
 @bview-prefix-iconfont          : bview-icon;
 
 // Color
-@primary-color                  : #2d8cf0;
-@info-color                     : #2db7f5;
-@success-color                  : #19be6b;
+@primary-color                  : @blue-1;
+@info-color                     : @blue-2;
+@success-color                  : @green-1;
 @processing-color               : @primary-color;
-@warning-color                  : #ff9900;
-@error-color                    : #ed4014;
-@normal-color                   : #e6ebf1;
-@link-color                     : #2D8cF0;
+@warning-color                  : @gold-1;
+@error-color                    : @red-1;
+@normal-color                   : @white-1;
+@link-color                     : @blue-1;
 @link-hover-color               : tint(@link-color, 20%);
 @link-active-color              : shade(@link-color, 5%);
 @selected-color                 : fade(@primary-color, 90%);
-@subsidiary-color               : #808695;
+@subsidiary-color               : @gray-1;
 
 // Base
-@body-background                : #fff;
+@body-background                : @white;
 @font-family                    : "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
 @code-family                    : Consolas,Menlo,Courier,monospace;
-@title-color                    : #17233d;
-@text-color                     : #515a6e;
+@title-color                    : @blue-3;
+@text-color                     : @gray-2;
 @font-size                      : 14px;
 @font-size-small                : 12px;
 @font-size-large                : 16px;
@@ -36,29 +36,29 @@
 @cursor-disabled                : not-allowed;
 
 // Border color
-@border-color                   : #dcdee2;
-@border-color-inside            : #e8eaec;
+@border-color                   : @white-2;
+@border-color-inside            : @white-3;
 @border-width                   : 1px;
 @border-style                   : solid;
 
 // Background color
-@background-color               : #f7f7f7;
+@background-color               : @white-4;
 @background-color-select-hover  : @input-disabled-bg;
 
 // table
-@head-bg                        : #f9fafc;
-@table-thead-bg                 : #f8f8f9;
-@table-td-bg                    : #f8f8f9;
-@table-td-hover-bg              : #ebf7ff;
-@table-td-highlight-bg          : #ebf7ff;
+@head-bg                        : @white-5;
+@table-thead-bg                 : @white-6;
+@table-td-bg                    : @white-6;
+@table-td-hover-bg              : @white-7;
+@table-td-highlight-bg          : @white-7;
 
 // datepicker
-@date-picker-cell-hover-bg      : #e1f0fe;
+@date-picker-cell-hover-bg      : @white-8;
 
 // Shadow
-@shadow-color                   : rgba(0, 0, 0, .2);
+@shadow-color                   : @black-1;
 @shadow                         : @shadow-down;
-@shadow-card                    : 0 1px 1px 0 rgba(0,0,0,.1);
+@shadow-card                    : 0 1px 1px 0 @black-2;
 @shadow-up                      : 0 -1px 6px @shadow-color;
 @shadow-down                    : 0 1px 6px @shadow-color;
 @shadow-left                    : -1px 0 6px @shadow-color;
@@ -83,12 +83,12 @@
 @btn-border-radius-large        : 6px;
 @btn-border-radius-small        : 3px;
 
-@btn-disable-color              : #c5c8ce;
+@btn-disable-color              : @gray-3;
 @btn-disable-bg                 : @background-color;
 @btn-disable-border             : @border-color;
 
 @btn-default-color              : @text-color;
-@btn-default-bg                 : #fff;
+@btn-default-bg                 : @white;
 @btn-default-border             : @border-color;
 
 @btn-circle-size                : 32px;
@@ -97,7 +97,7 @@
 
 @btn-circle-radius              : floor((@btn-circle-size/2));
 @btn-circle-radius-large        : floor((@btn-circle-size-large/2));
-@btn-circle-radius-small        : floor((@btn-circle-size-smal/2));
+@btn-circle-radius-small        : floor((@btn-circle-size-small/2));
 
 // Input
 @input-height                   : 32px;
@@ -107,11 +107,11 @@
 @input-placeholder-color        : @btn-disable-color;
 @input-color                    : @text-color;
 @input-border-color             : @border-color;
-@input-bg                       : #fff;
+@input-bg                       : @white;
 
 @input-hover-border-color       : @primary-color;
 @input-focus-border-color       : @primary-color;
-@input-disabled-bg              : #f3f3f3;
+@input-disabled-bg              : @white-9;
 
 // Media queries breakpoints
 // Extra small screen / phone
@@ -145,7 +145,8 @@
 @slider-margin                  : 16px 0;
 @slider-button-wrap-size        : 18px;
 @slider-button-wrap-offset      : -4px;
-@slider-disabled-color          : #ccc;
+@slider-disabled-color          : @gray;
 
 // Z-index
 @zindex                         : 9000;
+@global-z-index                 : 8000;
