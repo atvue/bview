@@ -1,0 +1,53 @@
+@import '../../../style/default.less' ;
+
+
+// tag
+@tag-wrapper: ~"@{bview-prefix}-tag" ;
+
+
+.@{tag-wrapper} {
+    font-size: 14px;
+    font-variant: tabular-nums;
+    line-height: 1.5;
+    color: rgba(0,0,0,0.65);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: inline-block;
+    line-height: 20px;
+    height: 22px;
+    padding: 0 7px;
+    border-radius: 4px;
+    border: 1px solid #d9d9d9;
+    background: #fafafa;
+    font-size: 12px;
+    transition: all .3s cubic-bezier(.215, .61, .355, 1);
+    opacity: 1;
+    margin-right: 8px;
+    cursor: pointer;
+    white-space: nowrap;
+    .@{bview-prefix}-tag-close {
+        font-style: normal;
+        vertical-align: -0.125em;
+        text-align: center;
+        text-transform: none;
+        line-height: 0;
+        text-rendering: optimizeLegibility;
+
+        display: inline-block;
+        font-size: 12px;
+        font-size: 10px \9;
+        transform: scale(.83333333) rotate(0deg);
+        cursor: pointer;
+        margin-left: 3px;
+        -webkit-transition: all .3s;
+        transition: all .3s;
+        color: rgba(0,0,0,0.45);
+        font-weight: bold;
+        svg {
+            display: inline-block;
+        }
+    }
+}
