@@ -3,7 +3,8 @@
 
 // tag
 @tag-wrapper: ~"@{bview-prefix}-tag" ;
-
+@tag-wrapper-disabled: ~"@{tag-wrapper}-disabled" ;
+@tag-wrapper-transition: ~"@{tag-wrapper}-transition" ;
 
 .@{tag-wrapper} {
     font-size: 14px;
@@ -28,6 +29,21 @@
     margin-right: 8px;
     cursor: pointer;
     white-space: nowrap;
+    .@{bview-prefix}-tag-loading {
+        display: inline-block ;
+        font-style: normal;
+        vertical-align: -0.125em;
+        text-align: center;
+        text-transform: none;
+        line-height: 0;
+        text-rendering: optimizeLegibility;
+        animation: 1s doCyclo infinite linear ;
+        transform-origin: center ;
+        @keyframes doCyclo {
+            from { transform: rotate(0) }
+            to { transform: rotate(360deg) }
+        }
+    }
     .@{bview-prefix}-tag-close {
         font-style: normal;
         vertical-align: -0.125em;
@@ -50,4 +66,21 @@
             display: inline-block;
         }
     }
+    &.@{tag-wrapper-transition}-leave-active {
+        opacity: 1 ;
+        transition: opacity .5s ;
+    }
+    &.@{tag-wrapper-transition}-leave-to {
+        opacity: 0 ;
+    }
+    &.@{tag-wrapper-disabled} , &.@{tag-wrapper-disabled} a {
+        color: rgba(0,0,0,0.25);
+        background-color: #f5f5f5;
+        border-color: #d9d9d9;
+        text-shadow: none;
+        box-shadow: none;
+        cursor: not-allowed ;
+        outline: none ;
+    }
 }
+ 

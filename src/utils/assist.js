@@ -102,3 +102,15 @@ var capitalize = function(str) {
 
 // 组件名称规范 https://vuejs.org/v2/style-guide/index.html#Multi-word-component-names-essential
 export const camlizeName = str => capitalize(camelize(str))
+
+
+//Array-like object to Array.
+export function toArray (list, start) {
+    start = start || 0
+    let i = list.length - start
+    let ret = new Array( i )
+    while ( i-- ) {
+        ret[ i ] = list[ i + start ]
+    }
+    return ret
+}
