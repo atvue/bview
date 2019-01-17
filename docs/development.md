@@ -66,6 +66,8 @@
   // 编辑器保存时自动格式化
   "editor.formatOnSave": true,
   "vetur.format.options.tabSize": 4
+  // eslint-plugin-vue和vetur有冲突，推荐禁用vetur默认的template校验
+  "vetur.validation.template": false
 }
 
 ```
