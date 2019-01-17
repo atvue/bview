@@ -172,7 +172,7 @@ module.exports = astJs => {
                         let { properties } = path.node.value
                         apiMethods = properties
                             .filter(e => {
-                                return /^[^_]/.test(e.key.name)
+                                return /^[^(_|$_)]/.test(e.key.name)
                             })
                             .map(e => {
                                 return {

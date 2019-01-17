@@ -4,7 +4,7 @@
 <template>
     <div>
         <Tag>Tag1</Tag>
-        <Tag><a href="https://163.com" target="_blank">跳转链接</a></Tag>
+        <Tag><a href="https://163.com" target="_blank">163跳转链接</a></Tag>
         <Tag 
             closable
             @close="closeTag"
@@ -27,6 +27,11 @@ export default {
     methods: {
         closeTag( event ){
             // event.preventDefault()
+            return new Promise( ( resolve , reject ) => {
+                setTimeout( () => {
+                    resolve()
+                } , 1000 )
+            } )
         }
     } ,
 }

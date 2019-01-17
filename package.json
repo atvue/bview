@@ -22,7 +22,7 @@
     },
     "license": "ISC",
     "dependencies": {
-        "markdown-it-attrs": "^2.3.2"
+
     },
     "peerDependencies": {
         "vue": ">=2.5.2"
@@ -51,6 +51,7 @@
         "babel-types": "^6.26.0",
         "chalk": "^2.4.1",
         "cheerio": "^1.0.0-rc.2",
+        "cross-spawn": "^6.0.5",
         "css-loader": "^1.0.0",
         "eslint": "^5.11.1",
         "eslint-loader": "^2.1.1",
@@ -74,7 +75,9 @@
         "loader-utils": "^1.1.0",
         "markdown-it": "^8.4.2",
         "markdown-table": "^1.1.2",
+        "markdown-it-attrs": "^2.3.2",
         "mini-css-extract-plugin": "^0.4.2",
+        "opn": "^5.4.0",
         "postcss-loader": "^3.0.0",
         "rucksack-css": "^1.0.2",
         "style-loader": "^0.23.0",
@@ -93,6 +96,6 @@
         "webpack-cli": "^3.1.0",
         "webpack-dev-server": "^3.1.7",
         "webpack-merge": "^4.1.4"
-    } ,
+    },
     "node": "^8.10.0 || >=9.10.0"
 }

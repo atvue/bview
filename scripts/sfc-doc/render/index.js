@@ -4,12 +4,12 @@ function renderTable(heads, keys, data) {
     let res = data.map(d => {
         let row = [];
         keys.forEach(key => {
-            let value = d[key] ,
-                noValue = value === undefined || value === 'undefined'
-                v = noValue ? '/' : value;
-            if ( key === 'required' ) {
-                let required = value === 'true'
-                v = required ? '必填' : '不必填'
+            let value = d[key],
+                noValue = value === undefined || value === 'undefined';
+            v = noValue ? '/' : value;
+            if (key === 'required') {
+                let required = value === true;
+                v = required ? '必填' : '不必填';
             }
             row.push(v);
         });
@@ -22,18 +22,18 @@ function renderTable(heads, keys, data) {
 
 function render(type, data) {
     switch (type) {
-        case 'propsRes':
-            return renderTable(
-                ['属性名', '描述', '类型', '必填', '默认'],
-                ['name', 'describe', 'type', 'required', 'default'],
-                data
-            );
-        case 'apiMethods':
-            return renderTable(['方法名', '描述'], ['name', 'describe'], data);
-        case 'emitEvents':
-            return renderTable(['事件名', '描述'], ['name', 'describe'], data);
-        case 'slotsRes':
-            return renderTable(['插槽名', '描述'], ['name', 'describe'], data);
+    case 'propsRes':
+        return renderTable(
+            ['属性名', '描述', '类型', '是否必填', '默认'],
+            ['name', 'describe', 'type', 'required', 'default'],
+            data
+        );
+    case 'apiMethods':
+        return renderTable(['方法名', '描述'], ['name', 'describe'], data);
+    case 'emitEvents':
+        return renderTable(['事件名', '描述'], ['name', 'describe'], data);
+    case 'slotsRes':
+        return renderTable(['插槽名', '描述'], ['name', 'describe'], data);
     }
 }
 
