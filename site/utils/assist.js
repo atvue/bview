@@ -97,7 +97,51 @@ export const camelize = function(str) {
 
 // 首字母大写
 var capitalize = function(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1)
+        return str.charAt(0).toUpperCase() + str.slice(1)
+    }
+    // 辅助方法 添加className
+export function addClass(el, cls) {
+    if (!el) return;
+    let curClass = el.className;
+    const classes = (cls || '').split(' ');
+
+    for (let i = 0, j = classes.length; i < j; i++) {
+        const clsName = classes[i];
+        if (!clsName) continue;
+
+        if (el.classList) {
+            el.classList.add(clsName);
+        } else {
+            if (!hasClass(el, clsName)) {
+                curClass += ' ' + clsName;
+            }
+        }
+    }
+    if (!el.classList) {
+        el.className = curClass;
+    }
+}
+// 辅助方法 移除className
+export function removeClass(el, cls) {
+    if (!el || !cls) return;
+    const classes = cls.split(' ');
+    let curClass = ' ' + el.className + ' ';
+
+    for (let i = 0, j = classes.length; i < j; i++) {
+        const clsName = classes[i];
+        if (!clsName) continue;
+
+        if (el.classList) {
+            el.classList.remove(clsName);
+        } else {
+            if (hasClass(el, clsName)) {
+                curClass = curClass.replace(' ' + clsName + ' ', ' ');
+            }
+        }
+    }
+    if (!el.classList) {
+        el.className = trim(curClass);
+    }
 }
 
 // 组件名称规范 https://vuejs.org/v2/style-guide/index.html#Multi-word-component-names-essential

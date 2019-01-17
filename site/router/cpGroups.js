@@ -1,36 +1,47 @@
 /* eslint-disable */
-import { componentRoutes } from './cptRoutes'
 
-let group = [
-    {
-        categoryName: '基础组件' ,
+const group = [{
+        categoryName: '基础组件',
         components: [
-            'button' ,
+            'button', 'icon'
         ]
-    } ,
+    },
     {
-        categoryName: '数据输入' ,
+        categoryName: '数据输入',
         components: [
-            'input' ,
+            'input', 'textarea', 'radio', 'checkbox', 'Dropdown', 'cascader'
         ]
-    } ,
+    },
     {
-        categoryName: '数据展示' ,
+        categoryName: '数据展示',
         components: [
-            'menu' ,
+            'tag'
         ]
-    } ,
+    },
     {
-        categoryName: '操作反馈' ,
+        categoryName: '导航组件',
         components: [
-            'anchor' ,
+            'menu'
         ]
-    } ,
-    {
-        categoryName: '导航组件' ,
-        components: [
-            'menu' ,
-        ]
-    } ,
+    },
 ]
 
+export function resetGroup(routerData, rootRoute) {
+    return group.map(item => {
+        let obj = {
+            meta: { name: item.categoryName },
+            children: [],
+            path: '/components',
+            component: rootRoute
+        };
+        item.components.forEach(com => {
+            let element = routerData.find((route) => {
+                return route.path === com;
+            })
+            if (element) {
+                obj.children.push(element);
+            }
+        });
+        return obj;
+    })
+}

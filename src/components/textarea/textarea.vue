@@ -30,7 +30,7 @@ import { bviewPrefix as b } from "../../utils/macro";
 export default {
     name: "Textarea",
     props: {
-    //@doc绑定的值
+        //@doc绑定的值
         value: {
             type: [String, Number],
             default: ""

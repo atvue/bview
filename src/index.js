@@ -18,7 +18,7 @@ const components = {
     Icon
 }
 
-const install = function(Vue, opts = {}) {
+const install = function(Vue) {
     Object.keys(components).forEach(key => {
         Vue.component(key, components[key])
     })

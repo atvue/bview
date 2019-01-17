@@ -38,7 +38,7 @@ module.exports = function(source, map, meta) {
             if (lang && hljs.getLanguage(lang)) {
                 try {
                     let html = hljs.highlight(lang, str, true).value
-                    return `<pre class="hljs ${ className }"><code>${ html }</code></pre>`
+                    return `<codePanel><pre class="hljs ${ className }" slot="content"><code>${ html }</code></pre></codePanel>`
                 } catch (e) {
                     callback(e)
                 }
@@ -90,15 +90,17 @@ module.exports = function(source, map, meta) {
             let vueModuleStr = `
                         <template>
                             <div class="md-live-vue-with-md">
-                                <div class="markdown">${ html2 }</div>
+                                 <div class="markdown">
+                                 ${ html2 }</div>
                             </div>
                         </template>
                         <script>
                             // md中vue组件 source code
                             ${ jsStr }
+                            import codePanel from 'site/components/codePanel'
                             // 注册md中的vue组件
                             export default {
-                                components: { ${ components } }
+                                components: { ${ components },codePanel }
                             }
                         </script>
                     `

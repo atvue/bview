@@ -2,12 +2,11 @@
     <div class="wrapper">
         <div class="home-header">
             <div class="header-left">
-                <div class="header-logo">
+                <div class="header-logo" />
+                <div class="header-title">
+                Bee&nbsp;Design
                 </div>
-                <div 
-                    class="header-title"
-                >Bee Design </div>
-                <div class="header-search" >
+                <div class="header-search">
                     <Input
                         placeholder="请输入想要搜索的组件"
                     />
@@ -26,35 +25,9 @@
             class="main-content" 
         >
             <!-- 随便生成的菜单 待替换 -->
-            <div class="slider-nav">
-                <div 
-                    v-for="(r,i) in routerData" 
-                    :key="getMetaName(r,i)" 
-                    class="nav-parent"
-                >
-                    <div class="nav-parent-title">
-                        <!-- <RouterLink 
-                            > -->
-                        {{ getMetaName(r,i) }}
-                    </div>
-                    
-                    <div 
-                        v-show="r.children&&r.children.length>0" 
-                        class="nav-child">
-                        <div 
-                            v-for="(c,j) in r.children"
-                            :key="getMetaName(c,j)"
-                            class="nav-child-title"
-                        >
-                            <RouterLink
-                                :to="r.path+'/'+c.path"
-                            >
-                                {{ getMetaName(c,j) }}
-                            </RouterLink>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <SlideNav 
+                :routerData="routerData"
+            />
             <!-- END 随便生成的菜单 待替换 -->
             <!-- 文档内容 -->
             <div
@@ -66,11 +39,14 @@
             <!-- END 文档内容 -->
             <!--锚点内容-->
             <div style="position:absolute;right:100px">
-                <Anchor>  
-                    <anchor-link
-                      v-for="item in anchorList" 
-                        :title="item.title"
-                        :href="item.href"
+                <Anchor
+                    ref="anchor" 
+                >  
+                    <AnchorLink
+                        v-for="(item,index) in anchorList" 
+                        :key="index"
+                        :title="item.title" 
+                        :href="item.href" 
                     />
                 </Anchor>
             </div>
@@ -81,20 +57,18 @@
 
 <script>
 import './style/app.less'
-import searchIcon from './assets/icons/search'
-import downIcon from './assets/icons/down'
 import Anchor from './components/anchor';
+import SlideNav from './components/slideNav';
 const { AnchorLink } = Anchor;
 
 export default {
     components: {
         Anchor,
-        AnchorLink
+        AnchorLink,
+        SlideNav
     },
     data(){
         return{
-            searchIcon:searchIcon,
-            downIcon:downIcon,
             anchorList:[]
         }
     },
@@ -114,9 +88,6 @@ export default {
         this.updateAnchor();
     },
     methods: {
-        getMetaName( r , i ){
-            return r.meta && r.meta.name || i
-        },
         updateAnchor(){
             this.anchorList = [];
             let ele = this.$refs.mainWrapper.querySelectorAll('h3');
@@ -132,4 +103,5 @@ export default {
     }   
 };
 </script>
+
 

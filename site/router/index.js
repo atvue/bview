@@ -1,12 +1,13 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import { componentRoutes } from './cptRoutes'
+import { resetGroup } from './cpGroups';
 import { waterfall } from './waterfall'
+
 Vue.use(Router);
-
-import Introduce from '../modules/introduce';
-
 import rootRoute from './rootRoute';
+
+
 
 const requireComponent = require.context('@/components/', true, /.*\.st$/);
 
@@ -24,7 +25,6 @@ requireComponent.keys().forEach(fileName => {
 const requireDemos = require.context('@/components/', true, /.*\.md$/);
 
 let demos = {};
-
 requireDemos.keys().forEach(fileName => {
     let name = fileName.split('/')[1],
         demo = requireDemos(fileName),
@@ -54,21 +54,23 @@ let componentsRouteConfig = componentRoutes.map(ele => {
 });
 
 // 添加组件说明路由结构
-let routes = [
-    // {
-    //     path: '/introduce',
-    //     component: Introduce,
-    //     alias: '/',
-    //     meta: { name: '简介' }
-    // } ,
-    {
-        path: '/components',
-        redirect: '/components/button',
-        component: rootRoute,
-        meta: { name: '组件' },
-        children: componentsRouteConfig
-    }
-];
+let routes = resetGroup(componentsRouteConfig, rootRoute);
+// let routes = [
+//     // {
+//     //     path: '/introduce',
+//     //     component: Introduce,
+//     //     alias: '/',
+//     //     meta: { name: '简介' }
+//     // } ,
+//     {
+//         path: '/components',
+//         redirect: '/components/button',
+//         component: rootRoute,
+//         meta: { name: '组件' },
+//         children: componentsRouteConfig
+//     }
+// ];
+
 
 const router = new Router({
     routes
