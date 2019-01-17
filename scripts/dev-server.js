@@ -6,6 +6,7 @@ const merge = require('webpack-merge')
 const webpackDevServer = require( 'webpack-dev-server' )
 const { site } = require( './project-path' )
 const { generateComponentRoute } = require( './site-helper/index' )
+const openBrowser = require( './util/openBrowser' )
 
 const siteResolve = ( ...args ) => path.resolve( site , ...args )
 const port = 8022 ,
@@ -52,11 +53,13 @@ async function devServer(){
         
         webpackDevServer.addDevServerEntrypoints( config , devOptions )
 
-        const webpackCompiler = webpack( config )
-        const server = new webpackDevServer( webpackCompiler , devOptions )
+        const webpackCompiler = webpack( config ),
+            server = new webpackDevServer( webpackCompiler , devOptions ) ,
+            url = `http://${host}:${port}`
 
         server.listen( port , host , function() {
-            console.log( `bview is running at http://${host}:${port}` )
+            console.log( `bview is running at ${url}` )
+            openBrowser( url )
         } )
     } catch( e ) {
         console.warn( e )
