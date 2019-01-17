@@ -63,7 +63,11 @@ module.exports = function(source, map, meta) {
                 apiTpl += emitEvents ? `\n\n##### emits\n\n${emitEvents}` : '' + slotsRes ? `\n\n##### slots\n\n${slotsRes}\n` : '';
             });
 
-            const apiHtml = md.render(apiTpl);
+            let apiHtml = md.render(apiTpl);
+            // https://github.com/arve0/markdown-it-attrs/issues/80
+            apiHtml = apiHtml.replace(/%7B|%7D/g, str => {
+                return decodeURI(str)
+            })
             let vueSfcTpl = `<template>
                     <div>
                         ${html}
