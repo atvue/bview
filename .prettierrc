@@ -1,4 +1,5 @@
 {
   "eslintIntegration": true,
-  "singleQuote": true
+  "singleQuote": true,
+  "tabWidth": 4
 }
