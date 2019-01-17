@@ -36,7 +36,7 @@
 
 -   插件安装（必要）：Vetur、ESLint、Prettier - Code formatter。注意 Beautify 插件和 Prettier 存在热键冲突，建议禁用。
 
--   工作区下 setting.json 配置， 复制以下配置，VsCode 中顶部工具栏 Code->首选项->设置 切换至工作区设置，并粘贴
+-   工作区下 setting.json 配置， 复制以下配置，VsCode 中顶部工具栏 Code->首选项->设置 切换至工作区设置，并粘贴；也可以在本项目下创建.vscode 文件夹并增加 setting.json 文件，并粘贴。
 
 ```
 
