@@ -1,30 +1,30 @@
 /* eslint-disable */
 
-const group = [{
+const group = [
+    {
         categoryName: '基础组件',
-        components: [
-            'button', 'icon'
-        ]
+        components: ['button', 'icon']
     },
     {
         categoryName: '数据输入',
         components: [
-            'input', 'textarea', 'radio', 'checkbox', 'Dropdown', 'cascader'
+            'input',
+            'textarea',
+            'radio',
+            'checkbox',
+            'Dropdown',
+            'cascader'
         ]
     },
     {
         categoryName: '数据展示',
-        components: [
-            'tag'
-        ]
+        components: ['tag']
     },
     {
         categoryName: '导航组件',
-        components: [
-            'menu'
-        ]
-    },
-]
+        components: ['menu', 'pager']
+    }
+];
 
 export function resetGroup(routerData, rootRoute) {
     return group.map(item => {
@@ -37,13 +37,13 @@ export function resetGroup(routerData, rootRoute) {
             component: rootRoute
         };
         item.components.forEach(com => {
-            let element = routerData.find((route) => {
+            let element = routerData.find(route => {
                 return route.path === com;
-            })
+            });
             if (element) {
                 obj.children.push(element);
             }
         });
         return obj;
-    })
+    });
 }
