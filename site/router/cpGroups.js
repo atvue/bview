@@ -9,7 +9,7 @@ const group = [{
     {
         categoryName: '数据输入',
         components: [
-            'input', 'textarea', 'radio', 'checkbox', 'Dropdown', 'cascader'
+            'input', 'textarea', 'radio', 'checkbox', 'Dropdown', 'cascader' , 'select'
         ]
     },
     {
