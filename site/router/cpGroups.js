@@ -13,7 +13,8 @@ const group = [
             'radio',
             'checkbox',
             'Dropdown',
-            'cascader'
+            'cascader',
+            'select'
         ]
     },
     {
