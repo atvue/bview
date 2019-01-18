@@ -4,13 +4,17 @@ function renderTable(heads, keys, data) {
     let res = data.map(d => {
         let row = [];
         keys.forEach(key => {
-            let value = d[key],
-                noValue = value === undefined || value === 'undefined';
-            v = noValue ? '/' : value;
+            let value = d[key] ,
+                noValue = value === undefined || value === 'undefined' ,
+                v = noValue ? '/' : value;
             if (key === 'required') {
                 let required = value === true;
                 v = required ? '必填' : '不必填';
             }
+            // mark-it插件bug临时方案,url编码方式 更多: https://github.com/arve0/markdown-it-attrs/issues/80
+            v = v.replace(/{|}/g, str => {
+                return encodeURI(str)
+            })
             row.push(v);
         });
         return row;
