@@ -1,7 +1,5 @@
 #### 简化版本
 
-简洁版本，此时 showTotal、showElevator、showSizer 配置项将失效
-
 ```vue
 <template>
     <Pager
@@ -26,3 +24,5 @@ export default {
 };
 </script>
 ```
+
+简洁版本，此时 showTotal、showElevator、showSizer 配置项将失效
