@@ -25,25 +25,25 @@
 </template>
 
 <script>
-import calcTextareaHeight from "../../utils/calcTextareaHeight";
-import { bviewPrefix as b } from "../../utils/macro";
+import calcTextareaHeight from '../../utils/calcTextareaHeight';
+import { bviewPrefix as b } from '../../utils/macro';
 export default {
-    name: "Textarea",
+    name: 'TextArea',
     props: {
         //@doc绑定的值
         value: {
             type: [String, Number],
-            default: ""
+            default: ''
         },
         //@doc输入框占位文本
         placeholder: {
             type: String,
-            default: "提示性文案"
+            default: '提示性文案'
         },
         //@doc自带属性
         autocomplete: {
             type: String,
-            default: "off"
+            default: 'off'
         },
         //@doc是否自动聚焦
         autofocus: {
@@ -68,7 +68,7 @@ export default {
         //@doc调整textarea的方向，可选择both、vertical、horizontal
         resize: {
             type: String,
-            default: "none"
+            default: 'none'
         },
         //@doc是否自动调整textarea
         autoResize: {
@@ -78,18 +78,18 @@ export default {
         //@doc 宽度
         width: {
             type: String,
-            default: "450px"
+            default: '450px'
         },
         //@doc 高度
         height: {
             type: String,
-            default: "50px"
+            default: '50px'
         }
     },
     data() {
         return {
             currentValue: this.value,
-            textareaStyles: "",
+            textareaStyles: '',
             b
         };
     },
@@ -118,12 +118,12 @@ export default {
         },
         _handleEnter(event) {
             //@doc enter键触发
-            this.$emit("enter", event);
+            this.$emit('enter', event);
         },
         _handleInput(event) {
             let value = event.target.value;
             //@doc输入框改变时触发
-            this.$emit("input", value);
+            this.$emit('input', value);
             this._setCurrentValue(value);
         },
         //@doc 手动聚焦输入框
@@ -136,11 +136,11 @@ export default {
         },
         _handleFocus(event) {
             //@doc 聚焦时触发
-            this.$emit("focus", event);
+            this.$emit('focus', event);
         },
         _handleBlur(event) {
             //@doc 失焦时触发
-            this.$emit("blur", event);
+            this.$emit('blur', event);
         },
         _resizeTextarea() {
             const autoResize = this.autoResize;

@@ -3,8 +3,8 @@
         <div class="home-header">
             <div class="header-left">
                 <div class="header-logo" />
-                <div class="header-title">
-                Bee&nbsp;Design
+                <div class="header-title">
+                    Bee&nbsp;Design
                 </div>
                 <div class="header-search">
                     <Input
@@ -14,10 +14,26 @@
             </div> 
             <div class="header-right">
                 <ul>
-                    <li><a href="/">组件</a></li>
-                    <li><a href="/">开发指南</a></li>
-                    <li><a href="/">v1.0</a></li>
-                    <li><a href="/">帮助</a></li>
+                    <li>
+                        <a href="/">
+                            组件
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/">
+                            开发指南
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/">
+                            v1.0
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/">
+                            帮助
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -26,7 +42,7 @@
         >
             <!-- 随便生成的菜单 待替换 -->
             <SlideNav 
-                :routerData="routerData"
+                :router-data="routerData"
             />
             <!-- END 随便生成的菜单 待替换 -->
             <!-- 文档内容 -->

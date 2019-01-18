@@ -9,7 +9,7 @@
                 class="bPanel-body-wrapper" 
             >
                 <div class="bPanel-body">
-                    <slot name="content"></slot>
+                    <slot name="content" />
                 </div>
             </div>
         </CollapseTransition>
@@ -17,15 +17,10 @@
             :class="['bPanel-footer',{'is-fixed':fixedControl}]"
             @click="toggle"
         >
-            <slot></slot>
             <span 
-                v-show="!isActive"
-                class="bPanel-footer-state"      
-            > </>展开代码</span>
-            <span 
-                v-show="isActive"
-                class="bPanel-footer-state" 
-            ></>收起代码</span>
+                class="bPanel-footer-state"       
+                v-html="activeText"    
+            />
         </div>
     </div>
 </template>
@@ -40,7 +35,12 @@ export default {
         return {
             isActive:false,
             fixedControl:false,
-            scrollEle:null
+            scrollEle:null,
+        }
+    },
+    computed:{
+        activeText(){
+            return this.isActive?'收起代码':'展开代码';
         }
     },
     watch:{
@@ -99,26 +99,24 @@ export default {
     margin-top: -1px;
     color: #d3dce6;
     cursor: pointer;
-}
-
-.bPanel-footer-state {
-    display: block;
     height: 40px;
     line-height: 40px;
-    text-align: center;
-    cursor: pointer;
-    color: #2c80ff;
     &:hover {
         background: #f9fafc;
     }
-    > span {
-        display: inline-block;
-        
+}
+.bPanel-footer-state {
+    display: inline-block;
+    height:100%;
+    color: #2c80ff;
+  
+    &:after{
+        clear: both;
     }
 }
 .collapse-transition {
     transition: height 0.3s ease-in-out, padding-top 0.3s ease-in-out,
-        padding-bottom 0.3s ease-in-out;
+    padding-bottom 0.3s ease-in-out;
 }
 
 </style>

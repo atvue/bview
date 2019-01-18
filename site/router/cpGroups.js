@@ -29,7 +29,9 @@ const group = [{
 export function resetGroup(routerData, rootRoute) {
     return group.map(item => {
         let obj = {
-            meta: { name: item.categoryName },
+            meta: {
+                name: item.categoryName
+            },
             children: [],
             path: '/components',
             component: rootRoute

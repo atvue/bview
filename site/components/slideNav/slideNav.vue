@@ -13,7 +13,8 @@
                     
             <div 
                 v-show="r.children&&r.children.length>0" 
-                class="nav-child">
+                class="nav-child"
+            >
                 <div 
                     v-for="(c,j) in r.children"
                     :key="getMetaName(c,j)"
