@@ -1,5 +1,7 @@
 <template>
-    <div style="width: 200px;position:fixed">
+    <div 
+        style="width: 200px;position:fixed" 
+    >
         <div :class="prefix+'-wrapper'">
             <div :class="prefix">
                 <slot />
@@ -21,6 +23,14 @@ export default {
         isAffix: {
             type: Boolean,
             default: true
+        },
+        container:{
+            type:String,
+            default:null
+        },
+        scrollOffset:{
+            type:Number,
+            default:74
         }
     },
     data() {
@@ -32,8 +42,7 @@ export default {
             scrollContainer: window,
             animating: false, // if is scrolling now
             scrollElement: document.documentElement || document.body,
-            wrapperTop: 20,
-            titleEle: []
+            wrapperTop:0,
         };
     },
     watch: {
@@ -42,7 +51,7 @@ export default {
             this.$nextTick(() => {
                 this._ScrollTo();
             });
-        }
+        },
     },
     mounted() {
         this._initMethod();
@@ -54,14 +63,16 @@ export default {
         _initMethod() {
             this._handleHashChange();
             this.$nextTick(() => {
+                this.getContainer();
+                this._ScrollTo();
+                this._updateTitleOffset();
                 this._removeListener();
-                this.titleEle = this.$children.map(item => {
-                    let link = item.href.split("#")[1];
-                    let titleId = document.getElementById(link);
-                    return titleId;
-                });
                 this._addListener();
             });
+        },
+        getContainer(){
+            this.scrollContainer = this.container ? (typeof this.container === 'string' ? document.querySelector(this.container) : this.container) : window;
+            this.scrollElement = this.container ? this.scrollContainer : (document.documentElement || document.body);
         },
         _handleHashChange() {
             let url = window.location.href;
@@ -74,11 +85,15 @@ export default {
             let scrollTop =
         document.documentElement.scrollTop ||
         e.target.pageYOffset ||
-        document.body.scrollTop;
+        document.body.scrollTop + this.scrollOffset;
             this._updateTitleOffset(scrollTop);
         },
         _updateTitleOffset(scrollTop) {
-            let titleEle = this.titleEle;
+            let titleEle = this.$children.map(item => {
+                let link = item.href.split("#")[1];
+                let titleId = document.getElementById(link);
+                return titleId;
+            });
             if (this.animating) {
                 return;
             }
@@ -101,7 +116,7 @@ export default {
             let offset = scrolllink
                 ? scrolllink.getAttribute("data-scroll-offset")
                 : 0;
-            let offsetTop = anchor.offsetTop - this.wrapperTop - offset;
+            let offsetTop = anchor.offsetTop - this.wrapperTop - offset-this.scrollOffset;
             this.animating = true;
             scrollTop(
                 this.scrollContainer,
@@ -120,8 +135,16 @@ export default {
         _addListener() {
             on(window, "hashchange", this._handleHashChange);
             on(this.scrollContainer, "scroll", this._handleScroll);
+        },
+        clearCurrentLink(){
+            this.currentLink='';
+            this.currentId='';
         }
     }
 };
 </script>
+<style lang="less">
+@import './style/index';
+</style>
+
 

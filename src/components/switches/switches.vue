@@ -34,7 +34,6 @@
     </span>
 </template>
 <script>
-//const prefixCls = 'bui-switches';
 import Icon from "../icon";
 import { bviewPrefix as b } from "../../utils/macro";
 import loadIcon from "../../icons/loading";

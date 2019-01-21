@@ -17,8 +17,14 @@ export default {
     name: "AnchorLink",
     inject: ["anchorEle"],
     props: {
-        href: String,
-        title: String,
+        href: {
+            type:String,
+            default:''
+        },
+        title: {
+            type:String,
+            default:''
+        },
         scrollOffset: {
             type: Number,
             default: 10
@@ -40,8 +46,7 @@ export default {
         }
     },
     methods: {
-        _goAnchor(event) {
-            // console.log('ee');
+        _goAnchor() {
             this.anchorEle.currentLink = this.href;
             this.anchorEle._handleHashChange();
             this.anchorEle._ScrollTo();

@@ -4,7 +4,7 @@
     <div class="example">
       <span>test5:</span>
       <Input placeholder="请输入" v-model="value5" @focus="focus">
-             <i slot="append" class="iconfont icon-riqi"></i>
+             <Icon slot="append" type="down"></Icon>
       </Input>
     </div>
   </section>
@@ -19,7 +19,7 @@ export default {
     data() {
         return {
             value4: '',
-            maxlength: 20
+            maxlength: 20,
         };
     },
     methods: {

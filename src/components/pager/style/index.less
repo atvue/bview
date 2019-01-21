@@ -1,0 +1,149 @@
+@import '../../../style/default';
+
+@pager-prefix-cls: ~'@{bview-prefix}-pager';
+
+.input-reset {
+    -webkit-appearance: none;
+    appearance: none;
+    outline: 0;
+}
+
+.@{pager-prefix-cls} {
+    padding: 0;
+    position: relative;
+    font-size: 0;
+    > li {
+        font-size: 12px;
+        .@{bview-prefix}-icon_svg svg {
+            font-size: 13px;
+            vertical-align: middle;
+        }
+    }
+    > li + li {
+        margin-left: 4px;
+    }
+    &-detail {
+        font-size: 12px;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 15px;
+    }
+    &-item {
+        display: inline-block;
+        vertical-align: middle;
+        width: 28px;
+        height: 28px;
+        line-height: 28px;
+        list-style: none;
+        text-align: center;
+        cursor: pointer;
+        color: #666666;
+        border: @border-width @border-style @border-color;
+        border-radius: 4px;
+        transition: all 0.2s ease-in-out;
+        a {
+            color: #495060;
+            &:hover,
+            &:focus,
+            &:active,
+            &:visited {
+                color: #495060;
+            }
+        }
+        &:hover {
+            border-color: @primary-color;
+            color: @primary-color;
+            & a {
+                color: @primary-color;
+                &:hover,
+                &:focus,
+                &:active,
+                &:visited {
+                    color: @primary-color;
+                }
+            }
+        }
+        &.simple {
+            border: none;
+            &:hover {
+                border: none;
+                color: #495060;
+            }
+            .@{pager-prefix-cls}-input {
+                display: inline-block;
+                box-sizing: border-box;
+                padding: 0 4px;
+                width: 30px;
+                height: 24px;
+                line-height: 24px;
+                border: @border-width @border-style @border-color;
+                .input-reset;
+                &:focus {
+                    border-color: @primary-color;
+                }
+            }
+        }
+        &.@{pager-prefix-cls}-pre {
+        }
+        &.@{pager-prefix-cls}-item-disabled {
+            cursor: not-allowed;
+            background-color: #ffffff;
+            border-color: #dddee1;
+            i {
+                cursor: not-allowed;
+            }
+            & a {
+                color: #dddee1;
+                &:hover,
+                &:focus,
+                &:active,
+                &:visited {
+                    color: #dddee1;
+                }
+            }
+        }
+        &.@{pager-prefix-cls}-item-active {
+            background-color: @primary-color;
+            border-color: @primary-color;
+            & a {
+                color: #ffffff;
+                &:hover,
+                &:focus,
+                &:active,
+                &:visited {
+                    color: #ffffff;
+                }
+            }
+        }
+    }
+    // pageSize选择器
+    .@{pager-prefix-cls}-select {
+        margin-left: 15px;
+        vertical-align: middle;
+        .@{bview-prefix}-select-wrapper {
+            font-size: 12px;
+            .@{bview-prefix}-select-inner {
+                height: 28px;
+            }
+        }
+    }
+    &-elevator {
+        font-size: 12px;
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 15px;
+        .@{pager-prefix-cls}-input {
+            width: 44px;
+            height: 28px;
+            line-height: 28px;
+            border: @border-width @border-style @border-color;
+            border-radius: 4px;
+            box-sizing: border-box;
+            padding: 2px 7px;
+            .input-reset;
+            &:focus {
+                border-color: @primary-color;
+            }
+        }
+    }
+}

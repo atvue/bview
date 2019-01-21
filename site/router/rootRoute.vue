@@ -5,8 +5,6 @@
 
 <script>
 export default {
-    name: 'RouteRoot'
+    name: 'RouteRoot',
 };
 </script>
-<style lang="scss">
-</style>
