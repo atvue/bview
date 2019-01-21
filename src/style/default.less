@@ -1,7 +1,7 @@
 @import "colors";
 
 // Prefix
-@bview-prefix                   : bview-;
+@bview-prefix                   : bview;
 @bview-prefix-iconfont          : bview-icon;
 
 // Color
@@ -15,6 +15,7 @@
 @link-color                     : @blue-1;
 @link-hover-color               : tint(@link-color, 20%);
 @link-active-color              : shade(@link-color, 5%);
+// visited
 @selected-color                 : fade(@primary-color, 90%);
 @subsidiary-color               : @gray-1;
 
@@ -22,7 +23,6 @@
 @body-background                : @white;
 @font-family                    : "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
 @code-family                    : Consolas,Menlo,Courier,monospace;
-@title-color                    : @blue-3;
 @text-color                     : @gray-2;
 @font-size                      : 14px;
 @font-size-small                : 12px;
@@ -37,7 +37,6 @@
 
 // Border color
 @border-color                   : @white-2;
-@border-color-inside            : @white-3;
 @border-width                   : 1px;
 @border-style                   : solid;
 
@@ -53,7 +52,6 @@
 @table-td-highlight-bg          : @white-7;
 
 // datepicker
-@date-picker-cell-hover-bg      : @white-8;
 
 // Shadow
 @shadow-color                   : @black-1;
@@ -68,20 +66,12 @@
 @btn-font-weight                : normal;
 
 @btn-padding                    : 5px 15px 6px;
-@btn-padding-large              : 6px 15px 6px 15px;
-@btn-padding-small              : 1px 7px 2px;
 
 @btn-padding-icon               : 5px 15px 6px;
-@btn-padding-large-icon         : 6px 15px 6px 15px;
-@btn-padding-small-icon         : 1px 7px 2px;
 
 @btn-font-size                  : 14px;
-@btn-font-size-large            : 16px;
-@btn-font-size-small            : 12px;
 
 @btn-border-radius              : 4px;
-@btn-border-radius-large        : 6px;
-@btn-border-radius-small        : 3px;
 
 @btn-disable-color              : @gray-3;
 @btn-disable-bg                 : @background-color;
@@ -92,60 +82,7 @@
 @btn-default-border             : @border-color;
 
 @btn-circle-size                : 32px;
-@btn-circle-size-large          : 36px;
-@btn-circle-size-small          : 24px;
-
 @btn-circle-radius              : floor((@btn-circle-size/2));
-@btn-circle-radius-large        : floor((@btn-circle-size-large/2));
-@btn-circle-radius-small        : floor((@btn-circle-size-small/2));
-
-// Input
-@input-height                   : 32px;
-@input-height-large             : 36px;
-@input-height-small             : 24px;
-
-@input-placeholder-color        : @btn-disable-color;
-@input-color                    : @text-color;
-@input-border-color             : @border-color;
-@input-bg                       : @white;
-
-@input-hover-border-color       : @primary-color;
-@input-focus-border-color       : @primary-color;
-@input-disabled-bg              : @white-9;
-
-// Media queries breakpoints
-// Extra small screen / phone
-@screen-xs                      : 480px;
-@screen-xs-min                  : @screen-xs;
-@screen-xs-max                  : (@screen-xs-min - 1);
-
-// Small screen / tablet
-@screen-sm                      : 768px;
-@screen-sm-min                  : @screen-sm;
-@screen-sm-max                  : (@screen-sm-min - 1);
-
-// Medium screen / desktop
-@screen-md                      : 992px;
-@screen-md-min                  : @screen-md;
-@screen-md-max                  : (@screen-md-min - 1);
-
-// Large screen / wide desktop
-@screen-lg                      : 1200px;
-@screen-lg-min                  : @screen-lg;
-@screen-lg-max                  : (@screen-lg-min - 1);
-
-// Animation
-@animation-time                 : .3s;
-@transition-time                : .2s;
-@ease-in-out                    : ease-in-out;
-
-// Slider
-@slider-color                   : tint(@primary-color, 20%);
-@slider-height                  : 4px;
-@slider-margin                  : 16px 0;
-@slider-button-wrap-size        : 18px;
-@slider-button-wrap-offset      : -4px;
-@slider-disabled-color          : @gray;
 
 // Z-index
 @zindex                         : 9000;
