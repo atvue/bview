@@ -14,7 +14,8 @@ const group = [
             'checkbox',
             'Dropdown',
             'cascader',
-            'select'
+            'select',
+            'search'
         ]
     },
     {
