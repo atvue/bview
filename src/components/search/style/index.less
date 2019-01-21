@@ -2,6 +2,7 @@
 
 // option
 @options-wrapper: ~"@{bview-prefix}-options-wrapper" ;
+@options-inner: ~"@{bview-prefix}-select-search-inner";
 @option-empty: ~"@{bview-prefix}-options-search-empty" ;
 @option: ~"@{bview-prefix}-option" ;
 @option-selected: ~"@{bview-prefix}-option-selected" ;
@@ -42,6 +43,9 @@
     }
     .bview-select-icon{
         display: none;
+    }
+    .bview-select-wrapper .bview-select-search-inner{
+        margin:0;
     }
     .@{options-wrapper} {
         color: rgba(0,0,0,0.65);

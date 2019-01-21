@@ -1,6 +1,8 @@
 ```vue
 <template>
   <search 
+    ref="search"
+    :disabled = "disabled"
     @search="doSearch" >
   </search>
 
@@ -13,7 +15,13 @@ export default {
     },
     data() {
         return {
+            disabled:false
         }
+    },
+    mounted(){
+        setTimeout(function(){
+            this.$refs.search.reset();
+        }.bind(this),5000)
     },
     methods: {
         doSearch(value){

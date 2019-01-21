@@ -10,7 +10,8 @@
                     ref="Select"
                     :options="searchOptionsTemp"
                     :placeholder="placeholder"
-                    clearable
+                    :disabled="disabled"
+                    :clearable="clearable"
                     has-search-options
                     label-in-value
                     show-search
@@ -21,9 +22,10 @@
                 />
                 <Input 
                     v-else
-                    placeholder
-                    clearable
-                    @input="_onInput" 
+                    v-model="searchValue"
+                    :placeholder="placeholder"
+                    :disabled="disabled"
+                    :clearable="clearable"
                 />
             </div>
         </transition>
@@ -61,11 +63,6 @@ export default {
             type: String,
             default: "200px"
         },
-        //@doc搜索框是否有清空按钮
-        clearable:{
-            type: Boolean,
-            default: true
-        },
         //@doc是否可以展开收缩搜索框
         toggleAble:{
             type: Boolean,
@@ -86,7 +83,17 @@ export default {
         //@doc输入框输入事件500ms合并做一次通知，不能小于500ms
         time:{
             type:Number,
-            default:2000
+            default:500
+        },
+        //@doc输入框是否需要清空按钮
+        clearable:{
+            type:Boolean,
+            default:true
+        },
+        //@doc输入框是否禁用
+        disabled:{
+            type:Boolean,
+            default:false
         }
     },
     data() {
@@ -127,11 +134,6 @@ export default {
                 this.searchValue = label;
             }
         },
-        _onInput(value){
-            if (this.searchValue!=value){
-                this.searchValue = value;
-            }
-        },
         _initDebounce(){
             let { time } = this;
             if (time){
@@ -162,7 +164,7 @@ export default {
         },
         _doSearch(){
             if (this.showSearch && this.searchValue){
-                // @doc 搜索框有值的情况搜索按钮被点击，触发do-search事件
+                // @doc 搜索框有值的情况搜索按钮被点击，触发search事件
                 this.$emit('search',this.searchValue);
             }else if (this.toggleAble){
                 this._doToggle();
@@ -174,6 +176,15 @@ export default {
         },
         //@doc收起搜索框
         unfold(){
+            this.showSearch = false;
+        },
+        //@doc重置搜索框
+        reset(){
+            if (this.hasSearchOptions){
+                this.$refs.Select.resetSearchWord();
+            }
+            this.searchValue = '';
+            this._onClearOptions();
             this.showSearch = false;
         }
     }

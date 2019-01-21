@@ -1,8 +1,10 @@
 ```vue
 <template>
   <search 
+    ref="search"
     :searchOptions="searchOptions" 
     :type = "type"
+    :disabled = "disabled"
     @search="doSearch" 
     @change="searchValueChange">
   </search>
@@ -17,8 +19,14 @@ export default {
     data() {
         return {
             searchOptions:[],
-            type:'select'
+            type:'select',
+            disabled:false
         }
+    },
+    mounted(){
+        setTimeout(function(){
+            this.$refs.search.reset();
+        }.bind(this),5000)
     },
     methods: {
         searchValueChange(value){

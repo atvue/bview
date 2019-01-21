@@ -23,6 +23,7 @@
                             style="width:100%"
                             :placeholder="searchPlaceholder"
                             :clearable="clearable"
+                            :disabled="disabled"
                             @focus="_focusSearchInput"
                             @blur="_blurSearchInput"
                             @input="_searchWordChange"
@@ -102,6 +103,10 @@ export default {
             default: false
         },
         hasSearchOptions:{
+            type:Boolean,
+            default:false
+        },
+        disabled:{
             type:Boolean,
             default:false
         }

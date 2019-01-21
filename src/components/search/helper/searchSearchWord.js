@@ -57,6 +57,10 @@ export default {
                 this.selected=undefined;
             }
             this.$emit('searchWordChange',value)  
+        },
+        resetSearchWord(){
+            this.searchWord = '';
+            this.selected=undefined;
         }
     }
 }
