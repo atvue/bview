@@ -9,6 +9,7 @@ const mode = 'production';
 const chalk = require('chalk');
 const path = require('path');
 const webpack = require('webpack');
+const { generateComponentRoute } = require('./site-helper/index');
 const { src, site } = require('./project-path');
 
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
@@ -195,5 +196,20 @@ const webpackConfig = {
         })
     ]
 };
-// merge config
-module.exports = webpackConfig;
+
+async function buildSite() {
+    try {
+        await generateComponentRoute();
+        webpack(webpackConfig, function(err, stats) {
+            if (err) {
+                throw err;
+            }
+            let msg = chalk`{green ${'Build complete'}}`;
+            console.log(msg);
+        });
+    } catch (error) {
+        console.warn(error);
+    }
+}
+
+buildSite();

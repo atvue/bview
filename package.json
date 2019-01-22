@@ -6,7 +6,7 @@
     "scripts": {
         "start": "npm run dev",
         "dev": "node scripts/dev-server.js",
-        "site": "webpack --config scripts/webpack.site.config.js",
+        "site": "node scripts/webpack.site.config.js",
         "test": "jest",
         "dist:common": "node scripts/sfc-transform/build-lib",
         "dist": "npm run dist:style && npm run dist:icon && npm run dist:common && npm run dist:prod-umd-dev && npm run dist:prod-umd",
