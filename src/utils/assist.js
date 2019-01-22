@@ -99,9 +99,10 @@ export const camelize = function(str) {
 
 // 首字母大写
 var capitalize = function(str) {
-        return str.charAt(0).toUpperCase() + str.slice(1)
-    }
-    // 辅助方法 添加className
+    return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
+// 辅助方法 添加className
 export function addClass(el, cls) {
     if (!el) return;
     let curClass = el.className;
@@ -158,6 +159,17 @@ export function hasClass(el, cls) {
 const trim = function(string) {
     return (string || '').replace(/^[\s\uFEFF]+|[\s\uFEFF]+$/g, '');
 };
+
+//Array-like object to Array.
+export function toArray (list, start) {
+    start = start || 0
+    let i = list.length - start
+    let ret = new Array( i )
+    while ( i-- ) {
+        ret[ i ] = list[ i + start ]
+    }
+    return ret
+}
 
 // 组件名称规范 https://vuejs.org/v2/style-guide/index.html#Multi-word-component-names-essential
 export const camlizeName = str => capitalize(camelize(str))
