@@ -10,7 +10,8 @@ module.exports = {
         "vue/no-v-html": 0 ,
     },
     env: {
-        "browser": true,
-        "commonjs": true,
+        "browser": true ,
+        "commonjs": true ,
+        "node": true ,
     }
 }
