@@ -41,7 +41,8 @@ module.exports = {
                 exclude: [/node_modules/, /\.md\.js$/, /src\/icons/], // 排除解析md文件
                 loader: "eslint-loader",
                 options: {
-                    emitWarning: true,
+                    emitWarning: true ,
+                    configFile: require.resolve( '../.eslintrc.dev' ) ,
                 },
                 /**
                  * eslint-vue-plugin 注释语法
