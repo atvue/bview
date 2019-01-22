@@ -40,7 +40,9 @@ export default {
 }
 
 
-const ENV = process.env.NODE_ENV;
+const ENV = process.env.NODE_ENV
+
+/* eslint-disable no-console */
 if (ENV !== 'production' && ENV !== 'test' && typeof console !== 'undefined' && console.warn && typeof window !== 'undefined') {
     console.warn('You are using a whole package of bui, ' + 'please use https://www.npmjs.com/package/babel-plugin-import to reduce app bundle size.')
 }
