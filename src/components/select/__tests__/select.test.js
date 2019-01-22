@@ -1,6 +1,5 @@
 import { mount } from '@vue/test-utils'
 import Select from '../index.js'
-const { Option } = Select
 
 
 describe( 'Select组件' , () => {
