@@ -1,6 +1,6 @@
 <template>
     <div :class="`${b}-search`">
-        <transition name="toggle">
+        <Transition name="toggle">
             <div 
                 v-show="showSearch"
                 :class="`search-input-wrapper`"
@@ -28,7 +28,7 @@
                     :clearable="clearable"
                 />
             </div>
-        </transition>
+        </Transition>
         <Button 
             :class="`${b}-search-button`" 
             @click="_doSearch"
@@ -105,6 +105,11 @@ export default {
             searchOptionsTemp:[]
         };
     },
+    computed:{
+        hasSearchOptions(){
+            return this.type === 'normal' ? false : true;
+        }
+    },
     watch:{
         searchValue(newValue){
             if (!newValue){
@@ -113,11 +118,6 @@ export default {
         },
         searchOptions(){
             this.searchOptionsTemp = this.searchOptions.concat();
-        }
-    },
-    computed:{
-        hasSearchOptions(){
-            return this.type === 'normal' ? false : true;
         }
     },
     mounted(){
