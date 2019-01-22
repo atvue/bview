@@ -181,13 +181,10 @@ const webpackConfig = {
     },
     plugins: [
         new VueLoaderPlugin(),
-        new webpack.DefinePlugin({
-            'process.env.BVIEWPREFIX': JSON.stringify(namePrefixer),
-            PRODUCTIONBVIEWPREFIX: `process.env.BVIEWPREFIX ? process.env.BVIEWPREFIX : "${namePrefixer}"`
-        }),
         new webpack.HashedModuleIdsPlugin(),
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': '"production"'
+            'process.env.NODE_ENV': '"production"',
+            PRODUCTIONBVIEWPREFIX: `"${namePrefixer}"`
         }),
         new HtmlWebpackPlugin({
             filename: './index.html',
