@@ -1,19 +1,10 @@
-import { mount } from '@vue/test-utils';
-import Pager from '../index.js';
+import Pager from '../index.js'
+import { mount } from '@vue/test-utils'
 
-describe('Pager组件', () => {
-    let wrapper;
 
-    beforeEach(() => {
-        wrapper = mount(Select, {
-            propsData: {
-                total: 200,
-                current: 1,
-                b: 'bview'
-            }
-        });
-    });
-    it('渲染正确的标记', () => {
-        expect(wrapper.isVueInstance()).toBeTruthy();
-    });
-});
+describe( 'Pager测试套件' , () => {
+    test( '创建Pager成功' , () => {
+        const wrapper = mount( Pager )
+        expect( wrapper.isVueInstance() ).toBeTruthy()
+    } )
+} )
