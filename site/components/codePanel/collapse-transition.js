@@ -1,7 +1,7 @@
 // Thanks to https://github.com/ElemeFE/element/blob/dev/src/transitions/collapse-transition.js
 // 折叠
 
-import { addClass, removeClass } from 'site/utils/assist';
+import { addClass, removeClass } from '@/utils/assist';
 
 const Transition = {
     beforeEnter(el) {
