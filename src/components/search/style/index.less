@@ -1,0 +1,102 @@
+@import '../../../style/default';
+
+// option
+@options-wrapper: ~"@{bview-prefix}-options-wrapper" ;
+@options-inner: ~"@{bview-prefix}-select-search-inner";
+@option-empty: ~"@{bview-prefix}-options-search-empty" ;
+@option: ~"@{bview-prefix}-option" ;
+@option-selected: ~"@{bview-prefix}-option-selected" ;
+@option-selected-icon: ~"@{bview-prefix}-option-selected-icon" ;
+@option-disabled: ~"@{bview-prefix}-option-disabled" ;
+@option-active: ~"@{bview-prefix}-option-active" ;
+
+.bview-search-button{
+    height:34px;
+}
+.search-input-wrapper{
+    overflow: hidden;
+    float:left;
+    position: relative;
+    height:34px;
+    width:200px;
+}
+.toggle-enter-active {
+    width:0;
+    transition:width .5s ease-in-out;
+}
+.toggle-leave-active {
+    width:200px;
+    transition:width .5s ease-in-out;
+}
+.toggle-enter-to {
+    width:200px !important;
+}
+.toggle-leave-to {
+    width:0 !important;
+}
+.bview-search{
+    position: relative;
+    .bview-dropdown{
+        position:absolute;
+        left:0;
+        top:0;
+    }
+    .bview-select-icon{
+        display: none;
+    }
+    .bview-select-wrapper .bview-select-search-inner{
+        margin:0;
+    }
+    .@{options-wrapper} {
+        color: rgba(0,0,0,0.65);
+        background-color: #fff;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        border-radius: 4px;
+        font-size: 14px;
+        max-height: 50px ;
+        overflow: auto ;
+        .@{option-empty} {
+            padding: 10px ;
+            text-align: center ;
+        }
+        .@{option} {
+            position: relative;
+            display: block ;
+            padding: 5px 12px 5px 16px;
+            line-height: 22px;
+            font-weight: normal;
+            color: rgba(0,0,0,0.65);
+            white-space: nowrap;
+            cursor: pointer;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: background .3s ease;
+            &:hover {
+                background-color: #e6f7ff;
+            }
+        }
+        .@{option-active} , .@{option-active}.@{option-selected} {
+            background-color: #e6f7ff;
+        }
+        .@{option-selected} {
+            background-color: #fafafa;
+            font-weight: 600;
+            color: rgba(0,0,0,0.65);
+            .@{option-selected-icon} {
+                position: absolute ;
+                left: 4px ;
+                z-index: 1 ;
+                font-size: 12px ;
+            }
+        }
+        .@{option-disabled} {
+            color: rgba(0,0,0,0.25);
+            cursor: not-allowed;
+            &:hover {
+                color: rgba(0,0,0,0.25);
+                background-color: #fff;
+                cursor: not-allowed;
+            }
+        }
+    }
+}

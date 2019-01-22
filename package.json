@@ -6,6 +6,7 @@
     "scripts": {
         "start": "npm run dev",
         "dev": "node scripts/dev-server.js",
+        "site": "webpack --config scripts/webpack.site.config.js",
         "test": "jest",
         "dist:common": "node scripts/sfc-transform/build-lib",
         "dist": "npm run dist:style && npm run dist:icon && npm run dist:common && npm run dist:prod-umd-dev && npm run dist:prod-umd",
@@ -21,9 +22,7 @@
         "url": "https://github.com/atvue/atvue-demo"
     },
     "license": "ISC",
-    "dependencies": {
-
-    },
+    "dependencies": {},
     "peerDependencies": {
         "vue": ">=2.5.2"
     },
@@ -74,10 +73,11 @@
         "less-loader": "^4.1.0",
         "loader-utils": "^1.1.0",
         "markdown-it": "^8.4.2",
-        "markdown-table": "^1.1.2",
         "markdown-it-attrs": "^2.3.2",
-        "mini-css-extract-plugin": "^0.4.2",
+        "markdown-table": "^1.1.2",
+        "mini-css-extract-plugin": "^0.5.0",
         "opn": "^5.4.0",
+        "optimize-css-assets-webpack-plugin": "^5.0.1",
         "postcss-loader": "^3.0.0",
         "rucksack-css": "^1.0.2",
         "style-loader": "^0.23.0",

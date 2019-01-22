@@ -40,7 +40,7 @@ requireDemos.keys().forEach(fileName => {
 // 规定组件说明展示顺序
 let componentsRouteConfig = componentRoutes.map(ele => {
     let { path } = ele,
-    docComp = components[path],
+        docComp = components[path],
         demoComps = demos[path];
     // 插入demo
     let wrapperComp = Vue.extend({

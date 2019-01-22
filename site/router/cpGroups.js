@@ -14,7 +14,8 @@ const group = [{
             'Dropdown',
             'cascader',
             'select',
-            'switches'
+            'switches',
+            'search'
         ]
     },
     {

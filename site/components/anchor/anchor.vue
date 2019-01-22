@@ -10,7 +10,7 @@
     </div>
 </template>
 <script>
-import { scrollTop, off, on } from "../../utils/assist";
+import { scrollTop, off, on } from "@/utils/assist";
 const prefix = "bui-anchor";
 export default {
     name: "Anchor",
