@@ -1,7 +1,6 @@
 /* eslint-disable */
 
-const group = [
-    {
+const group = [{
         categoryName: '基础组件',
         components: ['button', 'icon']
     },
@@ -14,7 +13,8 @@ const group = [
             'checkbox',
             'Dropdown',
             'cascader',
-            'select'
+            'select',
+            'switches'
         ]
     },
     {

@@ -2,17 +2,17 @@ import Button from './components/button'
 import Select from './components/select'
 import Input from './components/input'
 import Switches from './components/switches'
-import TextArea from './components/textarea'
 import Radio from './components/radio'
 import Checkbox from './components/checkbox'
 import Icon from './components/icon'
+import Textarea from './components/textarea'
 
 const components = {
     Button,
     Select,
     Input,
     Switches,
-    TextArea,
+    Textarea,
     Radio,
     Checkbox,
     Icon
@@ -29,7 +29,7 @@ export {
     Select,
     Input,
     Switches,
-    TextArea,
+    Textarea,
     Radio,
     Checkbox,
     Icon

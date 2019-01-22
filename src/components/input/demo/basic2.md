@@ -2,8 +2,8 @@
 <template>
   <section>
     <div class="example">
-      <span>test5:</span>
-      <Input placeholder="请输入" v-model="value5" @focus="focus">
+      <span>禁用状态:</span>
+      <Input placeholder="请输入" v-model="value5" @focus="focus" disabled>
              <Icon slot="append" type="down"></Icon>
       </Input>
     </div>
@@ -31,4 +31,4 @@ export default {
 </script>
 ```
 
-
+通过添加 disabled 属性可设置为不可用状态。

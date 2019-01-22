@@ -1,6 +1,6 @@
-#### 基本用法
++ 基本用法
 
-Cascader组件用于选择具有级联结构的数据
+
 
 ```vue
 <template>
@@ -98,3 +98,4 @@ export default {
 }
 </script>
 ```
+Cascader组件用于选择具有级联结构的数据

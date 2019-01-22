@@ -1,24 +1,32 @@
-
 ```vue
 <template>
-  <section>
-    <div class="example">
-      <span>test1:</span>
-      <Input placeholder="请输入" v-model="value1" @blur="blur" @change="change" width="300px" clearable />
-    </div>
-    <div class="example">
-      <span>test2:</span>
-      <Input placeholder="请输入" v-model="value2" @blur="blur" @change="change" clearable />
-    </div>
-    <div class="example">
-      <span>test3:</span>
-      <Input placeholder="请输入" v-model="value3" @blur="blur" @change="change" search @search="search" />
-    </div>
-  </section>
-
+    <section>
+        <div class="example">
+            <span>可清空状态</span>
+            <Input
+                placeholder="请输入"
+                v-model="value1"
+                @blur="blur"
+                @change="change"
+                width="300px"
+                clearable
+            />
+        </div>
+        <div class="example" style="margin-top:20px;">
+            <span>带search的输入框:</span>
+            <Input
+                placeholder="请输入"
+                v-model="value3"
+                @blur="blur"
+                @change="change"
+                search
+                @search="search"
+            />
+        </div>
+    </section>
 </template>
 <script>
-import { Input } from 'bview'
+import { Input } from 'bview';
 export default {
     components: {
         Input
@@ -26,9 +34,7 @@ export default {
     data() {
         return {
             value1: '',
-            value2: '',
-            value3: '',
-            maxlength: 20
+            value2: ''
         };
     },
     methods: {
@@ -49,4 +55,4 @@ export default {
 </script>
 ```
 
-
+开启属性 clearable 可显示清空按钮

@@ -1,6 +1,6 @@
-#### 基本用法
++ 基本用法
 
-Dropdown组件放入一个触发器(必传)，之后添加overlay的slot下拉框即可
+
 
 ```vue
 <template>
@@ -25,3 +25,4 @@ export default {
 }
 </script>
 ```
+Dropdown组件放入一个触发器(必传)，之后添加overlay的slot下拉框即可

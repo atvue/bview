@@ -9,7 +9,6 @@ const { getNamePrefix, rlaLessFile, lessPrefixKey } = require('./getLessVariable
     namePrefixer = getNamePrefix()
 if (namePrefixer === '') {
     let msg = chalk `{yellow ${'wraning'}}: {green ${rlaLessFile}}，不存在名为：{red ${lessPrefixKey}}的变量`
-    console.log(msg)
 }
 
 module.exports = {

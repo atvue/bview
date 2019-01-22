@@ -92,7 +92,9 @@ export const hyphenate = function(str) {
 // 连字符转驼峰
 const camelizeRE = /-(\w)/g;
 export const camelize = function(str) {
-    return str.replace(camelizeRE, function(_, c) { return c ? c.toUpperCase() : ''; })
+    return str.replace(camelizeRE, function(_, c) {
+        return c ? c.toUpperCase() : '';
+    })
 }
 
 // 首字母大写
@@ -143,6 +145,19 @@ export function removeClass(el, cls) {
         el.className = trim(curClass);
     }
 }
+
+export function hasClass(el, cls) {
+    if (!el || !cls) return false;
+    if (cls.indexOf(' ') !== -1) throw new Error('className should not contain space.');
+    if (el.classList) {
+        return el.classList.contains(cls);
+    } else {
+        return (' ' + el.className + ' ').indexOf(' ' + cls + ' ') > -1;
+    }
+}
+const trim = function(string) {
+    return (string || '').replace(/^[\s\uFEFF]+|[\s\uFEFF]+$/g, '');
+};
 
 // 组件名称规范 https://vuejs.org/v2/style-guide/index.html#Multi-word-component-names-essential
 export const camlizeName = str => capitalize(camelize(str))

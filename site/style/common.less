@@ -1,104 +1,206 @@
-
 /* Reset */
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote,
-abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,ul,
-fieldset, form, label, legend,pre,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+ul,
+fieldset,
+form,
+label,
+legend,
+pre,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-  display: block;
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+    display: block;
 }
 // ol, ul {
 //   list-style: none;
 // }
 
 /* Links */
-a{  
-  text-decoration:none;
+a {
+    text-decoration: none;
 }
-a,a:visited,a:hover,a:active,a:focus{
-  outline: none;
-  color: #333;
+a,
+a:visited,
+a:hover,
+a:active,
+a:focus {
+    outline: none;
+    color: #333;
 }
 
-@selectionColor: #b3d4fc ;
+@selectionColor: #b3d4fc;
 
-::-moz-selection{background: @selectionColor; color:#fff}
-::selection{background: @selectionColor; color:#fff}
+::-moz-selection {
+    background: @selectionColor;
+    color: #fff;
+}
+::selection {
+    background: @selectionColor;
+    color: #fff;
+}
 
-a::-moz-selection{background: @selectionColor; color:#fff}
-a::selection{background: @selectionColor; color:#fff}
+a::-moz-selection {
+    background: @selectionColor;
+    color: #fff;
+}
+a::selection {
+    background: @selectionColor;
+    color: #fff;
+}
 
 /* Headings */
-h1,h2,h3,h4,h5,h6{
-  font-family: 'Open Sans', sans-serif;
-  font-weight:700;
-  color:#111111;
-  line-height:1em;
-  -webkit-font-smoothing: antialiased;
-  // margin: 30px 0px;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    color: #111111;
+    line-height: 1em;
+    -webkit-font-smoothing: antialiased;
+    // margin: 30px 0px;
 }
-h1{ font-size:2.5em; }
-h2{ font-size:2em;  border-bottom: 1px solid #CCC; padding-bottom: 10px; }
-h3{ font-size:1.5em; }
-h4{ font-size:1.2em;margin:8px 0; }
-h5{ font-size:1em; margin:8px 0; }
-h6{ font-size:0.9em; }
+h1 {
+    font-size: 2.5em;
+}
+h2 {
+    font-size: 2em;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+h3 {
+    font-size: 1.5em;
+}
+h4 {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+h5 {
+    font-size: 1em;
+    margin: 8px 0;
+}
+h6 {
+    font-size: 0.9em;
+}
 
 /* Elements */
-p{
-  text-align: justify;
+p {
+    text-align: justify;
 }
 
-img{
-  max-width:100%;
-  border: 0; 
-  -ms-interpolation-mode: bicubic; 
-  vertical-align: middle;
+img {
+    max-width: 100%;
+    border: 0;
+    -ms-interpolation-mode: bicubic;
+    vertical-align: middle;
 }
 
 /* Tables */
-table { 
-  // border-collapse: collapse; 
-  border-spacing: 0; 
-  width: 100%;
-  font-size: 13px;
-  border:1px solid #f2f2f2;
-  border-bottom: none;
+table {
+    // border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    font-size: 13px;
+    border: 1px solid #f2f2f2;
+    border-bottom: none;
 }
 
-td { 
-  vertical-align: top; 
+td {
+    vertical-align: top;
 }
 
 table th {
-  font-weight: 700;
+    font-weight: 700;
 }
 
-table th, table td {
-  // border: 1px solid #ccc;
-  padding: 8px 13px;
-  border-bottom:1px solid #f2f2f2;
+table th,
+table td {
+    // border: 1px solid #ccc;
+    padding: 8px 13px;
+    border-bottom: 1px solid #f2f2f2;
 }
 
 table tr {
-  border-top: 1px solid #ccc;
-  background-color: #fff;
+    border-top: 1px solid #ccc;
+    background-color: #fff;
 }
 
 // table tr:nth-child(2n) {
@@ -106,16 +208,22 @@ table tr {
 // }
 
 /* Code */
-pre, code, tt {
-  font-size: 0.98em;
-  font-size: 13px;
-  line-height: 19px;
+pre,
+code,
+tt {
+    font-size: 0.98em;
+    font-size: 13px;
+    line-height: 19px;
 }
 
 @media only screen and (min-width: 480px) {
-  body{font-size:14px;}
+    body {
+        font-size: 14px;
+    }
 }
 
 @media only screen and (min-width: 768px) {
-  body{font-size:16px;}
+    body {
+        font-size: 16px;
+    }
 }
