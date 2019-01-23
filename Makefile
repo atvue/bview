@@ -12,6 +12,5 @@ component:
 
 help:
 	@echo 'make 命令使用说明'
-	@echo 'make component <name> <path>  --- name 文件模型的名称，不能忽略'
-	@echo '                         --- path 文件模型路径，忽略则认为是/src/components/'	
+	@echo 'make component <name>     name 组件名称，必填'
 
