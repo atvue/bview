@@ -2,7 +2,7 @@
 import { optionName } from './name'
 import { getVnodesTxt } from './traverseVnode'
 
-export const filterOption = vNode => {
+export const isOption = vNode => {
     let { componentOptions: op } = vNode ,
         isOptionNode = op !== undefined &&
             op.Ctor !== undefined &&
@@ -20,7 +20,7 @@ export default {
             } else {
                 let { filterSlotOptions: options } = this ,
                     ops = options
-                        .filter( filterOption )
+                        .filter( isOption )
                         .map( vNode => {
                             let { componentOptions: op } = vNode ,
                                 { propsData: { value , disabled } , children } = op ,

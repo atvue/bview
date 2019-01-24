@@ -21,13 +21,10 @@ export default {
                     hasOptions &&
                     hasSearchWord
             if ( filter ) {
-                let result = options.filter( ( { label } ) => {
-                    let hasLable = label !== undefined && label !== null
-                    if ( hasLable ) {
-                        let has = label.includes( searchWord )
-                        return has
-                    }
-                    return true
+                let result = options.filter( item => {
+                    let { label } = item ,
+                        reserver = this._checkFilterOption( searchWord , label , item )
+                    return reserver
                 } )
                 return result
             } else {
@@ -35,12 +32,18 @@ export default {
             }
         } ,
         searchPlaceholder(){
-            let { placeholder , hasSelected , selected } = this
+            let { placeholder , hasSelected , selected } = this ,
+                txt
             if ( hasSelected ) {
                 let { label } = selected
-                return label
+                txt = label
+            } else {
+                txt = placeholder
             }
-            return placeholder
+            if ( typeof txt === 'string' ) {
+                txt = txt.trim()
+            }
+            return txt
         } ,
     } ,
     methods: {
@@ -80,6 +83,23 @@ export default {
         } ,
         _searchWordChange(){
             this._toggleOptions( true )    
+        } ,
+        _checkFilterOption( searchWord , label , item ) {   // type item vNode || option
+            let { filterOption } = this ,
+                isFunc = typeof filterOption === 'function'
+            if ( isFunc ) {
+                return filterOption( searchWord , label , item ) === true
+            } else {
+                filterOption = filterOption === true
+                if ( filterOption ) {
+                    let type = typeof label ,
+                        validLabel = label !== undefined && label !== null && ( type === 'string' || type === 'number' ) ,
+                        bool = validLabel ? String( label ).includes( searchWord ) : true
+                    return bool
+                } else {
+                    return true
+                }
+            }
         }
     }
 }

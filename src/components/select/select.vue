@@ -65,16 +65,14 @@
                 v-else
                 ref="optionBox"
                 :class="`${b}-options-inner`"
-            >   
+            >
                 <template v-if="hasOptions">
                     <Option
                         v-for="item in filterAttrBindOptions"
                         :key="item.value"
                         :value="item.value"
                         :disabled="item.disabled===true"
-                    >
-                        {{ item.label }}
-                    </Option>
+                    >{{ item.label }}</Option> <!-- eslint-disable-line vue/multiline-html-element-content-newline -->
                 </template>
                 <SlotRender
                     v-else
@@ -91,7 +89,7 @@ import Dropdown from '../dropdown'
 import Input from '../input'
 import Option from './option'
 import { bviewPrefix as b } from '../../utils/macro'
-import optionList , { filterOption } from './helper/optionList'
+import optionList , { isOption } from './helper/optionList'
 import keyboard from './helper/keyboard'
 import scrollActiveIndex from './helper/scrollActiveIndex'
 import searchWord from './helper/searchWord'
@@ -135,6 +133,11 @@ export default {
         showSearch: {
             type: Boolean ,
             default: false ,
+        } ,
+        // @doc 是否根据输入项进行过滤。如果配置为一个函数，则会接收三个参数:searchWord,label,(vNode or option)视配置slot或option方式的区别，符合筛选条件应该返回true，反之返回false
+        filterOption: {
+            type: [ Boolean , Function ] ,
+            default: true ,
         }
     } ,
     data(){
@@ -172,8 +175,10 @@ export default {
         selectedLabel(){
             let { selected , hasSelected } = this
             if ( hasSelected ) {
-                let hasLabel = selected.label !== undefined
-                return hasLabel ? selected.label : selected.value
+                let hasLabel = selected.label !== undefined ,
+                    txt = hasLabel ? selected.label : selected.value ,
+                    isStr = typeof txt === 'string'
+                return isStr ? txt.trim() : txt
             } else {
                 return undefined
             }
@@ -199,15 +204,15 @@ export default {
                         searchWord !== null && 
                         searchWord.trim() !== '' ,
                     validOptions = slotOptions
-                        .filter( filterOption )
+                        .filter( isOption )
                         .filter( vNode => {
                             let { componentOptions: op } = vNode ,
                                 { children } = op ,
                                 text = getVnodesTxt( children ) ,
                                 needFilter = hasSearchWord && text !== undefined
                             if ( needFilter ) {
-                                let has = text.includes( searchWord )
-                                return has
+                                let reserver = this._checkFilterOption( searchWord , text , vNode )
+                                return reserver
                             }
                             return true
                         } )
