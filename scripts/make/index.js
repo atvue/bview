@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 require('babel-register')
 
 const { fileExist } = require('./util') ,

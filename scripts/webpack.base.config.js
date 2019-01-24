@@ -9,6 +9,7 @@ const { getNamePrefix, rlaLessFile, lessPrefixKey } = require('./getLessVariable
     namePrefixer = getNamePrefix()
 if (namePrefixer === '') {
     let msg = chalk `{yellow ${'wraning'}}: {green ${rlaLessFile}}，不存在名为：{red ${lessPrefixKey}}的变量`
+    console.log( msg )
 }
 
 module.exports = {
@@ -49,72 +50,72 @@ module.exports = {
             {
                 test: /\.less$/,
                 use: [{
-                        loader: 'style-loader',
-                        options: {
-                            sourceMap: true
-                        }
-                    },
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            sourceMap: true
-                        }
-                    },
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            sourceMap: true
-                        }
-                    },
-                    {
-                        loader: 'less-loader',
-                        options: {
-                            sourceMap: true
-                        }
+                    loader: 'style-loader',
+                    options: {
+                        sourceMap: true
                     }
+                },
+                {
+                    loader: 'css-loader',
+                    options: {
+                        sourceMap: true
+                    }
+                },
+                {
+                    loader: 'postcss-loader',
+                    options: {
+                        sourceMap: true
+                    }
+                },
+                {
+                    loader: 'less-loader',
+                    options: {
+                        sourceMap: true
+                    }
+                }
                 ]
             },
             // style: css
             {
                 test: /\.css$/,
                 use: [{
-                        loader: 'style-loader',
-                        options: {
-                            sourceMap: true
-                        }
-                    },
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            sourceMap: true
-                        }
-                    },
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            sourceMap: true
-                        }
+                    loader: 'style-loader',
+                    options: {
+                        sourceMap: true
                     }
+                },
+                {
+                    loader: 'css-loader',
+                    options: {
+                        sourceMap: true
+                    }
+                },
+                {
+                    loader: 'postcss-loader',
+                    options: {
+                        sourceMap: true
+                    }
+                }
                 ]
             },
             {
                 test: /\.md$/,
                 use: [{
-                        loader: 'vue-loader'
-                    },
-                    {
-                        loader: require.resolve('./loaders/md-loader.js')
-                    }
+                    loader: 'vue-loader'
+                },
+                {
+                    loader: require.resolve('./loaders/md-loader.js')
+                }
                 ]
             },
             {
                 test: /\.st$/,
                 use: [{
-                        loader: 'vue-loader'
-                    },
-                    {
-                        loader: require.resolve('./loaders/st-loader.js')
-                    }
+                    loader: 'vue-loader'
+                },
+                {
+                    loader: require.resolve('./loaders/st-loader.js')
+                }
                 ]
             },
             // 图片&字体资源

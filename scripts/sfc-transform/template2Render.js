@@ -57,7 +57,7 @@ const parse = ( content , name ) => {
                 } )
                 .catch( j )
         } )
-        .catch( j )
+            .catch( j )
     } )
 }
 

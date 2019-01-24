@@ -36,7 +36,7 @@ module.exports = function(source, map, meta) {
                 return ingore ? undefined : f;
             })
             .filter(f => f !== undefined),
-        vueSfcPath = path.join(dir, `${component}.vue`),
+        // vueSfcPath = path.join(dir, `${component}.vue`),
         apiTpl = `\n\n### API说明{id="${component}-api"}`;
     const html = md.render(`${source}\n\n### 代码示例{id="${component}-example"}`);
 

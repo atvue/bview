@@ -23,7 +23,7 @@ async function mapFileToConfig( fileName ) {
         obj = {
             name: fileName ,
             readMeConfig: undefined ,
-        }
+        } ,
         readMeConfig = await getReadMeConfig( file )
     Object.assign( obj , { readMeConfig } )
     return obj

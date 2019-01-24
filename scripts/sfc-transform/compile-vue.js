@@ -35,7 +35,7 @@ async function init(){
                 code = await parseVueFile( content )
             }catch( e ){
                 let short = toShortPath( filePath ) ,
-                    { base } = path.parse( filePath )
+                    { base } = path.parse( filePath ) ,
                     error = `错误❌:文件：${short}，消息：${e}(转译lib目录中，将不会生成${base})`
                 console.log(
                     chalk.red( error )

@@ -34,7 +34,9 @@ function walk( node , slotsRes ) {
                     if (commentNode.isComment) {
                         slot.describe = commentNode.text;
                     }
-                } catch (error) {}
+                } catch (error) {
+                    console.log( error )
+                }
                 // 追加slot上的其他属性
                 if (otherAttrs.length > 0) {
                     slot.describe = `${

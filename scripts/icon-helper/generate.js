@@ -145,7 +145,7 @@ async function svgToVue(cnt, filePath) {
             preserveWhitespace: false,
             modules: [
                 {
-                    transformNode: el => {
+                    transformNode: () => {  // el
                         // @TODO 需要修改输出的render函数
                     }
                 }
@@ -172,8 +172,8 @@ async function main() {
     try {
         files = await svgFiles()
         files.forEach(filePath => {
-            let { name } = path.parse(filePath)
-            cnt = fse.readFileSync(filePath, 'utf-8')
+            let { name } = path.parse(filePath) ,
+                cnt = fse.readFileSync(filePath, 'utf-8')
 
             svgToVue(cnt, filePath).then(component => {
                 fse.outputFile(`${outputDir}/${name}.js`, component, err => {
@@ -184,7 +184,7 @@ async function main() {
             })
         })
     } catch (error) {
-        throw e
+        throw error
     }
 }
 

@@ -200,7 +200,7 @@ const webpackConfig = {
 async function buildSite() {
     try {
         await generateComponentRoute();
-        webpack(webpackConfig, function(err, stats) {
+        webpack(webpackConfig, function(err) {  // err , stats
             if (err) {
                 throw err;
             }

@@ -14,7 +14,7 @@
         "dist:prod-umd-dev": "webpack --config scripts/webpack.prod.dev.config.js",
         "dist:style": "gulp --gulpfile scripts/buildStyle.js",
         "dist:icon": "node scripts/icon-helper/generate",
-        "lint": "eslint --ext .js,.vue src"
+        "lint": "eslint --ext .js,.vue src site scripts"
     },
     "husky": {
         "hooks": {

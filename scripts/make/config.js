@@ -124,7 +124,7 @@ const demoTemp = name => {
         `
 \`\`\`vue
 <template>
-    <div>这里编写Tag2的demo</div>
+    <div>这里编写${ upCase( name ) }的demo</div>
 </template>
 <script>
 export default {

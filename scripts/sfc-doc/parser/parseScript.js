@@ -126,27 +126,27 @@ module.exports = astJs => {
                                             let { name } = path.node.key,
                                                 { value } = path.node
                                             switch (name) {
-                                                case 'type':
-                                                    // debugger;
-                                                    prop.type = getType(value)
-                                                    break
-                                                case 'required':
-                                                    // debugger;
-                                                    prop.required = value.value
-                                                    break
-                                                case 'default':
-                                                    prop[name] = getDefault(
-                                                        value
-                                                    )
-                                                    break
-                                                case 'validator':
-                                                    // 仅获取注释
-                                                    prop[name] = getComment(
-                                                        path.node
-                                                    )
-                                                    break
-                                                default:
-                                                    break
+                                            case 'type':
+                                                // debugger;
+                                                prop.type = getType(value)
+                                                break
+                                            case 'required':
+                                                // debugger;
+                                                prop.required = value.value
+                                                break
+                                            case 'default':
+                                                prop[name] = getDefault(
+                                                    value
+                                                )
+                                                break
+                                            case 'validator':
+                                                // 仅获取注释
+                                                prop[name] = getComment(
+                                                    path.node
+                                                )
+                                                break
+                                            default:
+                                                break
                                             }
                                         }
                                     })
@@ -190,9 +190,9 @@ module.exports = astJs => {
                         bt.isMemberExpression(path.node.callee) &&
                         path.node.callee.property.name === '$emit'
                     ) {
-                        let { arguments } = path.node
+                        let { arguments: argts } = path.node
                         // 第一个是事件名称，第二个是事件传参
-                        let [emitName, emitArg] = arguments
+                        let [emitName, emitArg] = argts
                         // @NOTE 这里不能判断去重 traverse不是一个同步过程
                         // 检查emitEvents中是否存在 emitKey
                         // let exist =

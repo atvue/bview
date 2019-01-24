@@ -69,7 +69,6 @@ let routes = resetGroup(componentsRouteConfig, rootRoute);
 //     }
 // ];
 
-console.log(routes);
 const router = new Router({
     routes: [...routes]
 });

@@ -15,8 +15,6 @@ const { parseJs, parseTpl } = require('./parser'),
 
 // const path = require('path');
 // debugger;
-const testfile = './test.vue',
-    testoutput = './test.md';
 
 // 分析出单文件组件的AST
 const getAst = async file => {
@@ -47,27 +45,6 @@ const getAst = async file => {
     return astRes;
 };
 
-const output = async (result, outputfile) => {
-    let tpl = `## props\n\n${result.propsRes}\n\n## methods\n\n${
-        result.apiMethods
-    }\n\n## emits\n\n${result.emitEvents}\n\n## slots\n\n${result.slotsRes}\n
-    `;
-    // debugger;
-    try {
-        await fse.outputFile(outputfile, tpl);
-    } catch (error) {}
-};
-
-const parseEntry = async config => {
-    let { file } = config,
-        { astJs, astTpl } = await getAst(file);
-    // debugger;
-    // @NOTE 之后改成Promise.all 不需要保证顺序 拿到数据即可
-    let { propsRes, emitEvents, apiMethods } = await parseJs(astJs),
-        slotsRes = await parseTpl(astTpl);
-
-    return { propsRes, emitEvents, slotsRes, apiMethods };
-};
 
 module.exports = async file => {
     let { astJs, astTpl } = await getAst(file),
@@ -98,10 +75,37 @@ async function test(){
 test() */
 
 
+/*
 
 
-// parseEntry({ file: testfile, output: testoutput })
-//     .then(render)
-//     .then(result => {
-//         output(result, testoutput);
-//     });
+const output = async (result, outputfile) => {
+    let tpl = `## props\n\n${result.propsRes}\n\n## methods\n\n${
+        result.apiMethods
+    }\n\n## emits\n\n${result.emitEvents}\n\n## slots\n\n${result.slotsRes}\n
+    `;
+    // debugger;
+    try {
+        await fse.outputFile(outputfile, tpl);
+    } catch (error) {}
+};
+
+const parseEntry = async config => {
+    let { file } = config,
+        { astJs, astTpl } = await getAst(file);
+    // debugger;
+    // @NOTE 之后改成Promise.all 不需要保证顺序 拿到数据即可
+    let { propsRes, emitEvents, apiMethods } = await parseJs(astJs),
+        slotsRes = await parseTpl(astTpl);
+
+    return { propsRes, emitEvents, slotsRes, apiMethods };
+};
+
+const testfile = './test.vue',
+   testoutput = './test.md';
+parseEntry({ file: testfile, output: testoutput })
+    .then(render)
+    .then(result => {
+        output(result, testoutput);
+    });
+
+*/
