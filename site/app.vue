@@ -68,7 +68,16 @@
             </div>
             <!--锚点内容-->
         </div>
-        <div class="home-footer" />
+        <div class="home-footer">
+            <div class="about-info">
+                <div class="about-title">
+                    关于我们
+                </div>
+                <div class="about-txt">
+                    Bee Design 是基于Vue.js的高质量UI组件库，致力于打造模块化、轻量级的企业产品设计。
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
