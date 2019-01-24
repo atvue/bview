@@ -30,7 +30,7 @@ describe( 'Option组件' , () => {
         expect( label ).toBe( '大学' )
     } )
 
-    it( '多个slot，调用_getSlotTextContent的到正确文本' , () => {
+    it( '多个slot，调用_getSlotTextContent的到正确文本，用户配置的空格保留' , () => {
         let wrapper = mount( Option , {
                 propsData: {
                     value: 'university'
@@ -40,7 +40,7 @@ describe( 'Option组件' , () => {
                 }
             } ) ,
             txt = wrapper.vm._getSlotTextContent()
-        expect( txt ).toBe( '大学-全日制-非全日制' )
+        expect( txt ).toBe( '  大学    -全日制-非全日制    ' )
     } )
 
     it( '设置禁用状态' , () => {
