@@ -1,13 +1,11 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import { componentRoutes } from './cptRoutes'
+import { componentRoutes } from './cptRoutes';
 import { resetGroup } from './cpGroups';
-import { waterfall } from './waterfall'
+import { waterfall } from './waterfall';
 
 Vue.use(Router);
 import rootRoute from './rootRoute';
-
-
 
 const requireComponent = require.context('@/components/', true, /.*\.st$/);
 
@@ -45,8 +43,8 @@ let componentsRouteConfig = componentRoutes.map(ele => {
     // 插入demo
     let wrapperComp = Vue.extend({
         render: h => {
-            let waterFallVNode = waterfall(demoComps, h)
-            return h(docComp, [waterFallVNode])
+            let waterFallVNode = waterfall(demoComps, h);
+            return h(docComp, [waterFallVNode]);
         }
     });
     ele.component = wrapperComp;
@@ -71,9 +69,9 @@ let routes = resetGroup(componentsRouteConfig, rootRoute);
 //     }
 // ];
 
-
+console.log(routes);
 const router = new Router({
-    routes
+    routes: [...routes]
 });
 
 export default router;
