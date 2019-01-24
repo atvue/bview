@@ -68,6 +68,7 @@
             </div>
             <!--锚点内容-->
         </div>
+        <div class="home-footer" />
     </div>
 </template>
 

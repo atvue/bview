@@ -1,6 +1,6 @@
 ---
 order: 4
-title: 多选组件
+title: 多选组件 Checkbox
 ---
 
 

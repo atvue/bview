@@ -1,5 +1,4 @@
 ---
 order: 7
-title: Icon组件
+title: 图标 Icon
 ---
-### 代码示范
