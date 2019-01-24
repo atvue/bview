@@ -51,6 +51,27 @@ components 目录下每个组件目录会生成一份文档说明，文档内容
 
 推荐使用[Vue 风格指南](https://cn.vuejs.org/v2/style-guide/index.html)
 
+### ESLint disable
+
+推荐按照配置的规则书写代码，不过有时候disable掉某些规则能避开恼人的warning，提交代码的时候则需要符合规范。开发阶段已关闭`no-console`规则，强制提交则会失败
+
+- `JavaScript`文件注释当行`// eslint-disable-line`。更多参考[Disabling Rules with Inline Comments](http://eslint.cn/docs/user-guide/configuring#disabling-rules-with-inline-comments)
+
+- `Vue单文件组件SFC中的template注释`。规则如下，更多参考[New: directive comments (fixes #260) ](https://github.com/vuejs/eslint-plugin-vue/pull/320)
+```vue
+<template>
+    <div>
+        disable单个特性
+        <!-- eslint-disable-next-line vue/no-v-html -->
+        <p class="post-excerpt" v-html="`<a>link</a>`" />
+        disable以下
+        <!-- eslint-disable -->
+        <a>123<span>abc</span></a>
+        enable以下
+        <!-- eslint-enable -->
+    </div>
+</template>
+```
 
 ### README.st
 

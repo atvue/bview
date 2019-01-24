@@ -43,12 +43,7 @@ module.exports = {
                 options: {
                     emitWarning: true ,
                     configFile: require.resolve( '../.eslintrc.dev' ) ,
-                },
-                /**
-                 * eslint-vue-plugin 注释语法
-                 * https://github.com/vuejs/eslint-plugin-vue/issues/260
-                 * https://github.com/vuejs/eslint-plugin-vue/pull/320
-                 */
+                }
             },
             // style: less
             {
