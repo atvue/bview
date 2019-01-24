@@ -31,7 +31,7 @@ function walk( node , slotsRes ) {
                 try {
                     let commentNode = array[index - 1];
                     // debugger;
-                    if (commentNode.isComment) {
+                    if ( commentNode && commentNode.isComment ) {
                         slot.describe = commentNode.text;
                     }
                 } catch (error) {

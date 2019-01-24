@@ -2,20 +2,20 @@
 
 ### 组件录入
 
-组件录入到`components`目录下，每个对外暴露使用的独立组件一个文件夹（如需组合使用的组件可放置在一个文件夹下），文件夹下必须包括以下目录文件结构：
+使用`make component input`命令新建组件，它会在默认的`src/components`生成如下结构
 
 ```dir
 
 ├── __tests__
-│   ├── <component_name>.test  //  测试文件
+│   ├── <component_name>.test.js  //  测试文件
 ├── demo
-│   ├── basic.md  //  基础demo
-├── style  // 组件样式
+│   ├── basic.md                  //  基础demo
+├── style                         // 组件样式
 │   ├── index.js
 │   ├── index.less
-├── <component_name>.vue  // 单文件组件
+├── <component_name>.vue          // 单文件组件
 ├── index.js
-├── README.st   // 基础说明文档
+├── README.st                     // 基础说明文档
 
 ```
 

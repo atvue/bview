@@ -60,6 +60,8 @@ title: ${ upCase( name ) }
 ---
 ### 组件名称
 
+请在src/components/${name}/README.st中编辑
+
 组件介绍...
 
 ### 场景说明{id="changjin"}
@@ -124,7 +126,7 @@ const demoTemp = name => {
         `
 \`\`\`vue
 <template>
-    <div>这里编写${ upCase( name ) }的demo</div>
+    <div>请在src/components/${name}/demo目录下的md文件中编写${ upCase( name ) }的demo</div>
 </template>
 <script>
 export default {
