@@ -10,10 +10,10 @@
             :readonly="readonly"
             :value="currentValue"
             :autofocus="autofocus"
-            @keyup.enter="_handleEnter"
-            @focus="_handleFocus"
-            @blur="_handleBlur"
-            @input="_handleInput"
+            @keyup.enter="$_handleEnter"
+            @focus="$_handleFocus"
+            @blur="$_handleBlur"
+            @input="$_handleInput"
         />
         <span
             v-if="maxlength"
@@ -107,24 +107,24 @@ export default {
         }
     },
     mounted() {
-        this._resizeTextarea();
+        this.$_resizeTextarea();
     },
     methods: {
-        _setCurrentValue(val) {
+        $_setCurrentValue(val) {
             this.currentValue = val;
             this.$nextTick(() => {
-                this._resizeTextarea();
+                this.$_resizeTextarea();
             });
         },
-        _handleEnter(event) {
+        $_handleEnter(event) {
             //@doc enter键触发
             this.$emit('enter', event);
         },
-        _handleInput(event) {
+        $_handleInput(event) {
             let value = event.target.value;
             //@doc输入框改变时触发
             this.$emit('input', value);
-            this._setCurrentValue(value);
+            this.$_setCurrentValue(value);
         },
         //@doc 手动聚焦输入框
         focus() {
@@ -134,15 +134,15 @@ export default {
         blur() {
             this.$refs.input.blur();
         },
-        _handleFocus(event) {
+        $_handleFocus(event) {
             //@doc 聚焦时触发
             this.$emit('focus', event);
         },
-        _handleBlur(event) {
+        $_handleBlur(event) {
             //@doc 失焦时触发
             this.$emit('blur', event);
         },
-        _resizeTextarea() {
+        $_resizeTextarea() {
             const autoResize = this.autoResize;
             if (!autoResize) {
                 return false;

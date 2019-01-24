@@ -19,7 +19,7 @@
         >
             <span 
                 class="bPanel-footer-state"       
-                v-html="activeText"    
+                v-text="activeText"    
             />
         </div>
     </div>

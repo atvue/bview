@@ -14,13 +14,13 @@
             v-if="clearable&&currentValue&&!disabled"
             :svg="closeIcon"
             :class="`${b}-input-icon`"
-            @click="_handleClear"  
+            @click="$_handleClear"  
         />
         <Icon 
             v-else-if="search"
             :svg="searchIcon"   
             :class="[`${b}-input-icon`,`${b}-input-search`]"
-            @click="_handleSearch"
+            @click="$_handleSearch"
         />
         <input
             ref="input"
@@ -33,10 +33,10 @@
             :readonly="readonly"
             :disabled="disabled"
             :type="type"
-            @input="_handleInput"
-            @focus="_handleFocus"
-            @blur="_handleBlur"
-            @keyup.enter="_handleEnter"
+            @input="$_handleInput"
+            @focus="$_handleFocus"
+            @blur="$_handleBlur"
+            @keyup.enter="$_handleEnter"
         >
         <span
             v-if="$slots.append"
@@ -139,14 +139,14 @@ export default {
     },
     watch: {
         value(val) {
-            this._setCurrentValue(val);
+            this.$_setCurrentValue(val);
         }
     },
     methods: {
-        _setCurrentValue(val) {
+        $_setCurrentValue(val) {
             this.currentValue = val;
         },
-        _handleEnter(event) {
+        $_handleEnter(event) {
             if (this.search && !this.disabled) {
                 //@doc开启 search 时可用，点击搜索或按下回车键时触发
                 this.$emit("search", event, this.currentValue);
@@ -154,25 +154,25 @@ export default {
             //@doc enter键时触发
             this.$emit("enter", event);
         },
-        _handleInput(event) {
+        $_handleInput(event) {
             let value = event.target.value;
             //@doc 输入框改变时触发
             this.$emit("input", value);
-            this._setCurrentValue(value);
+            this.$_setCurrentValue(value);
         },
-        _handleFocus(event) {
+        $_handleFocus(event) {
             //@doc聚焦时触发
             this.$emit("focus", event);
         },
-        _handleBlur(event) {
+        $_handleBlur(event) {
             //@doc失焦时触发
             this.$emit("blur", event);
         },
-        _handleClear() {
+        $_handleClear() {
             this.$emit("input", "");
-            this._setCurrentValue("");
+            this.$_setCurrentValue("");
         },
-        _handleSearch(event) {
+        $_handleSearch(event) {
             this.$emit("search", event, this.currentValue);
         },
         //@doc手动聚焦

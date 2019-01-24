@@ -1,13 +1,13 @@
 ---
 order: 0
-title: 按钮组件 input
+title: 按钮 Button
 ---
 
 
-### 按钮 {id="button"}
+### 按钮 {id="button-title"}
 按钮的作用主要为引发即时操作，响应用户的点击行为并触发相应的业务逻辑。
 
-### 场景说明 {id="changjin"}
+### 场景说明 {id="button-changjin"}
 
 + 通用场景
 \

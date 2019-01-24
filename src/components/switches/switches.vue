@@ -2,8 +2,8 @@
     <span
         ref="switch"
         :class="wrapClasses"
-        @click="_toggle"
-        @keydown.space="_toggle"
+        @click="$_toggle"
+        @keydown.space="$_toggle"
     >
         <Icon
             v-if="loading"
@@ -92,7 +92,7 @@ export default {
         }
     },
     methods: {
-        _toggle() {
+        $_toggle() {
             event.preventDefault();
             if (this.disabled || this.loading) {
                 return false;

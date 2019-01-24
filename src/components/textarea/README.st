@@ -1,13 +1,13 @@
 ---
 order: 1
-title: 多行输入框
+title: 多行输入框 Textarea
 ---
 
-### 多行输入框{id="textarea"}
+### 多行输入框{id="textarea-title"}
 提供用户输入文本、数据、规则等内容的文本区域，并对输入的内容进行反馈以供用户使用的交互控件。
 
 
-### 场景说明{id="changjin"}
+### 场景说明{id="textarea-changjin"}
  + 通用场景
  \
 应用于备注说明等场景中；
