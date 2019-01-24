@@ -1,6 +1,24 @@
 import { timeout } from '../../../utils/timer'
 import makeCancelable from '../../../utils/makeCancelable'
 
+const validateOptionStructural = item => {
+    if ( item === undefined || item === null || typeof item !== 'object' ) {
+        return false
+    }
+    return ( 'value' in item ) && ( 'label' in item )
+}
+const formatterOption = item => {
+    let validItem = validateOptionStructural( item )
+    if ( validItem ) {
+        return item
+    } else {
+        return {
+            value: item ,
+            label: item ,
+        }
+    }
+}
+
 export default {
     watch: {
         searchWord( val , oldVal ){
@@ -19,17 +37,19 @@ export default {
                     searchWord.trim() !== '' ,
                 filter = showSearch && 
                     hasOptions &&
-                    hasSearchWord
+                    hasSearchWord ,
+                filterResult
             if ( filter ) {
                 let result = options.filter( item => {
                     let { label } = item ,
                         reserver = this._checkFilterOption( searchWord , label , item )
                     return reserver
                 } )
-                return result
+                filterResult = result
             } else {
-                return options ? options : []
+                filterResult = options ? options : []
             }
+            return filterResult.map( formatterOption )
         } ,
         searchPlaceholder(){
             let { placeholder , hasSelected , selected } = this ,
