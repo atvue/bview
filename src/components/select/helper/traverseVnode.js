@@ -21,9 +21,9 @@ export function getVnodesTxt( vNodes ){
             if ( ifTextVNode ) {
                 let { text } = vNode
                 if ( txt === undefined ) {
-                    txt = text.trim()
+                    txt = text
                 } else {
-                    txt += text.trim()
+                    txt += text
                 }
             }
         } )
