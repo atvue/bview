@@ -2,7 +2,7 @@
     <div :class="`${b}-search`">
         <Transition name="toggle">
             <div
-                v-show="showSearch"
+                v-show="showSearch||!toggleAble"
                 :class="`search-input-wrapper`"
             >
                 <Select
@@ -30,14 +30,28 @@
             </div>
         </Transition>
         <Button
-            :class="`${b}-search-button`"
+            :class="[`${b}-search-button`, `${b}-search-button-${hasIcon}`]"
             @click="_doSearch"
         >
-            {{ buttonTxt }}
+            <template v-if="hasIcon">
+                <slot name="search" />
+                <Icon
+                    v-if="hasIcon"
+                    :svg="searchIcon"
+                    :class="[`${b}-search-icon`, `${b}-search`]"
+                    @click="_doSearch"
+                />
+            </template>
+            <template v-else>
+                {{ buttonTxt }}
+            </template>
         </Button>
     </div>
 </template>
 <script>
+import searchIcon from '../../icons/search';
+import Icon from '../icon';
+
 import { debounce } from '../../utils/throttleDebounce';
 import { bviewPrefix as b } from '../../utils/macro';
 import Input from '../input';
@@ -46,7 +60,7 @@ import Button from '../button';
 
 export default {
     name: `Search` ,
-    components: { Input , Select , Button } ,
+    components: { Icon , Input , Select , Button } ,
     props: {
         //@doc搜索框的placeholder
         placeholder: {
@@ -58,15 +72,10 @@ export default {
             type: String ,
             default: `搜索`
         } ,
-        //@doc搜索框宽度
-        width: {
-            type: String ,
-            default: `200px`
-        } ,
         //@doc是否可以展开收缩搜索框
         toggleAble: {
             type: Boolean ,
-            default: true
+            default: false
         } ,
         //@doc是否支持搜索框下拉提示，可选normal,select
         type: {
@@ -94,6 +103,11 @@ export default {
         disabled: {
             type: Boolean ,
             default: false
+        } ,
+        //@doc是否需要小图标
+        hasIcon: {
+            type: Boolean ,
+            default: false
         }
     } ,
     data() {
@@ -102,7 +116,8 @@ export default {
             needSearch: true ,
             searchValue: `` ,
             b: b ,
-            searchOptionsTemp: []
+            searchOptionsTemp: [] ,
+            searchIcon: searchIcon
         };
     } ,
     computed: {
@@ -130,7 +145,7 @@ export default {
         } ,
         _onSelectInput( event ) {
             let { label } = event;
-            if ( this.searchValue != label ) {
+            if ( this.searchValue !== label ) {
                 this.searchValue = label;
             }
         } ,
@@ -149,7 +164,7 @@ export default {
             this.$emit( `change` , value );
         } ,
         _onSearchWordChange( value ) {
-            if ( this.searchValue != value ) {
+            if ( this.searchValue !== value ) {
                 this.searchValue = value;
                 this.debounceValueChange( value );
             }
@@ -185,7 +200,9 @@ export default {
             }
             this.searchValue = ``;
             this._onClearOptions();
-            this.showSearch = false;
+            if ( this.toggleAble ){
+                this.showSearch = false;
+            }
         }
     }
 };

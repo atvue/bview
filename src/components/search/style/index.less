@@ -10,8 +10,10 @@
 @option-disabled: ~"@{bview-prefix}-option-disabled" ;
 @option-active: ~"@{bview-prefix}-option-active" ;
 
-.bview-search-button{
-    height:34px;
+.bview-search-button-true{
+    height:30px;
+    width:36px;
+    padding:0;
 }
 .search-input-wrapper{
     overflow: hidden;
@@ -34,6 +36,18 @@
 .toggle-leave-to {
     width:0 !important;
 }
+.bview-search-icon{
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 16px;
+    text-align: center;
+    color: #808695;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 3;
+}
 .bview-search{
     position: relative;
     .bview-dropdown{
@@ -44,6 +58,7 @@
     .bview-select-icon{
         display: none;
     }
+    .bview-select-wrapper{width:200px;}
     .bview-select-wrapper .bview-select-search-inner{
         margin:0;
     }

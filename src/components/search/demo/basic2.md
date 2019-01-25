@@ -2,9 +2,11 @@
 <template>
   <search 
     ref="search"
+    :toggleAble="toggleAble"
     :disabled = "disabled"
     @search="doSearch" >
   </search>
+
 </template>
 <script>
 import { Search } from 'bview'
@@ -14,7 +16,8 @@ export default {
     },
     data() {
         return {
-            disabled:false
+            disabled:false,
+            toggleAble:true
         }
     },
     methods: {
