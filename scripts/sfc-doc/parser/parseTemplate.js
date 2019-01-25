@@ -1,6 +1,6 @@
-const slotDefaultName = 'default'
+const slotDefaultName = 'default';
 
-function walk( node , slotsRes ) {
+function walk(node, slotsRes) {
     // debugger;
     let { children } = node;
     if (children !== undefined && children.length > 0) {
@@ -25,16 +25,21 @@ function walk( node , slotsRes ) {
                     attrsMap,
                     describe: undefined,
                     isAnonymous: attrsMap.name !== undefined ? false : true,
-                    name: attrsMap.name !== undefined ? attrsMap.name : slotDefaultName
+                    name:
+                        attrsMap.name !== undefined
+                            ? attrsMap.name
+                            : slotDefaultName
                 };
                 // slot说明查找上一个comment节点
                 try {
                     let commentNode = array[index - 1];
                     // debugger;
-                    if (commentNode.isComment) {
+                    if (commentNode && commentNode.isComment) {
                         slot.describe = commentNode.text;
                     }
-                } catch (error) {}
+                } catch (error) {
+                    console.log(error);
+                }
                 // 追加slot上的其他属性
                 if (otherAttrs.length > 0) {
                     slot.describe = `${
@@ -44,19 +49,18 @@ function walk( node , slotsRes ) {
                 slotsRes.push(slot);
                 // slot不再继续遍历子元素
             } else {
-                walk( ele , slotsRes );
+                walk(ele, slotsRes);
             }
         });
     }
 }
 
-
 module.exports = astTpl => {
     let slotsRes = [];
-    if ( astTpl ) {
-        walk( astTpl , slotsRes ) ;
+    if (astTpl) {
+        walk(astTpl, slotsRes);
     } else {
-        console.warn( `sfc-doc/parse/parseTemplate.js astTpl = ` , astTpl )
+        console.warn(`sfc-doc/parse/parseTemplate.js astTpl = `, astTpl);
     }
     // debugger;
     return slotsRes;

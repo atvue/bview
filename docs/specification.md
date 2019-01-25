@@ -2,20 +2,20 @@
 
 ### 组件录入
 
-组件录入到`components`目录下，每个对外暴露使用的独立组件一个文件夹（如需组合使用的组件可放置在一个文件夹下），文件夹下必须包括以下目录文件结构：
+使用`make component input`命令新建组件，它会在默认的`src/components`生成如下结构
 
 ```dir
 
 ├── __tests__
-│   ├── <component_name>.test  //  测试文件
+│   ├── <component_name>.test.js  //  测试文件
 ├── demo
-│   ├── basic.md  //  基础demo
-├── style  // 组件样式
+│   ├── basic.md                  //  基础demo
+├── style                         // 组件样式
 │   ├── index.js
 │   ├── index.less
-├── <component_name>.vue  // 单文件组件
+├── <component_name>.vue          // 单文件组件
 ├── index.js
-├── README.st   // 基础说明文档
+├── README.st                     // 基础说明文档
 
 ```
 
@@ -51,6 +51,27 @@ components 目录下每个组件目录会生成一份文档说明，文档内容
 
 推荐使用[Vue 风格指南](https://cn.vuejs.org/v2/style-guide/index.html)
 
+### ESLint disable
+
+推荐按照配置的规则书写代码，不过有时候disable掉某些规则能避开恼人的warning，提交代码的时候则需要符合规范。开发阶段已关闭`no-console`规则，强制提交则会失败
+
+- `JavaScript`文件注释当行`// eslint-disable-line`。更多参考[Disabling Rules with Inline Comments](http://eslint.cn/docs/user-guide/configuring#disabling-rules-with-inline-comments)
+
+- `Vue单文件组件SFC中的template注释`。规则如下，更多参考[New: directive comments (fixes #260) ](https://github.com/vuejs/eslint-plugin-vue/pull/320)
+```vue
+<template>
+    <div>
+        disable单个特性
+        <!-- eslint-disable-next-line vue/no-v-html -->
+        <p class="post-excerpt" v-html="`<a>link</a>`" />
+        disable以下
+        <!-- eslint-disable -->
+        <a>123<span>abc</span></a>
+        enable以下
+        <!-- eslint-enable -->
+    </div>
+</template>
+```
 
 ### README.st
 

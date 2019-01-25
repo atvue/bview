@@ -1,14 +1,19 @@
 /**
  * 通用webpack配置
  */
-const chalk = require('chalk')
-const webpack = require('webpack')
+const chalk = require('chalk');
+const webpack = require('webpack');
 const { src, site } = require('./project-path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
-const { getNamePrefix, rlaLessFile, lessPrefixKey } = require('./getLessVariables'),
-    namePrefixer = getNamePrefix()
+const {
+        getNamePrefix,
+        rlaLessFile,
+        lessPrefixKey
+    } = require('./getLessVariables'),
+    namePrefixer = getNamePrefix();
 if (namePrefixer === '') {
-    let msg = chalk `{yellow ${'wraning'}}: {green ${rlaLessFile}}，不存在名为：{red ${lessPrefixKey}}的变量`
+    let msg = chalk`{yellow ${'wraning'}}: {green ${rlaLessFile}}，不存在名为：{red ${lessPrefixKey}}的变量`;
+    console.log(msg);
 }
 
 module.exports = {
@@ -19,12 +24,14 @@ module.exports = {
             // @TODO iview中向vue-loader传入了postLoader参数，了解一下什么用
             {
                 test: /\.vue$/,
-                use: [{
-                    loader: 'vue-loader',
-                    options: {
-                        preserveWhitespace: false,
+                use: [
+                    {
+                        loader: 'vue-loader',
+                        options: {
+                            preserveWhitespace: false
+                        }
                     }
-                }]
+                ]
             },
             // .js文件
             {
@@ -35,25 +42,21 @@ module.exports = {
             },
             // eslint
             {
-                enforce: "pre",
+                enforce: 'pre',
                 test: /\.(js|vue)$/,
                 // .md => bview/src/components/button/demo/basic.md.js
                 exclude: [/node_modules/, /\.md\.js$/, /src\/icons/], // 排除解析md文件
-                loader: "eslint-loader",
+                loader: 'eslint-loader',
                 options: {
-                    emitWarning: true ,
-                    configFile: require.resolve( '../.eslintrc.dev' ) ,
-                },
-                /**
-                 * eslint-vue-plugin 注释语法
-                 * https://github.com/vuejs/eslint-plugin-vue/issues/260
-                 * https://github.com/vuejs/eslint-plugin-vue/pull/320
-                 */
+                    emitWarning: true,
+                    configFile: require.resolve('../.eslintrc.dev')
+                }
             },
             // style: less
             {
                 test: /\.less$/,
-                use: [{
+                use: [
+                    {
                         loader: 'style-loader',
                         options: {
                             sourceMap: true
@@ -82,7 +85,8 @@ module.exports = {
             // style: css
             {
                 test: /\.css$/,
-                use: [{
+                use: [
+                    {
                         loader: 'style-loader',
                         options: {
                             sourceMap: true
@@ -104,7 +108,8 @@ module.exports = {
             },
             {
                 test: /\.md$/,
-                use: [{
+                use: [
+                    {
                         loader: 'vue-loader'
                     },
                     {
@@ -114,7 +119,8 @@ module.exports = {
             },
             {
                 test: /\.st$/,
-                use: [{
+                use: [
+                    {
                         loader: 'vue-loader'
                     },
                     {
@@ -139,14 +145,14 @@ module.exports = {
         alias: {
             vue: 'vue/dist/vue.runtime.esm.js',
             '@': src,
-            'site': site,
+            site: site
         }
     },
     plugins: [
         new VueLoaderPlugin(),
         new webpack.DefinePlugin({
             'process.env.BVIEWPREFIX': JSON.stringify(namePrefixer),
-            'PRODUCTIONBVIEWPREFIX': `process.env.BVIEWPREFIX ? process.env.BVIEWPREFIX : "${namePrefixer}"`,
-        }),
+            PRODUCTIONBVIEWPREFIX: `process.env.BVIEWPREFIX ? process.env.BVIEWPREFIX : "${namePrefixer}"`
+        })
     ]
 };

@@ -1,15 +1,15 @@
 // svg 文件 to Vue 组件
-const fse = require('fs-extra')
-const path = require('path')
-const glob = require('glob')
-const SVGO = require('svgo')
-const { compile } = require('vue-template-compiler')
-const stripWith = require('vue-template-es2015-compiler')
+const fse = require('fs-extra');
+const path = require('path');
+const glob = require('glob');
+const SVGO = require('svgo');
+const { compile } = require('vue-template-compiler');
+const stripWith = require('vue-template-es2015-compiler');
 
-const root = process.cwd()
+const root = process.cwd();
 
 const svgDir = path.resolve(root, 'src/style/svgs'),
-    outputDir = path.resolve(root, 'src/icons')
+    outputDir = path.resolve(root, 'src/icons');
 
 // SVGO优化svg插件参数
 const svgoConfig = {
@@ -120,18 +120,18 @@ const svgoConfig = {
             removeStyleElement: true
         }
     ]
-}
+};
 
 // 获取所有svg文件
 async function svgFiles() {
     return await new Promise((r, j) => {
         glob(`${svgDir}/*.svg`, function(er, file) {
             if (er) {
-                return j(er)
+                return j(er);
             }
-            return r(file)
-        })
-    })
+            return r(file);
+        });
+    });
 }
 
 // 简单处理：svg转化为vue组件render函数
@@ -145,47 +145,48 @@ async function svgToVue(cnt, filePath) {
             preserveWhitespace: false,
             modules: [
                 {
-                    transformNode: el => {
+                    transformNode: () => {
+                        // el
                         // @TODO 需要修改输出的render函数
                     }
                 }
             ]
-        })
+        });
 
     renderFunction = `
       function render(_h, _vm) {
         ${renderFunction}
       }
-    `
+    `;
     renderFunction = stripWith(renderFunction, {
         transforms: {
             stripWithFunctional: true
         }
-    })
+    });
     return `
       export default ${renderFunction}
-    `
+    `;
 }
 
 async function main() {
-    let files = []
+    let files = [];
     try {
-        files = await svgFiles()
+        files = await svgFiles();
         files.forEach(filePath => {
-            let { name } = path.parse(filePath)
-            cnt = fse.readFileSync(filePath, 'utf-8')
+            let { name } = path.parse(filePath),
+                cnt = fse.readFileSync(filePath, 'utf-8');
 
             svgToVue(cnt, filePath).then(component => {
                 fse.outputFile(`${outputDir}/${name}.js`, component, err => {
                     if (err) {
-                        throw err
+                        throw err;
                     }
-                })
-            })
-        })
+                });
+            });
+        });
     } catch (error) {
-        throw e
+        throw error;
     }
 }
 
-main()
+main();

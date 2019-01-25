@@ -1,6 +1,5 @@
-/* eslint-disable no-console */
-const fs = require('fs') ,
-    path = require('path')
+const fs = require('fs'),
+    path = require('path');
 
 /**
  * 创建文件夹同步
@@ -26,7 +25,7 @@ function mkdir(dirname) {
  * @return {[type]}         [description]
  */
 function writeFile(file, content) {
-    fs.writeFileSync(file, content)
+    fs.writeFileSync(file, content);
 }
 
 /**
@@ -36,11 +35,11 @@ function writeFile(file, content) {
  */
 function fileExist(path) {
     try {
-        fs.accessSync(path, fs.F_OK)
+        fs.accessSync(path, fs.F_OK);
     } catch (e) {
-        return false
+        return false;
     }
-    return true
+    return true;
 }
 
 /**
@@ -49,9 +48,9 @@ function fileExist(path) {
  * @return {[type]}     [description]
  */
 function firstUpperCase(str) {
-    return str.toLowerCase().replace(/^\S/g, function (s) {
+    return str.toLowerCase().replace(/^\S/g, function(s) {
         return s.toUpperCase();
-    })
+    });
 }
 
 /**
@@ -61,7 +60,7 @@ function firstUpperCase(str) {
  * @return {[type]}      [description]
  */
 
-exports.mkdir = mkdir
-exports.writeFile = writeFile
-exports.fileExist = fileExist
-exports.firstUpperCase = firstUpperCase
+exports.mkdir = mkdir;
+exports.writeFile = writeFile;
+exports.fileExist = fileExist;
+exports.firstUpperCase = firstUpperCase;

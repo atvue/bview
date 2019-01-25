@@ -1,11 +1,15 @@
-const compiler = require( 'vue-template-compiler' )
-const transpile = require('vue-template-es2015-compiler')
-const NullSFCScriptExport = 'export default {}'
-const babel = require( '@babel/core' )
-const babelPluginImportBview = require( '../babel-helper/babel-plugin-import-bview' )
-const babelPluginDefault2Export = require( '../babel-helper/babel-plugin-default2export' )
+const compiler = require('vue-template-compiler');
+const transpile = require('vue-template-es2015-compiler');
+const NullSFCScriptExport = 'export default {}';
+const babel = require('@babel/core');
+const babelPluginImportBview = require('../babel-helper/babel-plugin-import-bview');
+const babelPluginDefault2Export = require('../babel-helper/babel-plugin-default2export');
+
+const withStatement2RenderFunction = withStmt => {
+    return transpile(`function render() { ${withStmt} }`);
+};
 /**
- * 1、parse function do template scritpt -> vue Object literal
+ * 1、<template></template> <scritpt></scritpt> -> vue Object literal
  
  * 2、script part
     * do two things
@@ -18,55 +22,67 @@ const babelPluginDefault2Export = require( '../babel-helper/babel-plugin-default
             }                                           } ,
                                                         render: function render(){
                                                             // ....
-                                                        }
+                                                        } ,
+                                                        staticRenderFns: [ ... ] ,   // render code for static sub trees, if any
         }                                         }
  * 
  */
-const parse = ( content , name ) => {
-    return new Promise( ( r , j ) => {
-        if ( content === undefined || content === null || content.trim() === '' ) {
-            return j( new Error( '解析的vue文件内容不能为空' ) )
+const parse = (content, name) => {
+    return new Promise((r, j) => {
+        if (
+            content === undefined ||
+            content === null ||
+            content.trim() === ''
+        ) {
+            return j(new Error('解析的vue文件内容不能为空'));
         }
-        let vueDescriptor = compiler.parseComponent( content ) ,
+        let vueDescriptor = compiler.parseComponent(content),
             { template, script } = vueDescriptor,
-            scriptTxt = script ? script.content : NullSFCScriptExport ,
-            templateTxt = template ? template.content : '' ,
-            result = compiler.compile( templateTxt ),
-            { render , errors } = result ,
-            toFuncRender = transpile( `function render () { ${ render } }` )
-        if ( errors.length > 0 ) {
-            let parseTemplateError = new Error( `编译vue的template文件出错，${errors}` )
-            return j( parseTemplateError )
+            scriptTxt = script ? script.content : NullSFCScriptExport,
+            templateTxt = template ? template.content : '',
+            result = compiler.compile(templateTxt),
+            { render, staticRenderFns, errors } = result;
+
+        if (errors.length > 0) {
+            let parseTemplateError = new Error(
+                `编译vue的template文件出错，${errors}`
+            );
+            return j(parseTemplateError);
         }
-        babel.transformAsync( scriptTxt , {
-            ast: true ,
-            code: false ,
-            sourceType: 'module' ,
-            plugins:[
-                [ babelPluginImportBview , { libraryName: 'bview' } ] ,
-                [ babelPluginDefault2Export , { 
-                    render: toFuncRender ,
-                    exportName: name 
-                } ] ,
-            ]
-        } ).then( ( { ast } ) => {
-            babel
-                .transformFromAstAsync( ast )
-                .then( ( { code } ) => {
-                    r( code )
-                } )
-                .catch( j )
-        } )
-        .catch( j )
-    } )
-}
+        babel
+            .transformAsync(scriptTxt, {
+                ast: true,
+                code: false,
+                sourceType: 'module',
+                plugins: [
+                    [babelPluginImportBview, { libraryName: 'bview' }],
+                    [
+                        babelPluginDefault2Export,
+                        {
+                            render: withStatement2RenderFunction(render),
+                            staticRenderFns: `[${staticRenderFns
+                                .map(withStatement2RenderFunction)
+                                .join(',')}]`,
+                            exportName: name
+                        }
+                    ]
+                ]
+            })
+            .then(({ ast }) => {
+                babel
+                    .transformFromAstAsync(ast)
+                    .then(({ code }) => {
+                        r(code);
+                    })
+                    .catch(j);
+            })
+            .catch(j);
+    });
+};
 
 /* const tmp = `<template>
     <div>
-        <Button type="primary">主要按钮</Button>
-        <Button>次要按钮</Button>
-        <Button type="dashed">Dashed</Button>
-        <Button type="danger">Danger</Button>
+        123<Button />
     </div>
 </template>
 
@@ -80,7 +96,7 @@ export default {
 `
 parse( tmp ).then( data => {
     console.log( data )
-} ) */
+} )
+ */
 
-
-exports.parse = parse
+exports.parse = parse;

@@ -1,4 +1,4 @@
-const { firstUpperCase: upCase } = require( './util' )
+const { firstUpperCase: upCase } = require('./util');
 
 //template文件结构
 function createConfig(name) {
@@ -13,16 +13,16 @@ function createConfig(name) {
                         temp: 'testJs'
                     }
                 ]
-            } ,
+            },
             {
                 dir: 'demo',
                 child: [
                     {
-                        file: 'basic.md' ,
+                        file: 'basic.md',
                         temp: 'demoTemp'
                     }
                 ]
-            } ,
+            },
             {
                 dir: 'style',
                 child: [
@@ -42,33 +42,33 @@ function createConfig(name) {
             {
                 file: 'index.js',
                 temp: 'indexJs'
-
             },
             {
-                file: 'README.st' ,
+                file: 'README.st',
                 temp: 'readmeTemp'
             }
-        ],
-    }
+        ]
+    };
 }
 
 const readmeTemp = name => {
-    return (
-        `
+    return `
 ---
-title: ${ upCase( name ) }
+title: ${upCase(name)}
 ---
 ### 组件名称
+
+请在<em style="font-weight: bold;">src/components/${name}/README.st</em>中编辑
 
 组件介绍...
 
 ### 场景说明{id="changjin"}
  
 组件使用场景...
-`.trim()
-    ) }
+`.trim();
+};
 
-const vueTemp = name => (
+const vueTemp = name =>
     `
 <template>
     <div />
@@ -76,7 +76,7 @@ const vueTemp = name => (
 
 <script>
 export default {
-    name: '${ upCase( name ) }' ,
+    name: '${upCase(name)}' ,
     props: {
     } ,
     data () {
@@ -87,24 +87,22 @@ export default {
     } ,
 }
 </script>
-`.trim()
-)
+`.trim();
 
-const styleIndex = () => `import './index.less'`
+const styleIndex = () => `import './index.less'`;
 
 const indexJs = name => {
-    let up = upCase(name)
+    let up = upCase(name);
 
     return `import ${up} from './${name}'
 
-export default ${up}`
-}
+export default ${up}`;
+};
 
 const testJs = name => {
-    name = upCase( name )
+    name = upCase(name);
 
-    return (
-        `
+    return `
 import ${name} from '../index.js'
 import { mount } from '@vue/test-utils'
 
@@ -115,16 +113,16 @@ describe( '${name}' , () => {
         expect( wrapper.isVueInstance() ).toBeTruthy()
     } )
 })
-`.trim()
-    )
-}
+`.trim();
+};
 
 const demoTemp = name => {
-    return (
-        `
+    return `
 \`\`\`vue
 <template>
-    <div>这里编写Tag2的demo</div>
+    <div>请在<em style="font-weight: bold;">src/components/${name}/demo</em>目录下的md文件中编写&#60;${upCase(
+    name
+)} /&#62;的demo</div>
 </template>
 <script>
 export default {
@@ -132,17 +130,16 @@ export default {
 }
 </script>
 \`\`\`
-`
-    )
-}
+`;
+};
 
-exports.createConfig = createConfig
+exports.createConfig = createConfig;
 
 exports.tp = {
-    vueTemp ,
-    styleIndex ,
-    indexJs ,
-    testJs ,
-    readmeTemp ,
-    demoTemp ,
-}
+    vueTemp,
+    styleIndex,
+    indexJs,
+    testJs,
+    readmeTemp,
+    demoTemp
+};

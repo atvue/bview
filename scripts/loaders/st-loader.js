@@ -22,8 +22,8 @@ module.exports = function(source, map, meta) {
     const yamlReg = /---[\s\S]*---/;
     source = source.replace(yamlReg, '');
 
-
-    let { resourcePath } = this, { dir } = path.parse(resourcePath),
+    let { resourcePath } = this,
+        { dir } = path.parse(resourcePath),
         sepDir = dir.split(path.sep),
         component = sepDir[sepDir.length - 1],
         // @TODO P1 sfc文件中注释添加ignore标记 不对外暴露api
@@ -36,9 +36,11 @@ module.exports = function(source, map, meta) {
                 return ingore ? undefined : f;
             })
             .filter(f => f !== undefined),
-        vueSfcPath = path.join(dir, `${component}.vue`),
+        // vueSfcPath = path.join(dir, `${component}.vue`),
         apiTpl = `\n\n### API说明{id="${component}-api"}`;
-    const html = md.render(`${source}\n\n### 代码示例{id="${component}-example"}`);
+    const html = md.render(
+        `${source}\n\n### 代码示例{id="${component}-example"}`
+    );
 
     // 添加当前目录为依赖，变化时重新获取结果
     this.addContextDependency(dir);
@@ -55,14 +57,14 @@ module.exports = function(source, map, meta) {
                 } = res;
                 apiTpl += `\n\n#### ${name}.vue`;
                 apiTpl += propsRes ? `\n\n##### props\n\n${propsRes}` : '';
-                apiTpl += apiMethods ?
-                    `\n\n##### methods\n\n${apiMethods}` :
-                    '';
-                apiTpl += emitEvents ?
-                    `\n\n##### emits\n\n${emitEvents}` :
-                    '' + slotsRes ?
-                        `\n\n##### slots\n\n${slotsRes}\n` :
-                        '';
+                apiTpl += apiMethods
+                    ? `\n\n##### methods\n\n${apiMethods}`
+                    : '';
+                apiTpl += emitEvents
+                    ? `\n\n##### emits\n\n${emitEvents}`
+                    : '' + slotsRes
+                        ? `\n\n##### slots\n\n${slotsRes}\n`
+                        : '';
             });
 
             let apiHtml = md.render(apiTpl);
