@@ -11,7 +11,7 @@ module.exports = function( babel ) {
         visitor: {
             ExportDefaultDeclaration( path , state ) {
                 let { node } = path ,
-                    { opts: { render , exportName } } = state
+                    { opts: { render , staticRenderFns , exportName } } = state
                 exportName = exportName ? exportName : 'demo'
                 if ( !node ) return
                 let { declaration } = node
@@ -19,11 +19,15 @@ module.exports = function( babel ) {
                     return
                 }
                 let renderId = t.identifier( 'render' ) ,
-                    renderAst = t.identifier( render ) ,
-                    renderValueId = renderAst ,
-                    objectPropertyId = t.objectProperty( renderId , renderValueId ) // { render: function(){ ... } }
+                    renderValueId = t.identifier( render ) ,
+                    staticRenderFnsId = t.identifier( 'staticRenderFns' ) ,
+                    staticRenderFnsValue = t.identifier( staticRenderFns ) ,
+                    renderObjectPropertyId = t.objectProperty( renderId , renderValueId ) ,  // { render: function(){ ... } }
+                    staticObjectPropertyId = t.objectProperty( staticRenderFnsId , staticRenderFnsValue )  // { staticRenderFns: [ function(){ ... } ] }
+                
                 // insert key render
-                declaration.properties.push( objectPropertyId )
+                declaration.properties.push( renderObjectPropertyId )
+                declaration.properties.push( staticObjectPropertyId )
                 // export default -> export const demo = ...
                 let exportDemoDec = template( `
                         export const ${ exportName } = EXPORTDEFAULT

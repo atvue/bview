@@ -4,8 +4,12 @@ const NullSFCScriptExport = 'export default {}'
 const babel = require( '@babel/core' )
 const babelPluginImportBview = require( '../babel-helper/babel-plugin-import-bview' )
 const babelPluginDefault2Export = require( '../babel-helper/babel-plugin-default2export' )
+
+const withStatement2RenderFunction = withStmt => {
+    return transpile( `function render() { ${ withStmt } }` )
+}
 /**
- * 1、parse function do template scritpt -> vue Object literal
+ * 1、<template></template> <scritpt></scritpt> -> vue Object literal
  
  * 2、script part
     * do two things
@@ -18,7 +22,8 @@ const babelPluginDefault2Export = require( '../babel-helper/babel-plugin-default
             }                                           } ,
                                                         render: function render(){
                                                             // ....
-                                                        }
+                                                        } ,
+                                                        staticRenderFns: [ ... ] ,   // render code for static sub trees, if any
         }                                         }
  * 
  */
@@ -32,8 +37,8 @@ const parse = ( content , name ) => {
             scriptTxt = script ? script.content : NullSFCScriptExport ,
             templateTxt = template ? template.content : '' ,
             result = compiler.compile( templateTxt ),
-            { render , errors } = result ,
-            toFuncRender = transpile( `function render () { ${ render } }` )
+            { render , staticRenderFns , errors } = result
+        
         if ( errors.length > 0 ) {
             let parseTemplateError = new Error( `编译vue的template文件出错，${errors}` )
             return j( parseTemplateError )
@@ -45,7 +50,11 @@ const parse = ( content , name ) => {
             plugins:[
                 [ babelPluginImportBview , { libraryName: 'bview' } ] ,
                 [ babelPluginDefault2Export , { 
-                    render: toFuncRender ,
+                    render: withStatement2RenderFunction( render ) ,
+                    staticRenderFns: `[${ 
+                        staticRenderFns
+                            .map( withStatement2RenderFunction )
+                            .join(',') }]` ,
                     exportName: name 
                 } ] ,
             ]
@@ -63,10 +72,7 @@ const parse = ( content , name ) => {
 
 /* const tmp = `<template>
     <div>
-        <Button type="primary">主要按钮</Button>
-        <Button>次要按钮</Button>
-        <Button type="dashed">Dashed</Button>
-        <Button type="danger">Danger</Button>
+        123<Button />
     </div>
 </template>
 
@@ -80,7 +86,7 @@ export default {
 `
 parse( tmp ).then( data => {
     console.log( data )
-} ) */
-
+} )
+ */
 
 exports.parse = parse
