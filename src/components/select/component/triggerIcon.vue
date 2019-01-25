@@ -1,11 +1,7 @@
-
-
 <template>
-    <div 
-        :class="`${b}-select-icon`"
-    >
-        <Icon 
-            :svg="down" 
+    <div :class="`${b}-select-icon`">
+        <Icon
+            :svg="down"
             :class="clsIconDown"
             :size="18"
             @click="_clickUpDown"
@@ -13,40 +9,39 @@
     </div>
 </template>
 
-
 <script>
-import Icon from '../../icon'
-import down from "../../../icons/left_arrow"
+import Icon from '../../icon';
+import down from '../../../icons/left_arrow';
 
 export default {
     components: { Icon } ,
     props: {
         b: {
             type: String ,
-            required: true ,
+            required: true
         } ,
         visible: {
             type: Boolean ,
-            required: true ,
+            required: true
         }
     } ,
-    data(){
+    data() {
         return {
-            down ,
-        }
+            down
+        };
     } ,
     computed: {
-        clsIconDown(){
+        clsIconDown() {
             let { visible , b } = this ,
-                cls = `${b}-down`
+                cls = `${b}-down`;
             // visible = true
-            return visible ? cls + ` ${b}-down-turn-up` : cls
+            return visible ? cls + ` ${b}-down-turn-up` : cls;
         }
     } ,
     methods: {
-        _clickUpDown( event ){
-            this.$emit( 'click' , event )
+        _clickUpDown( event ) {
+            this.$emit( `click` , event );
         }
     }
-}
+};
 </script>

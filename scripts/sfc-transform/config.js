@@ -1,22 +1,22 @@
-const path = require( 'path' )
+const path = require( `path` );
 
-const root = process.cwd()
+const root = process.cwd();
 
 function resolvePath( dir ) {
-    return path.resolve( root , dir )
+    return path.resolve( root , dir );
 }
 
-const srcDir = resolvePath( 'src' ) ,
-    libDir = resolvePath( 'lib' )
+const srcDir = resolvePath( `src` ) ,
+    libDir = resolvePath( `lib` );
 
-function toLibPath( srcPath ){
-    let remainPath = srcPath.replace( `${srcDir}/` , ''  ) ,
-        libFilePath = path.join( libDir , remainPath )
-    return libFilePath
+function toLibPath( srcPath ) {
+    let remainPath = srcPath.replace( `${srcDir}/` , `` ) ,
+        libFilePath = path.join( libDir , remainPath );
+    return libFilePath;
 }
-function toShortPath( srcPath ){
-    let remainPath = srcPath.replace( `${root}/` , ''  )
-    return remainPath
+function toShortPath( srcPath ) {
+    let remainPath = srcPath.replace( `${root}/` , `` );
+    return remainPath;
 }
 
 module.exports = {
@@ -24,5 +24,5 @@ module.exports = {
     srcDir ,
     libDir ,
     toLibPath ,
-    toShortPath ,
-}
+    toShortPath
+};

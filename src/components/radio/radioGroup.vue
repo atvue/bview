@@ -5,78 +5,78 @@
 </template>
 
 <script>
-import { findComponentsDownward } from '../../utils/assist'
+import { findComponentsDownward } from '../../utils/assist';
 
-const prefix = 'bview'
+const prefix = `bview`;
 
 export default {
-    name: 'RadioGroup' ,
+    name: `RadioGroup` ,
     props: {
         //@doc单选按钮组的值value
         value: {
-            type: [String, Number],
-            default: ''
-        },
+            type: [ String , Number ] ,
+            default: ``
+        } ,
 
         name: {
             type: String ,
-            default: undefined ,
-        },
+            default: undefined
+        } ,
         //@doc是否垂直显示radioGroup
         vertical: {
-            type: Boolean,
+            type: Boolean ,
             default: false
         }
-    },
-    data () {
+    } ,
+    data() {
         return {
-            curValue: this.value,
-            childrens: [],
-        }
-    },
+            curValue: this.value ,
+            childrens: []
+        };
+    } ,
     computed: {
-        groupClass: function () {
+        groupClass: function() {
             return [
-                `${prefix}-radio-group-wrap`,
+                `${prefix}-radio-group-wrap` ,
                 {
-                    [`${prefix}-radio-group-vertical`]: this.vertical
+                    [ `${prefix}-radio-group-vertical` ]: this.vertical
                 }
-            ]
+            ];
         }
-    },
+    } ,
     watch: {
-        value (val) {
-            if(this.curValue !== val){
-                this.curValue = val
-                this._updateValue()
+        value( val ) {
+            if ( this.curValue !== val ) {
+                this.curValue = val;
+                this._updateValue();
             }
         }
-    },
-    mounted () {
-        this._updateValue(true);
-    },
+    } ,
+    mounted() {
+        this._updateValue( true );
+    } ,
     methods: {
-        _updateValue (flag) {
-            this.childrens = findComponentsDownward(this, 'Radio');
-            if (this.childrens) {
-                this.childrens.forEach(child => {
+        _updateValue( flag ) {
+            this.childrens = findComponentsDownward( this , `Radio` );
+            if ( this.childrens ) {
+                this.childrens.forEach( child => {
                     child.isChecked = this.curValue === child.value;
-                    
-                    if (flag) {
-                        child.groupName = this.name
-                        child.isGroup = true
+
+                    if ( flag ) {
+                        child.groupName = this.name;
+                        child.isGroup = true;
                     }
-                });
+                } );
             }
-        },
-        _changeValue(value) {
-            this.curValue = value
-            this._updateValue()
+        } ,
+        _changeValue( value ) {
+            this.curValue = value;
+            this._updateValue();
             //@doc 结合v-model,触发input事件
-            this.$emit('input', value)
+            this.$emit( `input` , value );
             //@doc 值改变时触发事件，参数当前的value
-            this.$emit('change', value)
+            this.$emit( `change` , value );
         }
     }
-}
+};
 </script>

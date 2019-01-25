@@ -1,7 +1,7 @@
-const parseJs = require('./parseScript'),
-    parseTpl = require('./parseTemplate');
+const parseJs = require( `./parseScript` ) ,
+    parseTpl = require( `./parseTemplate` );
 
 module.exports = {
-    parseJs,
+    parseJs ,
     parseTpl
 };

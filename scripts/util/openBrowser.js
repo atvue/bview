@@ -8,19 +8,19 @@
 
 'use strict';
 
-var chalk = require('chalk');
-var execSync = require('child_process').execSync;
-var spawn = require('cross-spawn');
-var opn = require('opn');
+var chalk = require( `chalk` );
+var execSync = require( `child_process` ).execSync;
+var spawn = require( `cross-spawn` );
+var opn = require( `opn` );
 
 // https://github.com/sindresorhus/opn#app
-var OSX_CHROME = 'google chrome';
+var OSX_CHROME = `google chrome`;
 
-const Actions = Object.freeze({
-    NONE: 0,
-    BROWSER: 1,
+const Actions = Object.freeze( {
+    NONE: 0 ,
+    BROWSER: 1 ,
     SCRIPT: 2
-});
+} );
 
 function getBrowserEnv() {
     // Attempt to honor this environment variable.
@@ -28,65 +28,65 @@ function getBrowserEnv() {
     // See https://github.com/sindresorhus/opn#app for documentation.
     const value = process.env.BROWSER;
     let action;
-    if (!value) {
+    if ( !value ) {
         // Default.
         action = Actions.BROWSER;
-    } else if (value.toLowerCase().endsWith('.js')) {
+    } else if ( value.toLowerCase().endsWith( `.js` ) ) {
         action = Actions.SCRIPT;
-    } else if (value.toLowerCase() === 'none') {
+    } else if ( value.toLowerCase() === `none` ) {
         action = Actions.NONE;
     } else {
         action = Actions.BROWSER;
     }
-    return { action, value };
+    return { action , value };
 }
 
-function executeNodeScript(scriptPath, url) {
-    const extraArgs = process.argv.slice(2);
-    const child = spawn('node', [scriptPath, ...extraArgs, url], {
-        stdio: 'inherit'
-    });
-    child.on('close', code => {
-        if (code !== 0) {
+function executeNodeScript( scriptPath , url ) {
+    const extraArgs = process.argv.slice( 2 );
+    const child = spawn( `node` , [ scriptPath , ...extraArgs , url ] , {
+        stdio: `inherit`
+    } );
+    child.on( `close` , code => {
+        if ( code !== 0 ) {
             console.log();
             console.log(
                 chalk.red(
-                    'The script specified as BROWSER environment variable failed.'
+                    `The script specified as BROWSER environment variable failed.`
                 )
             );
             console.log(
-                chalk.cyan(scriptPath) + ' exited with code ' + code + '.'
+                chalk.cyan( scriptPath ) + ` exited with code ` + code + `.`
             );
             console.log();
             return;
         }
-    });
+    } );
     return true;
 }
 
-function startBrowserProcess(browser, url) {
+function startBrowserProcess( browser , url ) {
     // If we're on OS X, the user hasn't specifically
     // requested a different browser, we can try opening
     // Chrome with AppleScript. This lets us reuse an
     // existing tab when possible instead of creating a new one.
     const shouldTryOpenChromeWithAppleScript =
-        process.platform === 'darwin' &&
-        (typeof browser !== 'string' || browser === OSX_CHROME);
+        process.platform === `darwin` &&
+        ( typeof browser !== `string` || browser === OSX_CHROME );
 
-    if (shouldTryOpenChromeWithAppleScript) {
+    if ( shouldTryOpenChromeWithAppleScript ) {
         try {
             // Try our best to reuse existing tab
             // on OS X Google Chrome with AppleScript
-            execSync('ps cax | grep "Google Chrome"');
+            execSync( `ps cax | grep "Google Chrome"` );
             execSync(
-                'osascript openChrome.applescript "' + encodeURI(url) + '"',
+                `osascript openChrome.applescript "` + encodeURI( url ) + `"` ,
                 {
-                    cwd: __dirname,
-                    stdio: 'ignore'
+                    cwd: __dirname ,
+                    stdio: `ignore`
                 }
             );
             return true;
-        } catch (err) {
+        } catch ( err ) {
             // Ignore errors.
         }
     }
@@ -95,7 +95,7 @@ function startBrowserProcess(browser, url) {
     // In this case, instead of passing `open` to `opn` (which won't work),
     // just ignore it (thus ensuring the intended behavior, i.e. opening the system browser):
     // https://github.com/facebook/create-react-app/pull/1690#issuecomment-283518768
-    if (process.platform === 'darwin' && browser === 'open') {
+    if ( process.platform === `darwin` && browser === `open` ) {
         browser = undefined;
     }
 
@@ -103,9 +103,9 @@ function startBrowserProcess(browser, url) {
     // (It will always open new tab)
     try {
         var options = { app: browser };
-        opn(url, options).catch(() => {}); // Prevent `unhandledRejection` error.
+        opn( url , options ).catch( () => {} ); // Prevent `unhandledRejection` error.
         return true;
-    } catch (err) {
+    } catch ( err ) {
         return false;
     }
 }
@@ -114,18 +114,18 @@ function startBrowserProcess(browser, url) {
  * Reads the BROWSER evironment variable and decides what to do with it. Returns
  * true if it opened a browser or ran a node.js script, otherwise false.
  */
-function openBrowser(url) {
-    const { action, value } = getBrowserEnv();
-    switch (action) {
+function openBrowser( url ) {
+    const { action , value } = getBrowserEnv();
+    switch ( action ) {
     case Actions.NONE:
         // Special case: BROWSER="none" will prevent opening completely.
         return false;
     case Actions.SCRIPT:
-        return executeNodeScript(value, url);
+        return executeNodeScript( value , url );
     case Actions.BROWSER:
-        return startBrowserProcess(value, url);
+        return startBrowserProcess( value , url );
     default:
-        throw new Error('Not implemented.');
+        throw new Error( `Not implemented.` );
     }
 }
 

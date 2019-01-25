@@ -6,11 +6,11 @@
 
 <script>
 export default {
-    name: 'BviewMenu',
-    prop: {},
-    data () {
-        return {}
-    },
-    methods: {},
-}
+    name: `BviewMenu` ,
+    prop: {} ,
+    data() {
+        return {};
+    } ,
+    methods: {}
+};
 </script>

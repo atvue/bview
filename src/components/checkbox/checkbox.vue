@@ -5,8 +5,8 @@
     >
         <span :class="checkboxClass">
             <span :class="innerClass" />
-            <input 
-                type="checkbox" 
+            <input
+                type="checkbox"
                 :class="[prefix + '-checkbox-input']"
                 :disabled="disabled"
                 :checked="checked"
@@ -21,106 +21,109 @@
 </template>
 
 <script>
-import { findComponentUpward } from '../../utils/assist'
+import { findComponentUpward } from '../../utils/assist';
 
-const prefix = 'bview'
+const prefix = `bview`;
 
 export default {
-    name: 'Checkbox',
+    name: `Checkbox` ,
     props: {
         //@doc 多选框的值
         value: {
-            type: [String, Number, Boolean],
+            type: [ String , Number , Boolean ] ,
             default: false
-        },
+        } ,
         //@doc 禁用多选框
         disabled: {
-            type: Boolean,
-            default: false,
-        },
+            type: Boolean ,
+            default: false
+        } ,
         //@doc 是否半选状态
         halfChecked: {
-            type: Boolean,
-            default: false,
-        },
+            type: Boolean ,
+            default: false
+        } ,
         //@doc 多选按钮的属性name
         name: {
             type: String ,
-            default: undefined ,
-        },
+            default: undefined
+        } ,
         //@doc 是否选中
         checked: {
-            type: Boolean,
+            type: Boolean ,
             default: false
-        },
+        } ,
         //@doc 多选按钮的大小
         size: {
-            type: String,
-            default: 'default'
+            type: String ,
+            default: `default`
         }
-    },
-    data () {
+    } ,
+    data() {
         return {
-            prefix: prefix,
-            isChecked: !this.isGroup ? this.value : this.checked,
-            groupName: this.name,
-            isGroup: false,
-            parent: undefined,	
-        }
-    },
+            prefix: prefix ,
+            isChecked: !this.isGroup ? this.value : this.checked ,
+            groupName: this.name ,
+            isGroup: false ,
+            parent: undefined
+        };
+    } ,
     computed: {
-        checkboxClass: function () {
-            return `${prefix}-checkbox-${this.size}`
-        },
-        innerClass: function () {
+        checkboxClass: function() {
+            return `${prefix}-checkbox-${this.size}`;
+        } ,
+        innerClass: function() {
             return [
-                `${prefix}-checkbox-inner`,
+                `${prefix}-checkbox-inner` ,
                 {
-                    [`${prefix}-checkbox-inner-checked`]: this.isChecked && !this.disabled && !this.halfChecked
-                },
+                    [ `${prefix}-checkbox-inner-checked` ]:
+                        this.isChecked && !this.disabled && !this.halfChecked
+                } ,
                 {
-                    [`${prefix}-checkbox-inner-disabled`]: this.disabled && !this.isChecked
-                },
+                    [ `${prefix}-checkbox-inner-disabled` ]:
+                        this.disabled && !this.isChecked
+                } ,
                 {
-                    [`${prefix}-checkbox-inner-checked-disabled`]: this.disabled && this.isChecked
-                },
+                    [ `${prefix}-checkbox-inner-checked-disabled` ]:
+                        this.disabled && this.isChecked
+                } ,
                 {
-                    [`${prefix}-checkbox-inner-half-checked`]: this.halfChecked 
+                    [ `${prefix}-checkbox-inner-half-checked` ]: this.halfChecked
                 }
-            ]
+            ];
         }
-    },
+    } ,
     watch: {
-        value (value) {
-            if (!this.isGroup) {
-                this.isChecked = value
+        value( value ) {
+            if ( !this.isGroup ) {
+                this.isChecked = value;
             }
         }
-    },
-    mounted () {
-        this.parent = findComponentUpward(this, 'CheckboxGroup')
-    },
+    } ,
+    mounted() {
+        this.parent = findComponentUpward( this , `CheckboxGroup` );
+    } ,
     methods: {
-        _change () {
-            if (this.disabled) {
+        _change() {
+            if ( this.disabled ) {
                 return false;
             }
 
-            if (this.halfChecked) {
-                this.isChecked = false
+            if ( this.halfChecked ) {
+                this.isChecked = false;
             } else {
                 this.isChecked = !this.isChecked;
             }
 
-            if(this.isGroup) {
-                this.parent._changeValue(this.value)
-            }else{
+            if ( this.isGroup ) {
+                this.parent._changeValue( this.value );
+            } else {
                 //@doc 结合v-model，触发input事件，参数当前值
-                this.$emit('input', this.isChecked)
+                this.$emit( `input` , this.isChecked );
                 //@doc 单个使用时候value改变事件，参数value
-                this.$emit('on-change', this.isChecked)
+                this.$emit( `on-change` , this.isChecked );
             }
-        },
+        }
     }
-}
+};
 </script>

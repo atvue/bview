@@ -1,81 +1,85 @@
 <template>
-    <div 
+    <div
         ref="panel"
-        class="bPanel" 
-    >  
+        class="bPanel"
+    >
         <CollapseTransition>
             <div
                 v-show="isActive"
-                class="bPanel-body-wrapper" 
+                class="bPanel-body-wrapper"
             >
                 <div class="bPanel-body">
                     <slot name="content" />
                 </div>
             </div>
         </CollapseTransition>
-        <div 
-            :class="['bPanel-footer',{'is-fixed':fixedControl}]"
+        <div
+            :class="['bPanel-footer', { 'is-fixed': fixedControl }]"
             @click="toggle"
         >
-            <span 
-                class="bPanel-footer-state"       
-                v-text="activeText"    
+            <span
+                class="bPanel-footer-state"
+                v-text="activeText"
             />
         </div>
     </div>
 </template>
 <script>
-import CollapseTransition from './collapse-transition'
+import CollapseTransition from './collapse-transition';
 export default {
-    name:"CodePanel",
-    components:{
+    name: `CodePanel` ,
+    components: {
         CollapseTransition
-    },
-    data(){
+    } ,
+    data() {
         return {
-            isActive:false,
-            fixedControl:false,
-            scrollEle:null,
+            isActive: false ,
+            fixedControl: false ,
+            scrollEle: null
+        };
+    } ,
+    computed: {
+        activeText() {
+            return this.isActive ? `收起代码` : `展开代码`;
         }
-    },
-    computed:{
-        activeText(){
-            return this.isActive?'收起代码':'展开代码';
-        }
-    },
-    watch:{
-        isActive(val){
+    } ,
+    watch: {
+        isActive( val ) {
             let t = this;
-            if(!val){
+            if ( !val ) {
                 this.fixedControl = false;
                 return;
-            }      
+            }
             this.removeScrollHandler();
-            setTimeout(()=>{
-                t.scrollEle =window;
-                t.scrollEle.addEventListener("scroll",t.scrollHandler);
+            setTimeout( () => {
+                t.scrollEle = window;
+                t.scrollEle.addEventListener( `scroll` , t.scrollHandler );
                 t.scrollHandler();
-            },300);
-            
+            } , 300 );
         }
-    },
-    destroyed(){
+    } ,
+    destroyed() {
         this.removeScrollHandler();
-    },
-    methods:{
-        toggle(){
-            this.isActive=!this.isActive;
-        },
-        scrollHandler(){
-            let {top,bottom}=this.$refs.panel.getBoundingClientRect();
-            let clientHeight = document.documentElement.clientHeight; 
-            this.fixedControl = bottom > clientHeight&&top+40<=clientHeight;
-        },
-        removeScrollHandler(){
-            this.scrollEle&&this.scrollEle.removeEventListener('scroll',this.scrollHandler);
+    } ,
+    methods: {
+        toggle() {
+            this.isActive = !this.isActive;
+        } ,
+        scrollHandler() {
+            let { top , bottom } = this.$refs.panel.getBoundingClientRect();
+            let clientHeight = document.documentElement.clientHeight;
+            this.fixedControl =
+                bottom > clientHeight && top + 40 <= clientHeight;
+        } ,
+        removeScrollHandler() {
+            this.scrollEle &&
+                this.scrollEle.removeEventListener(
+                    `scroll` ,
+                    this.scrollHandler
+                );
         }
     }
-}
+};
 </script>
 <style lang="less">
 .bPanel {
@@ -91,7 +95,7 @@ export default {
 }
 .bPanel-footer {
     position: relative;
-    border-top: 1px solid #ebebeb; 
+    border-top: 1px solid #ebebeb;
     background-color: #fff;
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
@@ -107,19 +111,15 @@ export default {
 }
 .bPanel-footer-state {
     display: inline-block;
-    height:100%;
+    height: 100%;
     color: #2c80ff;
-  
-    &:after{
+
+    &:after {
         clear: both;
     }
 }
 .collapse-transition {
     transition: height 0.3s ease-in-out, padding-top 0.3s ease-in-out,
-    padding-bottom 0.3s ease-in-out;
+        padding-bottom 0.3s ease-in-out;
 }
-
 </style>
-
-
-

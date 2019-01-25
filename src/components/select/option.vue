@@ -4,7 +4,7 @@
         :class="bClsOption"
         @click="_clickOption"
     >
-        <Icon 
+        <Icon
             v-if="selected"
             type="check"
             :class="bClsOptionSelectedIcon"
@@ -13,110 +13,118 @@
     </li>
 </template>
 
-
 <script>
-import { findComponentUpward } from '../../utils/assist'
-import Icon from '../icon'
-import { optionName , selectName } from './helper/name'
-import { bviewPrefix as b } from '../../utils/macro'
-import { getVnodesTxt } from './helper/traverseVnode'
+import { findComponentUpward } from '../../utils/assist';
+import Icon from '../icon';
+import { optionName , selectName } from './helper/name';
+import { bviewPrefix as b } from '../../utils/macro';
+import { getVnodesTxt } from './helper/traverseVnode';
 
 function joinClassnames( ...classnames ) {
-    return classnames.filter( i => i ).join( ' ' )
+    return classnames.filter( i => i ).join( ` ` );
 }
 
 export default {
     name: optionName ,
     components: {
-        Icon ,
+        Icon
     } ,
     props: {
         // @doc 值
         value: {
             type: null ,
-            required: true ,
+            required: true
         } ,
         // @doc 禁用
         disabled: {
             type: Boolean ,
-            default: false ,
+            default: false
         }
     } ,
     computed: {
-        selectVm(){
-            let parent = findComponentUpward( this , selectName )
-            return parent
+        selectVm() {
+            let parent = findComponentUpward( this , selectName );
+            return parent;
         } ,
-        bClsOption(){
+        bClsOption() {
             let { selected , disabled , selectVm , value } = this ,
                 cls = `${b}-option` ,
-                { activeOption } = selectVm ? selectVm : { activeOption: undefined } ,
+                { activeOption } = selectVm
+                    ? selectVm
+                    : { activeOption: undefined } ,
                 hasActiveOption = activeOption !== undefined ,
-                currentActive = hasActiveOption && activeOption.value === value
+                currentActive = hasActiveOption && activeOption.value === value;
             if ( disabled ) {
-                cls = joinClassnames( cls , `${b}-option-disabled` )
+                cls = joinClassnames( cls , `${b}-option-disabled` );
             }
             if ( selected ) {
-                cls = joinClassnames( cls , `${b}-option-selected` )
+                cls = joinClassnames( cls , `${b}-option-selected` );
             }
             if ( currentActive ) {
-                cls = joinClassnames( cls , `${b}-option-active` )
+                cls = joinClassnames( cls , `${b}-option-active` );
             }
-            return cls
+            return cls;
         } ,
-        bClsOptionSelectedIcon(){
-            return `${b}-option-selected-icon`
+        bClsOptionSelectedIcon() {
+            return `${b}-option-selected-icon`;
         } ,
-        selected(){
+        selected() {
             let { selectVm } = this ,
                 { selected } = selectVm ? selectVm : { selected: undefined } ,
-                selted = selected ? selected.value === this.value : false
-            return selted
-        } ,
+                selted = selected ? selected.value === this.value : false;
+            return selted;
+        }
     } ,
-    mounted(){
-        this._registerOption()
+    mounted() {
+        this._registerOption();
     } ,
-    destroyed(){
-        this._unRegisterOption()
+    destroyed() {
+        this._unRegisterOption();
     } ,
     methods: {
-        _clickOption(){
-            let { value , $refs: { el } , selectVm , disabled } = this ,
+        _clickOption() {
+            let {
+                    value ,
+                    $refs: { el } ,
+                    selectVm ,
+                    disabled
+                } = this ,
                 noSelect = selectVm === undefined ,
                 noEl = el === undefined ,
                 skip = noSelect || noEl ,
                 label = this._getSlotTextContent() ,
-                payload = { value , label }
+                payload = { value , label };
             if ( skip ) {
-                return
+                return;
             }
             // -@doc
-            selectVm.$emit( 'click-option' , { vm: this , payload , disabled } )
+            selectVm.$emit( `click-option` , { vm: this , payload , disabled } );
         } ,
-        _registerOption(){
+        _registerOption() {
             let { selectVm } = this ,
-                noSelect = selectVm === undefined
+                noSelect = selectVm === undefined;
             if ( noSelect ) {
-                return
+                return;
             }
             // -@doc
-            selectVm.$emit( 'register-option' , this )   
+            selectVm.$emit( `register-option` , this );
         } ,
-        _unRegisterOption(){
+        _unRegisterOption() {
             let { selectVm } = this ,
-                noSelect = selectVm === undefined
+                noSelect = selectVm === undefined;
             if ( noSelect ) {
-                return
+                return;
             }
             // -@doc
-            selectVm.$emit( 'un-register-option' , this )   
+            selectVm.$emit( `un-register-option` , this );
         } ,
-        _getSlotTextContent(){
-            let { $slots: { default: textVnodes } } = this ,
-                txt = getVnodesTxt( textVnodes )
-            return txt
+        _getSlotTextContent() {
+            let {
+                    $slots: { default: textVnodes }
+                } = this ,
+                txt = getVnodesTxt( textVnodes );
+            return txt;
         }
     }
-}
+};
 </script>

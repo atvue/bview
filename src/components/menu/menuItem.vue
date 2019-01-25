@@ -4,9 +4,8 @@
     </li>
 </template>
 
-
 <script>
 export default {
-    name: 'MenuItem'
-}
+    name: `MenuItem`
+};
 </script>

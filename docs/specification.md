@@ -98,5 +98,5 @@ components 目录下每个组件目录会生成一份文档说明，文档内容
 | [func-call-spacing](http://eslint.cn/docs/rules/func-call-spacing) | 禁止函数标识符和其调用之间有空格 |
 | [space-in-parens](http://eslint.cn/docs/rules/space-in-parens) | 强制圆括号内的空格 |
 | [eqeqeq](http://eslint.cn/docs/rules/eqeqeq) | 要求使用 === 和 !== |
-| [space-infix-ops][http://eslint.cn/docs/rules/space-infix-ops] | 确保中缀运算符周围有空格 |
+| [space-infix-ops](http://eslint.cn/docs/rules/space-infix-ops) | 确保中缀运算符周围有空格 |
 | [space-unary-ops](http://eslint.cn/docs/rules/space-unary-ops) | 要求在一元操作符之前或之后存在空格 |

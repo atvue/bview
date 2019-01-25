@@ -1,16 +1,16 @@
-const compiler = require('vue-template-compiler');
-const transpile = require('vue-template-es2015-compiler');
-const NullSFCScriptExport = 'export default {}';
-const babel = require('@babel/core');
-const babelPluginImportBview = require('../babel-helper/babel-plugin-import-bview');
-const babelPluginDefault2Export = require('../babel-helper/babel-plugin-default2export');
+const compiler = require( `vue-template-compiler` );
+const transpile = require( `vue-template-es2015-compiler` );
+const NullSFCScriptExport = `export default {}`;
+const babel = require( `@babel/core` );
+const babelPluginImportBview = require( `../babel-helper/babel-plugin-import-bview` );
+const babelPluginDefault2Export = require( `../babel-helper/babel-plugin-default2export` );
 
 const withStatement2RenderFunction = withStmt => {
-    return transpile(`function render() { ${withStmt} }`);
+    return transpile( `function render() { ${withStmt} }` );
 };
 /**
  * 1、<template></template> <scritpt></scritpt> -> vue Object literal
- 
+
  * 2、script part
     * do two things
 
@@ -25,59 +25,59 @@ const withStatement2RenderFunction = withStmt => {
                                                         } ,
                                                         staticRenderFns: [ ... ] ,   // render code for static sub trees, if any
         }                                         }
- * 
+ *
  */
-const parse = (content, name) => {
-    return new Promise((r, j) => {
+const parse = ( content , name ) => {
+    return new Promise( ( r , j ) => {
         if (
             content === undefined ||
             content === null ||
-            content.trim() === ''
+            content.trim() === ``
         ) {
-            return j(new Error('解析的vue文件内容不能为空'));
+            return j( new Error( `解析的vue文件内容不能为空` ) );
         }
-        let vueDescriptor = compiler.parseComponent(content),
-            { template, script } = vueDescriptor,
-            scriptTxt = script ? script.content : NullSFCScriptExport,
-            templateTxt = template ? template.content : '',
-            result = compiler.compile(templateTxt),
-            { render, staticRenderFns, errors } = result;
+        let vueDescriptor = compiler.parseComponent( content ) ,
+            { template , script } = vueDescriptor ,
+            scriptTxt = script ? script.content : NullSFCScriptExport ,
+            templateTxt = template ? template.content : `` ,
+            result = compiler.compile( templateTxt ) ,
+            { render , staticRenderFns , errors } = result;
 
-        if (errors.length > 0) {
+        if ( errors.length > 0 ) {
             let parseTemplateError = new Error(
                 `编译vue的template文件出错，${errors}`
             );
-            return j(parseTemplateError);
+            return j( parseTemplateError );
         }
         babel
-            .transformAsync(scriptTxt, {
-                ast: true,
-                code: false,
-                sourceType: 'module',
+            .transformAsync( scriptTxt , {
+                ast: true ,
+                code: false ,
+                sourceType: `module` ,
                 plugins: [
-                    [babelPluginImportBview, { libraryName: 'bview' }],
+                    [ babelPluginImportBview , { libraryName: `bview` } ] ,
                     [
-                        babelPluginDefault2Export,
+                        babelPluginDefault2Export ,
                         {
-                            render: withStatement2RenderFunction(render),
+                            render: withStatement2RenderFunction( render ) ,
                             staticRenderFns: `[${staticRenderFns
-                                .map(withStatement2RenderFunction)
-                                .join(',')}]`,
+                                .map( withStatement2RenderFunction )
+                                .join( `,` )}]` ,
                             exportName: name
                         }
                     ]
                 ]
-            })
-            .then(({ ast }) => {
+            } )
+            .then( ( { ast } ) => {
                 babel
-                    .transformFromAstAsync(ast)
-                    .then(({ code }) => {
-                        r(code);
-                    })
-                    .catch(j);
-            })
-            .catch(j);
-    });
+                    .transformFromAstAsync( ast )
+                    .then( ( { code } ) => {
+                        r( code );
+                    } )
+                    .catch( j );
+            } )
+            .catch( j );
+    } );
 };
 
 /* const tmp = `<template>

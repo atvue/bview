@@ -7,11 +7,9 @@
                     Bee&nbsp;Design
                 </div>
                 <div class="header-search">
-                    <Input
-                        placeholder="请输入想要搜索的组件"
-                    />
+                    <Input placeholder="请输入想要搜索的组件" />
                 </div>
-            </div> 
+            </div>
             <div class="header-right">
                 <ul>
                     <li>
@@ -37,32 +35,26 @@
                 </ul>
             </div>
         </div>
-        <div   
-            class="main-content" 
-        >
+        <div class="main-content">
             <!-- 随便生成的菜单 待替换 -->
-            <SlideNav 
-                :router-data="routerData"
-            />
+            <SlideNav :router-data="routerData" />
             <!-- END 随便生成的菜单 待替换 -->
             <!-- 文档内容 -->
             <div
                 ref="mainWrapper"
-                class="main-wrapper" 
+                class="main-wrapper"
             >
                 <RouterView />
             </div>
             <!-- END 文档内容 -->
             <!--锚点内容-->
             <div style="position:absolute;right:100px">
-                <Anchor
-                    ref="anchor" 
-                >  
+                <Anchor ref="anchor">
                     <AnchorLink
-                        v-for="(item,index) in anchorList" 
+                        v-for="(item, index) in anchorList"
                         :key="index"
-                        :title="item.title" 
-                        :href="item.href" 
+                        :title="item.title"
+                        :href="item.href"
                     />
                 </Anchor>
             </div>
@@ -74,7 +66,8 @@
                     关于我们
                 </div>
                 <div class="about-txt">
-                    Bee Design 是基于Vue.js的高质量UI组件库，致力于打造模块化、轻量级的企业产品设计。
+                    Bee Design
+                    是基于Vue.js的高质量UI组件库，致力于打造模块化、轻量级的企业产品设计。
                 </div>
             </div>
         </div>
@@ -82,52 +75,50 @@
 </template>
 
 <script>
-import './style/app.less'
+import './style/app.less';
 import Anchor from './components/anchor';
 import SlideNav from './components/slideNav';
 const { AnchorLink } = Anchor;
 
 export default {
     components: {
-        Anchor,
-        AnchorLink,
+        Anchor ,
+        AnchorLink ,
         SlideNav
-    },
-    data(){
-        return{
-            anchorList:[]
-        }
-    },
+    } ,
+    data() {
+        return {
+            anchorList: []
+        };
+    } ,
     computed: {
         routerData() {
             return this.$router.options.routes;
         }
     } ,
-    watch:{
-        $route(){
-            this.$nextTick(()=>{
+    watch: {
+        $route() {
+            this.$nextTick( () => {
                 this.updateAnchor();
-            })  
+            } );
         }
-    },
-    mounted(){
+    } ,
+    mounted() {
         this.updateAnchor();
-    },
+    } ,
     methods: {
-        updateAnchor(){
+        updateAnchor() {
             this.anchorList = [];
-            let ele = this.$refs.mainWrapper.querySelectorAll('h3');
-            ele.forEach(item => {
-                if(item.id){
-                    this.anchorList.push({
-                        title:item.innerText,
-                        href:"#"+item.id
-                    })
-                }  
-            })
+            let ele = this.$refs.mainWrapper.querySelectorAll( `h3` );
+            ele.forEach( item => {
+                if ( item.id ) {
+                    this.anchorList.push( {
+                        title: item.innerText ,
+                        href: `#` + item.id
+                    } );
+                }
+            } );
         }
-    }   
+    }
 };
 </script>
-
-

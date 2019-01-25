@@ -1,14 +1,13 @@
-const fs = require( 'fs' )
+const fs = require( `fs` );
 
-
-module.exports = function readFile( file ){
+module.exports = function readFile( file ) {
     return new Promise( ( r , j ) => {
-        fs.readFile( file , 'utf8' , function ( error , content ) {
+        fs.readFile( file , `utf8` , function( error , content ) {
             if ( error ) {
-                j( error )
+                j( error );
             } else {
-                r( content )
+                r( content );
             }
-        } )
-    } )
-}
+        } );
+    } );
+};

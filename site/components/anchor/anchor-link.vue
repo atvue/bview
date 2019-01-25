@@ -2,7 +2,7 @@
     <div :class="anchorLinkCss">
         <a
             :href="href"
-            :class="prefix+'-title'"
+            :class="prefix + '-title'"
             :data-href="href"
             :data-scroll-offset="scrollOffset"
             @click.prevent="_goAnchor"
@@ -14,45 +14,45 @@
 </template>
 <script>
 export default {
-    name: "AnchorLink",
-    inject: ["anchorEle"],
+    name: `AnchorLink` ,
+    inject: [ `anchorEle` ] ,
     props: {
         href: {
-            type:String,
-            default:''
-        },
+            type: String ,
+            default: ``
+        } ,
         title: {
-            type:String,
-            default:''
-        },
+            type: String ,
+            default: ``
+        } ,
         scrollOffset: {
-            type: Number,
+            type: Number ,
             default: 10
         }
-    },
+    } ,
     data() {
         return {
-            prefix: "bui-anchor-link"
+            prefix: `bui-anchor-link`
         };
-    },
+    } ,
     computed: {
         anchorLinkCss() {
             return [
-                this.prefix,
+                this.prefix ,
                 this.anchorEle.currentLink === this.href
-                    ? `${this.prefix}` + "-active"
-                    : ""
+                    ? `${this.prefix}` + `-active`
+                    : ``
             ];
         }
-    },
+    } ,
     methods: {
         _goAnchor() {
             this.anchorEle.currentLink = this.href;
             this.anchorEle._handleHashChange();
             this.anchorEle._ScrollTo();
             const isRoute = this.$router;
-            if (isRoute) {
-                this.$router.push(this.href);
+            if ( isRoute ) {
+                this.$router.push( this.href );
             } else {
                 window.location.href = this.href;
             }
@@ -60,4 +60,3 @@ export default {
     }
 };
 </script>
-

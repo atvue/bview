@@ -1,5 +1,5 @@
-const fs = require('fs'),
-    path = require('path');
+const fs = require( `fs` ) ,
+    path = require( `path` );
 
 /**
  * 创建文件夹同步
@@ -7,12 +7,12 @@ const fs = require('fs'),
  * @param  {[type]} dirname  文件夹名称
  * @return {[type]}         [description]
  */
-function mkdir(dirname) {
-    if (fs.existsSync(dirname)) {
+function mkdir( dirname ) {
+    if ( fs.existsSync( dirname ) ) {
         return true;
     } else {
-        if (mkdir(path.dirname(dirname))) {
-            fs.mkdirSync(dirname);
+        if ( mkdir( path.dirname( dirname ) ) ) {
+            fs.mkdirSync( dirname );
             return true;
         }
     }
@@ -24,8 +24,8 @@ function mkdir(dirname) {
  * @param  {[type]} content [description]
  * @return {[type]}         [description]
  */
-function writeFile(file, content) {
-    fs.writeFileSync(file, content);
+function writeFile( file , content ) {
+    fs.writeFileSync( file , content );
 }
 
 /**
@@ -33,10 +33,10 @@ function writeFile(file, content) {
  * @param  {[type]} file [description]
  * @return {[type]}      [description]
  */
-function fileExist(path) {
+function fileExist( path ) {
     try {
-        fs.accessSync(path, fs.F_OK);
-    } catch (e) {
+        fs.accessSync( path , fs.F_OK );
+    } catch ( e ) {
         return false;
     }
     return true;
@@ -47,10 +47,10 @@ function fileExist(path) {
  * @param  {[type]} str [description]
  * @return {[type]}     [description]
  */
-function firstUpperCase(str) {
-    return str.toLowerCase().replace(/^\S/g, function(s) {
+function firstUpperCase( str ) {
+    return str.toLowerCase().replace( /^\S/g , function( s ) {
         return s.toUpperCase();
-    });
+    } );
 }
 
 /**

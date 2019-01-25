@@ -1,51 +1,51 @@
-const { firstUpperCase: upCase } = require('./util');
+const { firstUpperCase: upCase } = require( `./util` );
 
 //template文件结构
-function createConfig(name) {
+function createConfig( name ) {
     return {
-        dir: name,
+        dir: name ,
         child: [
             {
-                dir: '__tests__',
+                dir: `__tests__` ,
                 child: [
                     {
-                        file: `${name}.test.js`,
-                        temp: 'testJs'
+                        file: `${name}.test.js` ,
+                        temp: `testJs`
                     }
                 ]
-            },
+            } ,
             {
-                dir: 'demo',
+                dir: `demo` ,
                 child: [
                     {
-                        file: 'basic.md',
-                        temp: 'demoTemp'
+                        file: `basic.md` ,
+                        temp: `demoTemp`
                     }
                 ]
-            },
+            } ,
             {
-                dir: 'style',
+                dir: `style` ,
                 child: [
                     {
-                        file: 'index.less'
-                    },
+                        file: `index.less`
+                    } ,
                     {
-                        file: 'index.js',
-                        temp: 'styleIndex'
+                        file: `index.js` ,
+                        temp: `styleIndex`
                     }
                 ]
-            },
+            } ,
             {
-                file: `${name}.vue`,
-                temp: 'vueTemp'
-            },
+                file: `${name}.vue` ,
+                temp: `vueTemp`
+            } ,
             {
-                file: 'index.js',
-                temp: 'indexJs'
-            },
+                file: `index.js` ,
+                temp: `indexJs`
+            } ,
             {
-                file: 'README.st',
-                temp: 'readmeTemp'
+                file: `README.st` ,
+                temp: `readmeTemp`
             }
         ]
     };
@@ -54,7 +54,7 @@ function createConfig(name) {
 const readmeTemp = name => {
     return `
 ---
-title: ${upCase(name)}
+title: ${upCase( name )}
 ---
 ### 组件名称
 
@@ -76,7 +76,7 @@ const vueTemp = name =>
 
 <script>
 export default {
-    name: '${upCase(name)}' ,
+    name: '${upCase( name )}' ,
     props: {
     } ,
     data () {
@@ -92,7 +92,7 @@ export default {
 const styleIndex = () => `import './index.less'`;
 
 const indexJs = name => {
-    let up = upCase(name);
+    let up = upCase( name );
 
     return `import ${up} from './${name}'
 
@@ -100,7 +100,7 @@ export default ${up}`;
 };
 
 const testJs = name => {
-    name = upCase(name);
+    name = upCase( name );
 
     return `
 import ${name} from '../index.js'
@@ -136,10 +136,10 @@ export default {
 exports.createConfig = createConfig;
 
 exports.tp = {
-    vueTemp,
-    styleIndex,
-    indexJs,
-    testJs,
-    readmeTemp,
+    vueTemp ,
+    styleIndex ,
+    indexJs ,
+    testJs ,
+    readmeTemp ,
     demoTemp
 };

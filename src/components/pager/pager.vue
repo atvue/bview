@@ -81,13 +81,13 @@
             <!-- 当前页 前limitPage页 -->
             <template v-for="n in limitPage">
                 <li
-                    v-if="currentPage - (limitPage - (n -1)) > 1"
-                    :key="currentPage - (limitPage - (n -1))"
-                    :title="currentPage - (limitPage - (n -1))"
+                    v-if="currentPage - (limitPage - (n - 1)) > 1"
+                    :key="currentPage - (limitPage - (n - 1))"
+                    :title="currentPage - (limitPage - (n - 1))"
                     :class="`${prefixCls}-item ${prefixCls}-num`"
-                    @click="$_changePage(currentPage - (limitPage - (n -1)))"
+                    @click="$_changePage(currentPage - (limitPage - (n - 1)))"
                 >
-                    <a>{{ currentPage - (limitPage - (n -1)) }}</a>
+                    <a>{{ currentPage - (limitPage - (n - 1)) }}</a>
                 </li>
             </template>
             <!-- 当前页 前limitPage页 -->
@@ -95,7 +95,9 @@
             <li
                 v-if="currentPage != 1 && currentPage != allPages"
                 :title="currentPage"
-                :class="`${prefixCls}-item ${prefixCls}-num ${prefixCls}-item-active`"
+                :class="
+                    `${prefixCls}-item ${prefixCls}-num ${prefixCls}-item-active`
+                "
             >
                 <a>{{ currentPage }}</a>
             </li>
@@ -193,215 +195,215 @@ import Select from '../select';
 const { Option } = Select;
 
 export default {
-    name: 'Pager',
+    name: `Pager` ,
     components: {
-        Icon,
-        Select,
+        Icon ,
+        Select ,
         Option
-    },
+    } ,
     props: {
         // @doc 页码，支持使用.sync修饰符
         current: {
-            type: Number,
+            type: Number ,
             default: 1
-        },
+        } ,
         // @doc 总页数
         total: {
-            type: Number,
+            type: Number ,
             default: 0
-        },
+        } ,
         // @doc 分页大小
         pageSize: {
-            type: Number,
+            type: Number ,
             default: 15
-        },
+        } ,
         // @doc 可配置分页切换下拉选框
         pageSizeOpts: {
-            type: Array,
+            type: Array ,
             default() {
-                return [15, 30, 50, 100];
+                return [ 15 , 30 , 50 , 100 ];
             }
-        },
+        } ,
         // @doc 是否显示总数文案
         showTotal: {
-            type: Boolean,
+            type: Boolean ,
             default: true
-        },
+        } ,
         // @doc 是否显示快捷跳转
         showElevator: {
-            type: Boolean,
+            type: Boolean ,
             default: true
-        },
+        } ,
         // @doc 是否显示分页切换
         showSizer: {
-            type: Boolean,
+            type: Boolean ,
             default: true
-        },
+        } ,
         // @doc 配置当前页前后展示的快捷页码数量
         limitPage: {
-            type: Number,
+            type: Number ,
             default: 4
-        },
+        } ,
         // @doc 简洁模式，配置为true，showTotal、showElevator、showSizer将失效
         simple: {
-            type: Boolean,
+            type: Boolean ,
             default: false
         }
-    },
+    } ,
     data() {
         return {
-            currentPage: this.current,
-            currentPageSize: this.pageSize,
-            prefixCls: `${b}-pager`,
-            more,
-            left,
+            currentPage: this.current ,
+            currentPageSize: this.pageSize ,
+            prefixCls: `${b}-pager` ,
+            more ,
+            left ,
             right
         };
-    },
+    } ,
     computed: {
         // 样式相关
         wrapperClass() {
-            let { simple, prefixCls } = this;
+            let { simple , prefixCls } = this;
             return [
-                prefixCls,
+                prefixCls ,
                 {
-                    ['simple']: simple
+                    [ `simple` ]: simple
                 }
             ];
-        },
+        } ,
         // 最左侧上一页按钮
         prevClass() {
-            let { simple, currentPage, prefixCls } = this;
+            let { simple , currentPage , prefixCls } = this;
             return [
-                `${prefixCls}-item`,
-                `${prefixCls}-pre`,
+                `${prefixCls}-item` ,
+                `${prefixCls}-pre` ,
                 {
-                    [`${prefixCls}-item-disabled`]: currentPage === 1,
-                    ['simple']: simple
+                    [ `${prefixCls}-item-disabled` ]: currentPage === 1 ,
+                    [ `simple` ]: simple
                 }
             ];
-        },
+        } ,
         // 最右侧下一页按钮
         nextClass() {
-            let { allPages, simple, currentPage, prefixCls } = this;
+            let { allPages , simple , currentPage , prefixCls } = this;
             return [
-                `${prefixCls}-item`,
-                `${prefixCls}-next`,
+                `${prefixCls}-item` ,
+                `${prefixCls}-next` ,
                 {
-                    [`${prefixCls}-item-disabled`]: currentPage === allPages,
-                    ['simple']: simple
+                    [ `${prefixCls}-item-disabled` ]: currentPage === allPages ,
+                    [ `simple` ]: simple
                 }
             ];
-        },
+        } ,
         // 首页
         firstPageClass() {
             let { prefixCls } = this;
             return [
-                `${prefixCls}-item`,
-                `${prefixCls}-first`,
-                `${prefixCls}-num`,
+                `${prefixCls}-item` ,
+                `${prefixCls}-first` ,
+                `${prefixCls}-num` ,
                 {
-                    [`${prefixCls}-item-active`]: this.currentPage === 1
+                    [ `${prefixCls}-item-active` ]: this.currentPage === 1
                 }
             ];
-        },
+        } ,
         // 末页
         lastPageClass() {
             let { prefixCls } = this;
             return [
-                `${prefixCls}-item`,
-                `${prefixCls}-last`,
-                `${prefixCls}-num`,
+                `${prefixCls}-item` ,
+                `${prefixCls}-last` ,
+                `${prefixCls}-num` ,
                 {
-                    [`${prefixCls}-item-active`]:
+                    [ `${prefixCls}-item-active` ]:
                         this.currentPage === this.allPages
                 }
             ];
-        },
+        } ,
         // END样式相关
         // 总页数
         allPages() {
-            const allPage = Math.ceil(this.total / this.currentPageSize);
+            const allPage = Math.ceil( this.total / this.currentPageSize );
             return allPage === 0 ? 1 : allPage;
         }
-    },
+    } ,
     watch: {
-        total(val) {
-            let maxPage = Math.ceil(val / this.currentPageSize);
-            if (maxPage < this.currentPage && maxPage > 0) {
+        total( val ) {
+            let maxPage = Math.ceil( val / this.currentPageSize );
+            if ( maxPage < this.currentPage && maxPage > 0 ) {
                 this.currentPage = maxPage;
             }
-        },
-        current(val) {
+        } ,
+        current( val ) {
             // @NOTE 超过最大页数 则忽略设置
-            if (val <= this.allPages) {
+            if ( val <= this.allPages ) {
                 this.currentPage = val;
             }
-        },
-        pageSize(val) {
+        } ,
+        pageSize( val ) {
             this.currentPageSize = val;
         }
-    },
+    } ,
     methods: {
-        $_changePage(page) {
-            if (this.currentPage != page) {
+        $_changePage( page ) {
+            if ( this.currentPage != page ) {
                 this.currentPage = page;
                 // @NOTE 父组件使用.sync 修饰符 可同步子组件prop状态 显式
                 // -@doc 父组件使用.sync 修饰符 可同步pager组件current
-                this.$emit('update:current', page);
+                this.$emit( `update:current` , page );
                 // @doc 页码变化，当切换pageSize触发页码回归1时不会触发
-                this.$emit('page-change', page);
+                this.$emit( `page-change` , page );
             }
-        },
+        } ,
         $_prev() {
             const current = this.currentPage;
-            if (current <= 1) {
+            if ( current <= 1 ) {
                 return false;
             }
-            this.$_changePage(current - 1);
-        },
+            this.$_changePage( current - 1 );
+        } ,
         $_next() {
             const current = this.currentPage;
-            if (current >= this.allPages) {
+            if ( current >= this.allPages ) {
                 return false;
             }
-            this.$_changePage(current + 1);
-        },
+            this.$_changePage( current + 1 );
+        } ,
         $_fastPrev() {
             const page = this.currentPage - 5;
-            if (page > 0) {
-                this.$_changePage(page);
+            if ( page > 0 ) {
+                this.$_changePage( page );
             } else {
-                this.$_changePage(1, 'size');
+                this.$_changePage( 1 , `size` );
             }
-        },
+        } ,
         $_fastNext() {
             const page = this.currentPage + 5;
-            if (page > this.allPages) {
-                this.$_changePage(this.allPages);
+            if ( page > this.allPages ) {
+                this.$_changePage( this.allPages );
             } else {
-                this.$_changePage(page);
+                this.$_changePage( page );
             }
-        },
-        $_onSize(pageSize) {
+        } ,
+        $_onSize( pageSize ) {
             this.currentPageSize = pageSize;
             // @doc 分页大小变化
-            this.$emit('page-size-change', pageSize);
+            this.$emit( `page-size-change` , pageSize );
 
             this.currentPage = 1;
             // -@doc 父组件使用.sync 修饰符 可同步pager组件current
-            this.$emit('update:current', 1);
-        },
-        $_onInputChange(event) {
+            this.$emit( `update:current` , 1 );
+        } ,
+        $_onInputChange( event ) {
             let val = event.target.value.trim();
             let page = 0;
 
-            if (/^[1-9][0-9]*$/.test(val + '')) {
-                val = Number(val);
-                if (val != this.currentPage) {
+            if ( /^[1-9][0-9]*$/.test( val + `` ) ) {
+                val = Number( val );
+                if ( val != this.currentPage ) {
                     const allPages = this.allPages;
 
-                    if (val > allPages) {
+                    if ( val > allPages ) {
                         page = allPages;
                     } else {
                         page = val;
@@ -411,8 +413,8 @@ export default {
                 page = 1;
             }
 
-            if (page) {
-                this.$_changePage(page);
+            if ( page ) {
+                this.$_changePage( page );
                 event.target.value = page;
             }
         }

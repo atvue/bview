@@ -1,8 +1,6 @@
 <template>
-    <Transition
-        :name="`${b}-tag-transition`"
-    >
-        <div 
+    <Transition :name="`${b}-tag-transition`">
+        <div
             v-if="show"
             :class="clsTag"
         >
@@ -25,97 +23,101 @@
 </template>
 
 <script>
-import renderClose from "../../icons/close"
-import renderLoading from '../../icons/loading'
-import Icon from "../icon"
-import { bviewPrefix as b } from '../../utils/macro'
-import { toArray } from '../../utils/assist'
+import renderClose from '../../icons/close';
+import renderLoading from '../../icons/loading';
+import Icon from '../icon';
+import { bviewPrefix as b } from '../../utils/macro';
+import { toArray } from '../../utils/assist';
 
 export default {
-    name: 'Tag' ,
+    name: `Tag` ,
     components: { Icon } ,
     props: {
         // @doc 标签是否可关闭
         closable: {
             type: Boolean ,
-            default: false ,
+            default: false
         } ,
         // @doc 是否禁用
         disabled: {
             type: Boolean ,
-            default: false ,
-        } ,
+            default: false
+        }
     } ,
-    data () {
+    data() {
         return {
             b ,
             destroyed: false ,
             loading: false ,
             renderLoading ,
-            renderClose ,
-        }
+            renderClose
+        };
     } ,
-    computed:{
-        show(){
-            return this.destroyed === false
+    computed: {
+        show() {
+            return this.destroyed === false;
         } ,
-        clsTag(){
+        clsTag() {
             let { disabled } = this ,
-                cls = `${b}-tag`
+                cls = `${b}-tag`;
             if ( disabled ) {
-                cls += ` ${b}-tag-disabled`
+                cls += ` ${b}-tag-disabled`;
             }
-            return cls
+            return cls;
         }
     } ,
     methods: {
-        async _clickClose( event ){
+        async _clickClose( event ) {
             if ( this.disabled ) {
-                return
+                return;
             }
-            let results = this._$emitClose( event )
+            let results = this._$emitClose( event );
             let { defaultPrevented: prevented } = event ,
-                needDestroy = prevented !== true
+                needDestroy = prevented !== true;
             if ( needDestroy ) {
-                this.loading = true
-                let resultPromises = results.map( item => Promise.resolve( item ) )
+                this.loading = true;
+                let resultPromises = results.map( item => Promise.resolve( item ) );
                 try {
-                    await Promise.all( resultPromises )
-                    this.loading = false
-                    this.destroyed = true
-                } catch( e ) {
-                    this.loading = false
-                    this.destroyed = false
+                    await Promise.all( resultPromises );
+                    this.loading = false;
+                    this.destroyed = true;
+                } catch ( e ) {
+                    this.loading = false;
+                    this.destroyed = false;
                 }
             }
             // eslint-disable-next-line
-            if ( false ) {
+            if (false) {
                 // just for document。需求：doc，可直接添加事件说明的入口
                 // @doc 关闭事件
-                this.$emit( 'close' , event )
+                this.$emit( `close` , event );
             }
         } ,
         // https://github.com/vuejs/vue/issues/5443
-        _$emitClose(){
-            let eventName = 'close' ,
+        _$emitClose() {
+            let eventName = `close` ,
                 vm = this ,
                 cbs = vm._events[ eventName ] ,
-                result = []
+                result = [];
             if ( cbs ) {
-                cbs = cbs.length > 1 ? toArray( cbs ) : cbs
-                let args = toArray( arguments )
-                for ( let i = 0 , l = cbs.length; i < l; i++) {
+                cbs = cbs.length > 1 ? toArray( cbs ) : cbs;
+                let args = toArray( arguments );
+                for ( let i = 0 , l = cbs.length; i < l; i++ ) {
                     try {
-                        let rtn = cbs[ i ].apply( vm , args )
-                        result.push( rtn )
+                        let rtn = cbs[ i ].apply( vm , args );
+                        result.push( rtn );
                     } catch ( e ) {
                         // eslint-disable-next-line
-                        console.warn( e , vm , ("event handler for \"" + eventName + "\"") )
+                        console.warn(
+                            e ,
+                            vm ,
+                            `event handler for "` + eventName + `"`
+                        );
                     }
                 }
             }
-            return result
+            return result;
         }
-    } ,
-}
+    }
+};
 </script>

@@ -1,10 +1,9 @@
-
 <template>
     <RouterView />
 </template>
 
 <script>
 export default {
-    name: 'RouteRoot',
+    name: `RouteRoot`
 };
 </script>
