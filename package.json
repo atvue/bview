@@ -23,7 +23,11 @@
         }
     },
     "lint-staged": {
-        "*.{js,vue}": [ "eslint --fix" , "git add" ]
+        "*.{js,vue}": [
+            "prettier --write",
+            "eslint --fix",
+            "git add"
+        ]
     },
     "author": "icy",
     "repository": {
@@ -90,6 +94,7 @@
         "opn": "^5.4.0",
         "optimize-css-assets-webpack-plugin": "^5.0.1",
         "postcss-loader": "^3.0.0",
+        "prettier": "^1.16.1",
         "rucksack-css": "^1.0.2",
         "style-loader": "^0.23.0",
         "svgo": "^1.1.1",
