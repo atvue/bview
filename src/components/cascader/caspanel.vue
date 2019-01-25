@@ -87,8 +87,8 @@ export default {
             this.tmpItem = {};
             if (deep) {
                 const Caspanel = findComponentsDownward(this, 'Caspanel');
-                if (Caspanel) {
-                    Caspanel.$emit('on-clear', true);
+                if (Caspanel[0]) {
+                    Caspanel[0].$emit('on-clear', true);
                 }
             }
         });
@@ -141,6 +141,7 @@ export default {
                 this.tmpItem = backItem;
                 this.emitUpdate([backItem]);
             }
+            // 展开下一级
             if (item.children && item.children.length){
                 this.sublist = item.children;
                 this.dispatch('Cascader', 'on-result-change', {
@@ -150,8 +151,8 @@ export default {
                 });
                 if (this.changeOnSelect) {
                     const Caspanel = findComponentsDownward(this, 'Caspanel');
-                    if (Caspanel) {
-                        Caspanel.$emit('on-clear', true);
+                    if (Caspanel[0]) {
+                        Caspanel[0].$emit('on-clear', true);
                     }
                 }
             } else {
@@ -163,7 +164,7 @@ export default {
                 });
             }
         },
-        updateResult (item) {
+        _updateResult (item) {
             this.result = [this.tmpItem].concat(item);
             this.emitUpdate(this.result);
         },
@@ -175,7 +176,7 @@ export default {
             return backItem;
         },
         emitUpdate (result) {
-            this.$parent.updateResult && this.$parent.updateResult(result);
+            this.$parent._updateResult && this.$parent._updateResult(result);
         },
         getKey () {
             return key++;

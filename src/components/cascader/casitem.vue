@@ -1,19 +1,30 @@
 <template>
     <li :class="classes">
         {{ data.label }}
-        <i
+        <Icon 
             v-if="showArrow"
-            class="at-icon at-icon-ios-arrow-forward"
+            class="child-icon"
+            :svg="hasChild"
+            :size="14"
         />
-        <i
+        <Icon 
             v-if="showLoading"
-            class="at-icon at-icon-ios-loading at-load-loop"
+            class="child-icon"
+            :svg="loading"
+            :size="14"
         />
     </li>
 </template>
 <script>
+import Icon from '../icon'
+import hasChild from "../../icons/right_arrow"
+import loading from "../../icons/loading"
+
 export default {
     name: 'Casitem',
+    components: {
+        Icon ,
+    } ,
     props: {
         data: {
             type:Object,
@@ -32,6 +43,12 @@ export default {
             }
         },
     },
+    data(){
+        return {
+            hasChild ,
+            loading ,
+        }
+    } ,
     computed: {
         classes () {
             return [
@@ -47,7 +64,10 @@ export default {
         },
         showLoading () {
             return 'loading' in this.data && this.data.loading;
-        }
+        },
     }
 };
 </script>
+<style type="less">
+    .child-icon{position: absolute;top: 4px;right:6px;}
+</style>

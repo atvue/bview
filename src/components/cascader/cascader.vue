@@ -24,7 +24,13 @@
             class="clear" 
             @click.stop="clearValue"
         >
-            x
+            <Icon 
+                v-show="displayRender!== '' && (filterable || clearable)" 
+                :svg="close"
+                :size="12"
+                class="clear" 
+                @click.stop="clearValue"
+            />
         </span>
         <div
             v-show="showDropDown"
@@ -81,6 +87,8 @@
 </template>
 <script>
 import Caspanel from './caspanel.vue';
+import Icon from '../icon'
+import close from "../../icons/close"
 import Emitter from '../../utils/emitter';
 import { oneOf } from '../../utils/assist';
 import clickOutEl from '../../directives/click-out-el'
@@ -92,6 +100,7 @@ export default {
     name: 'Cascader',
     components: { 
         Caspanel ,
+        Icon
     },
     directives: { clickOutEl } ,
     mixins: [ Emitter ],
@@ -169,6 +178,7 @@ export default {
             showValue:true ,
             // 异步获取的子节点无数据
             noChild:false ,
+            close ,
         };
     },
     computed: {
