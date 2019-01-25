@@ -76,3 +76,27 @@ components 目录下每个组件目录会生成一份文档说明，文档内容
 ### README.st
 
 顶部yml配置中，如果`ignoreMenu`为`true`，则不会出现在左侧菜单栏中，修改st的yml配置之后，需要重新启动`npm start`
+
+
+### ESLint规则
+
+
+|  rules | 描述  |
+|------|--------|
+| [no-tabs](http://eslint.cn/docs/rules/no-tabs) | 不允许使用tab |
+| [indent](http://eslint.cn/docs/rules/indent) | 使用一致的缩进，4个空格 |
+| [no-multiple-empty-lines](http://eslint.cn/docs/rules/no-multiple-empty-lines) | 禁止出现多行 |
+| [comma-spacing](http://eslint.cn/docs/rules/comma-spacing) | 强制在逗号周围使用空格 |
+| [array-bracket-spacing](http://eslint.cn/docs/rules/array-bracket-spacing) | 要求在数组括号内使用一个或多个空格、或折行 |
+| [no-regex-spaces](http://eslint.cn/docs/rules/no-regex-spaces) | 禁止正则表达式字面量中出现多个空格 |
+| [block-spacing](http://eslint.cn/docs/rules/block-spacing) | 强制在代码块中开括号前和闭括号后有空格 |
+| [brace-style](http://eslint.cn/docs/rules/brace-style) | 强制`one true brace style`，允许单行语句 |
+| [keyword-spacing](http://eslint.cn/docs/rules/keyword-spacing) | 关键字前后至少有一个空格 |
+| [no-trailing-spaces](http://eslint.cn/docs/rules/no-trailing-spaces) | 禁用行尾空白，禁止在空行使用空白符 |
+| [object-curly-spacing](http://eslint.cn/docs/rules/object-curly-spacing) | 强制在大括号中使用一致的空格 |
+| [computed-property-spacing](http://eslint.cn/docs/rules/computed-property-spacing) | 强制在计算属性中使用空格 |
+| [func-call-spacing](http://eslint.cn/docs/rules/func-call-spacing) | 禁止函数标识符和其调用之间有空格 |
+| [space-in-parens](http://eslint.cn/docs/rules/space-in-parens) | 强制圆括号内的空格 |
+| [eqeqeq](http://eslint.cn/docs/rules/eqeqeq) | 要求使用 === 和 !== |
+| [space-infix-ops][http://eslint.cn/docs/rules/space-infix-ops] | 确保中缀运算符周围有空格 |
+| [space-unary-ops](http://eslint.cn/docs/rules/space-unary-ops) | 要求在一元操作符之前或之后存在空格 |
