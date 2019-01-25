@@ -19,9 +19,9 @@ export default {
                 return;
             }
             let activeVm = __options[ index ];
-            if ( activeVm == undefined ) {
+            if ( activeVm === undefined ) {
                 // nextTick之后，等待__options更新，理论上不会报错了
-                if ( activeVm == undefined ) {
+                if ( activeVm === undefined ) {
                     let txt = __options.map( ( { value } ) => value ).join( `,` );
                     // eslint-disable-next-line
                     console.warn(
