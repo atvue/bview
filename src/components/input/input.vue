@@ -33,6 +33,7 @@
             :readonly="readonly"
             :disabled="disabled"
             :type="type"
+            @click="$_clickInput"
             @input="$_handleInput"
             @focus="$_handleFocus"
             @blur="$_handleBlur"
@@ -74,7 +75,7 @@ export default {
         //@doc输入框占位文本
         placeholder: {
             type: String ,
-            default: `提示性文案`
+            default: undefined
         } ,
         //@doc是否启用自动完成功能，为on或者off
         autocomplete: {
@@ -154,6 +155,9 @@ export default {
             }
             //@doc enter键时触发
             this.$emit( `enter` , event );
+        } ,
+        $_clickInput( event ) {
+            this.$emit( `click` , event );
         } ,
         $_handleInput( event ) {
             let value = event.target.value;
