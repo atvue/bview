@@ -1,2 +1,2 @@
-import switches from './switches';
-export default switches;
+import switches from './switches' ;
+export default switches ;

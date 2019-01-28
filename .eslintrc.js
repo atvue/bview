@@ -30,6 +30,7 @@ module.exports = {
         'space-in-parens': ['warn', 'always'],
         eqeqeq: ['warn', 'always'],
         'space-infix-ops': ['warn', { int32Hint: false }],
-        'space-unary-ops': ['warn', { words: true, nonwords: false }]
+        'space-unary-ops': ['warn', { words: true, nonwords: false }],
+        'semi-spacing': ['warn', { before: true, after: false }]
     }
 };

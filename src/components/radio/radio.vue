@@ -23,9 +23,9 @@
 </template>
 
 <script>
-import { findComponentUpward } from '../../utils/assist';
+import { findComponentUpward } from '../../utils/assist' ;
 
-const prefix = `bview`;
+const prefix = `bview` ;
 
 export default {
     name: `Radio` ,
@@ -63,11 +63,11 @@ export default {
             groupName: this.name ,
             isGroup: false ,
             parent: undefined
-        };
+        } ;
     } ,
     computed: {
         radioClass: function() {
-            return `${prefix}-radio-${this.size}`;
+            return `${prefix}-radio-${this.size}` ;
         } ,
         innerClass: function() {
             return [
@@ -84,36 +84,36 @@ export default {
                     [ `${prefix}-radio-inner-checked-disabled` ]:
                         this.disabled && this.isChecked
                 }
-            ];
+            ] ;
         }
     } ,
     watch: {
         value( value ) {
             if ( !this.isGroup ) {
-                this.isChecked = value;
+                this.isChecked = value ;
             }
         }
     } ,
     mounted() {
-        this.parent = findComponentUpward( this , `RadioGroup` );
+        this.parent = findComponentUpward( this , `RadioGroup` ) ;
     } ,
     methods: {
         _onChange() {
             if ( this.disabled || this.isChecked ) {
-                return false;
+                return false ;
             }
 
-            this.isChecked = !this.isChecked;
+            this.isChecked = !this.isChecked ;
 
             if ( this.isGroup ) {
-                this.parent._changeValue( this.value );
+                this.parent._changeValue( this.value ) ;
             } else {
                 //@doc 结合v-model，触发input事件，参数当前值
-                this.$emit( `input` , this.isChecked );
+                this.$emit( `input` , this.isChecked ) ;
                 //@doc 单个使用时候value改变事件，参数value
-                this.$emit( `on-change` , this.isChecked );
+                this.$emit( `on-change` , this.isChecked ) ;
             }
         }
     }
-};
+} ;
 </script>

@@ -9,8 +9,8 @@ export default {
     name: `BviewMenu` ,
     prop: {} ,
     data() {
-        return {};
+        return {} ;
     } ,
     methods: {}
-};
+} ;
 </script>

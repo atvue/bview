@@ -4,37 +4,37 @@
  * css文件独立抽取 压缩
  * 文件名加上内容md5
  */
-const mode = `production`;
+const mode = `production` ;
 
-const chalk = require( `chalk` );
-const path = require( `path` );
-const webpack = require( `webpack` );
-const { generateComponentRoute } = require( `./site-helper/index` );
-const { src , site } = require( `./project-path` );
+const chalk = require( `chalk` ) ;
+const path = require( `path` ) ;
+const webpack = require( `webpack` ) ;
+const { generateComponentRoute } = require( `./site-helper/index` ) ;
+const { src , site } = require( `./project-path` ) ;
 
-const VueLoaderPlugin = require( `vue-loader/lib/plugin` );
+const VueLoaderPlugin = require( `vue-loader/lib/plugin` ) ;
 const {
         getNamePrefix ,
         rlaLessFile ,
         lessPrefixKey
     } = require( `./getLessVariables` ) ,
-    namePrefixer = getNamePrefix();
+    namePrefixer = getNamePrefix() ;
 if ( namePrefixer === `` ) {
-    let msg = chalk`{yellow ${`wraning`}}: {green ${rlaLessFile}}，不存在名为：{red ${lessPrefixKey}}的变量`;
-    console.log( msg );
+    let msg = chalk`{yellow ${`wraning`}}: {green ${rlaLessFile}}，不存在名为：{red ${lessPrefixKey}}的变量` ;
+    console.log( msg ) ;
 }
 
 // css压缩
-const OptimizeCSSAssetsPlugin = require( `optimize-css-assets-webpack-plugin` );
-const MiniCssExtractPlugin = require( `mini-css-extract-plugin` );
+const OptimizeCSSAssetsPlugin = require( `optimize-css-assets-webpack-plugin` ) ;
+const MiniCssExtractPlugin = require( `mini-css-extract-plugin` ) ;
 
 // js压缩
-const UglifyJsPlugin = require( `uglifyjs-webpack-plugin` );
+const UglifyJsPlugin = require( `uglifyjs-webpack-plugin` ) ;
 
 // html
-const HtmlWebpackPlugin = require( `html-webpack-plugin` );
+const HtmlWebpackPlugin = require( `html-webpack-plugin` ) ;
 
-const cssFilename = `css/[name].[contenthash:8].css`;
+const cssFilename = `css/[name].[contenthash:8].css` ;
 
 const webpackConfig = {
     entry: {
@@ -195,22 +195,22 @@ const webpackConfig = {
             filename: cssFilename
         } )
     ]
-};
+} ;
 
 async function buildSite() {
     try {
-        await generateComponentRoute();
+        await generateComponentRoute() ;
         webpack( webpackConfig , function( err ) {
             // err , stats
             if ( err ) {
-                throw err;
+                throw err ;
             }
-            let msg = chalk`{green ${`Build complete`}}`;
-            console.log( msg );
-        } );
+            let msg = chalk`{green ${`Build complete`}}` ;
+            console.log( msg ) ;
+        } ) ;
     } catch ( error ) {
-        console.warn( error );
+        console.warn( error ) ;
     }
 }
 
-buildSite();
+buildSite() ;

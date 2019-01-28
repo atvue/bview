@@ -3,4 +3,4 @@ exports.babelParseOptions = {
         `transform-object-rest-spread` ,
         [ `@babel/plugin-transform-modules-commonjs` , { strictMode: true } ]
     ]
-};
+} ;

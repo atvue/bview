@@ -1,22 +1,22 @@
-import utils from './utils';
+import utils from './utils' ;
 
 export default function isAncestorFixed( element ) {
     if ( utils.isWindow( element ) || element.nodeType === 9 ) {
-        return false;
+        return false ;
     }
 
-    const doc = utils.getDocument( element );
-    const body = doc.body;
-    let parent = null;
+    const doc = utils.getDocument( element ) ;
+    const body = doc.body ;
+    let parent = null ;
     for (
-        parent = element.parentNode;
-        parent && parent !== body;
+        parent = element.parentNode ;
+        parent && parent !== body ;
         parent = parent.parentNode
     ) {
-        const positionStyle = utils.css( parent , `position` );
+        const positionStyle = utils.css( parent , `position` ) ;
         if ( positionStyle === `fixed` ) {
-            return true;
+            return true ;
         }
     }
-    return false;
+    return false ;
 }

@@ -23,12 +23,12 @@ const blacklist = [
     `^ehthumbs\\.db$` , // Folder config file
     `^Desktop\\.ini$` , // Stores custom folder attributes
     `@eaDir$` // Synology Diskstation "hidden" folder where the server stores thumbnails
-];
+] ;
 
-exports.re = new RegExp( blacklist.join( `|` ) );
+exports.re = new RegExp( blacklist.join( `|` ) ) ;
 
-exports.regex = exports.re;
+exports.regex = exports.re ;
 
-exports.is = filename => exports.re.test( filename );
+exports.is = filename => exports.re.test( filename ) ;
 
-exports.not = filename => !exports.is( filename );
+exports.not = filename => !exports.is( filename ) ;

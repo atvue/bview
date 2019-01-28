@@ -33,7 +33,7 @@ export default {
     data() {
         return {
             prefix: `bui-anchor-link`
-        };
+        } ;
     } ,
     computed: {
         anchorLinkCss() {
@@ -42,21 +42,21 @@ export default {
                 this.anchorEle.currentLink === this.href
                     ? `${this.prefix}` + `-active`
                     : ``
-            ];
+            ] ;
         }
     } ,
     methods: {
         _goAnchor() {
-            this.anchorEle.currentLink = this.href;
-            this.anchorEle._handleHashChange();
-            this.anchorEle._ScrollTo();
-            const isRoute = this.$router;
+            this.anchorEle.currentLink = this.href ;
+            this.anchorEle._handleHashChange() ;
+            this.anchorEle._ScrollTo() ;
+            const isRoute = this.$router ;
             if ( isRoute ) {
-                this.$router.push( this.href );
+                this.$router.push( this.href ) ;
             } else {
-                window.location.href = this.href;
+                window.location.href = this.href ;
             }
         }
     }
-};
+} ;
 </script>

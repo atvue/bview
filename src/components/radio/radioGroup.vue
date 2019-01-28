@@ -5,9 +5,9 @@
 </template>
 
 <script>
-import { findComponentsDownward } from '../../utils/assist';
+import { findComponentsDownward } from '../../utils/assist' ;
 
-const prefix = `bview`;
+const prefix = `bview` ;
 
 export default {
     name: `RadioGroup` ,
@@ -32,7 +32,7 @@ export default {
         return {
             curValue: this.value ,
             childrens: []
-        };
+        } ;
     } ,
     computed: {
         groupClass: function() {
@@ -41,42 +41,42 @@ export default {
                 {
                     [ `${prefix}-radio-group-vertical` ]: this.vertical
                 }
-            ];
+            ] ;
         }
     } ,
     watch: {
         value( val ) {
             if ( this.curValue !== val ) {
-                this.curValue = val;
-                this._updateValue();
+                this.curValue = val ;
+                this._updateValue() ;
             }
         }
     } ,
     mounted() {
-        this._updateValue( true );
+        this._updateValue( true ) ;
     } ,
     methods: {
         _updateValue( flag ) {
-            this.childrens = findComponentsDownward( this , `Radio` );
+            this.childrens = findComponentsDownward( this , `Radio` ) ;
             if ( this.childrens ) {
                 this.childrens.forEach( child => {
-                    child.isChecked = this.curValue === child.value;
+                    child.isChecked = this.curValue === child.value ;
 
                     if ( flag ) {
-                        child.groupName = this.name;
-                        child.isGroup = true;
+                        child.groupName = this.name ;
+                        child.isGroup = true ;
                     }
-                } );
+                } ) ;
             }
         } ,
         _changeValue( value ) {
-            this.curValue = value;
-            this._updateValue();
+            this.curValue = value ;
+            this._updateValue() ;
             //@doc 结合v-model,触发input事件
-            this.$emit( `input` , value );
+            this.$emit( `input` , value ) ;
             //@doc 值改变时触发事件，参数当前的value
-            this.$emit( `change` , value );
+            this.$emit( `change` , value ) ;
         }
     }
-};
+} ;
 </script>

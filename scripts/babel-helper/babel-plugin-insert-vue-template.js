@@ -1,7 +1,7 @@
-const template = require( `@babel/template` ).default;
+const template = require( `@babel/template` ).default ;
 
 module.exports = function( babel ) {
-    let t = babel.types;
+    let t = babel.types ;
     return {
         visitor: {
             AssignmentExpression( path , { opts } ) {
@@ -12,7 +12,7 @@ module.exports = function( babel ) {
                     // 找到 exports.default = _default 排除 exports.default = void 0 ;
                     if ( t.isIdentifier( path.node.right ) ) {
                         let { name } = path.node.right ,
-                            { renderBody } = opts;
+                            { renderBody } = opts ;
                         const renderAst = template.ast(
                             `
                             Object.assign( ${name} , { 
@@ -23,11 +23,11 @@ module.exports = function( babel ) {
                             {
                                 sourceType: `script` // disable strict mode
                             }
-                        );
-                        path.node.right = renderAst;
+                        ) ;
+                        path.node.right = renderAst ;
                     }
                 }
             }
         }
-    };
-};
+    } ;
+} ;

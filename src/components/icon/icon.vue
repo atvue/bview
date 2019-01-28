@@ -23,9 +23,9 @@ let Render = {
         }
     } ,
     render: ( h , ctx ) => {
-        return ctx.props.render( h , { _c: h } );
+        return ctx.props.render( h , { _c: h } ) ;
     }
-};
+} ;
 
 export default {
     name: `Icon` ,
@@ -42,38 +42,38 @@ export default {
     } ,
     computed: {
         className() {
-            let { type , svg } = this;
+            let { type , svg } = this ;
             return [
                 type !== undefined ? `bview-iconfont bicon-${type}` : `` ,
                 svg !== undefined ? `bview-icon_svg` : ``
-            ];
+            ] ;
         } ,
         styles() {
             let style = {} ,
-                { size , color } = this;
+                { size , color } = this ;
 
             if ( size !== undefined ) {
-                style[ `font-size` ] = `${this.size}px`;
+                style[ `font-size` ] = `${this.size}px` ;
             }
 
             if ( color !== undefined ) {
-                style.color = this.color;
+                style.color = this.color ;
             }
 
-            return style;
+            return style ;
         }
     } ,
     created() {
-        let { type , svg } = this;
+        let { type , svg } = this ;
         if ( type === undefined && svg === undefined ) {
-            throw `icon组件必须制定svg渲染函数或iconfont type参数！`;
+            throw `icon组件必须制定svg渲染函数或iconfont type参数！` ;
         }
     } ,
     methods: {
         _onClick( event ) {
             // @doc 点击事件
-            this.$emit( `click` , event );
+            this.$emit( `click` , event ) ;
         }
     }
-};
+} ;
 </script>

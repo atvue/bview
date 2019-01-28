@@ -1,6 +1,6 @@
 export function isTextVNode( vNode ) {
     if ( vNode === undefined || vNode === null ) {
-        return false;
+        return false ;
     }
     if (
         vNode.tag === undefined &&
@@ -8,8 +8,8 @@ export function isTextVNode( vNode ) {
         vNode.children === undefined &&
         `text` in vNode
     ) {
-        return true;
+        return true ;
     } else {
-        return false;
+        return false ;
     }
 }

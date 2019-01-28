@@ -1,5 +1,5 @@
 export default function render( _h , _vm ) {
-    var _c = _vm._c;
+    var _c = _vm._c ;
     return _c(
         `svg` ,
         {
@@ -14,5 +14,5 @@ export default function render( _h , _vm ) {
                 attrs: { d: `M863.322 251.675H194.108l334.57 369.512z` }
             } )
         ]
-    );
+    ) ;
 }

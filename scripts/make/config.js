@@ -1,4 +1,4 @@
-const { firstUpperCase: upCase } = require( `./util` );
+const { firstUpperCase: upCase } = require( `./util` ) ;
 
 //template文件结构
 function createConfig( name ) {
@@ -48,7 +48,7 @@ function createConfig( name ) {
                 temp: `readmeTemp`
             }
         ]
-    };
+    } ;
 }
 
 const readmeTemp = name => {
@@ -65,8 +65,8 @@ title: ${upCase( name )}
 ### 场景说明{id="changjin"}
  
 组件使用场景...
-`.trim();
-};
+`.trim() ;
+} ;
 
 const vueTemp = name =>
     `
@@ -87,20 +87,20 @@ export default {
     } ,
 }
 </script>
-`.trim();
+`.trim() ;
 
-const styleIndex = () => `import './index.less'`;
+const styleIndex = () => `import './index.less'` ;
 
 const indexJs = name => {
-    let up = upCase( name );
+    let up = upCase( name ) ;
 
     return `import ${up} from './${name}'
 
-export default ${up}`;
-};
+export default ${up}` ;
+} ;
 
 const testJs = name => {
-    name = upCase( name );
+    name = upCase( name ) ;
 
     return `
 import ${name} from '../index.js'
@@ -113,8 +113,8 @@ describe( '${name}' , () => {
         expect( wrapper.isVueInstance() ).toBeTruthy()
     } )
 })
-`.trim();
-};
+`.trim() ;
+} ;
 
 const demoTemp = name => {
     return `
@@ -130,10 +130,10 @@ export default {
 }
 </script>
 \`\`\`
-`;
-};
+` ;
+} ;
 
-exports.createConfig = createConfig;
+exports.createConfig = createConfig ;
 
 exports.tp = {
     vueTemp ,
@@ -142,4 +142,4 @@ exports.tp = {
     testJs ,
     readmeTemp ,
     demoTemp
-};
+} ;

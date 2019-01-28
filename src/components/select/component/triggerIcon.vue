@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import Icon from '../../icon';
-import down from '../../../icons/left_arrow';
+import Icon from '../../icon' ;
+import down from '../../../icons/left_arrow' ;
 
 export default {
     components: { Icon } ,
@@ -28,20 +28,20 @@ export default {
     data() {
         return {
             down
-        };
+        } ;
     } ,
     computed: {
         clsIconDown() {
             let { visible , b } = this ,
-                cls = `${b}-down`;
+                cls = `${b}-down` ;
             // visible = true
-            return visible ? cls + ` ${b}-down-turn-up` : cls;
+            return visible ? cls + ` ${b}-down-turn-up` : cls ;
         }
     } ,
     methods: {
         _clickUpDown( event ) {
-            this.$emit( `click` , event );
+            this.$emit( `click` , event ) ;
         }
     }
-};
+} ;
 </script>

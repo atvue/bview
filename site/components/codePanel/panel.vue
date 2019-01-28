@@ -25,7 +25,7 @@
     </div>
 </template>
 <script>
-import CollapseTransition from './collapse-transition';
+import CollapseTransition from './collapse-transition' ;
 export default {
     name: `CodePanel` ,
     components: {
@@ -36,50 +36,50 @@ export default {
             isActive: false ,
             fixedControl: false ,
             scrollEle: null
-        };
+        } ;
     } ,
     computed: {
         activeText() {
-            return this.isActive ? `收起代码` : `展开代码`;
+            return this.isActive ? `收起代码` : `展开代码` ;
         }
     } ,
     watch: {
         isActive( val ) {
-            let t = this;
+            let t = this ;
             if ( !val ) {
-                this.fixedControl = false;
-                return;
+                this.fixedControl = false ;
+                return ;
             }
-            this.removeScrollHandler();
+            this.removeScrollHandler() ;
             setTimeout( () => {
-                t.scrollEle = window;
-                t.scrollEle.addEventListener( `scroll` , t.scrollHandler );
-                t.scrollHandler();
-            } , 300 );
+                t.scrollEle = window ;
+                t.scrollEle.addEventListener( `scroll` , t.scrollHandler ) ;
+                t.scrollHandler() ;
+            } , 300 ) ;
         }
     } ,
     destroyed() {
-        this.removeScrollHandler();
+        this.removeScrollHandler() ;
     } ,
     methods: {
         toggle() {
-            this.isActive = !this.isActive;
+            this.isActive = !this.isActive ;
         } ,
         scrollHandler() {
-            let { top , bottom } = this.$refs.panel.getBoundingClientRect();
-            let clientHeight = document.documentElement.clientHeight;
+            let { top , bottom } = this.$refs.panel.getBoundingClientRect() ;
+            let clientHeight = document.documentElement.clientHeight ;
             this.fixedControl =
-                bottom > clientHeight && top + 40 <= clientHeight;
+                bottom > clientHeight && top + 40 <= clientHeight ;
         } ,
         removeScrollHandler() {
             this.scrollEle &&
                 this.scrollEle.removeEventListener(
                     `scroll` ,
                     this.scrollHandler
-                );
+                ) ;
         }
     }
-};
+} ;
 </script>
 <style lang="less">
 .bPanel {

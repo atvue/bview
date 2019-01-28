@@ -3,11 +3,11 @@
  * @author yiminghe@gmail.com
  */
 
-import utils from '../utils';
-import getVisibleRectForElement from '../getVisibleRectForElement';
-import adjustForViewport from '../adjustForViewport';
-import getRegion from '../getRegion';
-import getElFuturePos from '../getElFuturePos';
+import utils from '../utils' ;
+import getVisibleRectForElement from '../getVisibleRectForElement' ;
+import adjustForViewport from '../adjustForViewport' ;
+import getRegion from '../getRegion' ;
+import getElFuturePos from '../getElFuturePos' ;
 
 // http://yiminghe.iteye.com/blog/1124720
 
@@ -15,60 +15,60 @@ function isFailX( elFuturePos , elRegion , visibleRect ) {
     return (
         elFuturePos.left < visibleRect.left ||
         elFuturePos.left + elRegion.width > visibleRect.right
-    );
+    ) ;
 }
 
 function isFailY( elFuturePos , elRegion , visibleRect ) {
     return (
         elFuturePos.top < visibleRect.top ||
         elFuturePos.top + elRegion.height > visibleRect.bottom
-    );
+    ) ;
 }
 
 function isCompleteFailX( elFuturePos , elRegion , visibleRect ) {
     return (
         elFuturePos.left > visibleRect.right ||
         elFuturePos.left + elRegion.width < visibleRect.left
-    );
+    ) ;
 }
 
 function isCompleteFailY( elFuturePos , elRegion , visibleRect ) {
     return (
         elFuturePos.top > visibleRect.bottom ||
         elFuturePos.top + elRegion.height < visibleRect.top
-    );
+    ) ;
 }
 
 function flip( points , reg , map ) {
-    const ret = [];
+    const ret = [] ;
     utils.each( points , p => {
         ret.push(
             p.replace( reg , m => {
-                return map[ m ];
+                return map[ m ] ;
             } )
-        );
-    } );
-    return ret;
+        ) ;
+    } ) ;
+    return ret ;
 }
 
 function flipOffset( offset , index ) {
-    offset[ index ] = -offset[ index ];
-    return offset;
+    offset[ index ] = -offset[ index ] ;
+    return offset ;
 }
 
 function convertOffset( str , offsetLen ) {
-    let n;
+    let n ;
     if ( /%$/.test( str ) ) {
-        n = ( parseInt( str.substring( 0 , str.length - 1 ) , 10 ) / 100 ) * offsetLen;
+        n = ( parseInt( str.substring( 0 , str.length - 1 ) , 10 ) / 100 ) * offsetLen ;
     } else {
-        n = parseInt( str , 10 );
+        n = parseInt( str , 10 ) ;
     }
-    return n || 0;
+    return n || 0 ;
 }
 
 function normalizeOffset( offset , el ) {
-    offset[ 0 ] = convertOffset( offset[ 0 ] , el.width );
-    offset[ 1 ] = convertOffset( offset[ 1 ] , el.height );
+    offset[ 0 ] = convertOffset( offset[ 0 ] , el.width ) ;
+    offset[ 1 ] = convertOffset( offset[ 1 ] , el.height ) ;
 }
 
 /**
@@ -77,23 +77,23 @@ function normalizeOffset( offset , el ) {
  * @param align
  */
 function doAlign( el , tgtRegion , align , isTgtRegionVisible ) {
-    let points = align.points;
-    let offset = align.offset || [ 0 , 0 ];
-    let targetOffset = align.targetOffset || [ 0 , 0 ];
-    let overflow = align.overflow;
-    const source = align.source || el;
-    offset = [].concat( offset );
-    targetOffset = [].concat( targetOffset );
-    overflow = overflow || {};
-    const newOverflowCfg = {};
-    let fail = 0;
+    let points = align.points ;
+    let offset = align.offset || [ 0 , 0 ] ;
+    let targetOffset = align.targetOffset || [ 0 , 0 ] ;
+    let overflow = align.overflow ;
+    const source = align.source || el ;
+    offset = [].concat( offset ) ;
+    targetOffset = [].concat( targetOffset ) ;
+    overflow = overflow || {} ;
+    const newOverflowCfg = {} ;
+    let fail = 0 ;
     // 当前节点可以被放置的显示区域
-    const visibleRect = getVisibleRectForElement( source );
+    const visibleRect = getVisibleRectForElement( source ) ;
     // 当前节点所占的区域, left/top/width/height
-    const elRegion = getRegion( source );
+    const elRegion = getRegion( source ) ;
     // 将 offset 转换成数值，支持百分比
-    normalizeOffset( offset , elRegion );
-    normalizeOffset( targetOffset , tgtRegion );
+    normalizeOffset( offset , elRegion ) ;
+    normalizeOffset( targetOffset , tgtRegion ) ;
     // 当前节点将要被放置的位置
     let elFuturePos = getElFuturePos(
         elRegion ,
@@ -101,9 +101,9 @@ function doAlign( el , tgtRegion , align , isTgtRegionVisible ) {
         points ,
         offset ,
         targetOffset
-    );
+    ) ;
     // 当前节点将要所处的区域
-    let newElRegion = utils.merge( elRegion , elFuturePos );
+    let newElRegion = utils.merge( elRegion , elFuturePos ) ;
 
     // 如果可视区域不能完全放置当前节点时允许调整
     if (
@@ -118,23 +118,23 @@ function doAlign( el , tgtRegion , align , isTgtRegionVisible ) {
                 const newPoints = flip( points , /[lr]/gi , {
                     l: `r` ,
                     r: `l`
-                } );
+                } ) ;
                 // 偏移量也反下
-                const newOffset = flipOffset( offset , 0 );
-                const newTargetOffset = flipOffset( targetOffset , 0 );
+                const newOffset = flipOffset( offset , 0 ) ;
+                const newTargetOffset = flipOffset( targetOffset , 0 ) ;
                 const newElFuturePos = getElFuturePos(
                     elRegion ,
                     tgtRegion ,
                     newPoints ,
                     newOffset ,
                     newTargetOffset
-                );
+                ) ;
 
                 if ( !isCompleteFailX( newElFuturePos , elRegion , visibleRect ) ) {
-                    fail = 1;
-                    points = newPoints;
-                    offset = newOffset;
-                    targetOffset = newTargetOffset;
+                    fail = 1 ;
+                    points = newPoints ;
+                    offset = newOffset ;
+                    targetOffset = newTargetOffset ;
                 }
             }
         }
@@ -146,23 +146,23 @@ function doAlign( el , tgtRegion , align , isTgtRegionVisible ) {
                 const newPoints = flip( points , /[tb]/gi , {
                     t: `b` ,
                     b: `t`
-                } );
+                } ) ;
                 // 偏移量也反下
-                const newOffset = flipOffset( offset , 1 );
-                const newTargetOffset = flipOffset( targetOffset , 1 );
+                const newOffset = flipOffset( offset , 1 ) ;
+                const newTargetOffset = flipOffset( targetOffset , 1 ) ;
                 const newElFuturePos = getElFuturePos(
                     elRegion ,
                     tgtRegion ,
                     newPoints ,
                     newOffset ,
                     newTargetOffset
-                );
+                ) ;
 
                 if ( !isCompleteFailY( newElFuturePos , elRegion , visibleRect ) ) {
-                    fail = 1;
-                    points = newPoints;
-                    offset = newOffset;
-                    targetOffset = newTargetOffset;
+                    fail = 1 ;
+                    points = newPoints ;
+                    offset = newOffset ;
+                    targetOffset = newTargetOffset ;
                 }
             }
         }
@@ -175,21 +175,21 @@ function doAlign( el , tgtRegion , align , isTgtRegionVisible ) {
                 points ,
                 offset ,
                 targetOffset
-            );
-            utils.mix( newElRegion , elFuturePos );
+            ) ;
+            utils.mix( newElRegion , elFuturePos ) ;
         }
-        const isStillFailX = isFailX( elFuturePos , elRegion , visibleRect );
-        const isStillFailY = isFailY( elFuturePos , elRegion , visibleRect );
+        const isStillFailX = isFailX( elFuturePos , elRegion , visibleRect ) ;
+        const isStillFailY = isFailY( elFuturePos , elRegion , visibleRect ) ;
         // 检查反下后的位置是否可以放下了，如果仍然放不下：
         // 1. 复原修改过的定位参数
         if ( isStillFailX || isStillFailY ) {
-            points = align.points;
-            offset = align.offset || [ 0 , 0 ];
-            targetOffset = align.targetOffset || [ 0 , 0 ];
+            points = align.points ;
+            offset = align.offset || [ 0 , 0 ] ;
+            targetOffset = align.targetOffset || [ 0 , 0 ] ;
         }
         // 2. 只有指定了可以调整当前方向才调整
-        newOverflowCfg.adjustX = overflow.adjustX && isStillFailX;
-        newOverflowCfg.adjustY = overflow.adjustY && isStillFailY;
+        newOverflowCfg.adjustX = overflow.adjustX && isStillFailX ;
+        newOverflowCfg.adjustY = overflow.adjustY && isStillFailY ;
 
         // 确实要调整，甚至可能会调整高度宽度
         if ( newOverflowCfg.adjustX || newOverflowCfg.adjustY ) {
@@ -198,7 +198,7 @@ function doAlign( el , tgtRegion , align , isTgtRegionVisible ) {
                 elRegion ,
                 visibleRect ,
                 newOverflowCfg
-            );
+            ) ;
         }
     }
 
@@ -208,7 +208,7 @@ function doAlign( el , tgtRegion , align , isTgtRegionVisible ) {
             source ,
             `width` ,
             utils.width( source ) + newElRegion.width - elRegion.width
-        );
+        ) ;
     }
 
     if ( newElRegion.height !== elRegion.height ) {
@@ -216,7 +216,7 @@ function doAlign( el , tgtRegion , align , isTgtRegionVisible ) {
             source ,
             `height` ,
             utils.height( source ) + newElRegion.height - elRegion.height
-        );
+        ) ;
     }
 
     // https://github.com/kissyteam/kissy/issues/190
@@ -225,24 +225,24 @@ function doAlign( el , tgtRegion , align , isTgtRegionVisible ) {
     let targetPos = {
         left: newElRegion.left ,
         top: newElRegion.top
-    };
+    } ;
     // console.log( targetPos )
     utils.offset( source , targetPos , {
         useCssRight: align.useCssRight ,
         useCssBottom: align.useCssBottom ,
         useCssTransform: align.useCssTransform ,
         ignoreShake: align.ignoreShake
-    } );
+    } ) ;
 
     return {
         points ,
         offset ,
         targetOffset ,
         overflow: newOverflowCfg
-    };
+    } ;
 }
 
-export default doAlign;
+export default doAlign ;
 /**
  *  2012-04-26 yiminghe@gmail.com
  *   - 优化智能对齐算法

@@ -1,19 +1,19 @@
 /**
  * 通用webpack配置
  */
-const chalk = require( `chalk` );
-const webpack = require( `webpack` );
-const { src , site } = require( `./project-path` );
-const VueLoaderPlugin = require( `vue-loader/lib/plugin` );
+const chalk = require( `chalk` ) ;
+const webpack = require( `webpack` ) ;
+const { src , site } = require( `./project-path` ) ;
+const VueLoaderPlugin = require( `vue-loader/lib/plugin` ) ;
 const {
         getNamePrefix ,
         rlaLessFile ,
         lessPrefixKey
     } = require( `./getLessVariables` ) ,
-    namePrefixer = getNamePrefix();
+    namePrefixer = getNamePrefix() ;
 if ( namePrefixer === `` ) {
-    let msg = chalk`{yellow ${`wraning`}}: {green ${rlaLessFile}}，不存在名为：{red ${lessPrefixKey}}的变量`;
-    console.log( msg );
+    let msg = chalk`{yellow ${`wraning`}}: {green ${rlaLessFile}}，不存在名为：{red ${lessPrefixKey}}的变量` ;
+    console.log( msg ) ;
 }
 
 module.exports = {
@@ -155,4 +155,4 @@ module.exports = {
             PRODUCTIONBVIEWPREFIX: `process.env.BVIEWPREFIX ? process.env.BVIEWPREFIX : "${namePrefixer}"`
         } )
     ]
-};
+} ;

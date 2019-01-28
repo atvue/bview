@@ -12,9 +12,9 @@
 </template>
 
 <script>
-const prefixCls = `bview`;
-const typeDefault = `primary`;
-const SizeDefault = ``;
+const prefixCls = `bview` ;
+const typeDefault = `primary` ;
+const SizeDefault = `` ;
 const types = [
     `main` ,
     `primary` ,
@@ -23,8 +23,8 @@ const types = [
     `danger` ,
     `ghost` ,
     `dropbox`
-];
-const sizes = [ `` , `big` , `small` ];
+] ;
+const sizes = [ `` , `big` , `small` ] ;
 
 export default {
     name: `BviewButton` ,
@@ -47,41 +47,41 @@ export default {
         //@doc按钮的大小
         size: {
             validator( value ) {
-                return sizes.indexOf( value ) >= 0;
+                return sizes.indexOf( value ) >= 0 ;
             } ,
             default: SizeDefault
         } ,
         //@doc按钮的类型
         type: {
             validator( value ) {
-                return value ? true : types.indexOf( value ) >= 0;
+                return value ? true : types.indexOf( value ) >= 0 ;
             } ,
             default: typeDefault
         }
     } ,
     data() {
-        return {};
+        return {} ;
     } ,
     computed: {
         boxlassName() {
-            let { type , size } = this;
+            let { type , size } = this ;
 
             return [
                 `${prefixCls}-button` ,
                 `${prefixCls}-button-size${size}` ,
                 `${prefixCls}-button-${type}`
-            ];
+            ] ;
         }
     } ,
     methods: {
         _onClick( event ) {
-            let { loading } = this;
+            let { loading } = this ;
 
             if ( !loading ) {
                 //@doc 点击事件，参数event
-                this.$emit( `click` , event );
+                this.$emit( `click` , event ) ;
             }
         }
     }
-};
+} ;
 </script>

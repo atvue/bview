@@ -1,16 +1,16 @@
-const path = require( `path` );
-const HtmlWebpackPlugin = require( `html-webpack-plugin` );
-const webpack = require( `webpack` );
-const webpackBaseConfig = require( `./webpack.base.config.js` );
-const merge = require( `webpack-merge` );
-const webpackDevServer = require( `webpack-dev-server` );
-const { site } = require( `./project-path` );
-const { generateComponentRoute } = require( `./site-helper/index` );
-const openBrowser = require( `./util/openBrowser` );
+const path = require( `path` ) ;
+const HtmlWebpackPlugin = require( `html-webpack-plugin` ) ;
+const webpack = require( `webpack` ) ;
+const webpackBaseConfig = require( `./webpack.base.config.js` ) ;
+const merge = require( `webpack-merge` ) ;
+const webpackDevServer = require( `webpack-dev-server` ) ;
+const { site } = require( `./project-path` ) ;
+const { generateComponentRoute } = require( `./site-helper/index` ) ;
+const openBrowser = require( `./util/openBrowser` ) ;
 
-const siteResolve = ( ...args ) => path.resolve( site , ...args );
+const siteResolve = ( ...args ) => path.resolve( site , ...args ) ;
 const port = 8022 ,
-    host = `localhost`;
+    host = `localhost` ;
 
 const config = merge( webpackBaseConfig , {
     devtool: `eval-source-map` ,
@@ -32,7 +32,7 @@ const config = merge( webpackBaseConfig , {
         } ) ,
         new webpack.HotModuleReplacementPlugin()
     ]
-} );
+} ) ;
 
 const devOptions = {
     contentBase: [ site ] ,
@@ -45,25 +45,25 @@ const devOptions = {
     } ,
     port ,
     host
-};
+} ;
 
 async function devServer() {
     try {
-        await generateComponentRoute();
+        await generateComponentRoute() ;
 
-        webpackDevServer.addDevServerEntrypoints( config , devOptions );
+        webpackDevServer.addDevServerEntrypoints( config , devOptions ) ;
 
         const webpackCompiler = webpack( config ) ,
             server = new webpackDevServer( webpackCompiler , devOptions ) ,
-            url = `http://${host}:${port}`;
+            url = `http://${host}:${port}` ;
 
         server.listen( port , host , function() {
-            console.log( `bview is running at ${url}` );
-            openBrowser( url );
-        } );
+            console.log( `bview is running at ${url}` ) ;
+            openBrowser( url ) ;
+        } ) ;
     } catch ( e ) {
-        console.warn( e );
+        console.warn( e ) ;
     }
 }
 
-devServer();
+devServer() ;

@@ -1,5 +1,5 @@
 export default function render( _h , _vm ) {
-    var _c = _vm._c;
+    var _c = _vm._c ;
     return _c(
         `svg` ,
         {
@@ -21,5 +21,5 @@ export default function render( _h , _vm ) {
                 }
             } )
         ]
-    );
+    ) ;
 }

@@ -25,13 +25,13 @@
     </span>
 </template>
 <script>
-import Casitem from './casitem.vue';
-import Emitter from '../../utils/emitter';
+import Casitem from './casitem.vue' ;
+import Emitter from '../../utils/emitter' ;
 import {
     findComponentUpward ,
     findComponentsDownward
-} from '../../utils/assist';
-let key = 1;
+} from '../../utils/assist' ;
+let key = 1 ;
 export default {
     name: `Caspanel` ,
     components: { Casitem } ,
@@ -40,7 +40,7 @@ export default {
         data: {
             type: Array ,
             default() {
-                return [];
+                return [] ;
             }
         } ,
         disabled: Boolean ,
@@ -59,42 +59,42 @@ export default {
             tmpItem: {} ,
             result: [] ,
             sublist: []
-        };
+        } ;
     } ,
     watch: {
         data() {
-            this.sublist = [];
+            this.sublist = [] ;
         }
     } ,
     mounted() {
         this.$on( `on-find-selected` , params => {
-            const val = params.value;
-            let value = [ ...val ];
+            const val = params.value ;
+            let value = [ ...val ] ;
             value.forEach( item => {
                 this.data.forEach( ele => {
                     if ( item === ele.value ) {
-                        this.handleTriggerItem( ele , true );
-                        value.splice( 0 , 1 );
+                        this.handleTriggerItem( ele , true ) ;
+                        value.splice( 0 , 1 ) ;
                         this.$nextTick( () => {
                             this.broadcast( `Caspanel` , `on-find-selected` , {
                                 value: value
-                            } );
-                        } );
-                        return false;
+                            } ) ;
+                        } ) ;
+                        return false ;
                     }
-                } );
-            } );
-        } );
+                } ) ;
+            } ) ;
+        } ) ;
         this.$on( `on-clear` , ( deep = false ) => {
-            this.sublist = [];
-            this.tmpItem = {};
+            this.sublist = [] ;
+            this.tmpItem = {} ;
             if ( deep ) {
-                const Caspanel = findComponentsDownward( this , `Caspanel` );
+                const Caspanel = findComponentsDownward( this , `Caspanel` ) ;
                 if ( Caspanel[ 0 ] ) {
-                    Caspanel[ 0 ].$emit( `on-clear` , true );
+                    Caspanel[ 0 ].$emit( `on-clear` , true ) ;
                 }
             }
-        } );
+        } ) ;
     } ,
     methods: {
         handleClickItem( item ) {
@@ -103,8 +103,8 @@ export default {
                 item.children &&
                 item.children.length
             )
-                return;
-            this.handleTriggerItem( item , false , true );
+                return ;
+            this.handleTriggerItem( item , false , true ) ;
         } ,
         handleHoverItem( item ) {
             if (
@@ -112,14 +112,14 @@ export default {
                 !item.children ||
                 !item.children.length
             )
-                return;
-            this.handleTriggerItem( item , false , true );
+                return ;
+            this.handleTriggerItem( item , false , true ) ;
         } ,
         handleTriggerItem( item , fromInit = false , fromUser = false ) {
-            if ( item.disabled ) return;
-            const cascader = findComponentUpward( this , `Cascader` );
+            if ( item.disabled ) return ;
+            const cascader = findComponentUpward( this , `Cascader` ) ;
             if ( cascader ) {
-                cascader.noChild = false;
+                cascader.noChild = false ;
             }
             // 异步获取子节点列表
             if ( item.loading !== undefined && !item.children.length ) {
@@ -127,79 +127,79 @@ export default {
                     cascader.loadData( item , () => {
                         // 用户定义事件执行
                         if ( fromUser ) {
-                            cascader.isLoadedChildren = true;
+                            cascader.isLoadedChildren = true ;
                         }
                         // 若子节点仍有子节点，进行递归
                         if ( item.children.length ) {
-                            this.handleTriggerItem( item );
+                            this.handleTriggerItem( item ) ;
                         } else {
                             // 子节点数量为 0 ，选中当前节点并提示无子节点 ，
-                            cascader.noChild = true;
-                            this.sublist = [];
+                            cascader.noChild = true ;
+                            this.sublist = [] ;
                             if ( this.changeOnSelect ) {
-                                const backItem = this.getBaseItem( item );
+                                const backItem = this.getBaseItem( item ) ;
                                 if (
                                     backItem.label !== this.tmpItem.label ||
                                     backItem.value !== this.tmpItem.value
                                 ) {
-                                    this.tmpItem = backItem;
-                                    this.emitUpdate( [ backItem ] );
+                                    this.tmpItem = backItem ;
+                                    this.emitUpdate( [ backItem ] ) ;
                                 }
                             }
                         }
-                    } );
-                    return;
+                    } ) ;
+                    return ;
                 }
             }
             // 向上递归，设置选中值
-            const backItem = this.getBaseItem( item );
+            const backItem = this.getBaseItem( item ) ;
             if (
                 backItem.label !== this.tmpItem.label ||
                 backItem.value !== this.tmpItem.value
             ) {
-                this.tmpItem = backItem;
-                this.emitUpdate( [ backItem ] );
+                this.tmpItem = backItem ;
+                this.emitUpdate( [ backItem ] ) ;
             }
             // 展开下一级
             if ( item.children && item.children.length ) {
-                this.sublist = item.children;
+                this.sublist = item.children ;
                 this.dispatch( `Cascader` , `on-result-change` , {
                     lastValue: false ,
                     changeOnSelect: this.changeOnSelect ,
                     fromInit: fromInit
-                } );
+                } ) ;
                 if ( this.changeOnSelect ) {
-                    const Caspanel = findComponentsDownward( this , `Caspanel` );
+                    const Caspanel = findComponentsDownward( this , `Caspanel` ) ;
                     if ( Caspanel[ 0 ] ) {
-                        Caspanel[ 0 ].$emit( `on-clear` , true );
+                        Caspanel[ 0 ].$emit( `on-clear` , true ) ;
                     }
                 }
             } else {
-                this.sublist = [];
+                this.sublist = [] ;
                 this.dispatch( `Cascader` , `on-result-change` , {
                     lastValue: true ,
                     changeOnSelect: this.changeOnSelect ,
                     fromInit: fromInit
-                } );
+                } ) ;
             }
         } ,
         _updateResult( item ) {
-            this.result = [ this.tmpItem ].concat( item );
-            this.emitUpdate( this.result );
+            this.result = [ this.tmpItem ].concat( item ) ;
+            this.emitUpdate( this.result ) ;
         } ,
         getBaseItem( item ) {
-            let backItem = Object.assign( {} , item );
+            let backItem = Object.assign( {} , item ) ;
             if ( backItem.children ) {
-                delete backItem.children;
+                delete backItem.children ;
             }
-            return backItem;
+            return backItem ;
         } ,
         emitUpdate( result ) {
-            this.$parent._updateResult && this.$parent._updateResult( result );
+            this.$parent._updateResult && this.$parent._updateResult( result ) ;
         } ,
         getKey() {
-            return key++;
+            return key++ ;
         }
     }
-};
+} ;
 </script>

@@ -1,7 +1,7 @@
 export const triggerHover = `hover` ,
     triggerClick = `click` ,
     triggerRightClick = `contextmenu` ,
-    triggers = [ triggerHover , triggerClick , triggerRightClick ];
+    triggers = [ triggerHover , triggerClick , triggerRightClick ] ;
 
 export const bottomLeft = `bottomLeft` ,
     bottomCenter = `bottomCenter` ,
@@ -16,4 +16,4 @@ export const bottomLeft = `bottomLeft` ,
         topLeft ,
         topCenter ,
         topRight
-    ];
+    ] ;

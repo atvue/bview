@@ -1,6 +1,6 @@
-import utils from './utils';
-import getOffsetParent from './getOffsetParent';
-import isAncestorFixed from './isAncestorFixed';
+import utils from './utils' ;
+import getOffsetParent from './getOffsetParent' ;
+import isAncestorFixed from './isAncestorFixed' ;
 
 /**
  * 获得元素的显示部分的区域
@@ -11,12 +11,12 @@ function getVisibleRectForElement( element ) {
         right: Infinity ,
         top: 0 ,
         bottom: Infinity
-    };
-    let el = getOffsetParent( element );
-    const doc = utils.getDocument( element );
-    const win = doc.defaultView || doc.parentWindow;
-    const body = doc.body;
-    const documentElement = doc.documentElement;
+    } ;
+    let el = getOffsetParent( element ) ;
+    const doc = utils.getDocument( element ) ;
+    const win = doc.defaultView || doc.parentWindow ;
+    const body = doc.body ;
+    const documentElement = doc.documentElement ;
 
     // Determine the size of the visible rect by climbing the dom accounting for
     // all scrollable containers.
@@ -32,76 +32,76 @@ function getVisibleRectForElement( element ) {
                 el !== documentElement &&
                 utils.css( el , `overflow` ) !== `visible` )
         ) {
-            const pos = utils.offset( el );
+            const pos = utils.offset( el ) ;
             // add border
-            pos.left += el.clientLeft;
-            pos.top += el.clientTop;
-            visibleRect.top = Math.max( visibleRect.top , pos.top );
+            pos.left += el.clientLeft ;
+            pos.top += el.clientTop ;
+            visibleRect.top = Math.max( visibleRect.top , pos.top ) ;
             visibleRect.right = Math.min(
                 visibleRect.right ,
                 // consider area without scrollBar
                 pos.left + el.clientWidth
-            );
+            ) ;
             visibleRect.bottom = Math.min(
                 visibleRect.bottom ,
                 pos.top + el.clientHeight
-            );
-            visibleRect.left = Math.max( visibleRect.left , pos.left );
+            ) ;
+            visibleRect.left = Math.max( visibleRect.left , pos.left ) ;
         } else if ( el === body || el === documentElement ) {
-            break;
+            break ;
         }
-        el = getOffsetParent( el );
+        el = getOffsetParent( el ) ;
     }
 
     // Set element position to fixed
     // make sure absolute element itself don't affect it's visible area
     // https://github.com/ant-design/ant-design/issues/7601
-    let originalPosition = null;
+    let originalPosition = null ;
     if ( !utils.isWindow( element ) && element.nodeType !== 9 ) {
-        originalPosition = element.style.position;
-        const position = utils.css( element , `position` );
+        originalPosition = element.style.position ;
+        const position = utils.css( element , `position` ) ;
         if ( position === `absolute` ) {
-            element.style.position = `fixed`;
+            element.style.position = `fixed` ;
         }
     }
 
-    const scrollX = utils.getWindowScrollLeft( win );
-    const scrollY = utils.getWindowScrollTop( win );
-    const viewportWidth = utils.viewportWidth( win );
-    const viewportHeight = utils.viewportHeight( win );
-    const documentWidth = documentElement.scrollWidth;
-    const documentHeight = documentElement.scrollHeight;
+    const scrollX = utils.getWindowScrollLeft( win ) ;
+    const scrollY = utils.getWindowScrollTop( win ) ;
+    const viewportWidth = utils.viewportWidth( win ) ;
+    const viewportHeight = utils.viewportHeight( win ) ;
+    const documentWidth = documentElement.scrollWidth ;
+    const documentHeight = documentElement.scrollHeight ;
 
     // Reset element position after calculate the visible area
     if ( element.style ) {
-        element.style.position = originalPosition;
+        element.style.position = originalPosition ;
     }
 
     if ( isAncestorFixed( element ) ) {
         // Clip by viewport's size.
-        visibleRect.left = Math.max( visibleRect.left , scrollX );
-        visibleRect.top = Math.max( visibleRect.top , scrollY );
+        visibleRect.left = Math.max( visibleRect.left , scrollX ) ;
+        visibleRect.top = Math.max( visibleRect.top , scrollY ) ;
         visibleRect.right = Math.min(
             visibleRect.right ,
             scrollX + viewportWidth
-        );
+        ) ;
         visibleRect.bottom = Math.min(
             visibleRect.bottom ,
             scrollY + viewportHeight
-        );
+        ) ;
     } else {
         // Clip by document's size.
         const maxVisibleWidth = Math.max(
             documentWidth ,
             scrollX + viewportWidth
-        );
-        visibleRect.right = Math.min( visibleRect.right , maxVisibleWidth );
+        ) ;
+        visibleRect.right = Math.min( visibleRect.right , maxVisibleWidth ) ;
 
         const maxVisibleHeight = Math.max(
             documentHeight ,
             scrollY + viewportHeight
-        );
-        visibleRect.bottom = Math.min( visibleRect.bottom , maxVisibleHeight );
+        ) ;
+        visibleRect.bottom = Math.min( visibleRect.bottom , maxVisibleHeight ) ;
     }
 
     return visibleRect.top >= 0 &&
@@ -109,7 +109,7 @@ function getVisibleRectForElement( element ) {
         visibleRect.bottom > visibleRect.top &&
         visibleRect.right > visibleRect.left
         ? visibleRect
-        : null;
+        : null ;
 }
 
-export default getVisibleRectForElement;
+export default getVisibleRectForElement ;
