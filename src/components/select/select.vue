@@ -174,8 +174,18 @@ export default {
             if ( hasSelected ) {
                 let hasLabel = selected.label !== undefined ,
                     txt = hasLabel ? selected.label : selected.value ,
-                    isStr = typeof txt === `string`;
-                return isStr ? txt.trim() : txt;
+                    isStr = typeof txt === `string` ,
+                    isObj = typeof txt === `object` ,
+                    canFormat = true;
+                if ( isObj ) {
+                    try {
+                        JSON.stringify( txt );
+                        canFormat = true;
+                    } catch ( e ) {
+                        canFormat = false;
+                    }
+                }
+                return isStr ? txt.trim() : canFormat ? txt : `\u{3000}`; // 中文全角空格
             } else {
                 return undefined;
             }

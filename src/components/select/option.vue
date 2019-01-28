@@ -9,7 +9,9 @@
             type="check"
             :class="bClsOptionSelectedIcon"
         />
-        <slot />
+        <slot v-if="hasDefineLabel" />
+        <!-- eslint-disable-next-line vue/singleline-html-element-content-newline -->
+        <template v-else>{{ noLabelShowValue }}</template>
     </li>
 </template>
 
@@ -19,10 +21,12 @@ import Icon from '../icon';
 import { optionName , selectName } from './helper/name';
 import { bviewPrefix as b } from '../../utils/macro';
 import { getVnodesTxt } from './helper/traverseVnode';
+import warnFn from '../../utils/warn';
 
 function joinClassnames( ...classnames ) {
     return classnames.filter( i => i ).join( ` ` );
 }
+const warn = warnFn( `Option` );
 
 export default {
     name: optionName ,
@@ -73,6 +77,29 @@ export default {
                 { selected } = selectVm ? selectVm : { selected: undefined } ,
                 selted = selected ? selected.value === this.value : false;
             return selted;
+        } ,
+        hasDefineLabel() {
+            let {
+                    $slots: { default: children }
+                } = this ,
+                defined = children !== undefined;
+            return defined;
+        } ,
+        noLabelShowValue() {
+            let { value } = this ,
+                isObj = typeof value === `object` ,
+                objTxt;
+            if ( isObj ) {
+                try {
+                    objTxt = JSON.stringify( value );
+                } catch ( e ) {
+                    objTxt = `\u{3000}`; // 中文全角空格 &emsp;
+                    warn(
+                        `format error , you should format Option's value by your self`
+                    );
+                }
+            }
+            return isObj ? objTxt : `${value}`;
         }
     } ,
     mounted() {
