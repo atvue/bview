@@ -60,6 +60,25 @@ export default {
             }
             return filterResult.map( formatterOption );
         } ,
+        // 兼容旧的对外API,deprecated
+        searchPlaceholder() {
+            // eslint-disable-next-line
+            console.warn(
+                `searchPlaceholder api will be deprecated,please calculate this with placeholder , hasSelected , selected by your self `
+            );
+            let { placeholder , hasSelected , selected } = this ,
+                txt;
+            if ( hasSelected ) {
+                let { label } = selected;
+                txt = label;
+            } else {
+                txt = placeholder;
+            }
+            if ( typeof txt === `string` ) {
+                txt = txt.trim();
+            }
+            return txt;
+        } ,
         selectedValue() {
             let { hasSelected , selected } = this ,
                 txt;
