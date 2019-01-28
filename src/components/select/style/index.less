@@ -7,8 +7,10 @@
 @select-inner: ~"@{bview-prefix}-select-inner" ;
 @select-search-inner: ~"@{bview-prefix}-select-search-inner" ;
 @select-legend: ~"@{bview-prefix}-select-legend" ;
+@select-legend-inner: ~"@{bview-prefix}-legend-inner" ;
 @select-icon: ~"@{bview-prefix}-select-icon" ;
 @select-placeholder: ~"@{bview-prefix}-select-placeholder" ;
+@search-placeholder: ~"@{bview-prefix}-search-placeholder" ;
 // option
 @options-wrapper: ~"@{bview-prefix}-options-wrapper" ;
 @option-empty: ~"@{bview-prefix}-options-search-empty" ;
@@ -17,8 +19,12 @@
 @option-selected-icon: ~"@{bview-prefix}-option-selected-icon" ;
 @option-disabled: ~"@{bview-prefix}-option-disabled" ;
 @option-active: ~"@{bview-prefix}-option-active" ;
+// input
+@select-search-input: ~"@{bview-prefix}-select-search-input" ;
+@selected-value: ~"@{bview-prefix}-selected-value" ;
 // num
 @height: 32px ;
+@gapInput: 10px ;
 
 .@{select-wrapper} {
     border-radius: 4px;
@@ -46,8 +52,42 @@
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            .@{select-legend-inner} {
+                position: relative ;
+                width: 100% ;
+                height: @height - 2px ;
+                line-height: @height - 2px ;
+                font-size: 0 ;
+            }
+            .@{selected-value} {
+                float: left;
+                font-size: 14px ;
+                color: #333 ;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                max-width: 100%;
+                padding-right: 20px;
+                padding-left: 10px ;
+                &.focus {
+                    color: #bfbfbf;
+                }
+            }
+            .@{select-search-input} {
+                position: absolute ;
+                height: 100% ;
+                input {
+                    font-size: 14px ;
+                    background: transparent ;
+                }
+            }
+            .@{search-placeholder} {
+                float: left;
+                padding-left: @gapInput ;
+            }
         }
         .@{select-placeholder}{
+            font-size: 14px ;
             color: #bfbfbf ;
         }
         .@{select-icon} {

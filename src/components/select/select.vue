@@ -12,16 +12,36 @@
         >
             <div :class="clsSelectInner">
                 <div :class="`${b}-select-legend`">
-                    <div v-if="showSearch">
+                    <div
+                        v-if="showSearch"
+                        :class="`${b}-legend-inner`"
+                    >
                         <Input
+                            v-show="visibleInput"
                             ref="vmSearch"
                             v-model="searchWord"
                             style="width:100%"
-                            :placeholder="searchPlaceholder"
+                            :class="`${b}-select-search-input`"
                             @focus="_focusSearchInput"
                             @blur="_blurSearchInput"
                             @input="_searchWordChange"
                         />
+                        <div
+                            v-if="showSelectedValue"
+                            :class="clsSelectedValue"
+                        >
+                            {{ selectedValue }}
+                        </div>
+                        <!-- eslint-disable-line -->
+                        <div
+                            v-if="showSearchPlaceholder"
+                            :class="
+                                `${b}-select-placeholder ${b}-search-placeholder`
+                            "
+                        >
+                            {{ placeholder }}
+                        </div>
+                        <!-- eslint-disable-line -->
                     </div>
                     <div v-else>
                         <span
@@ -301,10 +321,20 @@ export default {
                 return undefined;
             }
         } ,
-        _clickTrigger() {
-            let { showSearch } = this;
+        async _clickTrigger() {
+            let { showSearch , visibleInput } = this;
             if ( showSearch === false ) {
                 this._toggleOptions();
+            } else {
+                if ( visibleInput ) {
+                    return;
+                }
+                this.visibleInput = true;
+                await this.$nextTick();
+                let {
+                    $refs: { vmSearch }
+                } = this;
+                vmSearch.focus();
             }
         } ,
         _toggleOptions( flag ) {

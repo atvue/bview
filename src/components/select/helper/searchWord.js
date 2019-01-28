@@ -1,5 +1,6 @@
 import { timeout } from '../../../utils/timer';
 import makeCancelable from '../../../utils/makeCancelable';
+import { bviewPrefix as b } from '../../../utils/macro';
 
 const validateOptionStructural = item => {
     if ( item === undefined || item === null || typeof item !== `object` ) {
@@ -20,6 +21,11 @@ const formatterOption = item => {
 };
 
 export default {
+    data() {
+        return {
+            visibleInput: false
+        };
+    } ,
     watch: {
         searchWord( val , oldVal ) {
             let changed = val !== oldVal;
@@ -54,19 +60,38 @@ export default {
             }
             return filterResult.map( formatterOption );
         } ,
-        searchPlaceholder() {
-            let { placeholder , hasSelected , selected } = this ,
+        selectedValue() {
+            let { hasSelected , selected } = this ,
                 txt;
             if ( hasSelected ) {
                 let { label } = selected;
                 txt = label;
-            } else {
-                txt = placeholder;
-            }
-            if ( typeof txt === `string` ) {
-                txt = txt.trim();
             }
             return txt;
+        } ,
+        clsSelectedValue() {
+            let { visibleInput } = this ,
+                cls = `${b}-selected-value`;
+            if ( visibleInput ) {
+                cls += ` focus`;
+            }
+            return cls;
+        } ,
+        showSelectedValue() {
+            let { searchWord } = this ,
+                has = searchWord.length > 0;
+            return !has;
+        } ,
+        showSearchPlaceholder() {
+            let { searchWord , hasSelected } = this;
+            if ( hasSelected ) {
+                return false;
+            }
+            let has = searchWord.length > 0;
+            if ( has ) {
+                return false;
+            }
+            return true;
         }
     } ,
     methods: {
@@ -78,9 +103,10 @@ export default {
             this._toggleOptions( true );
         } ,
         _syncSelectedValueToSw() {
-            let { hasSelected , selectedLabel } = this;
+            let { hasSelected } = this;
             if ( hasSelected ) {
-                this.searchWord = selectedLabel;
+                this.visibleInput = false;
+                this.searchWord = ``;
             }
         } ,
         async _blurSearchInput() {
