@@ -192,7 +192,9 @@ module.exports = astJs => {
                     ) {
                         let { arguments: argts } = path.node;
                         // 第一个是事件名称，第二个是事件传参
-                        let [ emitName , emitArg ] = argts;
+                        let [ emitName , emitArg ] = argts ,
+                            isTpLiteral = bt.isTemplateLiteral( emitName ) ,
+                            eventName;
                         // @NOTE 这里不能判断去重 traverse不是一个同步过程
                         // 检查emitEvents中是否存在 emitKey
                         // let exist =
@@ -216,8 +218,34 @@ module.exports = astJs => {
                         if ( ignoreEmit ) {
                             return;
                         }
+                        if ( isTpLiteral ) {
+                            let nodes = [] ,
+                                { expressions , quasis } = emitName;
+                            let index = 0;
+                            for ( const elem of quasis ) {
+                                if ( elem.value.cooked ) {
+                                    nodes.push(
+                                        bt.stringLiteral( elem.value.cooked )
+                                    );
+                                }
+                                if ( index < expressions.length ) {
+                                    const node = expressions[ index++ ];
+                                    if (
+                                        !bt.isStringLiteral( node , { value: `` } )
+                                    ) {
+                                        nodes.push( node );
+                                    }
+                                }
+                            }
+                            eventName = nodes.reduce(
+                                ( prev , next ) => prev + next.value ,
+                                ``
+                            );
+                        } else {
+                            eventName = emitName.value;
+                        }
                         let emit = {
-                            name: emitName.value ,
+                            name: eventName ,
                             args: generate( emitArg ).code , // args暂时没有用
                             describe: getComment( path.parent )
                         };
@@ -235,7 +263,6 @@ module.exports = astJs => {
             deEmitEvents.push( e );
         }
     } );
-
     // debugger;
     return { propsRes , emitEvents: deEmitEvents , apiMethods };
 };
