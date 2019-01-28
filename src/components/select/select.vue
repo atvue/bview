@@ -467,10 +467,15 @@ export default {
             return flag;
         } ,
         _emitInput() {
-            let { selected , labelInValue } = this ,
+            let {
+                    selected ,
+                    labelInValue ,
+                    $refs: { select }
+                } = this ,
                 { value , label } = selected;
             // @doc 选中值变化触发input事件
             this.$emit( `input` , labelInValue ? { value , label } : value );
+            select.focus();
         } ,
         _syncValueWithSelected() {
             let {
