@@ -37,3 +37,5 @@ const fakeTransitions = () => {
     } )
 }
 fakeTransitions()
+
+jest.setTimeout( 5000 )
