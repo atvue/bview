@@ -532,9 +532,27 @@ export default {
         } ,
         _clickIcon( event ) {
             event.stopPropagation() ;
-            let { __delayBlurCloseDropdownCancel: cancel } = this ;
+            let {
+                __delayBlurCloseDropdownCancel: cancel ,
+                visibleOptions ,
+                showSearch
+            } = this ;
             cancel && cancel() ;
             this._toggleOptions() ;
+            if ( showSearch ) {
+                this.visibleInput = !visibleOptions ;
+                this.$nextTick().then( () => {
+                    let {
+                        visibleOptions ,
+                        $refs: { vmSearch }
+                    } = this ;
+                    if ( visibleOptions ) {
+                        vmSearch.focus() ;
+                    } else {
+                        vmSearch.blur() ;
+                    }
+                } ) ;
+            }
         }
     }
 } ;
