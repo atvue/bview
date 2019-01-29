@@ -4,14 +4,17 @@
         :class="bClsOption"
         @click="_clickOption"
     >
+        <!-- eslint-disable vue/singleline-html-element-content-newline -->
         <Icon
             v-if="selected"
             type="check"
             :class="bClsOptionSelectedIcon"
-        />
-        <slot v-if="hasDefineLabel" />
-        <!-- eslint-disable-next-line vue/singleline-html-element-content-newline -->
-        <template v-else>{{ noLabelShowValue }}</template>
+        /><slot v-if="hasDefineLabel" /><template v-else>
+            {{
+                noLabelShowValue
+            }}
+        </template>
+        <!-- eslint-enable vue/multiline-html-element-content-newline -->
     </li>
 </template>
 
@@ -31,19 +34,19 @@ const warn = warnFn( `Option` )
 export default {
     name: optionName ,
     components: {
-        Icon
+        Icon ,
     } ,
     props: {
         // @doc 值
         value: {
             type: null ,
-            required: true
+            required: true ,
         } ,
         // @doc 禁用
         disabled: {
             type: Boolean ,
-            default: false
-        }
+            default: false ,
+        } ,
     } ,
     computed: {
         selectVm() {
@@ -80,7 +83,7 @@ export default {
         } ,
         hasDefineLabel() {
             let {
-                    $slots: { default: children }
+                    $slots: { default: children } ,
                 } = this ,
                 defined = children !== undefined
             return defined
@@ -95,12 +98,12 @@ export default {
                 } catch ( e ) {
                     objTxt = `\u{3000}` // 中文全角空格 &emsp;
                     warn(
-                        `format error , you should format Option's value by your self`
+                        `format error , you should format Option's value by your self` ,
                     )
                 }
             }
             return isObj ? objTxt : `${value}`
-        }
+        } ,
     } ,
     mounted() {
         this._registerOption()
@@ -114,7 +117,7 @@ export default {
                     value ,
                     $refs: { el } ,
                     selectVm ,
-                    disabled
+                    disabled ,
                 } = this ,
                 noSelect = selectVm === undefined ,
                 noEl = el === undefined ,
@@ -147,11 +150,11 @@ export default {
         } ,
         _getSlotTextContent() {
             let {
-                    $slots: { default: textVnodes }
+                    $slots: { default: textVnodes } ,
                 } = this ,
                 txt = getVnodesTxt( textVnodes )
             return txt
-        }
-    }
+        } ,
+    } ,
 }
 </script>

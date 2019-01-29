@@ -82,17 +82,16 @@
                 ref="optionBox"
                 :class="`${b}-options-inner`"
             >
+                <!-- eslint-disable vue/multiline-html-element-content-newline -->
                 <template v-if="hasOptions">
                     <Option
                         v-for="item in filterAttrBindOptions"
                         :key="item.value"
                         :value="item.value"
                         :disabled="item.disabled === true"
-                    >
-                        {{ item.label }}
-                    </Option>
-                    <!-- eslint-disable-line vue/multiline-html-element-content-newline -->
+                    >{{ item.label }}</Option>
                 </template>
+                <!-- eslint-enable vue/multiline-html-element-content-newline -->
                 <SlotRender
                     v-else
                     :list="filterSlotOptions"
@@ -124,38 +123,38 @@ export default {
         // @doc 占位提示符
         placeholder: {
             type: String ,
-            default: undefined
+            default: undefined ,
         } ,
         // @doc v-model
         value: {
             type: null ,
-            default: undefined
+            default: undefined ,
         } ,
         // @doc 默认false，则value值只是option代表的值，设置成true，则value是对象形式，参数中有label：{ value , label }。
         labelInValue: {
             type: Boolean ,
-            default: false
+            default: false ,
         } ,
         // @doc 如果不引入Option组件，可使用options参数直接生成option列表，参数应该符合{ value , label }的形式，支持disabled属性。注意：options和default slot配置方式只能二选一
         options: {
             type: Array ,
-            default: undefined
+            default: undefined ,
         } ,
         // @doc tabindex顺序，取值需要在0到32767之间，默认字符流中的次序来
         tabIndex: {
             type: Number ,
-            default: 0
+            default: 0 ,
         } ,
         // @doc 支持搜索
         showSearch: {
             type: Boolean ,
-            default: false
+            default: false ,
         } ,
         // @doc 是否根据输入项进行过滤。如果配置为一个函数，则会接收三个参数:searchWord,label,(vNode or option)视配置slot或option方式的区别，符合筛选条件应该返回true，反之返回false
         filterOption: {
             type: [ Boolean , Function ] ,
-            default: true
-        }
+            default: true ,
+        } ,
     } ,
     data() {
         let slotOptions = this.$slots.default
@@ -166,7 +165,7 @@ export default {
             styleOptionWrapper: undefined ,
             b ,
             searchWord: `` ,
-            slotOptions: slotOptions ? slotOptions : []
+            slotOptions: slotOptions ? slotOptions : [] ,
         }
     } ,
     computed: {
@@ -242,7 +241,7 @@ export default {
                                 let reserver = this._checkFilterOption(
                                     searchWord ,
                                     text ,
-                                    vNode
+                                    vNode ,
                                 )
                                 return reserver
                             }
@@ -258,7 +257,7 @@ export default {
                     hasOptions ,
                     searchWord ,
                     filterSlotOptions ,
-                    filterAttrBindOptions
+                    filterAttrBindOptions ,
                 } = this ,
                 hasSearchWord =
                     searchWord !== undefined &&
@@ -272,7 +271,7 @@ export default {
             } else {
                 return false
             }
-        }
+        } ,
     } ,
     watch: {
         visibleOptions( val , oldVal ) {
@@ -287,7 +286,7 @@ export default {
             if ( changed ) {
                 this._syncValueWithSelected()
             }
-        }
+        } ,
     } ,
     created() {
         this.__options = []
@@ -312,7 +311,7 @@ export default {
             let { selected , optionList , hasSelected } = this
             if ( hasSelected ) {
                 let index = optionList.findIndex(
-                        item => item.value === selected.value
+                        item => item.value === selected.value ,
                     ) ,
                     hasIndex = index > -1
                 return hasIndex ? index : undefined
@@ -331,7 +330,7 @@ export default {
                 this.visibleInput = true
                 await this.$nextTick()
                 let {
-                    $refs: { vmSearch }
+                    $refs: { vmSearch } ,
                 } = this
                 vmSearch.focus()
             }
@@ -347,7 +346,7 @@ export default {
         } ,
         _clacOptionWrapperWidth() {
             let {
-                    $refs: { select }
+                    $refs: { select } ,
                 } = this ,
                 rect = select.getBoundingClientRect() ,
                 { width } = rect
@@ -450,7 +449,7 @@ export default {
         _keyTab( event ) {
             let {
                     $refs: { select } ,
-                    visibleOptions
+                    visibleOptions ,
                 } = this ,
                 visible = visibleOptions === true ,
                 currentEl = event.target === select
@@ -460,7 +459,7 @@ export default {
         } ,
         _checkIsTabActive() {
             let {
-                    $refs: { select }
+                    $refs: { select } ,
                 } = this ,
                 flag = document.activeElement === select
             return flag
@@ -469,7 +468,7 @@ export default {
             let {
                     selected ,
                     labelInValue ,
-                    $refs: { select }
+                    $refs: { select } ,
                 } = this ,
                 { value , label } = selected
             // @doc 选中值变化触发input事件
@@ -482,7 +481,7 @@ export default {
                     selected ,
                     hasSelected ,
                     labelInValue ,
-                    optionList
+                    optionList ,
                 } = this ,
                 selectdValue = hasSelected ? selected.value : undefined ,
                 hasOutValue = outData !== undefined ,
@@ -523,7 +522,7 @@ export default {
         _triggerSearchInputBlur() {
             let {
                 showSearch ,
-                $refs: { vmSearch }
+                $refs: { vmSearch } ,
             } = this
             if ( showSearch ) {
                 vmSearch.blur()
@@ -534,7 +533,7 @@ export default {
             let {
                 __delayBlurCloseDropdownCancel: cancel ,
                 visibleOptions ,
-                showSearch
+                showSearch ,
             } = this
             cancel && cancel()
             this._toggleOptions()
@@ -543,7 +542,7 @@ export default {
                 this.$nextTick().then( () => {
                     let {
                         visibleOptions ,
-                        $refs: { vmSearch }
+                        $refs: { vmSearch } ,
                     } = this
                     if ( visibleOptions ) {
                         vmSearch.focus()
@@ -552,7 +551,7 @@ export default {
                     }
                 } )
             }
-        }
-    }
+        } ,
+    } ,
 }
 </script>
