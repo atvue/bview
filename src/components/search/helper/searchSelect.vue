@@ -84,9 +84,9 @@
 </template>
 
 <script>
-import Select from '../../select/select' ;
-import searchWord from './searchSearchWord' ;
-import { selectName } from '../../select/helper/name' ;
+import Select from '../../select/select'
+import searchWord from './searchSearchWord'
+import { selectName } from '../../select/helper/name'
 
 export default {
     name: selectName ,
@@ -110,7 +110,7 @@ export default {
     computed: {
         searchResultNoList() {
             if ( this.hasSearchOptions ) {
-                return false ;
+                return false
             }
             let {
                     hasOptions ,
@@ -124,22 +124,22 @@ export default {
                     searchWord.trim() !== `` ,
                 slotOpsNone = filterSlotOptions.length === 0 ,
                 attrOpsNone = filterAttrBindOptions.length === 0 ,
-                noList = hasOptions ? attrOpsNone : slotOpsNone ;
+                noList = hasOptions ? attrOpsNone : slotOpsNone
             if ( hasSearchWord && noList ) {
-                return true ;
+                return true
             } else {
-                return false ;
+                return false
             }
         }
     } ,
     methods: {
         _emitInput() {
             let { selected , labelInValue } = this ,
-                { value , label } = selected ;
+                { value , label } = selected
             // @doc 选中值变化触发input事件
-            this.hasSelectedOptions = true ;
-            this.$emit( `input` , labelInValue ? { value , label } : value ) ;
+            this.hasSelectedOptions = true
+            this.$emit( `input` , labelInValue ? { value , label } : value )
         }
     }
-} ;
+}
 </script>

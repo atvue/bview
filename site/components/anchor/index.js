@@ -1,6 +1,6 @@
-import Anchor from './anchor' ;
-import AnchorLink from './anchor-link' ;
+import Anchor from './anchor'
+import AnchorLink from './anchor-link'
 
-Anchor.AnchorLink = AnchorLink ;
+Anchor.AnchorLink = AnchorLink
 
-export default Anchor ;
+export default Anchor

@@ -35,14 +35,14 @@ export default {
         routerData: {
             type: Array ,
             default() {
-                return [] ;
+                return []
             }
         }
     } ,
     methods: {
         getMetaName( r , i ) {
-            return ( r.meta && r.meta.name ) || i ;
+            return ( r.meta && r.meta.name ) || i
         }
     }
-} ;
+}
 </script>

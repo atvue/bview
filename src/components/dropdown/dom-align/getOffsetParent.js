@@ -1,4 +1,4 @@
-import utils from './utils' ;
+import utils from './utils'
 
 /**
  * 得到会导致元素显示不全的祖先元素
@@ -6,7 +6,7 @@ import utils from './utils' ;
 
 function getOffsetParent( element ) {
     if ( utils.isWindow( element ) || element.nodeType === 9 ) {
-        return null ;
+        return null
     }
     // ie 这个也不是完全可行
     /*
@@ -23,17 +23,16 @@ function getOffsetParent( element ) {
     //            return element.offsetParent;
     //        }
     // 统一的 offsetParent 方法
-    const doc = utils.getDocument( element ) ;
-    const body = doc.body ;
-    let parent ;
-    let positionStyle = utils.css( element , `position` ) ;
-    const skipStatic =
-        positionStyle === `fixed` || positionStyle === `absolute` ;
+    const doc = utils.getDocument( element )
+    const body = doc.body
+    let parent
+    let positionStyle = utils.css( element , `position` )
+    const skipStatic = positionStyle === `fixed` || positionStyle === `absolute`
 
     if ( !skipStatic ) {
         return element.nodeName.toLowerCase() === `html`
             ? null
-            : element.parentNode ;
+            : element.parentNode
     }
 
     for (
@@ -41,12 +40,12 @@ function getOffsetParent( element ) {
         parent && parent !== body ;
         parent = parent.parentNode
     ) {
-        positionStyle = utils.css( parent , `position` ) ;
+        positionStyle = utils.css( parent , `position` )
         if ( positionStyle !== `static` ) {
-            return parent ;
+            return parent
         }
     }
-    return null ;
+    return null
 }
 
-export default getOffsetParent ;
+export default getOffsetParent

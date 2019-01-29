@@ -16,9 +16,9 @@
     </li>
 </template>
 <script>
-import Icon from '../icon' ;
-import hasChild from '../../icons/right_arrow' ;
-import loading from '../../icons/loading' ;
+import Icon from '../icon'
+import hasChild from '../../icons/right_arrow'
+import loading from '../../icons/loading'
 
 export default {
     name: `Casitem` ,
@@ -29,7 +29,7 @@ export default {
         data: {
             type: Object ,
             default: () => {
-                return {} ;
+                return {}
             }
         } ,
         prefixCls: {
@@ -39,7 +39,7 @@ export default {
         tmpItem: {
             type: Object ,
             default: () => {
-                return {} ;
+                return {}
             }
         }
     } ,
@@ -47,7 +47,7 @@ export default {
         return {
             hasChild ,
             loading
-        } ;
+        }
     } ,
     computed: {
         classes() {
@@ -58,19 +58,19 @@ export default {
                         this.tmpItem.value === this.data.value ,
                     [ `${this.prefixCls}-menu-item-disabled` ]: this.data.disabled
                 }
-            ] ;
+            ]
         } ,
         showArrow() {
             return (
                 ( this.data.children && this.data.children.length ) ||
                 ( `loading` in this.data && !this.data.loading )
-            ) ;
+            )
         } ,
         showLoading() {
-            return `loading` in this.data && this.data.loading ;
+            return `loading` in this.data && this.data.loading
         }
     }
-} ;
+}
 </script>
 <style type="less">
 .child-icon {

@@ -49,14 +49,14 @@
     </div>
 </template>
 <script>
-import searchIcon from '../../icons/search' ;
-import Icon from '../icon' ;
+import searchIcon from '../../icons/search'
+import Icon from '../icon'
 
-import { debounce } from '../../utils/throttleDebounce' ;
-import { bviewPrefix as b } from '../../utils/macro' ;
-import Input from '../input' ;
-import Select from './helper/searchSelect' ;
-import Button from '../button' ;
+import { debounce } from '../../utils/throttleDebounce'
+import { bviewPrefix as b } from '../../utils/macro'
+import Input from '../input'
+import Select from './helper/searchSelect'
+import Button from '../button'
 
 export default {
     name: `Search` ,
@@ -86,7 +86,7 @@ export default {
         searchOptions: {
             type: Array ,
             default() {
-                return [] ;
+                return []
             }
         } ,
         //@doc输入框输入事件500ms合并做一次通知，不能小于500ms
@@ -118,92 +118,92 @@ export default {
             b: b ,
             searchOptionsTemp: [] ,
             searchIcon: searchIcon
-        } ;
+        }
     } ,
     computed: {
         hasSearchOptions() {
-            return this.type === `normal` ? false : true ;
+            return this.type === `normal` ? false : true
         }
     } ,
     watch: {
         searchValue( newValue ) {
             if ( !newValue ) {
-                this.searchOptionsTemp = [].concat() ;
+                this.searchOptionsTemp = [].concat()
             }
         } ,
         searchOptions() {
-            this.searchOptionsTemp = this.searchOptions.concat() ;
+            this.searchOptionsTemp = this.searchOptions.concat()
         }
     } ,
     mounted() {
-        this.showSearch = !this.toggleAble ;
-        this._initDebounce() ;
+        this.showSearch = !this.toggleAble
+        this._initDebounce()
     } ,
     methods: {
         _onClearOptions() {
-            this.searchOptionsTemp = [].concat() ;
+            this.searchOptionsTemp = [].concat()
         } ,
         _onSelectInput( event ) {
-            let { label } = event ;
+            let { label } = event
             if ( this.searchValue !== label ) {
-                this.searchValue = label ;
+                this.searchValue = label
             }
         } ,
         _initDebounce() {
-            let { time } = this ;
+            let { time } = this
             if ( time ) {
                 this.debounceValueChange = debounce( time , value => {
-                    this._emitValueChange( value ) ;
-                } ) ;
+                    this._emitValueChange( value )
+                } )
             } else {
-                this.debounceValueChange = this._emitValueChange ;
+                this.debounceValueChange = this._emitValueChange
             }
         } ,
         _emitValueChange( value ) {
             // @doc 用户主动改变搜索框值，触发change事件
-            this.$emit( `change` , value ) ;
+            this.$emit( `change` , value )
         } ,
         _onSearchWordChange( value ) {
             if ( this.searchValue !== value ) {
-                this.searchValue = value ;
-                this.debounceValueChange( value ) ;
+                this.searchValue = value
+                this.debounceValueChange( value )
             }
         } ,
         _onFocusSearchInput() {
             if ( this.searchValue ) {
-                this.debounceValueChange( this.searchValue ) ;
+                this.debounceValueChange( this.searchValue )
             }
         } ,
         _doToggle() {
-            this.showSearch = !this.showSearch ;
+            this.showSearch = !this.showSearch
         } ,
         _doSearch() {
             if ( this.showSearch && this.searchValue ) {
                 // @doc 搜索框有值的情况搜索按钮被点击，触发search事件
-                this.$emit( `search` , this.searchValue ) ;
+                this.$emit( `search` , this.searchValue )
             } else if ( this.toggleAble ) {
-                this._doToggle() ;
+                this._doToggle()
             }
         } ,
         //@doc展开搜索框
         fold() {
-            this.showSearch = true ;
+            this.showSearch = true
         } ,
         //@doc收起搜索框
         unfold() {
-            this.showSearch = false ;
+            this.showSearch = false
         } ,
         //@doc重置搜索框
         reset() {
             if ( this.hasSearchOptions ) {
-                this.$refs.Select.resetSearchWord() ;
+                this.$refs.Select.resetSearchWord()
             }
-            this.searchValue = `` ;
-            this._onClearOptions() ;
+            this.searchValue = ``
+            this._onClearOptions()
             if ( this.toggleAble ) {
-                this.showSearch = false ;
+                this.showSearch = false
             }
         }
     }
-} ;
+}
 </script>

@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import domPortal from '../../directives/dom-portal' ;
+import domPortal from '../../directives/dom-portal'
 export default {
     directives: {
         domPortal
@@ -28,12 +28,12 @@ export default {
                 target = getPopupContainer() ,
                 config = {
                     symbol
-                } ;
+                }
             if ( target !== undefined && target !== null ) {
-                Object.assign( config , { target } ) ;
+                Object.assign( config , { target } )
             }
-            return config ;
+            return config
         }
     }
-} ;
+}
 </script>

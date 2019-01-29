@@ -28,8 +28,8 @@
 </template>
 
 <script>
-import calcTextareaHeight from '../../utils/calcTextareaHeight' ;
-import { bviewPrefix as b } from '../../utils/macro' ;
+import calcTextareaHeight from '../../utils/calcTextareaHeight'
+import { bviewPrefix as b } from '../../utils/macro'
 export default {
     name: `TextArea` ,
     props: {
@@ -94,7 +94,7 @@ export default {
             currentValue: this.value ,
             textareaStyles: `` ,
             b
-        } ;
+        }
     } ,
     computed: {
         textareaClasses() {
@@ -103,55 +103,55 @@ export default {
                 {
                     [ `${b}-textarea-disabled` ]: this.disabled
                 }
-            ] ;
+            ]
         } ,
         current() {
-            return this.value.length ;
+            return this.value.length
         }
     } ,
     mounted() {
-        this.$_resizeTextarea() ;
+        this.$_resizeTextarea()
     } ,
     methods: {
         $_setCurrentValue( val ) {
-            this.currentValue = val ;
+            this.currentValue = val
             this.$nextTick( () => {
-                this.$_resizeTextarea() ;
-            } ) ;
+                this.$_resizeTextarea()
+            } )
         } ,
         $_handleEnter( event ) {
             //@doc enter键触发
-            this.$emit( `enter` , event ) ;
+            this.$emit( `enter` , event )
         } ,
         $_handleInput( event ) {
-            let value = event.target.value ;
+            let value = event.target.value
             //@doc输入框改变时触发
-            this.$emit( `input` , value ) ;
-            this.$_setCurrentValue( value ) ;
+            this.$emit( `input` , value )
+            this.$_setCurrentValue( value )
         } ,
         //@doc 手动聚焦输入框
         focus() {
-            this.$refs.input.focus() ;
+            this.$refs.input.focus()
         } ,
         //@doc 手动失焦输入框
         blur() {
-            this.$refs.input.blur() ;
+            this.$refs.input.blur()
         } ,
         $_handleFocus( event ) {
             //@doc 聚焦时触发
-            this.$emit( `focus` , event ) ;
+            this.$emit( `focus` , event )
         } ,
         $_handleBlur( event ) {
             //@doc 失焦时触发
-            this.$emit( `blur` , event ) ;
+            this.$emit( `blur` , event )
         } ,
         $_resizeTextarea() {
-            const autoResize = this.autoResize ;
+            const autoResize = this.autoResize
             if ( !autoResize ) {
-                return false ;
+                return false
             }
-            this.textareaStyles = calcTextareaHeight( this.$refs.textarea ) ;
+            this.textareaStyles = calcTextareaHeight( this.$refs.textarea )
         }
     }
-} ;
+}
 </script>

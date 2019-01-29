@@ -1,49 +1,49 @@
-import { timeout } from '../../../utils/timer' ;
-import makeCancelable from '../../../utils/makeCancelable' ;
-import { bviewPrefix as b } from '../../../utils/macro' ;
+import { timeout } from '../../../utils/timer'
+import makeCancelable from '../../../utils/makeCancelable'
+import { bviewPrefix as b } from '../../../utils/macro'
 
 const validateOptionStructural = item => {
     if ( item === undefined || item === null || typeof item !== `object` ) {
-        return false ;
+        return false
     }
-    return `value` in item && `label` in item ;
-} ;
+    return `value` in item && `label` in item
+}
 const formatterOption = item => {
-    let validItem = validateOptionStructural( item ) ;
+    let validItem = validateOptionStructural( item )
     if ( validItem ) {
-        return item ;
+        return item
     } else {
         return {
             value: item ,
             label: item
-        } ;
+        }
     }
-} ;
+}
 
 export default {
     data() {
         return {
             visibleInput: false
-        } ;
+        }
     } ,
     watch: {
         searchWord( val , oldVal ) {
-            let changed = val !== oldVal ;
+            let changed = val !== oldVal
             if ( changed ) {
-                this._resetActiveIndex() ;
+                this._resetActiveIndex()
             }
         }
     } ,
     computed: {
         filterAttrBindOptions() {
-            let { hasOptions , options , searchWord , showSearch } = this ;
-            searchWord = searchWord.trim() ;
+            let { hasOptions , options , searchWord , showSearch } = this
+            searchWord = searchWord.trim()
             let hasSearchWord =
                     searchWord !== undefined &&
                     searchWord !== null &&
                     searchWord.trim() !== `` ,
                 filter = showSearch && hasOptions && hasSearchWord ,
-                filterResult ;
+                filterResult
             if ( filter ) {
                 let result = options.filter( item => {
                     let { label } = item ,
@@ -51,81 +51,81 @@ export default {
                             searchWord ,
                             label ,
                             item
-                        ) ;
-                    return reserver ;
-                } ) ;
-                filterResult = result ;
+                        )
+                    return reserver
+                } )
+                filterResult = result
             } else {
-                filterResult = options ? options : [] ;
+                filterResult = options ? options : []
             }
-            return filterResult.map( formatterOption ) ;
+            return filterResult.map( formatterOption )
         } ,
         // 兼容旧的对外API,deprecated
         searchPlaceholder() {
             // eslint-disable-next-line
             console.warn(
                 `searchPlaceholder api will be deprecated,please calculate this with placeholder , hasSelected , selected by your self `
-            ) ;
+            )
             let { placeholder , hasSelected , selected } = this ,
-                txt ;
+                txt
             if ( hasSelected ) {
-                let { label } = selected ;
-                txt = label ;
+                let { label } = selected
+                txt = label
             } else {
-                txt = placeholder ;
+                txt = placeholder
             }
             if ( typeof txt === `string` ) {
-                txt = txt.trim() ;
+                txt = txt.trim()
             }
-            return txt ;
+            return txt
         } ,
         selectedValue() {
             let { hasSelected , selected } = this ,
-                txt ;
+                txt
             if ( hasSelected ) {
-                let { label } = selected ;
-                txt = label ;
+                let { label } = selected
+                txt = label
             }
-            return txt ;
+            return txt
         } ,
         clsSelectedValue() {
             let { visibleInput } = this ,
-                cls = `${b}-selected-value` ;
+                cls = `${b}-selected-value`
             if ( visibleInput ) {
-                cls += ` focus` ;
+                cls += ` focus`
             }
-            return cls ;
+            return cls
         } ,
         showSelectedValue() {
             let { searchWord } = this ,
-                has = searchWord.length > 0 ;
-            return !has ;
+                has = searchWord.length > 0
+            return !has
         } ,
         showSearchPlaceholder() {
-            let { searchWord , hasSelected } = this ;
+            let { searchWord , hasSelected } = this
             if ( hasSelected ) {
-                return false ;
+                return false
             }
-            let has = searchWord.length > 0 ;
+            let has = searchWord.length > 0
             if ( has ) {
-                return false ;
+                return false
             }
-            return true ;
+            return true
         }
     } ,
     methods: {
         _focusSearchInput() {
-            let { hasSelected } = this ;
+            let { hasSelected } = this
             if ( hasSelected ) {
-                this.searchWord = `` ;
+                this.searchWord = ``
             }
-            this._toggleOptions( true ) ;
+            this._toggleOptions( true )
         } ,
         _syncSelectedValueToSw() {
-            let { hasSelected } = this ;
+            let { hasSelected } = this
             if ( hasSelected ) {
-                this.visibleInput = false ;
-                this.searchWord = `` ;
+                this.visibleInput = false
+                this.searchWord = ``
             }
         } ,
         async _blurSearchInput() {
@@ -133,35 +133,35 @@ export default {
                     __dropdownClosedCallBacks: closedCbs ,
                     _syncSelectedValueToSw: syncVSw
                 } = this ,
-                synced = closedCbs.includes( syncVSw ) ;
+                synced = closedCbs.includes( syncVSw )
             // 未加入过回调
             if ( !synced ) {
-                closedCbs.push( syncVSw ) ;
+                closedCbs.push( syncVSw )
             }
             // 异步关闭 可取消关闭，下拉框存在是click事件执行的条件
-            let { promise , cancel } = makeCancelable( timeout( 50 ) ) ;
-            this.__delayBlurCloseDropdownCancel = cancel ;
+            let { promise , cancel } = makeCancelable( timeout( 50 ) )
+            this.__delayBlurCloseDropdownCancel = cancel
             try {
-                await promise ;
-                this._toggleOptions( false ) ;
+                await promise
+                this._toggleOptions( false )
             } catch ( e ) {
                 if ( e.isCanceled !== true ) {
                     // eslint-disable-next-line
-                    console.warn(e);
+                    console.warn(e)
                 }
             }
         } ,
         _searchWordChange() {
-            this._toggleOptions( true ) ;
+            this._toggleOptions( true )
         } ,
         _checkFilterOption( searchWord , label , item ) {
             // type item vNode || option
             let { filterOption } = this ,
-                isFunc = typeof filterOption === `function` ;
+                isFunc = typeof filterOption === `function`
             if ( isFunc ) {
-                return filterOption( searchWord , label , item ) === true ;
+                return filterOption( searchWord , label , item ) === true
             } else {
-                filterOption = filterOption === true ;
+                filterOption = filterOption === true
                 if ( filterOption ) {
                     let type = typeof label ,
                         validLabel =
@@ -170,12 +170,12 @@ export default {
                             ( type === `string` || type === `number` ) ,
                         bool = validLabel
                             ? String( label ).includes( searchWord )
-                            : true ;
-                    return bool ;
+                            : true
+                    return bool
                 } else {
-                    return true ;
+                    return true
                 }
             }
         }
     }
-} ;
+}

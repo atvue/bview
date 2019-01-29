@@ -103,18 +103,18 @@
 </template>
 
 <script>
-import Dropdown from '../dropdown' ;
-import Input from '../input' ;
-import Option from './option' ;
-import { bviewPrefix as b } from '../../utils/macro' ;
-import optionList , { isOption } from './helper/optionList' ;
-import keyboard from './helper/keyboard' ;
-import scrollActiveIndex from './helper/scrollActiveIndex' ;
-import searchWord from './helper/searchWord' ;
-import SlotRender from './helper/slotRender' ;
-import { getVnodesTxt } from './helper/traverseVnode' ;
-import TriggerIcon from './component/triggerIcon' ;
-import { selectName } from './helper/name' ;
+import Dropdown from '../dropdown'
+import Input from '../input'
+import Option from './option'
+import { bviewPrefix as b } from '../../utils/macro'
+import optionList , { isOption } from './helper/optionList'
+import keyboard from './helper/keyboard'
+import scrollActiveIndex from './helper/scrollActiveIndex'
+import searchWord from './helper/searchWord'
+import SlotRender from './helper/slotRender'
+import { getVnodesTxt } from './helper/traverseVnode'
+import TriggerIcon from './component/triggerIcon'
+import { selectName } from './helper/name'
 
 export default {
     name: selectName ,
@@ -158,7 +158,7 @@ export default {
         }
     } ,
     data() {
-        let slotOptions = this.$slots.default ;
+        let slotOptions = this.$slots.default
         return {
             selected: undefined ,
             activeIndex: undefined ,
@@ -167,66 +167,66 @@ export default {
             b ,
             searchWord: `` ,
             slotOptions: slotOptions ? slotOptions : []
-        } ;
+        }
     } ,
     computed: {
         hasSelected() {
-            return this.selected !== undefined ;
+            return this.selected !== undefined
         } ,
         placeholderLabel() {
             let { placeholder } = this ,
-                hasPlaceholder = placeholder !== undefined ;
-            return hasPlaceholder ? placeholder : `\u2003` ;
+                hasPlaceholder = placeholder !== undefined
+            return hasPlaceholder ? placeholder : `\u2003`
         } ,
         activeOption() {
-            let { activeIndex , optionList } = this ;
+            let { activeIndex , optionList } = this
             if ( activeIndex === undefined ) {
-                return undefined ;
+                return undefined
             }
-            return optionList[ activeIndex ] ;
+            return optionList[ activeIndex ]
         } ,
         hasOptions() {
-            let { options } = this ;
-            return options !== undefined && options !== null ;
+            let { options } = this
+            return options !== undefined && options !== null
         } ,
         selectedLabel() {
-            let { selected , hasSelected } = this ;
+            let { selected , hasSelected } = this
             if ( hasSelected ) {
                 let hasLabel = selected.label !== undefined ,
                     txt = hasLabel ? selected.label : selected.value ,
                     isStr = typeof txt === `string` ,
                     isObj = typeof txt === `object` ,
-                    canFormat = true ;
+                    canFormat = true
                 if ( isObj ) {
                     try {
-                        JSON.stringify( txt ) ;
-                        canFormat = true ;
+                        JSON.stringify( txt )
+                        canFormat = true
                     } catch ( e ) {
-                        canFormat = false ;
+                        canFormat = false
                     }
                 }
-                return isStr ? txt.trim() : canFormat ? txt : `\u{3000}` ; // 中文全角空格
+                return isStr ? txt.trim() : canFormat ? txt : `\u{3000}` // 中文全角空格
             } else {
-                return undefined ;
+                return undefined
             }
         } ,
         clsSelectInner() {
             let { showSearch } = this ,
-                cls = `${b}-select-inner` ;
+                cls = `${b}-select-inner`
             if ( showSearch ) {
-                cls += ` ${b}-select-search-inner` ;
+                cls += ` ${b}-select-search-inner`
             }
-            return cls ;
+            return cls
         } ,
         filterSlotOptions() {
-            let { hasOptions } = this ;
+            let { hasOptions } = this
             // :options方式绑定的，通过另外一种方式过滤
             if ( hasOptions ) {
-                return [] ;
+                return []
             }
-            let { slotOptions , searchWord , showSearch } = this ;
+            let { slotOptions , searchWord , showSearch } = this
             if ( showSearch ) {
-                searchWord = searchWord.trim() ;
+                searchWord = searchWord.trim()
                 let hasSearchWord =
                         searchWord !== undefined &&
                         searchWord !== null &&
@@ -237,21 +237,20 @@ export default {
                             let { componentOptions: op } = vNode ,
                                 { children } = op ,
                                 text = getVnodesTxt( children ) ,
-                                needFilter =
-                                    hasSearchWord && text !== undefined ;
+                                needFilter = hasSearchWord && text !== undefined
                             if ( needFilter ) {
                                 let reserver = this._checkFilterOption(
                                     searchWord ,
                                     text ,
                                     vNode
-                                ) ;
-                                return reserver ;
+                                )
+                                return reserver
                             }
-                            return true ;
-                        } ) ;
-                return validOptions ;
+                            return true
+                        } )
+                return validOptions
             } else {
-                return slotOptions ;
+                return slotOptions
             }
         } ,
         searchResultNoList() {
@@ -267,83 +266,83 @@ export default {
                     searchWord.trim() !== `` ,
                 slotOpsNone = filterSlotOptions.length === 0 ,
                 attrOpsNone = filterAttrBindOptions.length === 0 ,
-                noList = hasOptions ? attrOpsNone : slotOpsNone ;
+                noList = hasOptions ? attrOpsNone : slotOpsNone
             if ( hasSearchWord && noList ) {
-                return true ;
+                return true
             } else {
-                return false ;
+                return false
             }
         }
     } ,
     watch: {
         visibleOptions( val , oldVal ) {
             let changed = val !== oldVal ,
-                calc = changed && val ;
+                calc = changed && val
             if ( calc ) {
-                this._clacOptionWrapperWidth() ;
+                this._clacOptionWrapperWidth()
             }
         } ,
         value( val , oldVal ) {
-            let changed = val !== oldVal ;
+            let changed = val !== oldVal
             if ( changed ) {
-                this._syncValueWithSelected() ;
+                this._syncValueWithSelected()
             }
         }
     } ,
     created() {
-        this.__options = [] ;
-        this.__dropdownClosedCallBacks = [] ;
-        this.__delayBlurCloseDropdownCancel = undefined ;
-        this.$on( `click-option` , this._clickOption ) ;
-        this.$on( `register-option` , this._regsiterOption ) ;
-        this.$on( `un-register-option` , this._unRegsiterOption ) ;
+        this.__options = []
+        this.__dropdownClosedCallBacks = []
+        this.__delayBlurCloseDropdownCancel = undefined
+        this.$on( `click-option` , this._clickOption )
+        this.$on( `register-option` , this._regsiterOption )
+        this.$on( `un-register-option` , this._unRegsiterOption )
         // 初次加载 填充legend
-        this._setValue() ;
+        this._setValue()
     } ,
     destroyed() {
-        this.__options = undefined ;
-        this.__dropdownClosedCallBacks = undefined ;
-        this.__delayBlurCloseDropdownCancel = undefined ;
+        this.__options = undefined
+        this.__dropdownClosedCallBacks = undefined
+        this.__delayBlurCloseDropdownCancel = undefined
     } ,
     updated() {
-        this._syncSlotOptions() ;
+        this._syncSlotOptions()
     } ,
     methods: {
         _getSelectedOptionIndex() {
-            let { selected , optionList , hasSelected } = this ;
+            let { selected , optionList , hasSelected } = this
             if ( hasSelected ) {
                 let index = optionList.findIndex(
                         item => item.value === selected.value
                     ) ,
-                    hasIndex = index > -1 ;
-                return hasIndex ? index : undefined ;
+                    hasIndex = index > -1
+                return hasIndex ? index : undefined
             } else {
-                return undefined ;
+                return undefined
             }
         } ,
         async _clickTrigger() {
-            let { showSearch , visibleInput } = this ;
+            let { showSearch , visibleInput } = this
             if ( showSearch === false ) {
-                this._toggleOptions() ;
+                this._toggleOptions()
             } else {
                 if ( visibleInput ) {
-                    return ;
+                    return
                 }
-                this.visibleInput = true ;
-                await this.$nextTick() ;
+                this.visibleInput = true
+                await this.$nextTick()
                 let {
                     $refs: { vmSearch }
-                } = this ;
-                vmSearch.focus() ;
+                } = this
+                vmSearch.focus()
             }
         } ,
         _toggleOptions( flag ) {
             let { visibleOptions } = this ,
-                confrimedVisible = flag !== undefined ;
+                confrimedVisible = flag !== undefined
             if ( confrimedVisible ) {
-                this.visibleOptions = flag ;
+                this.visibleOptions = flag
             } else {
-                this.visibleOptions = !visibleOptions ;
+                this.visibleOptions = !visibleOptions
             }
         } ,
         _clacOptionWrapperWidth() {
@@ -351,101 +350,101 @@ export default {
                     $refs: { select }
                 } = this ,
                 rect = select.getBoundingClientRect() ,
-                { width } = rect ;
-            this.styleOptionWrapper = `width: ${width}px` ;
+                { width } = rect
+            this.styleOptionWrapper = `width: ${width}px`
         } ,
         _checkIfScrollOption() {
             let { activeIndex } = this ,
-                hasActive = activeIndex !== undefined ;
+                hasActive = activeIndex !== undefined
             if ( hasActive ) {
-                this._scrollOptions( activeIndex ) ;
+                this._scrollOptions( activeIndex )
             }
         } ,
         _clickOption( { payload , disabled } ) {
-            let { __delayBlurCloseDropdownCancel: cancel } = this ;
-            cancel && cancel() ;
+            let { __delayBlurCloseDropdownCancel: cancel } = this
+            cancel && cancel()
             if ( disabled ) {
-                return ;
+                return
             }
-            let { value , label } = payload ;
-            this.selected = { value , label } ;
-            this._emitInput() ;
-            this._toggleOptions( false ) ;
+            let { value , label } = payload
+            this.selected = { value , label }
+            this._emitInput()
+            this._toggleOptions( false )
         } ,
         _setValue() {
             let { optionList , value , labelInValue } = this ,
-                valueDefined = value !== undefined ;
+                valueDefined = value !== undefined
             if ( valueDefined ) {
                 let target = optionList.find( ( { value: val } ) => {
                         return labelInValue
                             ? value.value === val
-                            : val === value ;
+                            : val === value
                     } ) ,
-                    hasValue = target !== undefined ;
+                    hasValue = target !== undefined
                 if ( hasValue ) {
-                    let index = optionList.findIndex( item => item === target ) ;
-                    this.selected = { ...target } ;
-                    this.activeIndex = index ;
+                    let index = optionList.findIndex( item => item === target )
+                    this.selected = { ...target }
+                    this.activeIndex = index
                 } else {
-                    let newSelected = labelInValue ? { ...value } : { value } ;
-                    this.selected = newSelected ;
+                    let newSelected = labelInValue ? { ...value } : { value }
+                    this.selected = newSelected
                 }
             }
         } ,
         _regsiterOption( vm ) {
-            let { __options } = this ;
-            __options.push( vm ) ;
+            let { __options } = this
+            __options.push( vm )
         } ,
         _unRegsiterOption( vm ) {
             let { __options } = this ,
                 index = __options.indexOf( vm ) ,
-                hasIndex = index > -1 ;
+                hasIndex = index > -1
             if ( hasIndex ) {
-                __options.splice( index , 1 ) ;
+                __options.splice( index , 1 )
             }
         } ,
         _dropdownOpen() {
-            this._checkIfScrollOption() ;
+            this._checkIfScrollOption()
         } ,
         _dropdownClosed() {
-            this._resetActiveIndex() ;
-            this._doClosedCallbacks() ;
+            this._resetActiveIndex()
+            this._doClosedCallbacks()
         } ,
         _doClosedCallbacks() {
-            let { __dropdownClosedCallBacks: callbacks } = this ;
+            let { __dropdownClosedCallBacks: callbacks } = this
             if ( callbacks ) {
                 for ( let cb of callbacks ) {
-                    cb() ;
+                    cb()
                 }
             }
             // 执行完就清空
-            this.__dropdownClosedCallBacks = [] ;
+            this.__dropdownClosedCallBacks = []
         } ,
         _resetActiveIndex() {
-            let index = this._getSelectedOptionIndex() ;
+            let index = this._getSelectedOptionIndex()
             if ( index !== undefined ) {
-                this.activeIndex = index ;
+                this.activeIndex = index
             } else {
-                this.activeIndex = undefined ;
+                this.activeIndex = undefined
             }
         } ,
         _keyEnter() {
             let { activeIndex , visibleOptions , optionList } = this ,
                 hiddenDropdown = visibleOptions === false ,
-                noneSelected = activeIndex === undefined ;
+                noneSelected = activeIndex === undefined
             if ( noneSelected || hiddenDropdown ) {
-                let isFocusNeedOpen = this._checkIsTabActive() ;
+                let isFocusNeedOpen = this._checkIsTabActive()
                 if ( isFocusNeedOpen ) {
-                    this._toggleOptions() ;
+                    this._toggleOptions()
                 }
             } else {
                 // activeIndex tre , visible true
                 let targetOption = optionList[ activeIndex ] ,
-                    { value , label } = targetOption ;
-                this.selected = { value , label } ;
-                this._emitInput() ;
-                this._triggerSearchInputBlur() ;
-                this._toggleOptions() ;
+                    { value , label } = targetOption
+                this.selected = { value , label }
+                this._emitInput()
+                this._triggerSearchInputBlur()
+                this._toggleOptions()
             }
         } ,
         _keyTab( event ) {
@@ -454,17 +453,17 @@ export default {
                     visibleOptions
                 } = this ,
                 visible = visibleOptions === true ,
-                currentEl = event.target === select ;
+                currentEl = event.target === select
             if ( visible && currentEl ) {
-                this._toggleOptions() ;
+                this._toggleOptions()
             }
         } ,
         _checkIsTabActive() {
             let {
                     $refs: { select }
                 } = this ,
-                flag = document.activeElement === select ;
-            return flag ;
+                flag = document.activeElement === select
+            return flag
         } ,
         _emitInput() {
             let {
@@ -472,10 +471,10 @@ export default {
                     labelInValue ,
                     $refs: { select }
                 } = this ,
-                { value , label } = selected ;
+                { value , label } = selected
             // @doc 选中值变化触发input事件
-            this.$emit( `input` , labelInValue ? { value , label } : value ) ;
-            select.focus() ;
+            this.$emit( `input` , labelInValue ? { value , label } : value )
+            select.focus()
         } ,
         _syncValueWithSelected() {
             let {
@@ -492,68 +491,68 @@ export default {
                         ? outData.value
                         : outData
                     : undefined ,
-                sameValue = outDataValue === selectdValue ;
+                sameValue = outDataValue === selectdValue
             if ( sameValue ) {
-                return ;
+                return
             }
             let clonedValue = hasOutValue
                     ? labelInValue
                         ? { ...outData }
                         : outData
                     : undefined ,
-                newSelected = labelInValue ? clonedValue : { value: outData } ;
+                newSelected = labelInValue ? clonedValue : { value: outData }
             // 追加label属性
             if ( labelInValue === false ) {
                 let target = optionList.find( ( { value } ) => value === outData ) ,
                     hasTarget = target !== undefined ,
-                    label = hasTarget ? target.label : undefined ;
-                Object.assign( newSelected , { label } ) ;
+                    label = hasTarget ? target.label : undefined
+                Object.assign( newSelected , { label } )
             }
-            this.selected = newSelected ;
-            let index = this._getSelectedOptionIndex() ;
-            this.activeIndex = index ;
+            this.selected = newSelected
+            let index = this._getSelectedOptionIndex()
+            this.activeIndex = index
         } ,
         _syncSlotOptions() {
-            let changed = this.slotOptions !== this.$slots.default ;
+            let changed = this.slotOptions !== this.$slots.default
             if ( changed ) {
                 this.slotOptions = this.$slots.default
                     ? this.$slots.default
-                    : [] ;
+                    : []
             }
         } ,
         _triggerSearchInputBlur() {
             let {
                 showSearch ,
                 $refs: { vmSearch }
-            } = this ;
+            } = this
             if ( showSearch ) {
-                vmSearch.blur() ;
+                vmSearch.blur()
             }
         } ,
         _clickIcon( event ) {
-            event.stopPropagation() ;
+            event.stopPropagation()
             let {
                 __delayBlurCloseDropdownCancel: cancel ,
                 visibleOptions ,
                 showSearch
-            } = this ;
-            cancel && cancel() ;
-            this._toggleOptions() ;
+            } = this
+            cancel && cancel()
+            this._toggleOptions()
             if ( showSearch ) {
-                this.visibleInput = !visibleOptions ;
+                this.visibleInput = !visibleOptions
                 this.$nextTick().then( () => {
                     let {
                         visibleOptions ,
                         $refs: { vmSearch }
-                    } = this ;
+                    } = this
                     if ( visibleOptions ) {
-                        vmSearch.focus() ;
+                        vmSearch.focus()
                     } else {
-                        vmSearch.blur() ;
+                        vmSearch.blur()
                     }
-                } ) ;
+                } )
             }
         }
     }
-} ;
+}
 </script>

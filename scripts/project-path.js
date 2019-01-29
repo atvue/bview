@@ -1,16 +1,16 @@
-const path = require( `path` ) ;
+const path = require( `path` )
 
-const root = process.cwd() ;
+const root = process.cwd()
 
 function resolvePath( ...args ) {
-    return path.resolve( root , ...args ) ;
+    return path.resolve( root , ...args )
 }
 
-const src = resolvePath( `./src` ) ;
+const src = resolvePath( `./src` )
 
 function transform2RelativePath( path ) {
-    let remainPath = path.replace( `${root}/` , `` ) ;
-    return remainPath ;
+    let remainPath = path.replace( `${root}/` , `` )
+    return remainPath
 }
 
 module.exports = {
@@ -18,4 +18,4 @@ module.exports = {
     site: resolvePath( `site` ) ,
     components: resolvePath( `src` , `components` ) ,
     transform2RelativePath
-} ;
+}

@@ -1,6 +1,6 @@
-import Icon from '../index.js' ;
-import renderClose from '../../../icons/close' ;
-import { mount } from '@vue/test-utils' ;
+import Icon from '../index.js'
+import renderClose from '../../../icons/close'
+import { mount } from '@vue/test-utils'
 
 describe( `Icon测试套件` , () => {
     test( `创建Icon成功` , () => {
@@ -8,7 +8,7 @@ describe( `Icon测试套件` , () => {
             propsData: {
                 svg: renderClose
             }
-        } ) ;
-        expect( wrapper.isVueInstance() ).toBeTruthy() ;
-    } ) ;
-} ) ;
+        } )
+        expect( wrapper.isVueInstance() ).toBeTruthy()
+    } )
+} )

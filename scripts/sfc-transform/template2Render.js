@@ -1,13 +1,13 @@
-const compiler = require( `vue-template-compiler` ) ;
-const transpile = require( `vue-template-es2015-compiler` ) ;
-const NullSFCScriptExport = `export default {}` ;
-const babel = require( `@babel/core` ) ;
-const babelPluginImportBview = require( `../babel-helper/babel-plugin-import-bview` ) ;
-const babelPluginDefault2Export = require( `../babel-helper/babel-plugin-default2export` ) ;
+const compiler = require( `vue-template-compiler` )
+const transpile = require( `vue-template-es2015-compiler` )
+const NullSFCScriptExport = `export default {}`
+const babel = require( `@babel/core` )
+const babelPluginImportBview = require( `../babel-helper/babel-plugin-import-bview` )
+const babelPluginDefault2Export = require( `../babel-helper/babel-plugin-default2export` )
 
 const withStatement2RenderFunction = withStmt => {
-    return transpile( `function render() { ${withStmt} }` ) ;
-} ;
+    return transpile( `function render() { ${withStmt} }` )
+}
 /**
  * 1、<template></template> <scritpt></scritpt> -> vue Object literal
 
@@ -34,20 +34,20 @@ const parse = ( content , name ) => {
             content === null ||
             content.trim() === ``
         ) {
-            return j( new Error( `解析的vue文件内容不能为空` ) ) ;
+            return j( new Error( `解析的vue文件内容不能为空` ) )
         }
         let vueDescriptor = compiler.parseComponent( content ) ,
             { template , script } = vueDescriptor ,
             scriptTxt = script ? script.content : NullSFCScriptExport ,
             templateTxt = template ? template.content : `` ,
             result = compiler.compile( templateTxt ) ,
-            { render , staticRenderFns , errors } = result ;
+            { render , staticRenderFns , errors } = result
 
         if ( errors.length > 0 ) {
             let parseTemplateError = new Error(
                 `编译vue的template文件出错，${errors}`
-            ) ;
-            return j( parseTemplateError ) ;
+            )
+            return j( parseTemplateError )
         }
         babel
             .transformAsync( scriptTxt , {
@@ -72,13 +72,13 @@ const parse = ( content , name ) => {
                 babel
                     .transformFromAstAsync( ast )
                     .then( ( { code } ) => {
-                        r( code ) ;
+                        r( code )
                     } )
-                    .catch( j ) ;
+                    .catch( j )
             } )
-            .catch( j ) ;
-    } ) ;
-} ;
+            .catch( j )
+    } )
+}
 
 /* const tmp = `<template>
     <div>
@@ -99,4 +99,4 @@ parse( tmp ).then( data => {
 } )
  */
 
-exports.parse = parse ;
+exports.parse = parse

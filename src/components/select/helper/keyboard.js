@@ -1,12 +1,12 @@
 export const fixOverflow = ( total , now ) => {
     if ( now < 0 ) {
-        return total - 1 ;
+        return total - 1
     }
     if ( now >= total ) {
-        return 0 ;
+        return 0
     }
-    return now ;
-} ;
+    return now
+}
 
 const keyMap = {
     left: 37 ,
@@ -15,45 +15,45 @@ const keyMap = {
     down: 40 ,
     enter: 13 ,
     tab: 9
-} ;
+}
 
 export const loopFindEnable = ( list , index , up = false ) => {
     let r ,
-        size = list.length ;
+        size = list.length
     for ( let i = index , loop = 0 ;up ? i >= 0 : i < size ;up ? i-- : i++ ) {
         let target = list[ i ] ,
-            { disabled } = target ;
+            { disabled } = target
         if ( i === index ) {
-            loop++ ;
+            loop++
         }
         // 经历了一次闭环，跳出
         if ( loop === 2 ) {
-            break ;
+            break
         }
         if ( disabled ) {
             // 到头，继续从size-1向上找
             if ( up && i === 0 ) {
-                i = size ;
+                i = size
             }
             // 到尾，继续从0向下找
             if ( !up && i === size - 1 ) {
-                i = -1 ;
+                i = -1
             }
-            continue ;
+            continue
         } else {
-            r = i ;
-            break ;
+            r = i
+            break
         }
     }
-    return r ;
-} ;
+    return r
+}
 
 export default {
     mounted() {
-        document.addEventListener( `keydown` , this._keydown ) ;
+        document.addEventListener( `keydown` , this._keydown )
     } ,
     destroyed() {
-        document.removeEventListener( `keydown` , this._keydown ) ;
+        document.removeEventListener( `keydown` , this._keydown )
     } ,
     methods: {
         _keydown( event ) {
@@ -66,37 +66,37 @@ export default {
                 isEnter = which === keyMap.enter ,
                 isTab = which === keyMap.tab ,
                 upward = isLeft || isUp ,
-                downward = isRight || isDown ;
+                downward = isRight || isDown
             if ( upward || downward ) {
-                this._scrollDropdownDir( event , upward ) ;
+                this._scrollDropdownDir( event , upward )
             }
             if ( isEnter ) {
-                this._keyEnter( event ) ;
+                this._keyEnter( event )
             }
             if ( isTab ) {
-                this._keyTab( event ) ;
+                this._keyTab( event )
             }
         } ,
         _scrollDropdownDir( event , up ) {
-            let { visibleOptions: visible } = this ;
+            let { visibleOptions: visible } = this
             if ( visible ) {
-                event.preventDefault() ;
-                this._scrollOptionWrapper( up ) ;
+                event.preventDefault()
+                this._scrollOptionWrapper( up )
             }
         } ,
         _scrollOptionWrapper( up ) {
             let { activeIndex , optionList } = this ,
                 total = optionList.length ,
                 hasActiveIndex = activeIndex !== undefined ,
-                nextIndex = undefined ;
+                nextIndex = undefined
             if ( hasActiveIndex ) {
-                nextIndex = up ? activeIndex - 1 : activeIndex + 1 ;
+                nextIndex = up ? activeIndex - 1 : activeIndex + 1
             } else {
-                nextIndex = up ? total - 1 : 0 ;
+                nextIndex = up ? total - 1 : 0
             }
-            nextIndex = fixOverflow( total , nextIndex ) ;
-            nextIndex = loopFindEnable( optionList , nextIndex , up ) ;
-            this.activeIndex = nextIndex ;
+            nextIndex = fixOverflow( total , nextIndex )
+            nextIndex = loopFindEnable( optionList , nextIndex , up )
+            this.activeIndex = nextIndex
         }
     }
-} ;
+}

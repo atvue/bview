@@ -21,9 +21,9 @@
 </template>
 
 <script>
-import { findComponentUpward } from '../../utils/assist' ;
+import { findComponentUpward } from '../../utils/assist'
 
-const prefix = `bview` ;
+const prefix = `bview`
 
 export default {
     name: `Checkbox` ,
@@ -66,11 +66,11 @@ export default {
             groupName: this.name ,
             isGroup: false ,
             parent: undefined
-        } ;
+        }
     } ,
     computed: {
         checkboxClass: function() {
-            return `${prefix}-checkbox-${this.size}` ;
+            return `${prefix}-checkbox-${this.size}`
         } ,
         innerClass: function() {
             return [
@@ -90,40 +90,40 @@ export default {
                 {
                     [ `${prefix}-checkbox-inner-half-checked` ]: this.halfChecked
                 }
-            ] ;
+            ]
         }
     } ,
     watch: {
         value( value ) {
             if ( !this.isGroup ) {
-                this.isChecked = value ;
+                this.isChecked = value
             }
         }
     } ,
     mounted() {
-        this.parent = findComponentUpward( this , `CheckboxGroup` ) ;
+        this.parent = findComponentUpward( this , `CheckboxGroup` )
     } ,
     methods: {
         _change() {
             if ( this.disabled ) {
-                return false ;
+                return false
             }
 
             if ( this.halfChecked ) {
-                this.isChecked = false ;
+                this.isChecked = false
             } else {
-                this.isChecked = !this.isChecked ;
+                this.isChecked = !this.isChecked
             }
 
             if ( this.isGroup ) {
-                this.parent._changeValue( this.value ) ;
+                this.parent._changeValue( this.value )
             } else {
                 //@doc 结合v-model，触发input事件，参数当前值
-                this.$emit( `input` , this.isChecked ) ;
+                this.$emit( `input` , this.isChecked )
                 //@doc 单个使用时候value改变事件，参数value
-                this.$emit( `on-change` , this.isChecked ) ;
+                this.$emit( `on-change` , this.isChecked )
             }
         }
     }
-} ;
+}
 </script>

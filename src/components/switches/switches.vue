@@ -34,9 +34,9 @@
     </span>
 </template>
 <script>
-import Icon from '../icon' ;
-import { bviewPrefix as b } from '../../utils/macro' ;
-import loadIcon from '../../icons/loading' ;
+import Icon from '../icon'
+import { bviewPrefix as b } from '../../utils/macro'
+import loadIcon from '../../icons/loading'
 export default {
     name: `Switches` ,
     components: { Icon } ,
@@ -77,7 +77,7 @@ export default {
             currentValue: this.value ,
             loadIcon: loadIcon ,
             b
-        } ;
+        }
     } ,
     computed: {
         wrapClasses() {
@@ -88,20 +88,20 @@ export default {
                     [ `${b}-switch-disabled` ]: this.disabled
                     // [`${prefixCls}-loading`]: this.loading
                 }
-            ] ;
+            ]
         }
     } ,
     methods: {
         $_toggle() {
-            event.preventDefault() ;
+            event.preventDefault()
             if ( this.disabled || this.loading ) {
-                return false ;
+                return false
             }
-            let checked = !this.currentValue ;
-            this.currentValue = checked ;
+            let checked = !this.currentValue
+            this.currentValue = checked
             //@doc开关切换时触发
-            this.$emit( `input` , checked ) ;
+            this.$emit( `input` , checked )
         }
     }
-} ;
+}
 </script>

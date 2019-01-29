@@ -52,10 +52,10 @@
 </template>
 <script>
 //const prefixCls = "bview-input";
-import CloseIcon from '../../icons/close' ;
-import searchIcon from '../../icons/search' ;
-import Icon from '../icon' ;
-import { bviewPrefix as b } from '../../utils/macro' ;
+import CloseIcon from '../../icons/close'
+import searchIcon from '../../icons/search'
+import Icon from '../icon'
+import { bviewPrefix as b } from '../../utils/macro'
 export default {
     name: `Input` ,
     components: {
@@ -124,7 +124,7 @@ export default {
             closeIcon: CloseIcon ,
             searchIcon: searchIcon ,
             b: b
-        } ;
+        }
     } ,
     computed: {
         inputClasses() {
@@ -136,58 +136,58 @@ export default {
                     [ `${b}-input-with-append` ]:
                         this.search || this.$slots.append
                 }
-            ] ;
+            ]
         }
     } ,
     watch: {
         value( val ) {
-            this.$_setCurrentValue( val ) ;
+            this.$_setCurrentValue( val )
         }
     } ,
     methods: {
         $_setCurrentValue( val ) {
-            this.currentValue = val ;
+            this.currentValue = val
         } ,
         $_handleEnter( event ) {
             if ( this.search && !this.disabled ) {
                 //@doc开启 search 时可用，点击搜索或按下回车键时触发
-                this.$emit( `search` , event , this.currentValue ) ;
+                this.$emit( `search` , event , this.currentValue )
             }
             //@doc enter键时触发
-            this.$emit( `enter` , event ) ;
+            this.$emit( `enter` , event )
         } ,
         $_clickInput( event ) {
-            this.$emit( `click` , event ) ;
+            this.$emit( `click` , event )
         } ,
         $_handleInput( event ) {
-            let value = event.target.value ;
+            let value = event.target.value
             //@doc 输入框改变时触发
-            this.$emit( `input` , value ) ;
-            this.$_setCurrentValue( value ) ;
+            this.$emit( `input` , value )
+            this.$_setCurrentValue( value )
         } ,
         $_handleFocus( event ) {
             //@doc聚焦时触发
-            this.$emit( `focus` , event ) ;
+            this.$emit( `focus` , event )
         } ,
         $_handleBlur( event ) {
             //@doc失焦时触发
-            this.$emit( `blur` , event ) ;
+            this.$emit( `blur` , event )
         } ,
         $_handleClear() {
-            this.$emit( `input` , `` ) ;
-            this.$_setCurrentValue( `` ) ;
+            this.$emit( `input` , `` )
+            this.$_setCurrentValue( `` )
         } ,
         $_handleSearch( event ) {
-            this.$emit( `search` , event , this.currentValue ) ;
+            this.$emit( `search` , event , this.currentValue )
         } ,
         //@doc手动聚焦
         focus() {
-            this.$refs.input.focus() ;
+            this.$refs.input.focus()
         } ,
         //@doc手动失焦
         blur() {
-            this.$refs.input.blur() ;
+            this.$refs.input.blur()
         }
     }
-} ;
+}
 </script>

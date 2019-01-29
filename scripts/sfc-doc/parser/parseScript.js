@@ -1,66 +1,66 @@
 // 解析经过pabel parser得出的js ast
 // 找到 props  emit
-const traverse = require( `@babel/traverse` ).default ;
-const bt = require( `babel-types` ) ;
-const generate = require( `@babel/generator` ).default ;
+const traverse = require( `@babel/traverse` ).default
+const bt = require( `babel-types` )
+const generate = require( `@babel/generator` ).default
 
 const COMMENTTAG = `@doc` ,
     ignoreCommentReg = new RegExp( `^\\s*-${COMMENTTAG}` ) , // -@doc 忽略输出当前的API
     tagbeginReg = new RegExp( `^${COMMENTTAG}` ) ,
     tagblock = new RegExp( `@docbegin[\\s\\S]*?@docend` ) ,
     tagReg = new RegExp( `(${COMMENTTAG}(begin|end|)|\\*)` , `g` ) ,
-    newLineReg = /\n/g ;
+    newLineReg = /\n/g
 
 // 获取prop 的 type
 function getType( node ) {
-    let type = `` ;
+    let type = ``
     // xxx: String 形式
     if ( bt.isNullLiteral( node ) ) {
         // `null` 匹配任何类型 https://vuejs.org/v2/guide/components-props.html#Prop-Validation
-        type = `any 任何类型` ;
+        type = `any 任何类型`
     }
     if ( bt.isIdentifier( node ) ) {
         // debugger;
-        type = node.name ;
+        type = node.name
     }
     // xxx: [Number, Array] 形式
     if ( bt.isArrayExpression( node ) ) {
-        type = generate( node ).code ;
+        type = generate( node ).code
     }
-    return type ;
+    return type
 }
 // 获取prop 的 default
 function getDefault( value ) {
     // debugger;
-    let res ;
+    let res
     // default是function形式
     if ( bt.isArrowFunctionExpression( value ) || bt.isFunctionExpression( value ) ) {
-        let helpfunc = new Function( `return (${generate( value ).code})` )() ;
+        let helpfunc = new Function( `return (${generate( value ).code})` )()
         // 转化成字面量形式
-        res = JSON.stringify( helpfunc() ) ;
+        res = JSON.stringify( helpfunc() )
     } else {
         // default是字面量形式
-        res = generate( value ).code ;
+        res = generate( value ).code
     }
-    return res ;
+    return res
 }
 // @docbegin.*? docend
 // 获取注释
 // 过滤指定tag开头的注释，并用<br/>拼接，换行符更换成<br/>
 function getComment( node ) {
-    let { leadingComments } = node ;
+    let { leadingComments } = node
 
     if ( leadingComments !== undefined && leadingComments.length > 0 ) {
         let tarComments = leadingComments
             .filter( ( { value , type } ) => {
-                let trimVal = value.trim() ;
+                let trimVal = value.trim()
                 if ( type === `CommentBlock` ) {
                     // 区块注释
-                    return tagblock.test( trimVal ) ;
+                    return tagblock.test( trimVal )
                     // debugger;
                 } else {
                     // 行注释
-                    return tagbeginReg.test( value.trim() ) ;
+                    return tagbeginReg.test( value.trim() )
                 }
             } )
             .map( ( { value } ) => {
@@ -68,11 +68,11 @@ function getComment( node ) {
                     .trim()
                     .replace( tagReg , `` )
                     .replace( newLineReg , `<br/>` )
-                    .trim() ;
-            } ) ;
-        return tarComments.join( `<br/>` ).trim() ;
+                    .trim()
+            } )
+        return tarComments.join( `<br/>` ).trim()
     } else {
-        return `` ;
+        return ``
     }
 }
 
@@ -80,26 +80,26 @@ function getComment( node ) {
 // 以事件名为key值
 let emitEvents = [] ,
     propsRes = [] ,
-    apiMethods = [] ;
+    apiMethods = []
 
 module.exports = astJs => {
-    emitEvents = [] ;
-    propsRes = [] ;
-    apiMethods = [] ;
+    emitEvents = []
+    propsRes = []
+    apiMethods = []
     traverse( astJs , {
         ExportDefaultDeclaration( exportDefaultPath ) {
             exportDefaultPath.traverse( {
                 Property( path ) {
                     // props
                     if ( path.node.key.name === `props` ) {
-                        let propsPath = path.get( `value` ) ;
+                        let propsPath = path.get( `value` )
                         // debugger;
                         // let
                         propsPath.traverse( {
                             Property( path ) {
                                 if ( path.parentPath !== propsPath ) {
                                     // 仅查找同级节点，parent都是props
-                                    return ;
+                                    return
                                 }
 
                                 let prop = {
@@ -109,14 +109,14 @@ module.exports = astJs => {
                                     required: false ,
                                     default: undefined ,
                                     validator: undefined
-                                } ;
-                                prop.name = path.node.key.name ;
+                                }
+                                prop.name = path.node.key.name
                                 // 获取注释
                                 // @NOTE 暂定为获取距离最近的一行
-                                prop.describe = getComment( path.node ) ;
+                                prop.describe = getComment( path.node )
                                 // debugger;
                                 // 判断prop的值
-                                let { value } = path.node ;
+                                let { value } = path.node
                                 // debugger;
                                 // xxx: {type: xxx ... } 形式
                                 if ( bt.isObjectExpression( value ) ) {
@@ -124,62 +124,62 @@ module.exports = astJs => {
                                         Property( path ) {
                                             // debugger;
                                             let { name } = path.node.key ,
-                                                { value } = path.node ;
+                                                { value } = path.node
                                             switch ( name ) {
                                             case `type`:
                                                 // debugger;
-                                                prop.type = getType( value ) ;
-                                                break ;
+                                                prop.type = getType( value )
+                                                break
                                             case `required`:
                                                 // debugger;
-                                                prop.required = value.value ;
-                                                break ;
+                                                prop.required = value.value
+                                                break
                                             case `default`:
                                                 prop[ name ] = getDefault(
                                                     value
-                                                ) ;
-                                                break ;
+                                                )
+                                                break
                                             case `validator`:
                                                 // 仅获取注释
                                                 prop[ name ] = getComment(
                                                     path.node
-                                                ) ;
-                                                break ;
+                                                )
+                                                break
                                             default:
-                                                break ;
+                                                break
                                             }
                                         }
-                                    } ) ;
+                                    } )
                                 } else {
                                     // xxx: xxx 或 xxx: [xx,xxx] 形式
                                     // 仅定义了prop的类型
-                                    prop.type = getType( value ) ;
+                                    prop.type = getType( value )
                                 }
 
                                 // 将validator合并到describe中
                                 if ( prop.validator !== undefined ) {
                                     prop.describe = `${prop.describe} ${
                                         prop.validator
-                                    }` ;
+                                    }`
                                 }
-                                propsRes.push( prop ) ;
+                                propsRes.push( prop )
                             }
-                        } ) ;
+                        } )
                     }
                     // methods
                     // @note 改成用jsdoc解析注释结构 生成描述、参数和返回值说明
                     if ( path.node.key.name === `methods` ) {
-                        let { properties } = path.node.value ;
+                        let { properties } = path.node.value
                         apiMethods = properties
                             .filter( e => {
-                                return /^[^(_|$_)]/.test( e.key.name ) ;
+                                return /^[^(_|$_)]/.test( e.key.name )
                             } )
                             .map( e => {
                                 return {
                                     name: e.key.name ,
                                     describe: getComment( e )
-                                } ;
-                            } ) ;
+                                }
+                            } )
                         // debugger;
                     }
                 } ,
@@ -190,11 +190,11 @@ module.exports = astJs => {
                         bt.isMemberExpression( path.node.callee ) &&
                         path.node.callee.property.name === `$emit`
                     ) {
-                        let { arguments: argts } = path.node ;
+                        let { arguments: argts } = path.node
                         // 第一个是事件名称，第二个是事件传参
                         let [ emitName , emitArg ] = argts ,
                             isTpLiteral = bt.isTemplateLiteral( emitName ) ,
-                            eventName ;
+                            eventName
                         // @NOTE 这里不能判断去重 traverse不是一个同步过程
                         // 检查emitEvents中是否存在 emitKey
                         // let exist =
@@ -209,60 +209,60 @@ module.exports = astJs => {
                         // 参数说明和事件说明都解析注释
                         let { leadingComments: comments } = path.parent ,
                             hasComments = comments && comments.length > 0 ,
-                            ignoreEmit = false ;
+                            ignoreEmit = false
                         if ( hasComments ) {
                             ignoreEmit = comments.some( ( { value } ) =>
                                 ignoreCommentReg.test( value )
-                            ) ;
+                            )
                         }
                         if ( ignoreEmit ) {
-                            return ;
+                            return
                         }
                         if ( isTpLiteral ) {
                             let nodes = [] ,
-                                { expressions , quasis } = emitName ;
-                            let index = 0 ;
+                                { expressions , quasis } = emitName
+                            let index = 0
                             for ( const elem of quasis ) {
                                 if ( elem.value.cooked ) {
                                     nodes.push(
                                         bt.stringLiteral( elem.value.cooked )
-                                    ) ;
+                                    )
                                 }
                                 if ( index < expressions.length ) {
-                                    const node = expressions[ index++ ] ;
+                                    const node = expressions[ index++ ]
                                     if (
                                         !bt.isStringLiteral( node , { value: `` } )
                                     ) {
-                                        nodes.push( node ) ;
+                                        nodes.push( node )
                                     }
                                 }
                             }
                             eventName = nodes.reduce(
                                 ( prev , next ) => prev + next.value ,
                                 ``
-                            ) ;
+                            )
                         } else {
-                            eventName = emitName.value ;
+                            eventName = emitName.value
                         }
                         let emit = {
                             name: eventName ,
                             args: generate( emitArg ).code , // args暂时没有用
                             describe: getComment( path.parent )
-                        } ;
-                        emitEvents.push( emit ) ;
+                        }
+                        emitEvents.push( emit )
                         // }
                     }
                 }
-            } ) ;
+            } )
         }
-    } ) ;
+    } )
     // emitEvents去重
-    let deEmitEvents = [] ;
+    let deEmitEvents = []
     emitEvents.forEach( e => {
         if ( deEmitEvents.find( de => de.name === e.name ) === undefined ) {
-            deEmitEvents.push( e ) ;
+            deEmitEvents.push( e )
         }
-    } ) ;
+    } )
     // debugger;
-    return { propsRes , emitEvents: deEmitEvents , apiMethods } ;
-} ;
+    return { propsRes , emitEvents: deEmitEvents , apiMethods }
+}

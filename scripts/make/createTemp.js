@@ -1,45 +1,45 @@
 const path = require( `path` ) ,
     { mkdir , writeFile } = require( `./util` ) ,
-    { tp } = require( `./config` ) ;
+    { tp } = require( `./config` )
 
 function createTemp( pathname , config , name ) {
     let dirname = config.dir ,
-        filename = config.file ;
+        filename = config.file
 
     if ( dirname ) {
         //创建文件夹
         let dirPath = path.resolve( pathname , dirname ) ,
-            child = config.child ;
+            child = config.child
 
         try {
-            mkdir( dirPath ) ;
+            mkdir( dirPath )
         } catch ( err ) {
-            console.error( err ) ;
-            return ;
+            console.error( err )
+            return
         }
 
         //遍历child
         if ( child ) {
             child.forEach( item => {
-                createTemp( dirPath , item , name ) ;
-            } ) ;
+                createTemp( dirPath , item , name )
+            } )
         }
     }
 
     if ( filename ) {
         let filePath = path.resolve( pathname , filename ) ,
             temp = config.temp ,
-            content = temp ? tp[ temp ]( name ) : `` ;
+            content = temp ? tp[ temp ]( name ) : ``
 
         try {
-            writeFile( filePath , content ) ;
+            writeFile( filePath , content )
         } catch ( err ) {
-            console.error( err ) ;
-            return ;
+            console.error( err )
+            return
         }
 
-        return ;
+        return
     }
 }
 
-exports.createTemp = createTemp ;
+exports.createTemp = createTemp

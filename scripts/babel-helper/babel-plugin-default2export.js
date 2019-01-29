@@ -1,23 +1,23 @@
 /**
  * export default {}  -> export const demo = {}
  */
-const template = require( `@babel/template` ).default ;
+const template = require( `@babel/template` ).default
 
 module.exports = function( babel ) {
     let { types } = babel ,
-        t = types ;
+        t = types
     return {
         visitor: {
             ExportDefaultDeclaration( path , state ) {
                 let { node } = path ,
                     {
                         opts: { render , staticRenderFns , exportName }
-                    } = state ;
-                exportName = exportName ? exportName : `demo` ;
-                if ( !node ) return ;
-                let { declaration } = node ;
+                    } = state
+                exportName = exportName ? exportName : `demo`
+                if ( !node ) return
+                let { declaration } = node
                 if ( declaration.type !== `ObjectExpression` ) {
-                    return ;
+                    return
                 }
                 let renderId = t.identifier( `render` ) ,
                     renderValueId = t.identifier( render ) ,
@@ -30,19 +30,19 @@ module.exports = function( babel ) {
                     staticObjectPropertyId = t.objectProperty(
                         staticRenderFnsId ,
                         staticRenderFnsValue
-                    ) ; // { staticRenderFns: [ function(){ ... } ] }
+                    ) // { staticRenderFns: [ function(){ ... } ] }
 
                 // insert key render
-                declaration.properties.push( renderObjectPropertyId ) ;
-                declaration.properties.push( staticObjectPropertyId ) ;
+                declaration.properties.push( renderObjectPropertyId )
+                declaration.properties.push( staticObjectPropertyId )
                 // export default -> export const demo = ...
                 let exportDemoDec = template( `
                         export const ${exportName} = EXPORTDEFAULT
                     ` ) ,
-                    ast = exportDemoDec( { EXPORTDEFAULT: declaration } ) ;
+                    ast = exportDemoDec( { EXPORTDEFAULT: declaration } )
                 // replace export default
-                path.replaceWithMultiple( ast ) ;
+                path.replaceWithMultiple( ast )
             }
         }
-    } ;
-} ;
+    }
+}

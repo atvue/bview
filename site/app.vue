@@ -75,10 +75,10 @@
 </template>
 
 <script>
-import './style/app.less' ;
-import Anchor from './components/anchor' ;
-import SlideNav from './components/slideNav' ;
-const { AnchorLink } = Anchor ;
+import './style/app.less'
+import Anchor from './components/anchor'
+import SlideNav from './components/slideNav'
+const { AnchorLink } = Anchor
 
 export default {
     components: {
@@ -89,36 +89,36 @@ export default {
     data() {
         return {
             anchorList: []
-        } ;
+        }
     } ,
     computed: {
         routerData() {
-            return this.$router.options.routes ;
+            return this.$router.options.routes
         }
     } ,
     watch: {
         $route() {
             this.$nextTick( () => {
-                this.updateAnchor() ;
-            } ) ;
+                this.updateAnchor()
+            } )
         }
     } ,
     mounted() {
-        this.updateAnchor() ;
+        this.updateAnchor()
     } ,
     methods: {
         updateAnchor() {
-            this.anchorList = [] ;
-            let ele = this.$refs.mainWrapper.querySelectorAll( `h3` ) ;
+            this.anchorList = []
+            let ele = this.$refs.mainWrapper.querySelectorAll( `h3` )
             ele.forEach( item => {
                 if ( item.id ) {
                     this.anchorList.push( {
                         title: item.innerText ,
                         href: `#` + item.id
-                    } ) ;
+                    } )
                 }
-            } ) ;
+            } )
         }
     }
-} ;
+}
 </script>

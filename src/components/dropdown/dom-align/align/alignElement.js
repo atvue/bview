@@ -1,11 +1,11 @@
-import doAlign from './align' ;
-import getOffsetParent from '../getOffsetParent' ;
-import getVisibleRectForElement from '../getVisibleRectForElement' ;
-import getRegion from '../getRegion' ;
+import doAlign from './align'
+import getOffsetParent from '../getOffsetParent'
+import getVisibleRectForElement from '../getVisibleRectForElement'
+import getRegion from '../getRegion'
 
 function isOutOfVisibleRect( target ) {
-    const visibleRect = getVisibleRectForElement( target ) ;
-    const targetRegion = getRegion( target ) ;
+    const visibleRect = getVisibleRectForElement( target )
+    const targetRegion = getRegion( target )
 
     return (
         !visibleRect ||
@@ -13,20 +13,20 @@ function isOutOfVisibleRect( target ) {
         targetRegion.top + targetRegion.height <= visibleRect.top ||
         targetRegion.left >= visibleRect.right ||
         targetRegion.top >= visibleRect.bottom
-    ) ;
+    )
 }
 
 function alignElement( el , refNode , align ) {
-    const target = align.target || refNode ;
-    const refNodeRegion = getRegion( target ) ;
+    const target = align.target || refNode
+    const refNodeRegion = getRegion( target )
 
-    const isTargetNotOutOfVisible = !isOutOfVisibleRect( target ) ;
+    const isTargetNotOutOfVisible = !isOutOfVisibleRect( target )
 
-    return doAlign( el , refNodeRegion , align , isTargetNotOutOfVisible ) ;
+    return doAlign( el , refNodeRegion , align , isTargetNotOutOfVisible )
 }
 
-alignElement.__getOffsetParent = getOffsetParent ;
+alignElement.__getOffsetParent = getOffsetParent
 
-alignElement.__getVisibleRectForElement = getVisibleRectForElement ;
+alignElement.__getVisibleRectForElement = getVisibleRectForElement
 
-export default alignElement ;
+export default alignElement

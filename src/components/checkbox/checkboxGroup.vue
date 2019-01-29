@@ -5,9 +5,9 @@
 </template>
 
 <script>
-import { findComponentsDownward } from '../../utils/assist' ;
+import { findComponentsDownward } from '../../utils/assist'
 
-const prefix = `bview` ;
+const prefix = `bview`
 
 export default {
     name: `CheckboxGroup` ,
@@ -15,7 +15,7 @@ export default {
         value: {
             type: Array ,
             default() {
-                return [] ;
+                return []
             }
         } ,
         vertical: {
@@ -27,7 +27,7 @@ export default {
         return {
             curValue: this.value ,
             childrens: []
-        } ;
+        }
     } ,
     computed: {
         groupClass: function() {
@@ -36,42 +36,42 @@ export default {
                 {
                     [ `${prefix}-checkbox-group-vertical` ]: this.vertical
                 }
-            ] ;
+            ]
         }
     } ,
     watch: {
         value() {
-            this._updateValue( true ) ;
+            this._updateValue( true )
         }
     } ,
     mounted() {
-        this._updateValue( true ) ;
+        this._updateValue( true )
     } ,
     methods: {
         _updateValue( flag ) {
-            this.childrens = findComponentsDownward( this , `Checkbox` ) ;
+            this.childrens = findComponentsDownward( this , `Checkbox` )
             if ( this.childrens ) {
-                const { value } = this ;
+                const { value } = this
                 this.childrens.forEach( child => {
-                    child.isChecked = value.indexOf( child.value ) >= 0 ;
+                    child.isChecked = value.indexOf( child.value ) >= 0
                     if ( flag ) {
-                        child.isGroup = true ;
+                        child.isGroup = true
                     }
-                } ) ;
+                } )
             }
         } ,
         _changeValue( value ) {
-            let index = this.curValue.indexOf( value ) ;
+            let index = this.curValue.indexOf( value )
             if ( index >= 0 ) {
-                this.curValue.splice( index , 1 ) ;
+                this.curValue.splice( index , 1 )
             } else {
-                this.curValue.push( value ) ;
+                this.curValue.push( value )
             }
             //@doc 结合v-model,触发input事件
-            this.$emit( `input` , this.curValue ) ;
+            this.$emit( `input` , this.curValue )
             //@doc 值改变时触发事件，参数当前的value
-            this.$emit( `on-change` , this.curValue ) ;
+            this.$emit( `on-change` , this.curValue )
         }
     }
-} ;
+}
 </script>
