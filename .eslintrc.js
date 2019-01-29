@@ -31,6 +31,7 @@ module.exports = {
         eqeqeq: ['warn', 'always'],
         'space-infix-ops': ['warn', { int32Hint: false }],
         'space-unary-ops': ['warn', { words: true, nonwords: false }],
-        'semi-spacing': ['warn', { before: true, after: false }]
+        'semi-spacing': ['warn', { before: true, after: false }],
+        semi: ['warn', 'never', { beforeStatementContinuationChars: 'any' }]
     }
 };

@@ -101,3 +101,4 @@ components 目录下每个组件目录会生成一份文档说明，文档内容
 | [space-infix-ops](http://eslint.cn/docs/rules/space-infix-ops) | 确保中缀运算符周围有空格 |
 | [space-unary-ops](http://eslint.cn/docs/rules/space-unary-ops) | 要求在一元操作符之前或之后存在空格 |
 | [semi-spacing](http://eslint.cn/docs/rules/semi-spacing) | 强制分号之前有空格，禁止分号之后有空格 |
+| [semi](http://eslint.cn/docs/rules/semi) | 禁止在语句末尾使用分号 |
