@@ -33,6 +33,7 @@
             :readonly="readonly"
             :disabled="disabled"
             :type="type"
+            v-bind="nativeProps"
             @click="$_clickInput"
             @input="$_handleInput"
             @focus="$_handleFocus"
@@ -59,71 +60,78 @@ import { bviewPrefix as b } from '../../utils/macro'
 export default {
     name: `Input` ,
     components: {
-        Icon
+        Icon ,
     } ,
     props: {
         //@doc输入框类型
         type: {
             type: String ,
-            default: `text`
+            default: `text` ,
         } ,
         //@doc输入框的值
         value: {
             type: [ String , Number ] ,
-            default: ``
+            default: `` ,
         } ,
         //@doc输入框占位文本
         placeholder: {
             type: String ,
-            default: undefined
+            default: undefined ,
         } ,
         //@doc是否启用自动完成功能，为on或者off
         autocomplete: {
             type: String ,
-            default: `off`
+            default: `off` ,
         } ,
         //@doc是否自动聚焦
         autofocus: {
             type: Boolean ,
-            default: false
+            default: false ,
         } ,
         //@doc最大输入长度
         maxlength: {
             type: Number ,
-            default: undefined
+            default: undefined ,
         } ,
         //@doc是否禁用按钮
         disabled: {
             type: Boolean ,
-            default: false
+            default: false ,
         } ,
         //@doc是否显示清空按钮
         clearable: {
             type: Boolean ,
-            default: false
+            default: false ,
         } ,
         //@doc输入框是否只读
         readonly: {
             type: Boolean ,
-            default: false
+            default: false ,
         } ,
         //@doc是否显示搜索按钮
         search: {
             type: Boolean ,
-            default: false
+            default: false ,
         } ,
         //@doc输入框长度
         width: {
             type: String ,
-            default: `200px`
-        }
+            default: `200px` ,
+        } ,
+        //@doc绑定原生属性
+        nativeProps: {
+            type: Object ,
+            default() {
+                return {}
+            } ,
+        } ,
     } ,
     data() {
         return {
             currentValue: this.value ,
             closeIcon: CloseIcon ,
             searchIcon: searchIcon ,
-            b: b
+            b: b ,
         }
     } ,
     computed: {
@@ -134,15 +142,15 @@ export default {
                     [ `${b}-input-disabled` ]: this.disabled ,
                     [ `${b}-input-with-prepend` ]: this.$slots.prepend ,
                     [ `${b}-input-with-append` ]:
-                        this.search || this.$slots.append
-                }
+                        this.search || this.$slots.append ,
+                } ,
             ]
-        }
+        } ,
     } ,
     watch: {
         value( val ) {
             this.$_setCurrentValue( val )
-        }
+        } ,
     } ,
     methods: {
         $_setCurrentValue( val ) {
@@ -187,7 +195,7 @@ export default {
         //@doc手动失焦
         blur() {
             this.$refs.input.blur()
-        }
-    }
+        } ,
+    } ,
 }
 </script>
