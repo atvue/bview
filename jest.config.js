@@ -1,21 +1,19 @@
-
-
-
 module.exports = {
     verbose: true ,
-    moduleFileExtensions: [ "js" , "json" , "vue" ] ,
+    moduleFileExtensions: [ `js` , `json` , `vue` ] ,
     transform: {
-        "^.+\\.js$": "babel-jest" ,
-        ".*\\.(vue)$": "vue-jest" ,
+        '^.+\\.js$': `babel-jest` ,
+        '.*\\.(vue)$': `vue-jest` ,
     } ,
     moduleNameMapper: {
-        "^@/(.*)$": "<rootDir>/src/$1" ,
+        '^@/(.*)$': `<rootDir>/src/$1` ,
     } ,
-    transformIgnorePatterns: [ '<rootDir>/node_modules/' ] ,
+    transformIgnorePatterns: [ `<rootDir>/node_modules/` ] ,
     collectCoverage: false ,
     collectCoverageFrom: [
-        "src/**/*.{js,vue}",
-        "!**/node_modules/**",
-        "!**/vendor/**"
-    ]
+        `src/**/*.{js,vue}` ,
+        `!**/node_modules/**` ,
+        `!**/vendor/**` ,
+    ] ,
+    setupTestFrameworkScriptFile: `./jest.setup.js` ,
 }
