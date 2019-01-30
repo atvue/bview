@@ -46,7 +46,7 @@ module.exports = function( source , map , meta ) {
             }
             let html = md.utils.escapeHtml( str )
             return `<pre class="hljs ${className}"><code>${html}</code></pre>`
-        }
+        } ,
     } )
     // 配置默认class - 先覆盖 ul table 相关
     // @TODO 抽取成独立插件全局处理
@@ -67,14 +67,14 @@ module.exports = function( source , map , meta ) {
                     name = `Demo${index}Component` ,
                     vueComponent = {
                         name ,
-                        content
+                        content ,
                     }
                 codeHtml = [ mdHtml ]
                 vueComponents.push( vueComponent )
                 return [
                     `<div class="md-live-vue">
                         <${name} />
-                    </div>`
+                    </div>` ,
                 ]
             }
             return [ `<div class="demo-info">${mdHtml}</div>` ]
@@ -84,7 +84,7 @@ module.exports = function( source , map , meta ) {
     const tokens = md.parse( source ) ,
         vueModule = tokens.find(
             ( { type , tag , info } ) =>
-                type === `fence` && tag === `code` && info === `vue`
+                type === `fence` && tag === `code` && info === `vue` ,
         ) ,
         hasVueModule = vueModule !== undefined
     if ( hasVueModule ) {
@@ -92,17 +92,26 @@ module.exports = function( source , map , meta ) {
             async ( { name , content } ) => {
                 let vueDemoModule = await parse( content , name )
                 return vueDemoModule
-            }
+            } ,
         )
         Promise.all( componentToPromise )
             .then( es6Modules => {
-                let jsStr = es6Modules.join( `;\n` ) ,
-                    components = vueComponents.map( ( { name } ) => name ).join( `,` )
-                let vueModuleStr = `
+                let jsStrArr = [] ,
+                    cssTxtArr = [] ,
+                    componentArr = []
+                es6Modules.forEach( ( { name , codeTxt , cssTxt } ) => {
+                    componentArr.push( name )
+                    jsStrArr.push( codeTxt )
+                    cssTxtArr.push( cssTxt )
+                } )
+
+                let components = componentArr.join( `,` ) ,
+                    jsStr = jsStrArr.join( `;\n` ) ,
+                    cssTxt = cssTxtArr.join( `\n` ) ,
+                    vueModuleStr = `
                         <template>
                             <div class="md-live-vue-with-md">
-                                 <div class="markdown">
-                                 ${html2}</div>
+                                 <div class="markdown">${html2}</div>
                             </div>
                         </template>
                         <script>
@@ -111,9 +120,12 @@ module.exports = function( source , map , meta ) {
                             import codePanel from 'site/components/codePanel'
                             // 注册md中的vue组件
                             export default {
-                                components: { ${components},codePanel }
+                                components: { ${components} , codePanel }
                             }
                         </script>
+                        <style>
+                            ${cssTxt}
+                        </style>
                     `
                 callback( null , vueModuleStr , map , meta )
             } )
