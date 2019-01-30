@@ -3,7 +3,7 @@ module.exports = {
         browser: true,
         commonjs: true,
         node: true,
-        jest: true
+        jest: true,
     },
     extends: ['eslint:recommended', 'plugin:vue/recommended'],
     rules: {
@@ -11,7 +11,7 @@ module.exports = {
         'vue/no-unused-vars': 'warn',
         'vue/no-v-html': 'off',
         'no-tabs': 'warn',
-        indent: ['warn', 4],
+        indent: ['warn', 4, { SwitchCase: 1 }],
         'no-regex-spaces': 'warn',
         'block-spacing': ['warn', 'always'],
         quotes: ['warn', 'backtick'],
@@ -23,7 +23,7 @@ module.exports = {
         'array-bracket-spacing': [
             'warn',
             'always',
-            { arraysInArrays: true, objectsInArrays: true, singleValue: true }
+            { arraysInArrays: true, objectsInArrays: true, singleValue: true },
         ],
         'computed-property-spacing': ['warn', 'always'],
         'func-call-spacing': ['warn', 'never'],
@@ -32,6 +32,6 @@ module.exports = {
         'space-infix-ops': ['warn', { int32Hint: false }],
         'space-unary-ops': ['warn', { words: true, nonwords: false }],
         'semi-spacing': ['warn', { before: true, after: false }],
-        semi: ['warn', 'never', { beforeStatementContinuationChars: 'any' }]
-    }
-};
+        semi: ['warn', 'never', { beforeStatementContinuationChars: 'any' }],
+    },
+}
