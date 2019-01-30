@@ -19,7 +19,7 @@ const lessConfig = {
     } ,
 }
 
-function toStyle( style ) {
+function toStyle( style , context ) {
     let { type , attrs , content } = style ,
         { type: preProcessor } = attrs ,
         isStyle = type === TYPESTYLE
@@ -33,7 +33,13 @@ function toStyle( style ) {
                 }
                 // less
                 case TYPESTYLELESS: {
-                    less.render( content , lessConfig )
+                    let config = lessConfig
+                    if ( context ) {
+                        config = Object.assign( {} , lessConfig , {
+                            paths: [ context ] ,
+                        } )
+                    }
+                    less.render( content , config )
                         .then( output => {
                             let { css } = output // css,map,imports
                             resolve( css )
@@ -62,8 +68,9 @@ function toStyle( style ) {
     } )
 }
 
-async function parseStyles( styles = [] ) {
-    let promises = styles.map( toStyle ) ,
+async function parseStyles( styles = [] , metadata = {} ) {
+    let { context } = metadata ,
+        promises = styles.map( style => toStyle( style , context ) ) ,
         results
     try {
         results = await Promise.all( promises )

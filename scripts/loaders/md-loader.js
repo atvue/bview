@@ -27,7 +27,8 @@ const mdCommonClass = require( `../util/mdCommonClass` )
 
 module.exports = function( source , map , meta ) {
     const callback = this.async() ,
-        { resourcePath } = this ,
+        { resourcePath , context } = this ,
+        metadata = { context , resourcePath } ,
         relativePath = transform2RelativePath( resourcePath ) ,
         mdFragments = source.split( vueCodeReg )
 
@@ -90,7 +91,7 @@ module.exports = function( source , map , meta ) {
     if ( hasVueModule ) {
         let componentToPromise = vueComponents.map(
             async ( { name , content } ) => {
-                let vueDemoModule = await parse( content , name )
+                let vueDemoModule = await parse( content , name , metadata )
                 return vueDemoModule
             } ,
         )

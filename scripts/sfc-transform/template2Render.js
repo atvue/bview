@@ -28,7 +28,7 @@ const withStatement2RenderFunction = withStmt => {
     * 2.3、<style />,<style type="less" />   ->    css text
  *
  */
-const parse = ( content , name ) => {
+const parse = ( content , name , metadata ) => {
     return new Promise( async ( r , j ) => {
         if (
             content === undefined ||
@@ -50,7 +50,7 @@ const parse = ( content , name ) => {
             )
             return j( parseTemplateError )
         }
-        let compiledStyle = parseStyles( styles ) ,
+        let compiledStyle = parseStyles( styles , metadata ) ,
             compileSFC = babel
                 .transformAsync( scriptTxt , {
                     ast: true ,
@@ -107,7 +107,7 @@ export default {
     body { color: #f00 ; p { color: #f00 } }
 </style>
 `
-parse( tmp , `Demo1component` ).then( data => {
+parse( tmp , `Demo1component` , { context: __dirname } ).then( data => {
     console.log( data )
 } ).catch( e => console.log( `解析vue模板失败` , e ) )
  */
