@@ -4,6 +4,9 @@
 
 使用`make component input`命令新建组件，它会在默认的`src/components`生成如下结构
 
+组件目录名称必须小写，防止在一些大小写不敏感的操作系统中，导致热更新失败
+> make命令中，输入PascalCase组件名会自动转成小写的kebab-case形式
+
 ```dir
 
 ├── __tests__
@@ -18,6 +21,9 @@
 ├── README.st                     // 基础说明文档
 
 ```
+![make component xxx](./images/make_component.gif)
+
+
 ### 组件目录名规范
 
 组件目录名称必须是小写，如果有多个单词，推荐使用连字符`-`
