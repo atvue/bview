@@ -4,13 +4,10 @@
 
 ```vue
 <template>
-    <div>
-        <Cascader 
-            :data="data" 
-            v-model="value2" 
-            clearable 
-            @on-change="handelChange"></Cascader>
-    </div>
+    <Cascader 
+        :data="data" 
+        v-model="value">
+    </Cascader>
 </template>
 
 <script>
@@ -23,7 +20,7 @@ export default {
     } ,
     data () {
         return {
-            value2: ['zhejiang', 'hangzhou', 'xihu'],
+            value: [],
             data: [{
                     value: 'anhui',
                     label: '安徽',
@@ -68,7 +65,6 @@ export default {
                                 {
                                     value: 'moganshan',
                                     label: '莫干山',
-                                    disabled: true,
                                 },
                                 {
                                     value: 'baicaoyuan',
@@ -89,11 +85,6 @@ export default {
                     ],
                 }] ,
         }
-    } ,
-    methods: {
-        handelChange(value, obj){
-            console.log(value,obj)
-        } ,
     } ,
 }
 </script>

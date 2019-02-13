@@ -1,17 +1,12 @@
-+ 异步用法
++ 有默认值
 
 
 
 ```vue
 <template>
     <Cascader 
-        v-model="value2"  
-        clearable 
-        changeOnSelect
         :data="data" 
-        :load-data="loadData" 
-        :render-format="renderFormat"
-        @on-change="handelChange">
+        v-model="value">
     </Cascader>
 </template>
 
@@ -25,7 +20,7 @@ export default {
     } ,
     data () {
         return {
-            value2: ['zhejiang', 'hangzhou', 'xihu'],
+            value: ['zhejiang', 'hangzhou', 'xihu'],
             data: [{
                     value: 'anhui',
                     label: '安徽',
@@ -33,14 +28,26 @@ export default {
                         {
                             value: 'hefei',
                             label: '合肥',
-                            loading : false ,
-                            children: [],
+                            children: [
+                                {
+                                    value: 'baogongyuan',
+                                    label: '包公园',
+                                }
+                            ],
                         },
                         {
                             value: 'huangshan',
                             label: '黄山' ,
-                            loading : false ,
-                            children: [],
+                            children: [
+                                {
+                                    value: 'guangmingding',
+                                    label: '光明顶',
+                                } ,
+                                {
+                                    value: 'tiandufeng',
+                                    label: '天都峰',
+                                } ,
+                            ],
                         },
                         {
                             value: 'anqing',
@@ -79,41 +86,7 @@ export default {
                 }] ,
         }
     } ,
-    methods: {
-        loadData (item, callback) {
-            item.loading = true;
-            setTimeout(() => {
-                if (item.value === 'hefei') {
-                    item.children = [
-
-                    ];
-                } else if (item.value === 'huangshan'||item.value === 'xidihongcun') {
-                    item.children = [
-                        {
-                            value: 'xidihongcun',
-                            label: '西递宏村' ,
-                            loading : false ,
-                            children: [],
-                        },
-                        {
-                            value: 'taihu',
-                            label: '太湖'
-                        }
-                    ];
-                }
-                item.loading = false;
-                callback();
-            }, 1000);
-        } ,
-        renderFormat(label){
-            return label.join(' - ');
-        },
-        handelChange(value, obj){
-            console.log(value,obj)
-        } ,
-    } ,
 }
 </script>
-
 ```
 Cascader组件用于选择具有级联结构的数据
