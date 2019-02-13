@@ -55,7 +55,8 @@ import {
 } from './placement'
 import { placementToPoints } from './helper'
 import { camlizeName } from '../../utils/assist'
-const name = camlizeName( `${b}-dropdown` )
+const name = `dropdown` ,
+    componentName = camlizeName( `${b}-${name}` )
 const warn = warnInit( name )
 const contextMenuOffset = { x: 10 , y: 16 }
 const defaultOffsetY = 4
@@ -63,7 +64,7 @@ const lazy = 200
 const defaultContainer = () => document.body
 
 export default {
-    name ,
+    name: componentName ,
     components: { Portal } ,
     directives: { clickOutEl } ,
     props: {
