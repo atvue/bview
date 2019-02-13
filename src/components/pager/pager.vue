@@ -93,7 +93,7 @@
             <!-- 当前页 前limitPage页 -->
             <!-- 当前页 -->
             <li
-                v-if="currentPage != 1 && currentPage != allPages"
+                v-if="currentPage !== 1 && currentPage !== allPages"
                 :title="currentPage"
                 :class="
                     `${prefixCls}-item ${prefixCls}-num ${prefixCls}-item-active`
@@ -199,56 +199,56 @@ export default {
     components: {
         Icon ,
         Select ,
-        Option
+        Option ,
     } ,
     props: {
         // @doc 页码，支持使用.sync修饰符
         current: {
             type: Number ,
-            default: 1
+            default: 1 ,
         } ,
         // @doc 总页数
         total: {
             type: Number ,
-            default: 0
+            default: 0 ,
         } ,
         // @doc 分页大小
         pageSize: {
             type: Number ,
-            default: 15
+            default: 15 ,
         } ,
         // @doc 可配置分页切换下拉选框
         pageSizeOpts: {
             type: Array ,
             default() {
                 return [ 15 , 30 , 50 , 100 ]
-            }
+            } ,
         } ,
         // @doc 是否显示总数文案
         showTotal: {
             type: Boolean ,
-            default: true
+            default: true ,
         } ,
         // @doc 是否显示快捷跳转
         showElevator: {
             type: Boolean ,
-            default: true
+            default: true ,
         } ,
         // @doc 是否显示分页切换
         showSizer: {
             type: Boolean ,
-            default: true
+            default: true ,
         } ,
         // @doc 配置当前页前后展示的快捷页码数量
         limitPage: {
             type: Number ,
-            default: 4
+            default: 4 ,
         } ,
         // @doc 简洁模式，配置为true，showTotal、showElevator、showSizer将失效
         simple: {
             type: Boolean ,
-            default: false
-        }
+            default: false ,
+        } ,
     } ,
     data() {
         return {
@@ -257,7 +257,7 @@ export default {
             prefixCls: `${b}-pager` ,
             more ,
             left ,
-            right
+            right ,
         }
     } ,
     computed: {
@@ -267,8 +267,8 @@ export default {
             return [
                 prefixCls ,
                 {
-                    [ `simple` ]: simple
-                }
+                    [ `simple` ]: simple ,
+                } ,
             ]
         } ,
         // 最左侧上一页按钮
@@ -279,8 +279,8 @@ export default {
                 `${prefixCls}-pre` ,
                 {
                     [ `${prefixCls}-item-disabled` ]: currentPage === 1 ,
-                    [ `simple` ]: simple
-                }
+                    [ `simple` ]: simple ,
+                } ,
             ]
         } ,
         // 最右侧下一页按钮
@@ -291,8 +291,8 @@ export default {
                 `${prefixCls}-next` ,
                 {
                     [ `${prefixCls}-item-disabled` ]: currentPage === allPages ,
-                    [ `simple` ]: simple
-                }
+                    [ `simple` ]: simple ,
+                } ,
             ]
         } ,
         // 首页
@@ -303,8 +303,8 @@ export default {
                 `${prefixCls}-first` ,
                 `${prefixCls}-num` ,
                 {
-                    [ `${prefixCls}-item-active` ]: this.currentPage === 1
-                }
+                    [ `${prefixCls}-item-active` ]: this.currentPage === 1 ,
+                } ,
             ]
         } ,
         // 末页
@@ -316,8 +316,8 @@ export default {
                 `${prefixCls}-num` ,
                 {
                     [ `${prefixCls}-item-active` ]:
-                        this.currentPage === this.allPages
-                }
+                        this.currentPage === this.allPages ,
+                } ,
             ]
         } ,
         // END样式相关
@@ -325,7 +325,7 @@ export default {
         allPages() {
             const allPage = Math.ceil( this.total / this.currentPageSize )
             return allPage === 0 ? 1 : allPage
-        }
+        } ,
     } ,
     watch: {
         total( val ) {
@@ -342,11 +342,11 @@ export default {
         } ,
         pageSize( val ) {
             this.currentPageSize = val
-        }
+        } ,
     } ,
     methods: {
         $_changePage( page ) {
-            if ( this.currentPage != page ) {
+            if ( this.currentPage !== page ) {
                 this.currentPage = page
                 // @NOTE 父组件使用.sync 修饰符 可同步子组件prop状态 显式
                 // -@doc 父组件使用.sync 修饰符 可同步pager组件current
@@ -400,7 +400,7 @@ export default {
 
             if ( /^[1-9][0-9]*$/.test( val + `` ) ) {
                 val = Number( val )
-                if ( val != this.currentPage ) {
+                if ( val !== this.currentPage ) {
                     const allPages = this.allPages
 
                     if ( val > allPages ) {
@@ -417,7 +417,7 @@ export default {
                 this.$_changePage( page )
                 event.target.value = page
             }
-        }
-    }
+        } ,
+    } ,
 }
 </script>
