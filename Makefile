@@ -12,5 +12,5 @@ component:
 
 help:
 	@echo 'make 命令使用说明'
-	@echo 'make component <name>     name 组件名称，必填'
+	@echo 'make component <name>     name为组件名称，必须小写（多个单词可使用连字符）,必填'
 

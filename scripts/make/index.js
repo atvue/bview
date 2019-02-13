@@ -1,6 +1,6 @@
 require( `babel-register` )
 
-const { fileExist } = require( `./util` ) ,
+const { fileExist , hyphenate } = require( `./util` ) ,
     { createTemp } = require( `./createTemp` ) ,
     { createConfig } = require( `./config` ) ,
     { components: componentPath } = require( `../project-path` ) ,
@@ -9,14 +9,18 @@ const { fileExist } = require( `./util` ) ,
 const path = require( `path` )
 
 let name = process.argv[ 2 ] ,
-    nameColor = chalk.keyword( `orange` )( name ) ,
     fullPath ,
     config
 
-if ( !name ) {
+if ( name ) {
+    // 必须小写
+    name = hyphenate( name ).toLowerCase()
+} else {
     console.error( `[模版名称必填！具体可运行make help查看]` )
     process.exit( 1 )
 }
+
+let nameColor = chalk.keyword( `orange` )( name )
 
 fullPath = path.resolve( componentPath , name )
 

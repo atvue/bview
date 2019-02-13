@@ -52,7 +52,20 @@ function firstUpperCase( str ) {
         return s.toUpperCase()
     } )
 }
-
+const hyphenateRE = /\B([A-Z])/g ,
+    hyphenate = function( str ) {
+        return str.replace( hyphenateRE , `-$1` ).toLowerCase()
+    }
+const camelizeRE = /-(\w)/g ,
+    camelize = function( str ) {
+        return str.replace( camelizeRE , function( _ , c ) {
+            return c ? c.toUpperCase() : ``
+        } )
+    } ,
+    bigCamelize = str => {
+        let next = camelize( str )
+        return next.charAt( 0 ).toUpperCase() + next.slice( 1 )
+    }
 /**
  * 根据配置文件创建模版
  * @param  {[type]} path [description]
@@ -61,6 +74,9 @@ function firstUpperCase( str ) {
  */
 
 exports.mkdir = mkdir
+exports.hyphenate = hyphenate
+exports.camelize = camelize
+exports.bigCamelize = bigCamelize
 exports.writeFile = writeFile
 exports.fileExist = fileExist
 exports.firstUpperCase = firstUpperCase

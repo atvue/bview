@@ -1,4 +1,4 @@
-const { firstUpperCase: upCase } = require( `./util` )
+const { bigCamelize } = require( `./util` )
 
 //template文件结构
 function createConfig( name ) {
@@ -10,51 +10,51 @@ function createConfig( name ) {
                 child: [
                     {
                         file: `${name}.test.js` ,
-                        temp: `testJs`
-                    }
-                ]
+                        temp: `testJs` ,
+                    } ,
+                ] ,
             } ,
             {
                 dir: `demo` ,
                 child: [
                     {
                         file: `basic.md` ,
-                        temp: `demoTemp`
-                    }
-                ]
+                        temp: `demoTemp` ,
+                    } ,
+                ] ,
             } ,
             {
                 dir: `style` ,
                 child: [
                     {
-                        file: `index.less`
+                        file: `index.less` ,
                     } ,
                     {
                         file: `index.js` ,
-                        temp: `styleIndex`
-                    }
-                ]
+                        temp: `styleIndex` ,
+                    } ,
+                ] ,
             } ,
             {
                 file: `${name}.vue` ,
-                temp: `vueTemp`
+                temp: `vueTemp` ,
             } ,
             {
                 file: `index.js` ,
-                temp: `indexJs`
+                temp: `indexJs` ,
             } ,
             {
                 file: `README.st` ,
-                temp: `readmeTemp`
-            }
-        ]
+                temp: `readmeTemp` ,
+            } ,
+        ] ,
     }
 }
 
 const readmeTemp = name => {
     return `
 ---
-title: ${upCase( name )}
+title: ${bigCamelize( name )}
 ---
 ### 组件名称
 
@@ -68,15 +68,16 @@ title: ${upCase( name )}
 `.trim()
 }
 
-const vueTemp = name =>
-    `
+const vueTemp = name => {
+    let componentName = bigCamelize( name )
+    return `
 <template>
-    <div />
+    <div>${componentName}</div>
 </template>
 
 <script>
 export default {
-    name: '${upCase( name )}' ,
+    name: \`${componentName}\` ,
     props: {
     } ,
     data () {
@@ -88,27 +89,28 @@ export default {
 }
 </script>
 `.trim()
+}
 
 const styleIndex = () => `import './index.less'`
 
 const indexJs = name => {
-    let up = upCase( name )
+    let camelizeName = bigCamelize( name )
 
-    return `import ${up} from './${name}'
+    return `import ${camelizeName} from './${name}'
 
-export default ${up}`
+export default ${camelizeName}`
 }
 
 const testJs = name => {
-    name = upCase( name )
+    name = bigCamelize( name )
 
     return `
 import ${name} from '../index.js'
 import { mount } from '@vue/test-utils'
 
-describe( '${name}' , () => {
+describe( \`${name}\` , () => {
 
-    test( '创建${name}成功' , () => {
+    test( \`创建${name}成功\` , () => {
         const wrapper = mount( ${name} )
         expect( wrapper.isVueInstance() ).toBeTruthy()
     } )
@@ -120,8 +122,8 @@ const demoTemp = name => {
     return `
 \`\`\`vue
 <template>
-    <div>请在<em style="font-weight: bold;">src/components/${name}/demo</em>目录下的md文件中编写&#60;${upCase(
-    name
+    <div>请在<em style="font-weight: bold;">src/components/${name}/demo</em>目录下的md文件中编写&#60;${bigCamelize(
+    name ,
 )} /&#62;的demo</div>
 </template>
 <script>
@@ -141,5 +143,5 @@ exports.tp = {
     indexJs ,
     testJs ,
     readmeTemp ,
-    demoTemp
+    demoTemp ,
 }
