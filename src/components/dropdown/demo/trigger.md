@@ -41,10 +41,5 @@ export default {
 }
 </script>
 
-<style type="less">
-.demo-dropdown {
-    background: #f00 ;
-}
-</style>
 ```
 默认是移入触发菜单，可以点击或者右键触发。

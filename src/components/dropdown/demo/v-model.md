@@ -38,10 +38,5 @@ export default {
 }
 </script>
 
-<style type="less">
-.demo-dropdown {
-    background: #f00 ;
-}
-</style>
 ```
 默认点击菜单关闭菜单，可以关闭此功能

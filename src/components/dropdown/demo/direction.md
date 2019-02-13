@@ -89,10 +89,5 @@ export default {
 }
 </script>
 
-<style type="less">
-.demo-dropdown {
-    background: #f00 ;
-}
-</style>
 ```
 支持 6 个弹出位置。
