@@ -1,3 +1,5 @@
+const { hyphenate } = require( `../make/util` )
+
 module.exports = function( babel ) {
     let { types } = babel
     return {
@@ -14,16 +16,17 @@ module.exports = function( babel ) {
                     specifiers.forEach( spec => {
                         // 单个导入
                         if ( types.isImportSpecifier( spec ) ) {
-                            let lowerCaseComponentName = spec.local.name.toLowerCase() ,
+                            let { name } = spec.local ,
+                                lowerCaseComponentName = hyphenate( name ) ,
                                 sourceStr = `@/components/${lowerCaseComponentName}` ,
                                 styleSourceStr = `@/components/${lowerCaseComponentName}/style/index.js`
                             let decModule = types.ImportDeclaration(
                                     [ types.importDefaultSpecifier( spec.local ) ] ,
-                                    types.StringLiteral( sourceStr )
+                                    types.StringLiteral( sourceStr ) ,
                                 ) ,
                                 decStyle = types.ImportDeclaration(
                                     [] ,
-                                    types.StringLiteral( styleSourceStr )
+                                    types.StringLiteral( styleSourceStr ) ,
                                 )
                             declarations.push( decModule )
                             declarations.push( decStyle )
@@ -31,11 +34,11 @@ module.exports = function( babel ) {
                         } else if ( types.isImportDefaultSpecifier( spec ) ) {
                             let importIndexId = types.ImportDeclaration(
                                     [ types.importDefaultSpecifier( spec.local ) ] ,
-                                    types.StringLiteral( `@` )
+                                    types.StringLiteral( `@` ) ,
                                 ) ,
                                 importIndexStyleId = types.ImportDeclaration(
                                     [] ,
-                                    types.StringLiteral( `@/style.less` )
+                                    types.StringLiteral( `@/style.less` ) ,
                                 )
                             declarations.push( importIndexId )
                             declarations.push( importIndexStyleId )
@@ -45,7 +48,7 @@ module.exports = function( babel ) {
                         path.replaceWithMultiple( declarations )
                     }
                 }
-            }
-        }
+            } ,
+        } ,
     }
 }
