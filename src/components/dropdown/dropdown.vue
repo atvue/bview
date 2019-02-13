@@ -51,10 +51,11 @@ import {
     triggers ,
     triggerHover ,
     triggerClick ,
-    triggerRightClick
+    triggerRightClick ,
 } from './placement'
 import { placementToPoints } from './helper'
-const name = `dropdown`
+import { camlizeName } from '../../utils/assist'
+const name = camlizeName( `${b}-dropdown` )
 const warn = warnInit( name )
 const contextMenuOffset = { x: 10 , y: 16 }
 const defaultOffsetY = 4
@@ -73,12 +74,12 @@ export default {
             default: bottomLeft ,
             validator( value ) {
                 return placements.indexOf( value ) !== -1
-            }
+            } ,
         } ,
         // @doc 是否禁用
         disabled: {
             type: Boolean ,
-            default: false
+            default: false ,
         } ,
         // @doc 触发方式
         trigger: {
@@ -86,23 +87,23 @@ export default {
             default: triggerHover ,
             validator( value ) {
                 return triggers.indexOf( value ) !== -1
-            }
+            } ,
         } ,
         // @doc 下拉根元素的类名称
         overlayClass: {
             type: String ,
-            default: undefined
+            default: undefined ,
         } ,
         // @doc v-model 下拉框受控展示
         value: {
             type: Boolean ,
-            default: undefined
+            default: undefined ,
         } ,
         // @doc 菜单渲染父节点，默认渲染到 body 上，如果你遇到菜单滚动定位问题，试试修改为滚动的区域，并相对其定位。
         getPopupContainer: {
             type: Function ,
-            default: defaultContainer
-        }
+            default: defaultContainer ,
+        } ,
     } ,
     data() {
         let { value } = this ,
@@ -112,7 +113,7 @@ export default {
             visible ,
             visiblePortal: visible ,
             cancelEnter: noop ,
-            cancelLeave: noop
+            cancelLeave: noop ,
         }
     } ,
     computed: {
@@ -152,7 +153,7 @@ export default {
         isControlled() {
             let { value } = this
             return value !== undefined
-        }
+        } ,
     } ,
     watch: {
         value( visible , oldVisible ) {
@@ -163,7 +164,7 @@ export default {
                     this._hiddenOverlay()
                 }
             }
-        }
+        } ,
     } ,
     methods: {
         async _showOverlay( point ) {
@@ -216,7 +217,7 @@ export default {
                 isTriggerClick || isTriggerRightClick || isControlled
             if ( canHandle ) {
                 let {
-                        $refs: { source }
+                        $refs: { source } ,
                     } = this ,
                     contains = source !== undefined && source.contains( target ) ,
                     preventClose = contains
@@ -242,7 +243,7 @@ export default {
                 isTriggerClick ,
                 isTriggerRightClick ,
                 visible ,
-                isControlled
+                isControlled ,
             } = this
             if ( isControlled ) {
                 return
@@ -297,7 +298,7 @@ export default {
         _calcPopPosition( mousePoint ) {
             let {
                     $refs: { source , target } ,
-                    placement
+                    placement ,
                 } = this ,
                 isContextMenuMode = mousePoint !== undefined
             if ( isContextMenuMode ) {
@@ -305,7 +306,7 @@ export default {
                 alignPoint( source , mousePoint , {
                     points: [ `tl` , `br` ] ,
                     offset: [ x , y ] ,
-                    overflow: { adjustX: true , adjustY: true }
+                    overflow: { adjustX: true , adjustY: true } ,
                 } )
             } else {
                 let points = placementToPoints( placement ) ,
@@ -314,16 +315,16 @@ export default {
                     offsetY = isTargetTop ? -defaultOffsetY : defaultOffsetY
                 if ( source === undefined || target === undefined ) {
                     return warn(
-                        `one of source、target get be undefined,should nerver be happened`
+                        `one of source、target get be undefined,should nerver be happened` ,
                     )
                 }
                 alignElement( source , target , {
                     points ,
                     offset: [ 0 , offsetY ] ,
-                    overflow: { adjustX: true , adjustY: true }
+                    overflow: { adjustX: true , adjustY: true } ,
                 } )
             }
-        }
-    }
+        } ,
+    } ,
 }
 </script>

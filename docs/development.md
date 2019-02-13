@@ -1,7 +1,7 @@
 ## 环境准备
 
--   [Node.js](https://nodejs.org/en/) ，使用最新 LTS 版本
--   [Yarn](https://yarnpkg.com/zh-Hans/docs/install)，安装最新版即可
+-   [Node.js](https://nodejs.org/en/) ^8.10.0
+-   [Yarn](https://yarnpkg.com/zh-Hans/docs/install) ^1.12.0
 
 进入`bview`项目，安装依赖，执行：
 
