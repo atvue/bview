@@ -19,7 +19,7 @@ var OSX_CHROME = `google chrome`
 const Actions = Object.freeze( {
     NONE: 0 ,
     BROWSER: 1 ,
-    SCRIPT: 2
+    SCRIPT: 2 ,
 } )
 
 function getBrowserEnv() {
@@ -44,18 +44,18 @@ function getBrowserEnv() {
 function executeNodeScript( scriptPath , url ) {
     const extraArgs = process.argv.slice( 2 )
     const child = spawn( `node` , [ scriptPath , ...extraArgs , url ] , {
-        stdio: `inherit`
+        stdio: `inherit` ,
     } )
     child.on( `close` , code => {
         if ( code !== 0 ) {
             console.log()
             console.log(
                 chalk.red(
-                    `The script specified as BROWSER environment variable failed.`
-                )
+                    `The script specified as BROWSER environment variable failed.` ,
+                ) ,
             )
             console.log(
-                chalk.cyan( scriptPath ) + ` exited with code ` + code + `.`
+                chalk.cyan( scriptPath ) + ` exited with code ` + code + `.` ,
             )
             console.log()
             return
@@ -82,8 +82,8 @@ function startBrowserProcess( browser , url ) {
                 `osascript openChrome.applescript "` + encodeURI( url ) + `"` ,
                 {
                     cwd: __dirname ,
-                    stdio: `ignore`
-                }
+                    stdio: `ignore` ,
+                } ,
             )
             return true
         } catch ( err ) {
@@ -117,15 +117,15 @@ function startBrowserProcess( browser , url ) {
 function openBrowser( url ) {
     const { action , value } = getBrowserEnv()
     switch ( action ) {
-    case Actions.NONE:
-        // Special case: BROWSER="none" will prevent opening completely.
-        return false
-    case Actions.SCRIPT:
-        return executeNodeScript( value , url )
-    case Actions.BROWSER:
-        return startBrowserProcess( value , url )
-    default:
-        throw new Error( `Not implemented.` )
+        case Actions.NONE:
+            // Special case: BROWSER="none" will prevent opening completely.
+            return false
+        case Actions.SCRIPT:
+            return executeNodeScript( value , url )
+        case Actions.BROWSER:
+            return startBrowserProcess( value , url )
+        default:
+            throw new Error( `Not implemented.` )
     }
 }
 

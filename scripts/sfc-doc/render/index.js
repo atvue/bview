@@ -26,18 +26,18 @@ function renderTable( heads , keys , data ) {
 
 function render( type , data ) {
     switch ( type ) {
-    case `propsRes`:
-        return renderTable(
-            [ `属性名` , `描述` , `类型` , `是否必填` , `默认` ] ,
-            [ `name` , `describe` , `type` , `required` , `default` ] ,
-            data
-        )
-    case `apiMethods`:
-        return renderTable( [ `方法名` , `描述` ] , [ `name` , `describe` ] , data )
-    case `emitEvents`:
-        return renderTable( [ `事件名` , `描述` ] , [ `name` , `describe` ] , data )
-    case `slotsRes`:
-        return renderTable( [ `插槽名` , `描述` ] , [ `name` , `describe` ] , data )
+        case `propsRes`:
+            return renderTable(
+                [ `属性名` , `描述` , `类型` , `是否必填` , `默认` ] ,
+                [ `name` , `describe` , `type` , `required` , `default` ] ,
+                data ,
+            )
+        case `apiMethods`:
+            return renderTable( [ `方法名` , `描述` ] , [ `name` , `describe` ] , data )
+        case `emitEvents`:
+            return renderTable( [ `事件名` , `描述` ] , [ `name` , `describe` ] , data )
+        case `slotsRes`:
+            return renderTable( [ `插槽名` , `描述` ] , [ `name` , `describe` ] , data )
     }
 }
 

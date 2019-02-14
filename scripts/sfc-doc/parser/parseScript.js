@@ -108,7 +108,7 @@ module.exports = astJs => {
                                     describe: `` ,
                                     required: false ,
                                     default: undefined ,
-                                    validator: undefined
+                                    validator: undefined ,
                                 }
                                 prop.name = path.node.key.name
                                 // 获取注释
@@ -126,29 +126,29 @@ module.exports = astJs => {
                                             let { name } = path.node.key ,
                                                 { value } = path.node
                                             switch ( name ) {
-                                            case `type`:
-                                                // debugger;
-                                                prop.type = getType( value )
-                                                break
-                                            case `required`:
-                                                // debugger;
-                                                prop.required = value.value
-                                                break
-                                            case `default`:
-                                                prop[ name ] = getDefault(
-                                                    value
-                                                )
-                                                break
-                                            case `validator`:
-                                                // 仅获取注释
-                                                prop[ name ] = getComment(
-                                                    path.node
-                                                )
-                                                break
-                                            default:
-                                                break
+                                                case `type`:
+                                                    // debugger;
+                                                    prop.type = getType( value )
+                                                    break
+                                                case `required`:
+                                                    // debugger;
+                                                    prop.required = value.value
+                                                    break
+                                                case `default`:
+                                                    prop[ name ] = getDefault(
+                                                        value ,
+                                                    )
+                                                    break
+                                                case `validator`:
+                                                    // 仅获取注释
+                                                    prop[ name ] = getComment(
+                                                        path.node ,
+                                                    )
+                                                    break
+                                                default:
+                                                    break
                                             }
-                                        }
+                                        } ,
                                     } )
                                 } else {
                                     // xxx: xxx 或 xxx: [xx,xxx] 形式
@@ -163,7 +163,7 @@ module.exports = astJs => {
                                     }`
                                 }
                                 propsRes.push( prop )
-                            }
+                            } ,
                         } )
                     }
                     // methods
@@ -177,7 +177,7 @@ module.exports = astJs => {
                             .map( e => {
                                 return {
                                     name: e.key.name ,
-                                    describe: getComment( e )
+                                    describe: getComment( e ) ,
                                 }
                             } )
                         // debugger;
@@ -212,7 +212,7 @@ module.exports = astJs => {
                             ignoreEmit = false
                         if ( hasComments ) {
                             ignoreEmit = comments.some( ( { value } ) =>
-                                ignoreCommentReg.test( value )
+                                ignoreCommentReg.test( value ) ,
                             )
                         }
                         if ( ignoreEmit ) {
@@ -225,7 +225,7 @@ module.exports = astJs => {
                             for ( const elem of quasis ) {
                                 if ( elem.value.cooked ) {
                                     nodes.push(
-                                        bt.stringLiteral( elem.value.cooked )
+                                        bt.stringLiteral( elem.value.cooked ) ,
                                     )
                                 }
                                 if ( index < expressions.length ) {
@@ -239,7 +239,7 @@ module.exports = astJs => {
                             }
                             eventName = nodes.reduce(
                                 ( prev , next ) => prev + next.value ,
-                                ``
+                                `` ,
                             )
                         } else {
                             eventName = emitName.value
@@ -247,14 +247,14 @@ module.exports = astJs => {
                         let emit = {
                             name: eventName ,
                             args: generate( emitArg ).code , // args暂时没有用
-                            describe: getComment( path.parent )
+                            describe: getComment( path.parent ) ,
                         }
                         emitEvents.push( emit )
                         // }
                     }
-                }
+                } ,
             } )
-        }
+        } ,
     } )
     // emitEvents去重
     let deEmitEvents = []

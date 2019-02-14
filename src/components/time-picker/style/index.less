@@ -1,60 +1,60 @@
-@import '../../../style/default.less' ;
-@timePicker: ~"@{bview-prefix}-timePicker" ;
-@time: ~"@{bview-prefix}-time" ;
+@import '../../../style/default.less';
+@timePicker: ~'@{bview-prefix}-timePicker';
+@time: ~'@{bview-prefix}-time';
 
-.@{timePicker}{
+.@{timePicker} {
     display: inline-block;
     position: relative;
     background: #fff;
-    &-input{
+    &-input {
         height: 30px;
         width: 250px;
-        border:1px solid #ddd;
+        border: 1px solid #ddd;
         padding: 0 5px;
     }
-    &-ctime{
+    &-ctime {
         position: absolute;
         z-index: 10;
-        top:30px;
+        top: 30px;
         left: 0;
     }
-    &-input-close{
-        position:absolute;
-        top:6px;
+    &-input-close {
+        position: absolute;
+        top: 6px;
         right: 8px;
     }
 }
 
-.@{time}{
+.@{time} {
     overflow: hidden;
     width: 100%;
-    border:1px solid #ddd;
+    border: 1px solid #ddd;
     background: #fff;
     box-sizing: border-box;
-    &-list{
+    &-list {
         float: left;
         height: 160px;
         overflow: auto;
-        &-ul{
+        &-ul {
             padding-bottom: 140px;
-            li{
+            li {
                 height: 20px;
                 padding: 0;
                 display: block;
                 line-height: 20px;
                 text-align: center;
                 cursor: pointer;
-                &:hover{
-                    background:#ccc;
+                &:hover {
+                    background: #ccc;
                 }
             }
         }
     }
-    &-active{
+    &-active {
         background: #3385ff;
-        color:#fff;
-        &:hover{
-            background:#3385ff;
+        color: #fff;
+        &:hover {
+            background: #3385ff;
         }
     }
 }
