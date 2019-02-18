@@ -1,12 +1,13 @@
-+ 有默认值
++ 自定义连接符
 
 
 
 ```vue
 <template>
     <Cascader 
-        :data="data" 
-        v-model="value">
+        v-model="value"
+        :data="data"
+        :render-format="renderFormat">
     </Cascader>
 </template>
 
@@ -20,7 +21,7 @@ export default {
     } ,
     data () {
         return {
-            value: ['zhejiang', 'hangzhou', 'xihu'],
+            value: ['zhejiang','hangzhou','xihu'],
             data: [{
                 value: 'anhui',
                 label: '安徽',
@@ -86,7 +87,12 @@ export default {
             }] ,
         }
     } ,
+    methods:{
+        renderFormat(label){
+            return label.join(' - ');
+        },
+    }
 }
 </script>
 ```
-通过设置 value 属性来设置默认值，设置后级联选择器将在初始化时选中该值。
+通过设置 render-format 来自定义输入框中的层级连接符，不设置则默认为' / '。

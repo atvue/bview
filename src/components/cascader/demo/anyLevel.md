@@ -1,12 +1,13 @@
-+ 基本用法
++ 允许选中任意一级
 
 
 
 ```vue
 <template>
     <Cascader 
-        :data="data" 
-        v-model="value">
+        v-model="value"
+        changeOnSelect
+        :data="data" >
     </Cascader>
 </template>
 
@@ -89,4 +90,4 @@ export default {
 }
 </script>
 ```
-Cascader组件用于选择具有级联结构的数据，对数据格式有要求。数据项中需包含 value 、 label属性，children 为子集，具体格式可参考示例代码中的 data 对象。可使用 v-model 对选中值进行双向绑定。
+通过设置属性 changeOnSelect 使得用户能够选中任意一级的选项。

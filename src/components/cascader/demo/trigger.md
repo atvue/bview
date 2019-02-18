@@ -1,12 +1,13 @@
-+ 基本用法
++ hover展开
 
 
 
 ```vue
 <template>
     <Cascader 
+        v-model="value"
         :data="data" 
-        v-model="value">
+        :trigger="'hover'">
     </Cascader>
 </template>
 
@@ -89,4 +90,4 @@ export default {
 }
 </script>
 ```
-Cascader组件用于选择具有级联结构的数据，对数据格式有要求。数据项中需包含 value 、 label属性，children 为子集，具体格式可参考示例代码中的 data 对象。可使用 v-model 对选中值进行双向绑定。
+通过设置 trigger:hover 属性来实现鼠标移入到级联选项上即展开下一级列表的效果，默认值为 'click'。

@@ -65,8 +65,8 @@
                                 selectPrefixCls + '-item',
                                 {
                                     [selectPrefixCls +
-                                    '-item-disabled']: item.disabled
-                                }
+                                    '-item-disabled']: item.disabled,
+                                },
                             ]"
                             @click="_handleSelectItem(index)"
                             v-html="item.display"
@@ -106,7 +106,7 @@ export default {
     name: `Cascader` ,
     components: {
         Caspanel ,
-        Icon
+        Icon ,
     } ,
     directives: { clickOutEl } ,
     mixins: [ Emitter ] ,
@@ -116,58 +116,58 @@ export default {
             type: Array ,
             default() {
                 return []
-            }
+            } ,
         } ,
         // 是否禁用选择器
         disabled: {
             type: Boolean ,
-            default: false
+            default: false ,
         } ,
         // 是否支持清空输入框
         clearable: {
             type: Boolean ,
-            default: false
+            default: false ,
         } ,
         // 当前已选项的数据
         value: {
             type: Array ,
             default() {
                 return []
-            }
+            } ,
         } ,
         // 是否选中即改变
         changeOnSelect: {
             type: Boolean ,
-            default: false
+            default: false ,
         } ,
         // 交互方式
         trigger: {
             validator( value ) {
                 return oneOf( value , [ `click` , `hover` ] )
             } ,
-            default: `click`
+            default: `click` ,
         } ,
         // 结果展示方式
         renderFormat: {
             type: Function ,
             default( label ) {
                 return label.join( ` / ` )
-            }
+            } ,
         } ,
         placeholder: {
             type: [ String , Number ] ,
-            default: `请选择`
+            default: `请选择` ,
         } ,
         // 是否支持搜索
         filterable: {
             type: Boolean ,
-            default: false
+            default: false ,
         } ,
         // 异步数据
         loadData: {
             type: Function ,
-            default: () => {}
-        }
+            default: () => {} ,
+        } ,
     } ,
     data() {
         return {
@@ -184,7 +184,7 @@ export default {
             showValue: true ,
             // 异步获取的子节点无数据
             noChild: false ,
-            close
+            close ,
         }
     } ,
     computed: {
@@ -214,7 +214,7 @@ export default {
                             value: item.__value ,
                             display: item.__label ,
                             item: item ,
-                            disabled: !!item.disabled
+                            disabled: !!item.disabled ,
                         } )
                     }
                 } )
@@ -229,12 +229,12 @@ export default {
                 .map( item => {
                     item.display = item.display.replace(
                         new RegExp( this.query , `g` ) ,
-                        `<span>${this.query}</span>`
+                        `<span>${this.query}</span>` ,
                     )
                     return item
                 } )
             return selections
-        }
+        } ,
     } ,
     watch: {
         showDropDown( val ) {
@@ -261,7 +261,7 @@ export default {
             deep: true ,
             handler() {
                 const validDataStr = JSON.stringify(
-                    this._getValidData( this.data )
+                    this._getValidData( this.data ) ,
                 )
                 if ( validDataStr !== this.validDataStr ) {
                     this.validDataStr = validDataStr
@@ -270,8 +270,8 @@ export default {
                     }
                     this.isLoadedChildren = false
                 }
-            }
-        }
+            } ,
+        } ,
     } ,
     created() {
         this.validDataStr = JSON.stringify( this._getValidData( this.data ) )
@@ -326,7 +326,7 @@ export default {
         } ,
         //@doc当外部被点击时调用
         handleClickOutSide() {
-            if ( this.showDropDown && !this.filterable ) {
+            if ( this.showDropDown ) {
                 this.onClose()
             }
         } ,
@@ -344,7 +344,7 @@ export default {
                 this.$emit(
                     `on-change` ,
                     this.currentValue ,
-                    JSON.parse( JSON.stringify( this.selected ) )
+                    JSON.parse( JSON.stringify( this.selected ) ) ,
                 )
                 // 对于表单中使用级联选择器，触发表单变更事件
                 // this.$nextTick(() => {
@@ -359,7 +359,7 @@ export default {
         _updateSelected( init = false ) {
             if ( this.changeOnSelect || init ) {
                 this.broadcast( `Caspanel` , `on-find-selected` , {
-                    value: this.currentValue
+                    value: this.currentValue ,
                 } )
             }
         } ,
@@ -383,7 +383,7 @@ export default {
             }
             if ( `children` in new_item && new_item.children.length ) {
                 new_item.children = new_item.children.map( i =>
-                    this._deleteData( i )
+                    this._deleteData( i ) ,
                 )
             }
             return new_item
@@ -407,7 +407,7 @@ export default {
             this.currentValue = []
             this._emitValue( this.currentValue , oldVal )
             this.onClose()
-        }
-    }
+        } ,
+    } ,
 }
 </script>
