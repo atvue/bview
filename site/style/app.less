@@ -232,20 +232,32 @@ body {
             }
 
             table.bview-doc {
+                border-spacing: 0;
+                width: 100%;
+                font-size: 13px;
+                border: 1px solid #f2f2f2;
+                border-bottom: none;
                 margin-bottom: 20px;
-
                 thead > tr {
                     background: rgba(242, 245, 253, 0.5);
                 }
-
+                th,
+                td {
+                    padding: 8px 13px;
+                    border-bottom: 1px solid #f2f2f2;
+                }
                 tr {
                     height: 30px;
                     line-height: 30px;
                     text-align: left;
+                    border-top: 1px solid #ccc;
+                    background-color: #fff;
                 }
-
+                td {
+                    vertical-align: top;
+                }
                 th {
-                    min-width: 100px;
+                    font-weight: 700;
                 }
             }
         }

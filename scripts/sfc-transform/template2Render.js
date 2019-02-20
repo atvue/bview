@@ -4,6 +4,7 @@ const NullSFCScriptExport = `export default {}`
 const babel = require( `@babel/core` )
 const babelPluginImportBview = require( `../babel-helper/babel-plugin-import-bview` )
 const babelPluginDefault2Export = require( `../babel-helper/babel-plugin-default2export` )
+const babelPluginVueJsx = require( `babel-plugin-transform-vue-jsx` )
 const { parseStyles } = require( `./parseStyles` )
 const withStatement2RenderFunction = withStmt => {
     return transpile( `function render() { ${withStmt} }` )
@@ -57,6 +58,7 @@ const parse = ( content , name , metadata ) => {
                     code: false ,
                     sourceType: `module` ,
                     plugins: [
+                        babelPluginVueJsx ,
                         [ babelPluginImportBview , { libraryName: `bview` } ] ,
                         [
                             babelPluginDefault2Export ,
