@@ -1,5 +1,5 @@
 
-使用options替代Option组件
+
 
 ```vue
 <template>
@@ -36,3 +36,4 @@ export default {
 }
 </script>
 ```
+使用options替代Option组件

@@ -10,6 +10,7 @@
                 @change="change"
                 width="300px"
                 clearable
+                :nativeProps="mag"
             />
         </div>
         <div class="example" style="margin-top:20px;">
@@ -34,7 +35,10 @@ export default {
     data() {
         return {
             value1: '',
-            value2: ''
+            value2: '',
+            mag: {
+                msg: 'hello'
+            }
         };
     },
     methods: {

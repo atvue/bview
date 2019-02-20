@@ -1,7 +1,7 @@
 const group = [
     {
         categoryName: `基础组件` ,
-        components: [ `button` , `icon` ]
+        components: [ `button` , `icon` ] ,
     } ,
     {
         categoryName: `数据输入` ,
@@ -14,17 +14,17 @@ const group = [
             `cascader` ,
             `select` ,
             `switches` ,
-            `search`
-        ]
+            `search` ,
+        ] ,
     } ,
     {
         categoryName: `数据展示` ,
-        components: [ `tag` ]
+        components: [ `tag` ] ,
     } ,
     {
         categoryName: `导航组件` ,
-        components: [ `menu` , `pager` ]
-    }
+        components: [ `menu` , `pager` ] ,
+    } ,
 ]
 
 export function resetGroup( routerData , rootRoute ) {
@@ -33,11 +33,11 @@ export function resetGroup( routerData , rootRoute ) {
         result = group.map( item => {
             let obj = {
                 meta: {
-                    name: item.categoryName
+                    name: item.categoryName ,
                 } ,
                 children: [] ,
                 path: `/components` ,
-                component: rootRoute
+                component: rootRoute ,
             }
             item.components.forEach( com => {
                 let element = routerData.find( route => route.path === com ) ,
@@ -57,11 +57,11 @@ export function resetGroup( routerData , rootRoute ) {
     if ( hasDiff ) {
         let obj = {
             meta: {
-                name: `未定义`
+                name: `未定义` ,
             } ,
             children: [] ,
             path: `/components` ,
-            component: rootRoute
+            component: rootRoute ,
         }
         diffArr.forEach( com => {
             let element = routerData.find( route => route.path === com ) ,

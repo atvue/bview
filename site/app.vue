@@ -48,7 +48,7 @@
             </div>
             <!-- END 文档内容 -->
             <!--锚点内容-->
-            <div style="position:absolute;right:100px">
+            <div class="anchor-wrapper">
                 <Anchor ref="anchor">
                     <AnchorLink
                         v-for="(item, index) in anchorList"
@@ -84,24 +84,24 @@ export default {
     components: {
         Anchor ,
         AnchorLink ,
-        SlideNav
+        SlideNav ,
     } ,
     data() {
         return {
-            anchorList: []
+            anchorList: [] ,
         }
     } ,
     computed: {
         routerData() {
             return this.$router.options.routes
-        }
+        } ,
     } ,
     watch: {
         $route() {
             this.$nextTick( () => {
                 this.updateAnchor()
             } )
-        }
+        } ,
     } ,
     mounted() {
         this.updateAnchor()
@@ -114,11 +114,11 @@ export default {
                 if ( item.id ) {
                     this.anchorList.push( {
                         title: item.innerText ,
-                        href: `#` + item.id
+                        href: `#` + item.id ,
                     } )
                 }
             } )
-        }
-    }
+        } ,
+    } ,
 }
 </script>

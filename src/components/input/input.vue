@@ -134,6 +134,7 @@ export default {
             b: b ,
         }
     } ,
+
     computed: {
         inputClasses() {
             return [
