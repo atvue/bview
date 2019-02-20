@@ -22,12 +22,6 @@ export default {
     }
 }
 </script>
-
-<style type="less">
-.demo-button {
-    background: #f00 ;
-}
-</style>
 ```
 
 
