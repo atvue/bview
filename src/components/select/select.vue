@@ -75,7 +75,7 @@
                 v-if="showSearch && searchResultNoList"
                 :class="`${b}-options-search-empty`"
             >
-                暂无数据
+                {{ notFoundContent }}
             </div>
             <ul
                 v-else
@@ -154,6 +154,10 @@ export default {
         filterOption: {
             type: [ Boolean , Function ] ,
             default: true ,
+        } ,
+        notFoundContent: {
+            type: String ,
+            default: `暂无搜索结果` ,
         } ,
     } ,
     data() {
