@@ -1,6 +1,6 @@
 ---
 order: 1
-title: 开关 Switches
+title: 开关 
 ---
 ### 开关{id="switches-title"}
 

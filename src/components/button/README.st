@@ -1,6 +1,6 @@
 ---
 order: 0
-title: 按钮 Button
+title: 按钮
 ---
 
 

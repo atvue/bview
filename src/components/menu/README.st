@@ -1,6 +1,6 @@
 ---
 order: 5
-title: 菜单 Menu
+title: 菜单
 ---
 
 

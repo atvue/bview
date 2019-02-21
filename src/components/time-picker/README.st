@@ -1,6 +1,6 @@
 ---
 order: 40
-title: 时间选择器 TimePicker
+title: 时间选择器 
 ---
 
 ### 基本描述

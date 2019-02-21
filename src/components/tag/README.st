@@ -1,6 +1,6 @@
 ---
 order: 11
-title: 标签 Tag
+title: 标签 
 ---
 
 ### 标签{id="tag-title"}

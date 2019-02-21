@@ -1,6 +1,6 @@
 ---
 order: 1
-title: 多行输入框 Textarea
+title: 多行输入框 
 ---
 
 ### 多行输入框{id="textarea-title"}

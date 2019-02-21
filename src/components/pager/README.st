@@ -1,6 +1,6 @@
 ---
 order: 11
-title: 分页器 Pager
+title: 分页器
 ---
 ### 基本描述{id="pager-basic"}
 
