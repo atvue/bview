@@ -2,7 +2,7 @@ const fs = require( `fs` )
 const path = require( `path` )
 const junk = require( `../fs-helper/junk` )
 const { components: pathComponents } = require( `../project-path` )
-const getReadMeConfig = require( `./readMeConfig` )
+const { readMeConfig: getReadMeConfig } = require( `./readMeConfig` )
 const suffix = `.st` ,
     readMeFileName = `README${suffix}`
 
@@ -21,7 +21,7 @@ async function mapFileToConfig( fileName ) {
     let file = path.resolve( pathComponents , fileName , readMeFileName ) ,
         obj = {
             name: fileName ,
-            readMeConfig: undefined
+            readMeConfig: undefined ,
         } ,
         readMeConfig = await getReadMeConfig( file )
     Object.assign( obj , { readMeConfig } )
@@ -80,7 +80,7 @@ exports.siteComponentsReadMeSortedConfig = async function() {
         // 忽略标记 ignoreMenu
         filterComponents = componentsConfig.filter( stConfig => {
             let {
-                readMeConfig: { ignoreMenu }
+                readMeConfig: { ignoreMenu } ,
             } = stConfig
             return ignoreMenu !== true
         } ) ,

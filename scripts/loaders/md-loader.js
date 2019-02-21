@@ -2,6 +2,8 @@ const markdown = require( `markdown-it` )
 const hljs = require( `highlight.js` )
 const { transform2RelativePath } = require( `../project-path` )
 const { parse } = require( `../sfc-transform/template2Render` )
+const { getYamlContent , yamlReg } = require( `../site-helper/readMeConfig` )
+const yaml = require( `js-yaml` )
 const mdHasNoVueCodeWarning = filePath => `<template>
                 <div>
                     <code>${filePath}</code><br/>
@@ -26,12 +28,21 @@ hljs.registerLanguage( `vue` , require( `highlight.js/lib/languages/xml` ) )
 const mdCommonClass = require( `../util/mdCommonClass` )
 
 module.exports = function( source , map , meta ) {
-    const callback = this.async() ,
+    let callback = this.async() ,
         { resourcePath , context } = this ,
         metadata = { context , resourcePath } ,
         relativePath = transform2RelativePath( resourcePath ) ,
-        mdFragments = source.split( vueCodeReg )
-
+        mdFragments = source.split( vueCodeReg ) ,
+        yamlStr = getYamlContent( source ) ,
+        yamlConfig
+    if ( yamlStr !== undefined ) {
+        try {
+            yamlConfig = yaml.safeLoad( yamlStr )
+        } catch ( e ) {
+            console.log( `文件：${relativePath},的yaml语法错误` , e )
+        }
+    }
+    Object.assign( metadata , { yamlConfig } )
     let md = markdown( {
         html: true ,
         typographer: true ,
@@ -56,6 +67,8 @@ module.exports = function( source , map , meta ) {
     let vueComponents = [] ,
         codeHtml ,
         dealFragments = mdFragments.map( ( mdStr , index ) => {
+            // yaml配置不展示
+            mdStr = mdStr.replace( yamlReg , `` )
             let isVueCode = vueCodeReg.test( mdStr ) ,
                 mdHtml = md.render( mdStr )
             // 解决md中的`{{`,`}}`符号被sfc当做template插值语法来解析
@@ -121,6 +134,11 @@ module.exports = function( source , map , meta ) {
                             import codePanel from 'site/components/codePanel'
                             // 注册md中的vue组件
                             export default {
+                                __yamlConfig: ${
+    yamlConfig
+        ? JSON.stringify( yamlConfig )
+        : `undefined`
+} ,
                                 components: { ${components} , codePanel }
                             }
                         </script>

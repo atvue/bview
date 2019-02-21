@@ -4,7 +4,7 @@ const yaml = require( `js-yaml` )
 const yamlReg = /---([\s\S]*?)---/
 
 // 提取yaml字符内容
-function getYamlContent( str ) {
+const getYamlContent = str => {
     if ( str === null || str === undefined || str.trim() === `` ) {
         return undefined
     }
@@ -17,7 +17,9 @@ function getYamlContent( str ) {
     }
 }
 
-module.exports = async function readMeConfig( file ) {
+exports.getYamlContent = getYamlContent
+exports.yamlReg = yamlReg
+exports.readMeConfig = async file => {
     if ( file === undefined || file === null ) {
         return undefined
     }

@@ -11,7 +11,12 @@ module.exports = function( babel ) {
             ExportDefaultDeclaration( path , state ) {
                 let { node } = path ,
                     {
-                        opts: { render , staticRenderFns , exportName }
+                        opts: {
+                            render ,
+                            staticRenderFns ,
+                            exportName ,
+                            yamlConfig ,
+                        } ,
                     } = state
                 exportName = exportName ? exportName : `demo`
                 if ( !node ) return
@@ -19,22 +24,26 @@ module.exports = function( babel ) {
                 if ( declaration.type !== `ObjectExpression` ) {
                     return
                 }
-                let renderId = t.identifier( `render` ) ,
-                    renderValueId = t.identifier( render ) ,
-                    staticRenderFnsId = t.identifier( `staticRenderFns` ) ,
-                    staticRenderFnsValue = t.identifier( staticRenderFns ) ,
-                    renderObjectPropertyId = t.objectProperty(
-                        renderId ,
-                        renderValueId
+                let renderObjectPropertyId = t.objectProperty(
+                        t.identifier( `render` ) ,
+                        t.identifier( render ) ,
                     ) , // { render: function(){ ... } }
                     staticObjectPropertyId = t.objectProperty(
-                        staticRenderFnsId ,
-                        staticRenderFnsValue
-                    ) // { staticRenderFns: [ function(){ ... } ] }
-
+                        t.identifier( `staticRenderFns` ) ,
+                        t.identifier( staticRenderFns ) ,
+                    ) , // { staticRenderFns: [ function(){ ... } ] }
+                    yamlConfigObjectPropertyId = t.objectProperty(
+                        t.identifier( `__yamlConfig` ) ,
+                        t.identifier(
+                            yamlConfig
+                                ? JSON.stringify( yamlConfig )
+                                : `undefined` ,
+                        ) ,
+                    ) // { __yamlConfig: { "order":0 } }
                 // insert key render
                 declaration.properties.push( renderObjectPropertyId )
                 declaration.properties.push( staticObjectPropertyId )
+                declaration.properties.push( yamlConfigObjectPropertyId )
                 // export default -> export const demo = ...
                 let exportDemoDec = template( `
                         export const ${exportName} = EXPORTDEFAULT
@@ -42,7 +51,7 @@ module.exports = function( babel ) {
                     ast = exportDemoDec( { EXPORTDEFAULT: declaration } )
                 // replace export default
                 path.replaceWithMultiple( ast )
-            }
-        }
+            } ,
+        } ,
     }
 }

@@ -39,6 +39,7 @@ const parse = ( content , name , metadata ) => {
             return j( new Error( `解析的vue文件内容不能为空` ) )
         }
         let vueDescriptor = compiler.parseComponent( content ) ,
+            { yamlConfig } = metadata ,
             { template , script , styles } = vueDescriptor ,
             scriptTxt = script ? script.content : NullSFCScriptExport ,
             templateTxt = template ? template.content : `` ,
@@ -68,6 +69,7 @@ const parse = ( content , name , metadata ) => {
                                     .map( withStatement2RenderFunction )
                                     .join( `,` )}]` ,
                                 exportName: name ,
+                                yamlConfig ,
                             } ,
                         ] ,
                     ] ,

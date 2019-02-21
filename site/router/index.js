@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import { componentRoutes } from './cptRoutes'
 import { resetGroup } from './cpGroups'
 import { waterfall } from './waterfall'
-
+import { sortDemo } from './sortDemo'
 Vue.use( Router )
 import rootRoute from './rootRoute'
 
@@ -40,12 +40,13 @@ let componentsRouteConfig = componentRoutes.map( ele => {
     let { path } = ele ,
         docComp = components[ path ] ,
         demoComps = demos[ path ]
+    demoComps.sort( sortDemo )
     // 插入demo
     let wrapperComp = Vue.extend( {
         render: h => {
             let waterFallVNode = waterfall( demoComps , h )
             return h( docComp , [ waterFallVNode ] )
-        }
+        } ,
     } )
     ele.component = wrapperComp
     return ele
@@ -70,7 +71,7 @@ let routes = resetGroup( componentsRouteConfig , rootRoute )
 // ];
 
 const router = new Router( {
-    routes: [ ...routes ]
+    routes: [ ...routes ] ,
 } )
 
 export default router
