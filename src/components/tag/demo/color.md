@@ -1,14 +1,14 @@
 ---
-order: 1
+order: 2
 ---
 
-禁用`disabled`
+设置标签的`color`
 
 ```vue
 <template>
     <div>
         <Tag>语文</Tag>
-        <Tag disabled>英语</Tag>
+        <Tag>英语</Tag>
         <Tag>数学</Tag>
     </div>
 </template>
