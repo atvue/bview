@@ -22,3 +22,6 @@ lauch.json
 .history
 # 测试覆盖率
 /coverage
+
+# 本地loader开发测试目录
+loader-test-dir
