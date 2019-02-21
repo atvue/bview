@@ -1,8 +1,8 @@
 <template>
     <button
         :disabled="disabled"
-        :class="boxlassName"
-        @click.prevent="_onClick"
+        :class="buttonClassName"
+        @click.prevent="$_onClick"
     >
         <span v-if="showSlot">
             <slot />
@@ -12,76 +12,69 @@
 </template>
 
 <script>
-const prefixCls = `bview`
+import { bviewPrefix as b } from '../../utils/macro'
 const typeDefault = `primary`
 const SizeDefault = ``
-const types = [
-    `main` ,
-    `primary` ,
-    `dashed` ,
-    `text` ,
-    `danger` ,
-    `ghost` ,
-    `dropbox`
-]
+const types = [ `main` , `primary` , `text` ]
 const sizes = [ `` , `big` , `small` ]
 
 export default {
-    name: `BviewButton` ,
+    name: `Button` ,
     props: {
         //@doc是否禁用按钮
         disabled: {
             type: Boolean ,
-            default: false
+            default: false ,
         } ,
         //@doc是否需要loading
         loading: {
             type: Boolean ,
-            default: false
+            default: false ,
         } ,
         //@doc是否显示slot
         showSlot: {
             type: Boolean ,
-            default: true
+            default: true ,
         } ,
         //@doc按钮的大小
         size: {
             validator( value ) {
                 return sizes.indexOf( value ) >= 0
             } ,
-            default: SizeDefault
+            default: SizeDefault ,
         } ,
-        //@doc按钮的类型
+        //@doc按钮的类型,为[main ,primary ,text]的一种
         type: {
             validator( value ) {
                 return value ? true : types.indexOf( value ) >= 0
             } ,
-            default: typeDefault
-        }
+            default: typeDefault ,
+        } ,
     } ,
     data() {
-        return {}
+        return {
+            b: b ,
+        }
     } ,
     computed: {
-        boxlassName() {
+        buttonClassName() {
             let { type , size } = this
 
             return [
-                `${prefixCls}-button` ,
-                `${prefixCls}-button-size${size}` ,
-                `${prefixCls}-button-${type}`
+                `${b}-button` ,
+                `${b}-button-size${size}` ,
+                `${b}-button-${type}` ,
             ]
-        }
+        } ,
     } ,
     methods: {
-        _onClick( event ) {
+        $_onClick( event ) {
             let { loading } = this
-
             if ( !loading ) {
                 //@doc 点击事件，参数event
                 this.$emit( `click` , event )
             }
-        }
-    }
+        } ,
+    } ,
 }
 </script>

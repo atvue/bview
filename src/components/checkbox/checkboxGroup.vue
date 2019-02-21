@@ -6,8 +6,7 @@
 
 <script>
 import { findComponentsDownward } from '../../utils/assist'
-
-const prefix = `bview`
+import { bviewPrefix as b } from '../../utils/macro'
 
 export default {
     name: `CheckboxGroup` ,
@@ -16,39 +15,40 @@ export default {
             type: Array ,
             default() {
                 return []
-            }
+            } ,
         } ,
         vertical: {
             type: Boolean ,
-            default: false
-        }
+            default: false ,
+        } ,
     } ,
     data() {
         return {
             curValue: this.value ,
-            childrens: []
+            childrens: [] ,
+            b: b ,
         }
     } ,
     computed: {
         groupClass: function() {
             return [
-                `${prefix}-checkbox-group-wrap` ,
+                `${b}-checkbox-group-wrap` ,
                 {
-                    [ `${prefix}-checkbox-group-vertical` ]: this.vertical
-                }
+                    [ `${b}-checkbox-group-vertical` ]: this.vertical ,
+                } ,
             ]
-        }
+        } ,
     } ,
     watch: {
         value() {
-            this._updateValue( true )
-        }
+            this.$_updateValue( true )
+        } ,
     } ,
     mounted() {
-        this._updateValue( true )
+        this.$_updateValue( true )
     } ,
     methods: {
-        _updateValue( flag ) {
+        $_updateValue( flag ) {
             this.childrens = findComponentsDownward( this , `Checkbox` )
             if ( this.childrens ) {
                 const { value } = this
@@ -60,7 +60,7 @@ export default {
                 } )
             }
         } ,
-        _changeValue( value ) {
+        $_changeValue( value ) {
             let index = this.curValue.indexOf( value )
             if ( index >= 0 ) {
                 this.curValue.splice( index , 1 )
@@ -71,7 +71,7 @@ export default {
             this.$emit( `input` , this.curValue )
             //@doc 值改变时触发事件，参数当前的value
             this.$emit( `on-change` , this.curValue )
-        }
-    }
+        } ,
+    } ,
 }
 </script>

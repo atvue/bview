@@ -1,20 +1,20 @@
 <template>
     <span
-        :class="[prefix + '-radio-wrap']"
-        @click="_onChange"
+        :class="`${b}-radio-wrap`"
+        @click="$_onChange"
     >
         <span :class="radioClass">
             <span :class="innerClass" />
             <input
                 type="radio"
-                :class="[prefix + '-radio-input']"
+                :class="`${b}-radio-input`"
                 :disabled="disabled"
                 :checked="checked"
                 :name="groupName"
                 :value="value"
             >
         </span>
-        <label :class="[prefix + '-radio-label']">
+        <label :class="`${b}-radio-label`">
             <slot>
                 {{ value }}
             </slot>
@@ -24,8 +24,7 @@
 
 <script>
 import { findComponentUpward } from '../../utils/assist'
-
-const prefix = `bview`
+import { bviewPrefix as b } from '../../utils/macro'
 
 export default {
     name: `Radio` ,
@@ -33,72 +32,72 @@ export default {
         //@doc单选按钮的值
         value: {
             type: [ String , Number , Boolean ] ,
-            default: false
+            default: false ,
         } ,
         //@doc是否禁用
         disabled: {
             type: Boolean ,
-            default: false
+            default: false ,
         } ,
         //@doc是否选中
         checked: {
             type: Boolean ,
-            default: false
+            default: false ,
         } ,
         //@doc单选按钮的属性值name
         name: {
             type: String ,
-            default: undefined
+            default: undefined ,
         } ,
         //@doc单选按钮可选大小
         size: {
             type: String ,
-            default: `default`
-        }
+            default: `default` ,
+        } ,
     } ,
     data() {
         return {
-            prefix: prefix ,
+            b: b ,
             isChecked: !this.isGroup ? this.value : this.checked ,
             groupName: this.name ,
             isGroup: false ,
-            parent: undefined
+            parent: undefined ,
         }
     } ,
     computed: {
         radioClass: function() {
-            return `${prefix}-radio-${this.size}`
+            return `${b}-radio-${this.size}`
         } ,
         innerClass: function() {
             return [
-                `${prefix}-radio-inner` ,
+                `${b}-radio-inner` ,
                 {
-                    [ `${prefix}-radio-inner-checked` ]:
-                        this.isChecked && !this.disabled
+                    [ `${b}-radio-inner-checked` ]:
+                        this.isChecked && !this.disabled ,
                 } ,
                 {
-                    [ `${prefix}-radio-inner-disabled` ]:
-                        this.disabled && !this.isChecked
+                    [ `${b}-radio-inner-disabled` ]:
+                        this.disabled && !this.isChecked ,
                 } ,
                 {
-                    [ `${prefix}-radio-inner-checked-disabled` ]:
-                        this.disabled && this.isChecked
-                }
+                    [ `${b}-radio-inner-checked-disabled` ]:
+                        this.disabled && this.isChecked ,
+                } ,
             ]
-        }
+        } ,
     } ,
     watch: {
         value( value ) {
             if ( !this.isGroup ) {
                 this.isChecked = value
             }
-        }
+        } ,
     } ,
     mounted() {
         this.parent = findComponentUpward( this , `RadioGroup` )
     } ,
     methods: {
-        _onChange() {
+        $_onChange() {
             if ( this.disabled || this.isChecked ) {
                 return false
             }
@@ -106,14 +105,14 @@ export default {
             this.isChecked = !this.isChecked
 
             if ( this.isGroup ) {
-                this.parent._changeValue( this.value )
+                this.parent.$_changeValue( this.value )
             } else {
                 //@doc 结合v-model，触发input事件，参数当前值
                 this.$emit( `input` , this.isChecked )
                 //@doc 单个使用时候value改变事件，参数value
                 this.$emit( `on-change` , this.isChecked )
             }
-        }
-    }
+        } ,
+    } ,
 }
 </script>

@@ -1,11 +1,10 @@
-#### 单个radio的基本用法
-结合v-model一起使用
++ 单个radio的基本用法
+
 
 ```vue
 <template>
     <div class="demo-radio">
-        <Radio v-model="isOpen">one</Radio>
-        <p>value: {{ isOpen }}</p>
+        <Radio v-model="isOpen">选项一</Radio>
     </div>
 </template>
 
@@ -22,9 +21,5 @@ export default {
 }
 </script>
 
-<style type="less">
-.demo-radio {
-    background: #f00 ;
-}
-</style>
 ```
+结合v-model一起使用，最简单的用法

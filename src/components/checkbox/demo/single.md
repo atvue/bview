@@ -1,11 +1,10 @@
-#### 单个checkbox的基本用法
-结合v-model一起使用
+
++ 单个checkbox 
 
 ```vue
 <template>
     <div class="demo-radio">
         <Checkbox v-model="check">厨房</Checkbox>
-        <p>value: {{ check }}</p>
     </div>
 </template>
 
@@ -22,9 +21,5 @@ export default {
 }
 </script>
 
-<style type="less">
-.demo-radio {
-    background: #f00 ;
-}
-</style>
 ```
+结合v-model一起使用

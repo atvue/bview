@@ -1,31 +1,18 @@
 
-#### 单选按钮组的用法CheckboxGroup
++ 按钮组合
 
 ```vue
 <template>
     <div>
         <CheckboxGroup v-model="list">
             <Checkbox value="1">
-                1111
+                选项一
             </Checkbox>
             <Checkbox value="2">
-                2222
+                选项二
             </Checkbox>
             <Checkbox value="3">
-                3333
-            </Checkbox>
-        </CheckboxGroup>
-        <p class="p-pad">checklistValue: {{list}}</p>
-        <h6>垂直使用</h6>
-        <CheckboxGroup v-model="list" vertical>
-            <Checkbox value="1">
-                1111
-            </Checkbox>
-            <Checkbox value="2" disabled>
-                2222
-            </Checkbox>
-            <Checkbox value="3">
-                3333
+                选项三
             </Checkbox>
         </CheckboxGroup>
     </div>

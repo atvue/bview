@@ -1,122 +1,124 @@
+@import '../../../style/default';
+@css-prefix: ~'@{bview-prefix}-button';
 @btn_hover: #3cd4ba;
 @btn_disabled: #bbc1d0;
 @btn_normal: #0bc9a9;
 @btn_press: #10bfa2;
 
-.bview-button-group-vertical{
-    .bview-button{
-        display: block;
-    }
-}
-
-.bview-button-group-vertical-space-middle{
-    .bview-button{
-        &:not(:first-child){
-            margin-top: 20px;
-        }
-    }
-}
-
-.bview-button-group-vertical-space-default{
-    .bview-button{
-        &:not(:first-child){
-            margin-top: 10px;
-        }
-    }
-}
-
-.bview-button-group-vertical-space-small{
-    .bview-button{
-        &:not(:first-child){
-            margin-top: 5px;
-        }
-    }
-}
-
-.bview-button-group-vertical-space-big{
-    .bview-button{
-        &:not(:first-child){
-            margin-top: 30px;
-        }
-    }
-}
-
-.bview-button {
+.@{css-prefix} {
     display: inline-block;
     vertical-align: middle;
     width: auto;
-    padding: 0 26px;
+    padding: 0 22px;
     height: 30px;
+    border-radius: 2px;
+    border-width: 0;
     box-sizing: border-box;
     line-height: 30px;
     color: #ffffff;
-    background-color: @btn_normal;
+    background-color: @btn-default-bg;
     font-size: 12px;
     cursor: pointer;
     &:hover {
         background-color: @btn_hover;
     }
     &[disabled] {
-        background-color: @btn_disabled;
+        background-color: @btn-disable-color;
         cursor: not-allowed;
     }
     &:focus {
         background-color: @btn_press;
+        outline: none;
     }
-    &.bview-button-sizebig {
+    &-sizebig {
         padding: 0 41px;
         margin-right: 40px;
         font-size: 14px;
         height: 38px;
         line-height: 38px;
     }
+    &-main {
+        color: #fff;
+        // border: 1px solid #aaa;
+        background-color: @btn-default-bg;
+        &:hover {
+            background-color: @btn-hover-color;
+        }
+        &[disabled] {
+            background-color: @btn-disable-color;
+            cursor: not-allowed;
+        }
+        &:focus {
+            background-color: @btn-hover-color;
+        }
+    }
+    &-text {
+        color: #666;
+        border: none;
+        background-color: #fff;
+        &:hover {
+            background-color: #fff;
+        }
+        &[disabled] {
+            background-color: @btn-disable-color;
+            cursor: not-allowed;
+        }
+        &:focus {
+            background-color: #fff;
+        }
+    }
+    &-primary {
+        color: #fff;
+        border: 1px solid #666;
+        background-color: #666;
+        &:hover {
+            background-color: #777;
+        }
+        &[disabled] {
+            background-color: @btn-disable-color;
+            cursor: not-allowed;
+        }
+        &:focus {
+            background-color: #555;
+        }
+    }
 }
 
-.bview-button-primary {
-    color: #666;
-    border: 1px solid #aaa;
-    background-color: #fff;
-    &:hover {
-        background-color: #fff;
-    }
-    &[disabled] {
-        background-color: @btn_disabled;
-        cursor: not-allowed;
-    }
-    &:focus {
-        background-color: #fff;
+.@{css-prefix}-group-vertical {
+    .@{css-prefix} {
+        display: block;
     }
 }
 
-.bview-button-text {
-    color: #666;
-    border: none;
-    background-color: #fff;
-    &:hover {
-        background-color: #fff;
-    }
-    &[disabled] {
-        background-color: @btn_disabled;
-        cursor: not-allowed;
-    }
-    &:focus {
-        background-color: #fff;
+.@{css-prefix}-group-vertical-space-middle {
+    .@{css-prefix} {
+        &:not(:first-child) {
+            margin-top: 20px;
+        }
     }
 }
 
-.bview-button-main {
-    color: #fff;
-    border: 1px solid #666;
-    background-color: #666;
-    &:hover {
-        background-color: #777;
+.@{css-prefix}-group-vertical-space-default {
+    .bview-button {
+        &:not(:first-child) {
+            margin-top: 10px;
+        }
     }
-    &[disabled] {
-        background-color: @btn_disabled;
-        cursor: not-allowed;
+}
+
+.bview-button-group-vertical-space-small {
+    .bview-button {
+        &:not(:first-child) {
+            margin-top: 5px;
+        }
     }
-    &:focus {
-        background-color: #555;
+}
+
+.bview-button-group-vertical-space-big {
+    .bview-button {
+        &:not(:first-child) {
+            margin-top: 30px;
+        }
     }
 }
 

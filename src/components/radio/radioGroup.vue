@@ -6,8 +6,7 @@
 
 <script>
 import { findComponentsDownward } from '../../utils/assist'
-
-const prefix = `bview`
+import { bviewPrefix as b } from '../../utils/macro'
 
 export default {
     name: `RadioGroup` ,
@@ -15,48 +14,48 @@ export default {
         //@doc单选按钮组的值value
         value: {
             type: [ String , Number ] ,
-            default: ``
+            default: `` ,
         } ,
 
         name: {
             type: String ,
-            default: undefined
+            default: undefined ,
         } ,
         //@doc是否垂直显示radioGroup
         vertical: {
             type: Boolean ,
-            default: false
-        }
+            default: false ,
+        } ,
     } ,
     data() {
         return {
             curValue: this.value ,
-            childrens: []
+            childrens: [] ,
         }
     } ,
     computed: {
         groupClass: function() {
             return [
-                `${prefix}-radio-group-wrap` ,
+                `${b}-radio-group-wrap` ,
                 {
-                    [ `${prefix}-radio-group-vertical` ]: this.vertical
-                }
+                    [ `${b}-radio-group-vertical` ]: this.vertical ,
+                } ,
             ]
-        }
+        } ,
     } ,
     watch: {
         value( val ) {
             if ( this.curValue !== val ) {
                 this.curValue = val
-                this._updateValue()
+                this.$_updateValue()
             }
-        }
+        } ,
     } ,
     mounted() {
-        this._updateValue( true )
+        this.$_updateValue( true )
     } ,
     methods: {
-        _updateValue( flag ) {
+        $_updateValue( flag ) {
             this.childrens = findComponentsDownward( this , `Radio` )
             if ( this.childrens ) {
                 this.childrens.forEach( child => {
@@ -69,14 +68,14 @@ export default {
                 } )
             }
         } ,
-        _changeValue( value ) {
+        $_changeValue( value ) {
             this.curValue = value
-            this._updateValue()
+            this.$_updateValue()
             //@doc 结合v-model,触发input事件
             this.$emit( `input` , value )
             //@doc 值改变时触发事件，参数当前的value
             this.$emit( `change` , value )
-        }
-    }
+        } ,
+    } ,
 }
 </script>

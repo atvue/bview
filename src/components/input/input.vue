@@ -52,7 +52,6 @@
     </div>
 </template>
 <script>
-//const prefixCls = "bview-input";
 import CloseIcon from '../../icons/close'
 import searchIcon from '../../icons/search'
 import Icon from '../icon'
