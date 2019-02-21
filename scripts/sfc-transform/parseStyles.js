@@ -20,8 +20,7 @@ const lessConfig = {
 }
 
 function toStyle( style , context ) {
-    let { type , attrs , content } = style ,
-        { type: preProcessor } = attrs ,
+    let { type , content , lang: preProcessor } = style ,
         isStyle = type === TYPESTYLE
     return new Promise( ( resolve , reject ) => {
         if ( isStyle ) {
@@ -64,6 +63,8 @@ function toStyle( style , context ) {
                     break
                 }
             }
+        } else {
+            resolve( undefined )
         }
     } )
 }
