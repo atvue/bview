@@ -2,8 +2,6 @@
 order: 0
 ---
 
-基本用法
-
 ```vue
 <template>
     <div>
@@ -39,3 +37,5 @@ export default {
 }
 </script>
 ```
+
+基本用法

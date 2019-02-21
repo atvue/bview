@@ -3,6 +3,7 @@
         <div
             v-if="show"
             :class="clsTag"
+            :style="styTag"
         >
             <slot />
             <Icon
@@ -36,13 +37,18 @@ export default {
         // @doc 标签是否可关闭
         closable: {
             type: Boolean ,
-            default: false
+            default: false ,
         } ,
         // @doc 是否禁用
         disabled: {
             type: Boolean ,
-            default: false
-        }
+            default: false ,
+        } ,
+        // @doc 颜色
+        // eslint-disable-next-line vue/require-default-prop
+        color: {
+            type: String ,
+        } ,
     } ,
     data() {
         return {
@@ -50,7 +56,7 @@ export default {
             destroyed: false ,
             loading: false ,
             renderLoading ,
-            renderClose
+            renderClose ,
         }
     } ,
     computed: {
@@ -58,13 +64,27 @@ export default {
             return this.destroyed === false
         } ,
         clsTag() {
-            let { disabled } = this ,
+            let { disabled , color } = this ,
+                hasColor = color !== undefined ,
                 cls = `${b}-tag`
             if ( disabled ) {
                 cls += ` ${b}-tag-disabled`
             }
+            if ( hasColor ) {
+                cls += ` ${b}-tag-custom-color`
+            }
             return cls
-        }
+        } ,
+        styTag() {
+            let { color } = this
+            if ( color ) {
+                return {
+                    backgroundColor: color ,
+                    borderColor: color ,
+                }
+            }
+            return undefined
+        } ,
     } ,
     methods: {
         async _clickClose( event ) {
@@ -111,13 +131,13 @@ export default {
                         console.warn(
                             e ,
                             vm ,
-                            `event handler for "` + eventName + `"`
+                            `event handler for "` + eventName + `"` ,
                         )
                     }
                 }
             }
             return result
-        }
-    }
+        } ,
+    } ,
 }
 </script>

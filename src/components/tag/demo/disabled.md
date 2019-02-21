@@ -2,8 +2,6 @@
 order: 1
 ---
 
-禁用`disabled`
-
 ```vue
 <template>
     <div>
@@ -22,3 +20,5 @@ export default {
 </script>
 
 ```
+
+禁用`disabled`

@@ -2,6 +2,7 @@
 
 // tag
 @tag-wrapper: ~'@{bview-prefix}-tag';
+@tag-custom: ~'@{bview-prefix}-tag-custom-color';
 @tag-wrapper-disabled: ~'@{tag-wrapper}-disabled';
 @tag-wrapper-transition: ~'@{tag-wrapper}-transition';
 
@@ -31,6 +32,12 @@
         background: #2c80ff;
         border-color: #2c80ff;
         transition: none;
+    }
+    &.@{tag-custom} {
+        color: #fff;
+        &:hover {
+            opacity: 0.8;
+        }
     }
     .@{bview-prefix}-tag-loading {
         display: inline-block;
