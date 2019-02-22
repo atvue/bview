@@ -2,11 +2,12 @@
 
 ```vue
 <template>
-    <div class="demo-button">
-        <Button type="main">主按钮</Button>
-        <Button type="primary">次按钮</Button>
+    <div>
+        <Button type="primary">主按钮</Button>
+        <Button>次按钮</Button>
+        <Button type="dashed">虚线按钮</Button>
+        <Button type="danger">危险按钮</Button>
         <Button type="text">文字按钮</Button>
-        <Button :showSlot="showSlot">noslot</Button>
     </div>
 </template>
 
@@ -15,11 +16,6 @@ import { Button } from 'bview'
 
 export default {
     components: { Button } ,
-    data () {
-        return {
-            showSlot: true
-        }
-    }
 }
 </script>
 ```

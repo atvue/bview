@@ -4,19 +4,17 @@
         :class="buttonClassName"
         @click.prevent="$_onClick"
     >
-        <span v-if="showSlot">
-            <slot />
-        </span>
+        <slot />
         <i v-if="loading" />
     </button>
 </template>
 
 <script>
 import { bviewPrefix as b } from '../../utils/macro'
-const typeDefault = `primary`
-const SizeDefault = ``
-const types = [ `main` , `primary` , `text` ]
+const types = [ `default` , `primary` , `dashed` , `text` ]
+const typeDefault = types[ 0 ]
 const sizes = [ `` , `big` , `small` ]
+const SizeDefault = sizes[ 0 ]
 
 export default {
     name: `Button` ,
@@ -31,11 +29,6 @@ export default {
             type: Boolean ,
             default: false ,
         } ,
-        //@doc是否显示slot
-        showSlot: {
-            type: Boolean ,
-            default: true ,
-        } ,
         //@doc按钮的大小
         size: {
             validator( value ) {
@@ -43,7 +36,7 @@ export default {
             } ,
             default: SizeDefault ,
         } ,
-        //@doc按钮的类型,为[main ,primary ,text]的一种
+        //@doc按钮的类型,为[primary ,text]的一种
         type: {
             validator( value ) {
                 return value ? true : types.indexOf( value ) >= 0

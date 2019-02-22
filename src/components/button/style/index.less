@@ -1,4 +1,4 @@
-@import '../../../style/default';
+@import '../../../style/default.less';
 @css-prefix: ~'@{bview-prefix}-button';
 @btn_hover: #3cd4ba;
 @btn_disabled: #bbc1d0;
@@ -37,7 +37,7 @@
         height: 38px;
         line-height: 38px;
     }
-    &-main {
+    &-primary {
         color: #fff;
         // border: 1px solid #aaa;
         background-color: @btn-default-bg;
@@ -50,6 +50,51 @@
         }
         &:focus {
             background-color: @btn-hover-color;
+        }
+    }
+    &-default {
+        color: #333;
+        border: 1px solid #d5d5d5;
+        background-color: #fff;
+        &:hover {
+            background-color: #fff;
+        }
+        &[disabled] {
+            background-color: @btn-disable-color;
+            cursor: not-allowed;
+        }
+        &:focus {
+            background-color: #fff;
+        }
+    }
+    &-dashed {
+        color: #333;
+        border: 1px dashed #d5d5d5;
+        background-color: #fff;
+        &:hover {
+            background-color: #fff;
+        }
+        &[disabled] {
+            background-color: @btn-disable-color;
+            cursor: not-allowed;
+        }
+        &:focus {
+            background-color: #fff;
+        }
+    }
+    &-danger {
+        color: #ff6363;
+        border: 1px solid #ff6363;
+        background-color: #fff;
+        &:hover {
+            background-color: #fff;
+        }
+        &[disabled] {
+            background-color: @btn-disable-color;
+            cursor: not-allowed;
+        }
+        &:focus {
+            background-color: #fff;
         }
     }
     &-text {
@@ -65,21 +110,6 @@
         }
         &:focus {
             background-color: #fff;
-        }
-    }
-    &-primary {
-        color: #fff;
-        border: 1px solid #666;
-        background-color: #666;
-        &:hover {
-            background-color: #777;
-        }
-        &[disabled] {
-            background-color: @btn-disable-color;
-            cursor: not-allowed;
-        }
-        &:focus {
-            background-color: #555;
         }
     }
 }
