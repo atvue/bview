@@ -111,43 +111,43 @@ export default {
     directives: { clickOutEl } ,
     mixins: [ Emitter ] ,
     props: {
-        // 可选项的数据源
+        //@doc级联选项数据
         data: {
             type: Array ,
             default() {
                 return []
             } ,
         } ,
-        // 是否禁用选择器
+        //@doc 是否禁用选择器
         disabled: {
             type: Boolean ,
             default: false ,
         } ,
-        // 是否支持清空输入框
+        //@doc 是否支持清空输入框
         clearable: {
             type: Boolean ,
             default: false ,
         } ,
-        // 当前已选项的数据
+        //@doc 默认值/当前已选项的数据
         value: {
             type: Array ,
             default() {
                 return []
             } ,
         } ,
-        // 是否选中即改变
+        //@doc 是否选中即改变
         changeOnSelect: {
             type: Boolean ,
             default: false ,
         } ,
-        // 交互方式
+        //@doc 级联展开的交互方式，支持 'click' 与 'hover' 两种
         trigger: {
             validator( value ) {
                 return oneOf( value , [ `click` , `hover` ] )
             } ,
             default: `click` ,
         } ,
-        // 结果展示方式
+        //@doc 结果展示方式，可自定义显示格式
         renderFormat: {
             type: Function ,
             default( label ) {
@@ -158,12 +158,12 @@ export default {
             type: [ String , Number ] ,
             default: `请选择` ,
         } ,
-        // 是否支持搜索
+        //@doc 是否支持搜索
         filterable: {
             type: Boolean ,
             default: false ,
         } ,
-        // 异步数据
+        //@doc 获取异步数据
         loadData: {
             type: Function ,
             default: () => {} ,
@@ -175,7 +175,7 @@ export default {
             selectPrefixCls ,
             showDropDown: false ,
             query: `` ,
-            updatingValue: false , // to fix set value in changeOnSelect type
+            updatingValue: false ,
             selected: [] ,
             tmpSelected: [] ,
             currentValue: this.value ,
