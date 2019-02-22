@@ -14,6 +14,7 @@
 // option
 @options-wrapper: ~'@{bview-prefix}-options-wrapper';
 @option-empty: ~'@{bview-prefix}-options-search-empty';
+@option-noset: ~'@{bview-prefix}-options-no-set';
 @option: ~'@{bview-prefix}-option';
 @option-selected: ~'@{bview-prefix}-option-selected';
 @option-selected-icon: ~'@{bview-prefix}-option-selected-icon';
@@ -129,6 +130,10 @@
     overflow: auto;
     box-sizing: border-box;
     .@{option-empty} {
+        padding: 10px;
+        text-align: center;
+    }
+    .@{option-noset} {
         padding: 10px;
         text-align: center;
     }

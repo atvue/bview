@@ -72,7 +72,13 @@
             :style="styleOptionWrapper"
         >
             <div
-                v-if="showSearch && searchResultNoList"
+                v-if="noSetOptions"
+                :class="`${b}-options-no-set`"
+            >
+                没有数据
+            </div>
+            <div
+                v-else-if="showSearch && searchResultNoList"
                 :class="`${b}-options-search-empty`"
             >
                 {{ notFoundContent }}
@@ -173,6 +179,12 @@ export default {
         }
     } ,
     computed: {
+        noSetOptions() {
+            let { options , $slots } = this ,
+                noSet = options === undefined && $slots.default === undefined ,
+                optionsEmpty = options && options.length === 0
+            return noSet || optionsEmpty
+        } ,
         hasSelected() {
             return this.selected !== undefined
         } ,
