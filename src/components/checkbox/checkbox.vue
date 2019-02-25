@@ -107,20 +107,18 @@ export default {
             if ( this.disabled ) {
                 return false
             }
-
+            let _isChecked = !this.isChecked
             if ( this.halfChecked ) {
-                this.isChecked = false
-            } else {
-                this.isChecked = !this.isChecked
+                _isChecked = false
             }
 
             if ( this.isGroup ) {
                 this.parent.$_changeValue( this.value )
             } else {
                 //@doc 结合v-model，触发input事件，参数当前值
-                this.$emit( `input` , this.isChecked )
+                this.$emit( `input` , _isChecked )
                 //@doc 单个使用时候value改变事件，参数value
-                this.$emit( `on-change` , this.isChecked )
+                this.$emit( `on-change` , _isChecked )
             }
         } ,
     } ,

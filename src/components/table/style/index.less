@@ -1,0 +1,111 @@
+@import '../../../style/default';
+
+@table-prefix-cls: ~'@{bview-prefix}-table';
+@table-head-background-color: #f9f9f9;
+@table-border-color: #ebebeb;
+@table-link-color: #3c80ed;
+@table-row-expand-background-color: #f9f9f9;
+
+.@{table-prefix-cls} {
+    table {
+        width: 100%;
+        text-align: left;
+        box-sizing: border-box;
+        border-collapse: collapse;
+        border-spacing: 0;
+        color: #333333;
+        font-size: 12px;
+        border: 1px solid #ebebeb;
+    }
+    &-thead,
+    &-tbody {
+        > tr {
+            > th,
+            > td {
+                padding: 15px 0 15px 30px;
+                border-bottom: 1px solid @table-border-color;
+                box-sizing: border-box;
+            }
+        }
+    }
+    &-thead {
+        > tr > th {
+            background: @table-head-background-color;
+            font-weight: 700;
+            &[colspan] {
+                text-align: center;
+            }
+        }
+        &-icon {
+            cursor: pointer;
+            svg {
+                font-size: 14px;
+            }
+        }
+        &-filter {
+            background: #ffffff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            padding: 10px;
+            min-width: 80px;
+        }
+        // 带边框样式
+        &-bordered {
+            > tr > th {
+                border: 1px solid @table-border-color;
+                padding: 15px 0;
+                text-align: center;
+            }
+        }
+        // 文字居中
+    }
+    &-tbody {
+        > tr > td {
+            a {
+                color: @table-link-color;
+                :hover {
+                    opacity: 0.8;
+                }
+            }
+        }
+        // 带边框
+        &-bordered {
+            > tr > td {
+                border: 1px solid @table-border-color;
+                padding: 15px 0;
+                text-align: center;
+            }
+        }
+        // 文字居中
+    }
+    &-cell {
+        &-expand-icon {
+            color: #80848f;
+            cursor: pointer;
+            &::before {
+                content: '';
+                display: inline-block;
+                vertical-align: middle;
+                width: 0;
+                height: 0;
+                border-style: solid;
+                border-width: 5px 4px 0 4px;
+                border-color: #80848f transparent transparent transparent;
+                transition: all 0.2s ease-in-out;
+            }
+        }
+        &-expand-icon_expand {
+            &::before {
+                transform: rotate(180deg);
+            }
+        }
+        &-opr {
+            width: 50px;
+            text-align: center;
+        }
+    }
+    &-row {
+        &_expand {
+            background: @table-row-expand-background-color;
+        }
+    }
+}

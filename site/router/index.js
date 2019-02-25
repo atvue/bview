@@ -11,7 +11,7 @@ const requireComponent = require.context( `@/components/` , true , /.*\.st$/ )
 
 let components = {}
 
-// 获取组件文档入口
+// // 获取组件文档入口
 requireComponent.keys().forEach( fileName => {
     let name = fileName.split( `/` )[ 1 ] ,
         component = requireComponent( fileName )
