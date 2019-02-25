@@ -19,7 +19,7 @@ const group = [
     } ,
     {
         categoryName: `数据展示` ,
-        components: [ `tag` ] ,
+        components: [ `tag` , `table` ] ,
     } ,
     {
         categoryName: `导航组件` ,
