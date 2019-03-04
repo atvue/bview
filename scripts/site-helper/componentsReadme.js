@@ -78,11 +78,13 @@ function sortComponents( arr ) {
 exports.siteComponentsReadMeSortedConfig = async function() {
     let componentsConfig = await readComponentsReadme() ,
         // 忽略标记 ignoreMenu
-        filterComponents = componentsConfig.filter( stConfig => {
-            let {
-                readMeConfig: { ignoreMenu } ,
-            } = stConfig
-            return ignoreMenu !== true
+        filterComponents = componentsConfig.filter( ( { readMeConfig } ) => {
+            if ( readMeConfig ) {
+                let { ignoreMenu } = readMeConfig
+                return ignoreMenu !== true
+            } else {
+                return false
+            }
         } ) ,
         sorted = sortComponents( filterComponents )
     return sorted

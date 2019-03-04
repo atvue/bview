@@ -36,7 +36,10 @@ exports.readMeConfig = async file => {
             }
         }
     } catch ( e ) {
-        console.warn( e )
+        // 忽略文件不存在的错误
+        if ( e.code !== `ENOENT` ) {
+            console.warn( e )
+        }
     }
     return undefined
 }
