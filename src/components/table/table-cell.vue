@@ -100,7 +100,10 @@ export default {
                 return {}
             } ,
         } ,
-        index: Number ,
+        index: {
+            type: Number ,
+            default: undefined ,
+        } ,
         // 无数据时默认显示
         emptyData: {
             type: String ,

@@ -84,7 +84,7 @@
 <script>
 import Checkbox from '../checkbox'
 const { CheckboxGroup } = Checkbox
-import { Button } from '../button'
+import Button from '../button'
 import Dropdown from '../dropdown'
 
 import { bviewPrefix as b } from '../../utils/macro'
