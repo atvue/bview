@@ -126,6 +126,7 @@ export default {
                 opacity: 0 ,
             } ,
             $spring: { stiffness: 270 , damping: 26 , precision: 1 } ,
+            transitionXY: true ,
         }
     } ,
     computed: {
@@ -133,11 +134,17 @@ export default {
             return `${b}-${name}`
         } ,
         clsOverlay() {
-            let { overlayClass , trigger } = this ,
+            let { overlayClass , trigger , transitionXY } = this ,
                 clsStr = overlayClass ? ` ${overlayClass}` : `` ,
                 clsTriggerContextMenu =
-                    trigger === triggerRightClick ? ` ctx-menu-type` : ``
-            return `${b}-${name}-overlay` + clsStr + clsTriggerContextMenu
+                    trigger === triggerRightClick ? ` ctx-menu-type` : `` ,
+                noTransition = transitionXY ? `` : ` transition-disable`
+            return (
+                `${b}-${name}-overlay` +
+                clsStr +
+                clsTriggerContextMenu +
+                noTransition
+            )
         } ,
         clsDropPortal() {
             return `${b}-${name}-poartal`
@@ -211,11 +218,12 @@ export default {
                 this.visiblePortal = true
                 // 先dom protal生成
                 await this.$nextTick()
+                let { visible: prevVisible } = this
                 this.visible = true
                 // 计算位置
                 await this.$nextTick()
                 // -@doc 通知下拉框打开，dom已生成
-                this._calcPopPosition( point )
+                this._calcPopPosition( point , prevVisible )
                 this.$emit( `dropdown-open` )
                 // 动画开始
                 this.anim = this.endAnimConfig
@@ -343,7 +351,7 @@ export default {
                 r()
             }
         } ,
-        _calcPopPosition( mousePoint ) {
+        _calcPopPosition( mousePoint , prevVisible ) {
             let {
                     $refs: { source , target } ,
                     placement ,
@@ -351,6 +359,7 @@ export default {
                 isContextMenuMode = mousePoint !== undefined
             if ( isContextMenuMode ) {
                 let { x , y } = contextMenuOffset
+                this.transitionXY = prevVisible
                 alignPoint( source , mousePoint , {
                     points: [ `tl` , `br` ] ,
                     offset: [ x , y ] ,
