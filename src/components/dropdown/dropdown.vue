@@ -16,13 +16,17 @@
             :symbol="symbolPortal"
             :get-popup-container="getPopupContainer"
         >
-            <Transition
-                :name="transitionName"
-                @after-leave="_afterAnimLeave"
+            <Motion
+                tag="div"
+                :values="anim"
+                :spring="$data.$spring"
+                @motion-end="$_motionEnd"
             >
                 <div
                     v-if="visible"
                     ref="source"
+                    slot-scope="{ offset, opacity }"
+                    :style="{ transform: `translateY(${offset}px)`, opacity }"
                     :class="clsOverlay"
                     @mouseenter="_mouseEnter"
                     @mouseleave="_mouseLeave"
@@ -31,7 +35,7 @@
                     <!-- 下拉组件 -->
                     <slot name="overlay" />
                 </div>
-            </Transition>
+            </Motion>
         </Portal>
     </div>
 </template>
@@ -42,6 +46,7 @@ import makeCancelable from '../../utils/makeCancelable'
 import { bviewPrefix as b } from '../../utils/macro.js'
 import clickOutEl from '../../directives/click-out-el'
 import { timeout } from '../../utils/timer'
+import { Motion } from '../motion'
 import noop from '../../utils/noop'
 import Portal from './portal.vue'
 import alignElement , { alignPoint } from './dom-align/index'
@@ -61,11 +66,12 @@ const warn = warnInit( name )
 const contextMenuOffset = { x: 10 , y: 16 }
 const defaultOffsetY = 4
 const lazy = 200
+const animDistance = 8
 const defaultContainer = () => document.body
 
 export default {
     name: componentName ,
-    components: { Portal } ,
+    components: { Portal , Motion } ,
     directives: { clickOutEl } ,
     props: {
         /* @docbegin 菜单弹出位置：bottomLeft bottomCenter bottomRight topLeft topCenter topRight
@@ -115,6 +121,11 @@ export default {
             visiblePortal: visible ,
             cancelEnter: noop ,
             cancelLeave: noop ,
+            anim: {
+                offset: undefined ,
+                opacity: 0 ,
+            } ,
+            $spring: { stiffness: 270 , damping: 26 , precision: 1 } ,
         }
     } ,
     computed: {
@@ -131,11 +142,26 @@ export default {
         clsDropPortal() {
             return `${b}-${name}-poartal`
         } ,
-        transitionName() {
+        isTop() {
             let { placement } = this ,
-                isTop = placement.indexOf( `top` ) >= 0 ,
-                dir = isTop ? `top` : `bottom`
-            return `dropdown-transition-${dir}`
+                isTop = placement.indexOf( `top` ) >= 0
+            return isTop
+        } ,
+        startOffset() {
+            let { isTop } = this
+            return isTop ? animDistance : -animDistance
+        } ,
+        beginAnimConfig() {
+            return {
+                opacity: 0 ,
+                offset: this.startOffset ,
+            }
+        } ,
+        endAnimConfig() {
+            return {
+                offset: 0 ,
+                opacity: 1 ,
+            }
         } ,
         symbolPortal() {
             return Symbol.for( `dropdown-protal` )
@@ -167,6 +193,9 @@ export default {
             }
         } ,
     } ,
+    mounted() {
+        this.anim = this.beginAnimConfig
+    } ,
     methods: {
         async _showOverlay( point ) {
             let { cancelLeave , cancelEnter: prevCancelEnter , disabled } = this
@@ -186,8 +215,11 @@ export default {
                 // 计算位置
                 await this.$nextTick()
                 // -@doc 通知下拉框打开，dom已生成
-                this.$emit( `dropdown-open` )
                 this._calcPopPosition( point )
+                this.$emit( `dropdown-open` )
+                // 动画开始
+                this.anim = this.endAnimConfig
+                this.$_motionStart()
             } catch ( e ) {
                 if ( !e.isCanceled ) {
                     warn( e )
@@ -205,7 +237,11 @@ export default {
             this.cancelLeave = cancelLeave
             try {
                 await promise
+                this.anim = this.beginAnimConfig
+                this.$_motionStart()
+                await this.motionPromise
                 this.visible = false
+                this.$_afterAnimLeave()
             } catch ( e ) {
                 if ( !e.isCanceled ) {
                     warn( e )
@@ -287,13 +323,24 @@ export default {
                 this._showOverlay( { pageX , pageY } )
             }
         } ,
-        _afterAnimLeave() {
+        $_afterAnimLeave() {
             // important 异步触发，先确认主菜单是否已关闭
             let { visible } = this
             if ( visible === false ) {
                 this.visiblePortal = false
                 // -@doc 不暴露，动画结束，通知外部下拉框关闭
                 this.$emit( `dropdown-closed` )
+            }
+        } ,
+        $_motionStart() {
+            this.motionPromise = new Promise( r => {
+                this.motionPromiseResolve = r
+            } )
+        } ,
+        $_motionEnd() {
+            let { motionPromiseResolve: r } = this
+            if ( r ) {
+                r()
             }
         } ,
         _calcPopPosition( mousePoint ) {
