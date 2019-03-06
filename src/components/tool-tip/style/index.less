@@ -1,0 +1,36 @@
+@import '../../../style/default.less';
+
+@tool-tip-cls: ~'@{bview-prefix}-tool-tip';
+@tool-tip-overlay: ~'@{bview-prefix}-tool-tip-overlay';
+@tool-tip-content: ~'@{bview-prefix}-tool-tip-content';
+@tool-tip-inner: ~'@{bview-prefix}-tool-tip-inner';
+
+@bgColor: rgba(0, 0, 0, 0.75);
+
+.@{tool-tip-overlay} {
+    display: block;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    color: rgba(0, 0, 0, 0.65);
+    font-size: 14px;
+    font-variant: tabular-nums;
+    line-height: 1.5;
+    font-feature-settings: 'tnum';
+    max-width: 250px;
+    .@{tool-tip-content} {
+    }
+    .@{tool-tip-inner} {
+        min-width: 30px;
+        box-sizing: border-box;
+        min-height: 32px;
+        padding: 6px 8px;
+        color: #fff;
+        text-align: left;
+        text-decoration: none;
+        word-wrap: break-word;
+        background-color: @bgColor;
+        border-radius: 4px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+}
