@@ -201,7 +201,7 @@ export default {
         } ,
     } ,
     mounted() {
-        this.anim = this.beginAnimConfig
+        this.$_checkIfShow()
     } ,
     methods: {
         async _showOverlay( point ) {
@@ -380,6 +380,15 @@ export default {
                     offset: [ 0 , offsetY ] ,
                     overflow: { adjustX: true , adjustY: true } ,
                 } )
+            }
+        } ,
+        $_checkIfShow() {
+            let { value } = this ,
+                hasControlled = value !== undefined ,
+                needShow = hasControlled && value === true
+            this.anim = this.beginAnimConfig
+            if ( needShow ) {
+                this._showOverlay()
             }
         } ,
     } ,
