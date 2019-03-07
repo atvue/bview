@@ -48,6 +48,7 @@
             </div>
         </div>
         <div
+            v-if="filterAttrBindOptions.length"
             slot="overlay"
             ref="selectDropdown"
             :class="`${b}-options-wrapper`"
@@ -96,16 +97,16 @@ export default {
         //@doc搜索框是否有清空按钮
         clearable: {
             type: Boolean ,
-            default: false
+            default: false ,
         } ,
         hasSearchOptions: {
             type: Boolean ,
-            default: false
+            default: false ,
         } ,
         disabled: {
             type: Boolean ,
-            default: false
-        }
+            default: false ,
+        } ,
     } ,
     computed: {
         searchResultNoList() {
@@ -116,7 +117,7 @@ export default {
                     hasOptions ,
                     searchWord ,
                     filterSlotOptions ,
-                    filterAttrBindOptions
+                    filterAttrBindOptions ,
                 } = this ,
                 hasSearchWord =
                     searchWord !== undefined &&
@@ -130,7 +131,7 @@ export default {
             } else {
                 return false
             }
-        }
+        } ,
     } ,
     methods: {
         _emitInput() {
@@ -139,7 +140,7 @@ export default {
             // @doc 选中值变化触发input事件
             this.hasSelectedOptions = true
             this.$emit( `input` , labelInValue ? { value , label } : value )
-        }
-    }
+        } ,
+    } ,
 }
 </script>

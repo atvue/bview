@@ -1,7 +1,4 @@
-import searchWord from '../../select/helper/searchWord'
-
 export default {
-    extends: searchWord ,
     computed: {
         filterAttrBindOptions() {
             let {
@@ -10,7 +7,7 @@ export default {
                 searchWord ,
                 showSearch ,
                 hasSelectedOptions ,
-                hasSearchOptions
+                hasSearchOptions ,
             } = this
             searchWord = searchWord.trim()
             let hasSearchWord =
@@ -41,7 +38,7 @@ export default {
             } else {
                 return options ? options : []
             }
-        }
+        } ,
     } ,
     methods: {
         _focusSearchInput() {
@@ -67,6 +64,6 @@ export default {
         resetSearchWord() {
             this.searchWord = ``
             this.selected = undefined
-        }
-    }
+        } ,
+    } ,
 }
