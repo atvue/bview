@@ -134,17 +134,20 @@ export default {
             return `${b}-${name}`
         } ,
         clsOverlay() {
-            let { overlayClass , trigger , transitionXY } = this ,
-                clsStr = overlayClass ? ` ${overlayClass}` : `` ,
-                clsTriggerContextMenu =
-                    trigger === triggerRightClick ? ` ctx-menu-type` : `` ,
-                noTransition = transitionXY ? `` : ` transition-disable`
-            return (
-                `${b}-${name}-overlay` +
-                clsStr +
-                clsTriggerContextMenu +
-                noTransition
-            )
+            let {
+                overlayClass ,
+                trigger ,
+                transitionXY ,
+                visible ,
+                prefixCls ,
+            } = this
+            return {
+                [ `${b}-${name}-overlay` ]: true ,
+                [ `${overlayClass}` ]: overlayClass ? true : false ,
+                [ `${prefixCls}-open` ]: visible ,
+                'ctx-menu-type': trigger === triggerRightClick ,
+                'transition-disable': transitionXY ? false : true ,
+            }
         } ,
         clsDropPortal() {
             return `${b}-${name}-poartal`
