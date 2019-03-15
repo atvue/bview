@@ -2,7 +2,7 @@
     <div
         ref="target"
         v-click-out-el="_clickOutEl"
-        :class="prefixCls"
+        :class="wraperTriggerCls"
         @click="_clickTrigger"
         @mouseenter="_mouseEnter"
         @mouseleave="_mouseLeave"
@@ -133,18 +133,18 @@ export default {
         prefixCls() {
             return `${b}-${name}`
         } ,
+        wraperTriggerCls() {
+            let { visible , prefixCls } = this
+            return {
+                [ prefixCls ]: true ,
+                [ `${prefixCls}-open` ]: visible ,
+            }
+        } ,
         clsOverlay() {
-            let {
-                overlayClass ,
-                trigger ,
-                transitionXY ,
-                visible ,
-                prefixCls ,
-            } = this
+            let { overlayClass , trigger , transitionXY } = this
             return {
                 [ `${b}-${name}-overlay` ]: true ,
                 [ `${overlayClass}` ]: overlayClass ? true : false ,
-                [ `${prefixCls}-open` ]: visible ,
                 'ctx-menu-type': trigger === triggerRightClick ,
                 'transition-disable': transitionXY ? false : true ,
             }
