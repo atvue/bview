@@ -35,8 +35,7 @@ describe( `Dropdown` , () => {
     test( `click弹出之后会有bview-dropdown-open的css类` , done => {
         wrapper.trigger( `click` )
         setTimeout( () => {
-            let overlay = document.getElementsByClassName( `bview-dropdown-open` )
-            expect( overlay.length ).not.toBe( 0 )
+            expect( wrapper.classes( `bview-dropdown-open` ) ).toBe( true )
             done()
         } , 2000 )
     } )
