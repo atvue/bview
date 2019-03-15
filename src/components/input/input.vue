@@ -11,9 +11,15 @@
             <slot name="prepend" />
         </span>
         <Icon
-            v-if="clearable && currentValue && !disabled"
-            :svg="closeIcon"
+            v-if="type === 'password'"
+            :svg="eyeIcon"
             :class="`${b}-input-icon`"
+            @click="$_handleOpenEye"
+        />
+        <Icon
+            v-if="clearable && currentValue && !disabled"
+            :svg="clearIcon"
+            :class="clearIconClasses"
             @click="$_handleClear"
         />
         <Icon
@@ -32,7 +38,7 @@
             :autofocus="autofocus"
             :readonly="readonly"
             :disabled="disabled"
-            :type="type"
+            :type="initType"
             v-bind="nativeProps"
             @click="$_clickInput"
             @input="$_handleInput"
@@ -52,8 +58,10 @@
     </div>
 </template>
 <script>
-import CloseIcon from '../../icons/close'
+import clearIcon from '../../icons/clear'
 import searchIcon from '../../icons/search'
+import openEyeIcon from '../../icons/openEye'
+import closeEyeIcon from '../../icons/closeEye'
 import Icon from '../icon'
 import { bviewPrefix as b } from '../../utils/macro'
 export default {
@@ -128,9 +136,13 @@ export default {
     data() {
         return {
             currentValue: this.value ,
-            closeIcon: CloseIcon ,
+            initType: this.type ,
+            clearIcon: clearIcon ,
             searchIcon: searchIcon ,
+            openEyeIcon: openEyeIcon ,
+            closeEyeIcon: closeEyeIcon ,
             b: b ,
+            open: false ,
         }
     } ,
 
@@ -145,6 +157,17 @@ export default {
                         this.search || this.$slots.append ,
                 } ,
             ]
+        } ,
+        clearIconClasses() {
+            return [
+                `${b}-input-icon` ,
+                {
+                    [ `${b}-input-clear-prepend` ]: this.type === `password` ,
+                } ,
+            ]
+        } ,
+        eyeIcon() {
+            return this.open ? openEyeIcon : closeEyeIcon
         } ,
     } ,
     watch: {
@@ -180,6 +203,7 @@ export default {
         $_handleBlur( event ) {
             //@doc失焦时触发
             this.$emit( `blur` , event )
+            this.$emit( `on-form-blur` , event )
         } ,
         $_handleClear() {
             this.$emit( `input` , `` )
@@ -195,6 +219,10 @@ export default {
         //@doc手动失焦
         blur() {
             this.$refs.input.blur()
+        } ,
+        $_handleOpenEye() {
+            this.open = !this.open
+            this.initType = this.open ? `text` : `password`
         } ,
     } ,
 }

@@ -2,7 +2,7 @@
     "name": "bview",
     "version": "0.0.1-alpha",
     "description": "vue ui components",
-    "main": "lib/index.js",
+    "main": "dist/nopvue.js",
     "scripts": {
         "start": "npm run dev",
         "dev": "node scripts/dev-server.js",

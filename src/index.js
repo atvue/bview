@@ -6,6 +6,8 @@ import Radio from './components/radio'
 import Checkbox from './components/checkbox'
 import Icon from './components/icon'
 import Textarea from './components/textarea'
+import Dropdown from './components/dropdown'
+import Menu from './components/menu'
 
 const components = {
     Button ,
@@ -15,7 +17,9 @@ const components = {
     Textarea ,
     Radio ,
     Checkbox ,
-    Icon
+    Icon ,
+    Dropdown ,
+    Menu ,
 }
 
 const install = function( Vue ) {
@@ -24,10 +28,21 @@ const install = function( Vue ) {
     } )
 }
 
-export { Button , Select , Input , Switches , Textarea , Radio , Checkbox , Icon }
+export {
+    Button ,
+    Select ,
+    Input ,
+    Switches ,
+    Textarea ,
+    Radio ,
+    Checkbox ,
+    Icon ,
+    Dropdown ,
+    Menu ,
+}
 
 export default {
-    install
+    install ,
 }
 
 const ENV = process.env.NODE_ENV
@@ -42,6 +57,6 @@ if (
 ) {
     console.warn(
         `You are using a whole package of bui, ` +
-            `please use https://www.npmjs.com/package/babel-plugin-import to reduce app bundle size.`
+            `please use https://www.npmjs.com/package/babel-plugin-import to reduce app bundle size.` ,
     )
 }
