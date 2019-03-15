@@ -6,7 +6,7 @@
     >
         <slot />
         <i v-if="loading" />
-        {{ tip }}
+        <span>{{ tip }}</span>
         <Icon
             v-if="loadingStatus"
             :svg="loadIcon"
@@ -43,11 +43,7 @@ export default {
         } ,
         enableTip: {
             type: String ,
-            default: `下一步` ,
-        } ,
-        disableTip: {
-            type: String ,
-            default: `下一步` ,
+            default: `` ,
         } ,
         //@doc按钮的大小
         size: {
@@ -124,7 +120,7 @@ export default {
                 this.$_countDown()
             } else {
                 // 仅锁定，采用disableTip
-                this.tip = _opt.tip || this.disableTip
+                this.tip = _opt.tip
             }
         } ,
         //@doc解锁按钮
