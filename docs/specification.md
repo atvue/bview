@@ -115,3 +115,4 @@ order: 1
 | [space-unary-ops](http://eslint.cn/docs/rules/space-unary-ops) | 要求在一元操作符之前或之后存在空格 |
 | [semi-spacing](http://eslint.cn/docs/rules/semi-spacing) | 强制分号之前有空格，禁止分号之后有空格 |
 | [semi](http://eslint.cn/docs/rules/semi) | 禁止在语句末尾使用分号 |
+| [curly](http://eslint.cn/docs/rules/curly) | 强制所有控制语句使用一致的括号风格，即时只有单行语句，也强制使用大括号 |
