@@ -6,6 +6,7 @@ const config = require( `./config` ) ,
     chalk = require( `chalk` )
 
 const glob = require( `glob` )
+const subfixVue2JS = /\.vue$/
 
 // 查找所有vue文件
 async function findVueFiles() {
@@ -42,7 +43,8 @@ async function init() {
                 return
             }
             if ( code !== undefined ) {
-                writeFile( mirrorLibPath , code )
+                const path2JS = mirrorLibPath.replace( subfixVue2JS , `.js` )
+                writeFile( path2JS , code )
             }
         } )
     } )
