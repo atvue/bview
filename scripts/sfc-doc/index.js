@@ -8,8 +8,7 @@ const VSFCParser = require( `@vue/component-compiler-utils` ).parse
 // template编译工具
 const vueTemplateCompiler = require( `vue-template-compiler` )
 
-const babelParse = require( `@babel/parser` ).parse
-
+const transformSync = require( `@babel/core` ).transformSync
 const { parseJs , parseTpl } = require( `./parser` ) ,
     render = require( `./render` )
 
@@ -22,7 +21,7 @@ const getAst = async file => {
     const sfc = VSFCParser( {
         source: source ,
         compiler: vueTemplateCompiler ,
-        needMap: false
+        needMap: false ,
     } )
 
     let astRes = {}
@@ -30,15 +29,28 @@ const getAst = async file => {
     if ( sfc.script && sfc.script.content !== `` ) {
         // 使用babel parser解析js文件
         // @TODO plugin传入支持
-        astRes.astJs = babelParse( sfc.script.content , {
-            sourceType: `module`
-        } )
+        astRes.astJs = transformSync( sfc.script.content , {
+            ast: true ,
+            code: false ,
+            sourceType: `module` ,
+            plugins: [
+                require( `babel-plugin-transform-vue-jsx` ) ,
+                [
+                    require( `@babel/plugin-transform-runtime` ) ,
+                    {
+                        regenerator: true ,
+                    } ,
+                ] ,
+                require( `babel-plugin-transform-object-rest-spread` ) ,
+                require( `@babel/plugin-syntax-dynamic-import` ) ,
+            ] ,
+        } ).ast
     }
     if ( sfc.template && sfc.template.content !== `` ) {
         // 使用vue-template-compiler解析模板
         astRes.astTpl = vueTemplateCompiler.compile( sfc.template.content , {
             comments: true ,
-            preserveWhitespace: false //去掉标签直接的空格换行便于查找slot之前的注释
+            preserveWhitespace: false , //去掉标签直接的空格换行便于查找slot之前的注释
         } ).ast
     }
 
@@ -54,7 +66,7 @@ module.exports = async file => {
     // console.log(propsRes);
     return {
         render: render( { propsRes , emitEvents , slotsRes , apiMethods } ) ,
-        name: name
+        name: name ,
     }
 }
 
