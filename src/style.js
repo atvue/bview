@@ -1,0 +1,7 @@
+import './components/button/style/index'
+import './components/input/style/index'
+import './components/switches/style/index'
+import './components/textarea/style/index'
+import './components/icon/style/index'
+import './components/dropdown/style/index'
+import './components/menu/style/index'
