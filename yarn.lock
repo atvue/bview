@@ -9067,7 +9067,7 @@ vue-test-utils@^1.0.0-beta.11:
 
 vue@^2.6.8:
   version "2.6.8"
-  resolved "http://rnpm.hz.netease.com/vue/download/vue-2.6.8.tgz#f21cbc536bfc14f7d1d792a137bb12f69e60ea91"
+  resolved "https://registry.npm.taobao.org/vue/download/vue-2.6.8.tgz#f21cbc536bfc14f7d1d792a137bb12f69e60ea91"
   integrity sha1-8hy8U2v8FPfR15KhN7sS9p5g6pE=
 
 w3c-hr-time@^1.0.1:
